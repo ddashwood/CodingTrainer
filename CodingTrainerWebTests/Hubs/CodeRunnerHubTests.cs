@@ -53,6 +53,27 @@ namespace CodingTrainerWebTests.Hubs
             });
         }
 
+        private class CodeRunnerStub : ICodeRunner
+        {
+            private ManualResetEvent done = new ManualResetEvent(false);
+
+            public event ConsoleWriteEventHandler ConsoleWrite;
+
+            public void ConsoleIn(string text)
+            {
+                if (text == "Console In")
+                {
+                    ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs("Received"));
+                    done.Set();
+                }
+            }
+            public void RunCode(string code)
+            {
+                ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs("Hello Test"));
+                done.WaitOne();
+            }
+        }
+
         [Test]
         public async Task CodeRunnerConsoleInTestAsync()
         {
@@ -66,11 +87,10 @@ namespace CodingTrainerWebTests.Hubs
 
             // Arrange - Runner
             string code = "<Test code>";
-            var mockRunner = new Mock<ICodeRunner>();
+            ICodeRunner stubRunner = new CodeRunnerStub(); 
+
             var mockFactory = new Mock<ICodeRunnerFactory>();
-            mockFactory.Setup(f => f.GetCodeRunner()).Returns(() => mockRunner.Object);
-            mockRunner.Setup(r => r.RunCode(code)).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
-            mockRunner.Setup(r => r.ConsoleIn("Console In")).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Received"));
+            mockFactory.Setup(f => f.GetCodeRunner()).Returns(() => stubRunner);
 
             // Arrange - Class under test - Hub
             var hub = new CodeRunnerHub(mockFactory.Object)
