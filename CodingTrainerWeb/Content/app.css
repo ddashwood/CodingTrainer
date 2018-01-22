@@ -1,0 +1,8 @@
+﻿.body-content textarea {
+    max-width:none;
+    font-family:Consolas, Courier New, Courier, monospace
+}
+
+.body-content textarea:disabled {
+    cursor: default;
+}

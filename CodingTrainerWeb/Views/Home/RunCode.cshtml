@@ -1,0 +1,29 @@
+﻿@model CodingTrainer.CodingTrainerWeb.Models.CodeSnippet
+
+@{
+    ViewBag.Title = "Run Code";
+}
+@section Scripts {
+    <script>
+        model = @Html.Raw(Json.Encode(Model));
+    </script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/app/RunCode.js"></script>
+}
+            
+<h2>Run Code</h2>
+<div class="col-md-6 col-sm-12">
+    <textarea class="form-control" id="code" rows="30" spellcheck="false"></textarea><br />
+</div>
+<div class="col-md-6 col-sm-12">
+    <textarea class="form-control" id="console-out" rows="30" spellcheck="false" disabled></textarea><br />
+</div>
+<div class="col-md-6 col-sm-12">
+    <button id="run" disabled>Connecting</button>
+</div>
+<div class="col-md-6 col-sm-12">
+    <input type="text" id="console-in" /><button id="console"> Send to console</button>
+</div>
+<div id="console-out"></div>
+
