@@ -8,8 +8,8 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using CodingTrainer.CSharpRunner.CodeHost;
 using System.Collections.Concurrent;
-using CodingTrainer.CodingTrainerWeb.Factories;
 using Microsoft.CodeAnalysis.Scripting;
+using CodingTrainer.CSharpRunner.CodeHost.Factories;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs
 {

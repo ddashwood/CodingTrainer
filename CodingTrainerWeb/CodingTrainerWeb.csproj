@@ -277,10 +277,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Factories\CodeRunnerFactory.cs" />
-    <Compile Include="Factories\ICodeRunnerFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -288,7 +287,6 @@
     <Compile Include="Hubs\ICodeRunnerHubClient.cs" />
     <Compile Include="Hubs\ICodeRunnerHubServer.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\CodeSnippet.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -334,7 +332,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\RunCode.cshtml" />
+    <Content Include="Views\Exercise\RunCode.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -382,6 +380,10 @@
     <ProjectReference Include="..\CodeHost\CodeHost.csproj">
       <Project>{0b5480bd-8879-4158-8c35-73fd207742a3}</Project>
       <Name>CodeHost</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodingTrainerModels\CodingTrainerModels.csproj">
+      <Project>{dfa7a141-5d03-48dc-b604-c3a9659d2948}</Project>
+      <Name>CodingTrainerModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

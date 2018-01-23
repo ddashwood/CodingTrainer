@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using CodingTrainer.CSharpRunner.CodeHost;
 
-namespace CodingTrainer.CodingTrainerWeb.Factories
+namespace CodingTrainer.CSharpRunner.CodeHost.Factories
 {
     public class CodeRunnerFactory : ICodeRunnerFactory
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodingTrainer.CodingTrainerWeb.Factories
+namespace CodingTrainer.CSharpRunner.CodeHost.Factories
 {
     public interface ICodeRunnerFactory
     {
