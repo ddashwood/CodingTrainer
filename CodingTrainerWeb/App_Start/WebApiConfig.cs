@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace CodingTrainerWeb
+namespace CodingTrainer.CodingTrainerWeb
 {
     public static class WebApiConfig
     {

@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using CodingTrainerWeb.Models;
+using CodingTrainer.CodingTrainerWeb.Models;
 
-namespace CodingTrainerWeb
+namespace CodingTrainer.CodingTrainerWeb
 {
     public class EmailService : IIdentityMessageService
     {
