@@ -122,5 +122,45 @@ namespace CodingTrainerWebTests.Hubs
                 mockCaller.Verify(c => c.Complete(), Times.Once);
             });
         }
+
+        [Test]
+        public async Task CodeRunnerLoggedOffTestAsync()
+        {
+            // Arrange - Clients
+            var mockClients = new Mock<IHubCallerConnectionContext<ICodeRunnerHubClient>>();
+            var mockCaller = new Mock<ICodeRunnerHubClient>();
+            mockClients.Setup(m => m.Caller).Returns(mockCaller.Object);
+
+            // Arrange - Context
+            var context = new HubCallerContext(null, "CodeRunnerLoggedOffTestAsyncConnection");
+
+            // Arrange - Runner
+            string code = "<Test code>";
+            var mockRunner = new Mock<ICodeRunner>();
+            mockRunner.Setup(r => r.RunCode(code)).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
+            var mockFactory = new Mock<ICodeRunnerFactory>();
+            mockFactory.Setup(f => f.GetCodeRunner()).Returns(() => mockRunner.Object);
+
+            // Arrange - Repository
+            var mockRepository = new Mock<ICodingTrainerRepository>();
+            mockRepository.Setup(r => r.GetUser(It.IsAny<HubCallerContext>())).Returns((ApplicationUser)null);
+
+            // Arrange - Class under test - Hub
+            var hub = new CodeRunnerHub(mockFactory.Object, mockRepository.Object)
+            {
+                Clients = mockClients.Object,
+                Context = context
+            };
+
+            // Act
+            await hub.Run(code);
+
+            // Assert
+            Assert.Multiple(() => {
+                mockCaller.Verify(c => c.ConsoleOut("Can't run code because you are not logged in"), Times.Once);
+                mockCaller.Verify(c => c.Complete(), Times.Once);
+            });
+        }
+
     }
 }

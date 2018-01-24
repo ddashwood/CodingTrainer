@@ -68,10 +68,11 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             {
                 connection.ConsoleQueue.Add((QueueItemType.ConsoleOut, "Can't run code because you are not logged in"));
                 connection.ConsoleQueue.Add((QueueItemType.Complete, null));
-                return;
             }
-
-            connection.ConsoleQueue.Add((QueueItemType.Run, code));
+            else
+            {
+                connection.ConsoleQueue.Add((QueueItemType.Run, code));
+            }
 
             await queueProcess;
         }
