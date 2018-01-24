@@ -5,6 +5,7 @@ using System.Web;
 using CodingTrainer.CodingTrainerModels.Contexts;
 using CodingTrainer.CodingTrainerModels.Models;
 using CodingTrainer.CodingTrainerModels.Models.Security;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace CodingTrainer.CodingTrainerModels.Repositories
 {
@@ -20,6 +21,11 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
         public ApplicationUser GetUser(string userName)
         {
             return context.Users.FirstOrDefault(u => u.UserName == userName);
+        }
+
+        public ApplicationUser GetUser(HubCallerContext hubContext)
+        {
+            return GetUser(hubContext.User.Identity.Name);
         }
     }
 }
