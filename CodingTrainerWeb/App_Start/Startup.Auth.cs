@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerModels.Models.Security;
+using CodingTrainer.CodingTrainerModels.Contexts;
 
 namespace CodingTrainer.CodingTrainerWeb
 {

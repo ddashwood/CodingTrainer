@@ -19,7 +19,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             : this(new SqlCodingTrainerRepository())
         { }
 
-
+        [Authorize]
         public ActionResult RunCode()
         {
             var exercise = rep.GetExercise(0);

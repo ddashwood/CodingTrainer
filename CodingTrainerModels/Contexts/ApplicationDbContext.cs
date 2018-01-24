@@ -1,10 +1,11 @@
 ﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CodingTrainer.CodingTrainerModels.Models.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace CodingTrainer.CodingTrainerModels.Models.Security
+namespace CodingTrainer.CodingTrainerModels.Contexts
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
