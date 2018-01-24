@@ -156,6 +156,10 @@
       <Project>{0b5480bd-8879-4158-8c35-73fd207742a3}</Project>
       <Name>CodeHost</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodingTrainerModels\CodingTrainerModels.csproj">
+      <Project>{dfa7a141-5d03-48dc-b604-c3a9659d2948}</Project>
+      <Name>CodingTrainerModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodingTrainerWeb\CodingTrainerWeb.csproj">
       <Project>{83AF2E13-FA5C-4C36-BA3E-6E2290DF0EE5}</Project>
       <Name>CodingTrainerWeb</Name>

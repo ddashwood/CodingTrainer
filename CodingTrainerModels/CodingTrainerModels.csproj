@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Security\ApplicationDbContext.cs" />
+    <Compile Include="Models\Security\ApplicationUser.cs" />
     <Compile Include="Models\Exercise.cs" />
     <Compile Include="Models\Submission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

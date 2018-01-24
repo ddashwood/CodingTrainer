@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using CodingTrainer.CodingTrainerWeb.Models;
+using CodingTrainer.CodingTrainerModels.Models.Security;
 
 namespace CodingTrainer.CodingTrainerWeb
 {

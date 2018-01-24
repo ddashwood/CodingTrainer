@@ -8,9 +8,9 @@ using Moq;
 using Microsoft.AspNet.SignalR.Hubs;
 using System.Dynamic;
 using CodingTrainer.CodingTrainerWeb.Hubs;
-using CodingTrainer.CodingTrainerWeb.Factories;
 using CodingTrainer.CSharpRunner.CodeHost;
 using System.Threading;
+using CodingTrainer.CSharpRunner.CodeHost.Factories;
 
 namespace CodingTrainerWebTests.Hubs
 {

@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CodingTrainerModels.Models;
+using CodingTrainer.CodingTrainerModels.Models.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,9 @@ using System.Web;
 
 namespace CodingTrainer.CodingTrainerModels.Contexts
 {
-    public class CodingTrainerContext : IdentityDbContext<IdentityUser>
+    public class CodingTrainerContext : ApplicationDbContext
     {
-        public CodingTrainerContext()
-            : base("DefaultConnection")
-        { }
-
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Submission> Submissions { get; set; }
-     // public DbSet<Chapter> Chapters { get; set; }
     }
 }

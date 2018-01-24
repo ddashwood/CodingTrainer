@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.EntityFramework;
-
+using CodingTrainer.CodingTrainerModels.Models.Security;
 
 namespace CodingTrainer.CodingTrainerModels.Models
 {
@@ -16,8 +16,8 @@ namespace CodingTrainer.CodingTrainerModels.Models
         [Required]
         public string SubmittedCode { get; set; }
         [Required]
-        public Exercise Exercise { get; set; }
+        public virtual Exercise Exercise { get; set; }
 
-        public virtual IdentityUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

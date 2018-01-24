@@ -10,6 +10,8 @@ using CodingTrainer.CSharpRunner.CodeHost;
 using System.Collections.Concurrent;
 using Microsoft.CodeAnalysis.Scripting;
 using CodingTrainer.CSharpRunner.CodeHost.Factories;
+using CodingTrainer.CodingTrainerModels.Repositories;
+using CodingTrainer.CodingTrainerModels.Models.Security;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
@@ -29,31 +31,46 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         // Instance fields
 
-        // To allow code runner injection
+        // Dependencies
         ICodeRunnerFactory runnerFactory;
+        ICodingTrainerRepository rep;
 
         // Constructors
-        public CodeRunnerHub(ICodeRunnerFactory runnerFactory)
+        public CodeRunnerHub(ICodeRunnerFactory runnerFactory, ICodingTrainerRepository repository)
         {
             this.runnerFactory = runnerFactory;
+            rep = repository;
         }
+        public CodeRunnerHub(ICodeRunnerFactory runnerFactory)
+            :this(runnerFactory, new SqlCodingTrainerRepository())
+        { }
+        public CodeRunnerHub(ICodingTrainerRepository repository)
+            :this(new CodeRunnerFactory(), repository)
+        { }
         public CodeRunnerHub()
-            : this(new CodeRunnerFactory())
+            : this(new CodeRunnerFactory() ,new SqlCodingTrainerRepository())
         { }
 
 
         public async Task Run(string code)
         {
-            AutoResetEvent consoleWaiting = new AutoResetEvent(false);
+            string userName = Context.User.Identity.Name;
+            var user = rep.GetUser(userName);
 
             ICodeRunner runner = runnerFactory.GetCodeRunner();
-
-            var connection = new Connection(Context.ConnectionId, runner, Clients.Caller, consoleWaiting);
-            connections[Context.ConnectionId] = connection;
-
+            var connection = new Connection(Context.ConnectionId, runner, Clients.Caller, user);
             var runnerHandler = new ConsoleOut(connection);
             runner.ConsoleWrite += runnerHandler.OnConsoleWrite;
+            connections[Context.ConnectionId] = connection;
+
             Task queueProcess = Task.Run(() => ProcessQueue(connection));
+
+            if (user == null)
+            {
+                connection.ConsoleQueue.Add((QueueItemType.ConsoleOut, "Can't run code because you are not logged in"));
+                connection.ConsoleQueue.Add((QueueItemType.Complete, null));
+                return;
+            }
 
             connection.ConsoleQueue.Add((QueueItemType.Run, code));
 
@@ -130,13 +147,15 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             public ICodeRunner Runner { get; private set; }
             public ICodeRunnerHubClient Caller { get; private set; }
             public BlockingCollection<(QueueItemType type, string message)> ConsoleQueue { get; private set; }
+            public ApplicationUser User { get; private set; }
 
 
-            public Connection(string connectionId, ICodeRunner runner, ICodeRunnerHubClient caller, AutoResetEvent consoleWaiting)
+            public Connection(string connectionId, ICodeRunner runner, ICodeRunnerHubClient caller, ApplicationUser user)
             {
                 ConnectionID = connectionId;
                 Runner = runner;
                 Caller = caller;
+                User = user;
                 ConsoleQueue = new BlockingCollection<(QueueItemType type, string message)>();
             }
         }
