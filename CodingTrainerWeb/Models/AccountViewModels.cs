@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CodingTrainer.CodingTrainerModels.Models.Security;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CodingTrainer.CodingTrainerWeb.Models
@@ -70,6 +71,14 @@ namespace CodingTrainer.CodingTrainerWeb.Models
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -79,6 +88,17 @@ namespace CodingTrainer.CodingTrainerWeb.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public ApplicationUser GetUser()
+        {
+            return new ApplicationUser()
+            {
+                Email = Email,
+                UserName = Email,
+                FirstName = FirstName,
+                LastName = LastName
+            };
+        }
     }
 
     public class ResetPasswordViewModel

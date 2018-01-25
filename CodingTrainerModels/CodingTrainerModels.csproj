@@ -75,6 +75,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201801251104372_AddFirstNameLastName.cs" />
+    <Compile Include="Migrations\201801251104372_AddFirstNameLastName.Designer.cs">
+      <DependentUpon>201801251104372_AddFirstNameLastName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Contexts\ApplicationDbContext.cs" />
     <Compile Include="Models\Security\ApplicationUser.cs" />
@@ -96,6 +100,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201801251104372_AddFirstNameLastName.resx">
+      <DependentUpon>201801251104372_AddFirstNameLastName.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
