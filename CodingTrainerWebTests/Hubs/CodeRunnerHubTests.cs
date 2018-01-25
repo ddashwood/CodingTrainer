@@ -40,7 +40,7 @@ namespace CodingTrainerWebTests.Hubs
 
             // Arrange - Repository
             var mockRepository = new Mock<ICodingTrainerRepository>();
-            mockRepository.Setup(r => r.GetUser(It.IsAny<HubCallerContext>())).Returns(new ApplicationUser());
+            mockRepository.Setup(r => r.GetUserAsync(It.IsAny<HubCallerContext>())).Returns(Task.FromResult(new ApplicationUser()));
 
             // Arrange - Class under test - Hub
             var hub = new CodeRunnerHub(mockFactory.Object, mockRepository.Object)
@@ -100,7 +100,7 @@ namespace CodingTrainerWebTests.Hubs
 
             // Arrange - Repository
             var mockRepository = new Mock<ICodingTrainerRepository>();
-            mockRepository.Setup(r => r.GetUser(It.IsAny<HubCallerContext>())).Returns(new ApplicationUser());
+            mockRepository.Setup(r => r.GetUserAsync(It.IsAny<HubCallerContext>())).Returns(Task.FromResult(new ApplicationUser()));
 
             // Arrange - Class under test - Hub
             var hub = new CodeRunnerHub(mockFactory.Object, mockRepository.Object)
@@ -143,7 +143,7 @@ namespace CodingTrainerWebTests.Hubs
 
             // Arrange - Repository
             var mockRepository = new Mock<ICodingTrainerRepository>();
-            mockRepository.Setup(r => r.GetUser(It.IsAny<HubCallerContext>())).Returns((ApplicationUser)null);
+            mockRepository.Setup(r => r.GetUserAsync(It.IsAny<HubCallerContext>())).Returns(Task.FromResult<ApplicationUser>(null));
 
             // Arrange - Class under test - Hub
             var hub = new CodeRunnerHub(mockFactory.Object, mockRepository.Object)

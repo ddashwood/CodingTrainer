@@ -54,7 +54,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         public async Task Run(string code)
         {
-            var user = rep.GetUser(Context);
+            var user = await rep.GetUserAsync(Context);
 
             ICodeRunner runner = runnerFactory.GetCodeRunner();
             var connection = new Connection(Context.ConnectionId, runner, Clients.Caller, user);

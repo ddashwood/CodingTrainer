@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using CodingTrainer.CodingTrainerModels.Contexts;
 using CodingTrainer.CodingTrainerModels.Models;
@@ -11,21 +13,25 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
 {
     public class SqlCodingTrainerRepository : ICodingTrainerRepository
     {
-        CodingTrainerContext context = new CodingTrainerContext();
-
-        public Exercise GetExercise(int id)
+        public async Task<Exercise> GetExerciseAsync(int id)
         {
-            return context.Exercises.Single(e => e.ExerciseId == id);
+            using (var context = new CodingTrainerContext())
+            {
+                return await context.Exercises.SingleAsync(e => e.ExerciseId == id);
+            }
         }
 
-        public ApplicationUser GetUser(string userName)
+        public async Task<ApplicationUser> GetUserAsync(string userName)
         {
-            return context.Users.FirstOrDefault(u => u.UserName == userName);
+            using (var context = new CodingTrainerContext())
+            {
+                return await context.Users.FirstOrDefaultAsync(u => u.UserName == userName);
+            }
         }
 
-        public ApplicationUser GetUser(HubCallerContext hubContext)
+        public async Task<ApplicationUser> GetUserAsync(HubCallerContext hubContext)
         {
-            return GetUser(hubContext.User.Identity.Name);
+            return await GetUserAsync(hubContext.User.Identity.Name);
         }
     }
 }

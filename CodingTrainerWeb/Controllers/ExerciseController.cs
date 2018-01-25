@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,9 +21,9 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         { }
 
         [Authorize]
-        public ActionResult RunCode()
+        public async Task<ActionResult> RunCode()
         {
-            var exercise = rep.GetExercise(0);
+            var exercise = await rep.GetExerciseAsync(0);
 
             return View(exercise);
         }
