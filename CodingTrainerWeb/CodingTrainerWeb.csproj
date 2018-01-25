@@ -284,8 +284,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\CodeRunnerHub.cs" />
+    <Compile Include="Hubs\HubContextRepository.cs" />
     <Compile Include="Hubs\ICodeRunnerHubClient.cs" />
     <Compile Include="Hubs\ICodeRunnerHubServer.cs" />
+    <Compile Include="Hubs\IHubContextRepository.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
