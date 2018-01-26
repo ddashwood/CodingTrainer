@@ -13,6 +13,7 @@ using CodingTrainer.CSharpRunner.CodeHost.Factories;
 using CodingTrainer.CodingTrainerModels.Models.Security;
 using Microsoft.AspNet.Identity;
 using System.Security.Principal;
+using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
@@ -46,22 +47,19 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             :this(runnerFactory, new HubContextRepository())
         { }
         public CodeRunnerHub(IHubContextRepository repository)
-            :this(new CodeRunnerFactory(), repository)
+            :this(new CodeRunnerWithLoggerFactory(repository), repository)
         { }
         public CodeRunnerHub()
-            : this(new CodeRunnerFactory() ,new HubContextRepository())
+            : this(new HubContextRepository())
         { }
-
 
         public async Task Run(string code)
         {
-            IPrincipal user = null;
-            try
-            {
-                user = Context.User;
-            }
-            catch (NullReferenceException) { } // Hard to inject a user from unit test, so just handle this here
             string userId = rep.GetUserIdFromContext(Context);
+
+            IRequiresContext contextFactory = runnerFactory as IRequiresContext;
+            if (contextFactory != null)
+                contextFactory.Context = Context;
 
             ICodeRunner runner = runnerFactory.GetCodeRunner();
             var connection = new Connection(Context.ConnectionId, runner, Clients.Caller, userId);

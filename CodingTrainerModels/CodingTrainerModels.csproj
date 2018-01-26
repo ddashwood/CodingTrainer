@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Contexts\ApplicationDbContext.cs" />
+    <Compile Include="Models\ExceptionLog.cs" />
     <Compile Include="Models\Security\ApplicationUser.cs" />
     <Compile Include="Models\Exercise.cs" />
     <Compile Include="Models\Submission.cs" />

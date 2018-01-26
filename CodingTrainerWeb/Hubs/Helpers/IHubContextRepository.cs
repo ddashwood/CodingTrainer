@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 
-namespace CodingTrainer.CodingTrainerWeb.Hubs
+namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
 {
     public interface IHubContextRepository
     {

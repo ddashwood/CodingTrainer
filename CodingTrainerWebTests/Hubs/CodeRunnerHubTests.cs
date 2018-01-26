@@ -12,6 +12,7 @@ using CodingTrainer.CSharpRunner.CodeHost;
 using System.Threading;
 using CodingTrainer.CSharpRunner.CodeHost.Factories;
 using System.Security.Principal;
+using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 
 namespace CodingTrainerWebTests.Hubs
 {

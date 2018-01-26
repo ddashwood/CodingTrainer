@@ -8,6 +8,10 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
 {
     public interface ICodingTrainerRepository
     {
+        // Exercises
         Task <Exercise> GetExerciseAsync(int number);
+
+        // Exception logs
+        void InsertExceptionLog(ExceptionLog log);
     }
 }

@@ -10,11 +10,24 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
 {
     public class SqlCodingTrainerRepository : ICodingTrainerRepository
     {
+        // Exercises
+
         public async Task<Exercise> GetExerciseAsync(int id)
         {
             using (var context = new CodingTrainerContext())
             {
                 return await context.Exercises.SingleAsync(e => e.ExerciseId == id);
+            }
+        }
+
+        // Exception logs
+
+        public void InsertExceptionLog(ExceptionLog log)
+        {
+            using (var context = new CodingTrainerContext())
+            {
+                context.ExceptionLogs.Add(log);
+                context.SaveChanges();
             }
         }
     }
