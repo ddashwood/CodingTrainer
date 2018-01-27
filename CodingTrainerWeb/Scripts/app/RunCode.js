@@ -49,12 +49,17 @@
         $('#run').prop('disabled', true);
         $('#console-out').text('');
         try {
-            hub.server.run($('#code').val());
-        } catch (e) {
-            // In case it's been disconnected
-            $.connection.hub.start().done(function () {
-                hub.server.run($('#code').val());
+            hub.server.run($('#code').val()).fail(function (e) {
+                var message = e.message;
+                if (e.data) {
+                    e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
+                }
+                alert(e.message);
+                complete();
             });
+        } catch (e) {
+            alert(e.message);
+            complete();
         }
     }
 

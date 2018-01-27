@@ -1,4 +1,5 @@
-﻿using CodingTrainer.CSharpRunner.CodeHost;
+﻿using CodingTrainer.CodingTrainerModels.Repositories;
+using CodingTrainer.CSharpRunner.CodeHost;
 using CodingTrainer.CSharpRunner.CodeHost.Factories;
 using Microsoft.AspNet.SignalR.Hubs;
 using System;
@@ -10,11 +11,13 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
 {
     public class CodeRunnerWithLoggerFactory : ICodeRunnerFactory, IRequiresContext
     {
-        IHubContextRepository rep;
+        IHubContextRepository hubRep;
+        ICodingTrainerRepository dbRep;
 
-        public CodeRunnerWithLoggerFactory(IHubContextRepository rep)
+        public CodeRunnerWithLoggerFactory(IHubContextRepository hubRep, ICodingTrainerRepository dbRep)
         {
-            this.rep = rep;
+            this.hubRep = hubRep;
+            this.dbRep = dbRep;
         }
 
         public HubCallerContext Context { get; set; }
@@ -24,7 +27,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
             if (Context == null)
                 return new CodeRunner();
 
-            return new CodeRunner(new CodeRunnerLogger(rep.GetUserIdFromContext(Context)));
+            return new CodeRunner(new CodeRunnerLogger(hubRep.GetUserIdFromContext(Context), dbRep));
         }
     }
 }

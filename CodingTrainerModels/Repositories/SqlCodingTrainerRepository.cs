@@ -14,7 +14,7 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
 
         public async Task<Exercise> GetExerciseAsync(int id)
         {
-            using (var context = new CodingTrainerContext())
+            using (var context = new ApplicationDbContext())
             {
                 return await context.Exercises.SingleAsync(e => e.ExerciseId == id);
             }
@@ -24,7 +24,7 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
 
         public void InsertExceptionLog(ExceptionLog log)
         {
-            using (var context = new CodingTrainerContext())
+            using (var context = new ApplicationDbContext())
             {
                 context.ExceptionLogs.Add(log);
                 context.SaveChanges();

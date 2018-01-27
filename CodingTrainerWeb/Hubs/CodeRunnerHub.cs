@@ -14,6 +14,8 @@ using CodingTrainer.CodingTrainerModels.Models.Security;
 using Microsoft.AspNet.Identity;
 using System.Security.Principal;
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
+using CodingTrainer.CodingTrainerModels.Models;
+using CodingTrainer.CodingTrainerModels.Repositories;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
@@ -35,51 +37,77 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         // Dependencies
         ICodeRunnerFactory runnerFactory;
-        IHubContextRepository rep;
+        IHubContextRepository hubRep;
+        ICodingTrainerRepository sqlRep;
 
         // Constructors
-        public CodeRunnerHub(ICodeRunnerFactory runnerFactory, IHubContextRepository repository)
+        public CodeRunnerHub(ICodeRunnerFactory runnerFactory=null, IHubContextRepository hubRepository = null, ICodingTrainerRepository dbRepository = null)
         {
-            this.runnerFactory = runnerFactory;
-            rep = repository;
+            hubRep = hubRepository ?? new HubContextRepository();
+            sqlRep = dbRepository ?? new SqlCodingTrainerRepository();
+            this.runnerFactory = runnerFactory ?? new CodeRunnerWithLoggerFactory(hubRep, sqlRep);
         }
-        public CodeRunnerHub(ICodeRunnerFactory runnerFactory)
-            :this(runnerFactory, new HubContextRepository())
-        { }
-        public CodeRunnerHub(IHubContextRepository repository)
-            :this(new CodeRunnerWithLoggerFactory(repository), repository)
-        { }
         public CodeRunnerHub()
-            : this(new HubContextRepository())
+            :this(null, null, null)
         { }
 
         public async Task Run(string code)
         {
-            string userId = rep.GetUserIdFromContext(Context);
-
-            IRequiresContext contextFactory = runnerFactory as IRequiresContext;
-            if (contextFactory != null)
-                contextFactory.Context = Context;
-
-            ICodeRunner runner = runnerFactory.GetCodeRunner();
-            var connection = new Connection(Context.ConnectionId, runner, Clients.Caller, userId);
-            var runnerHandler = new ConsoleOut(connection);
-            runner.ConsoleWrite += runnerHandler.OnConsoleWrite;
-            connections[Context.ConnectionId] = connection;
-
-            Task queueProcess = Task.Run(() => ProcessQueue(connection));
-
-            if (userId == null)
+            try
             {
-                connection.ConsoleQueue.Add((QueueItemType.ConsoleOut, "Can't run code because you are not logged in"));
-                connection.ConsoleQueue.Add((QueueItemType.Complete, null));
-            }
-            else
-            {
-                connection.ConsoleQueue.Add((QueueItemType.Run, code));
-            }
+                string userId = hubRep.GetUserIdFromContext(Context);
 
-            await queueProcess;
+                IRequiresContext contextFactory = runnerFactory as IRequiresContext;
+                if (contextFactory != null)
+                    contextFactory.Context = Context;
+
+                ICodeRunner runner = runnerFactory.GetCodeRunner();
+                var connection = new Connection(Context.ConnectionId, runner, Clients.Caller, userId);
+                var runnerHandler = new ConsoleOut(connection);
+                runner.ConsoleWrite += runnerHandler.OnConsoleWrite;
+                connections[Context.ConnectionId] = connection;
+
+                Task queueProcess = Task.Run(() => ProcessQueue(connection));
+
+                if (userId == null)
+                {
+                    connection.ConsoleQueue.Add((QueueItemType.ConsoleOut, "Can't run code because you are not logged in"));
+                    connection.ConsoleQueue.Add((QueueItemType.Complete, null));
+                }
+                else
+                {
+                    connection.ConsoleQueue.Add((QueueItemType.Run, code));
+                }
+
+                await queueProcess;
+            }
+            catch (Exception e)
+            {
+                LogError(e, code);
+                throw new HubException("An error occured when running your code", e);
+            }
+        }
+
+        private void LogError(Exception e, string code)
+        {
+            ExceptionLog log = new ExceptionLog
+            {
+                ExceptionText = e.ToString(),
+                ExceptionDateTime = DateTimeOffset.Now,
+                UserCode = $"<Not from user code>{Environment.NewLine}{code}"
+            };
+
+            if (Context != null) log.UserId = hubRep?.GetUserIdFromContext(Context);
+            try
+            {
+                // Log to database
+                sqlRep.InsertExceptionLog(log);
+            }
+            catch
+            {
+                // Ignore exceptions - no way of logging them if the logger fails, but want
+                // to allow program flow to continue anyway in order to show message to user
+            }
         }
 
         private void ProcessQueue(Connection connection)
