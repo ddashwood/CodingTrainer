@@ -12,6 +12,6 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
         Task <Exercise> GetExerciseAsync(int number);
 
         // Exception logs
-        void InsertExceptionLog(ExceptionLog log);
+        Task InsertExceptionLogAsync(ExceptionLog log);
     }
 }

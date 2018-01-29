@@ -22,12 +22,12 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
 
         // Exception logs
 
-        public void InsertExceptionLog(ExceptionLog log)
+        public async Task InsertExceptionLogAsync(ExceptionLog log)
         {
             using (var context = new ApplicationDbContext())
             {
                 context.ExceptionLogs.Add(log);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }

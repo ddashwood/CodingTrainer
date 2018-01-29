@@ -82,12 +82,12 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             }
             catch (Exception e)
             {
-                LogError(e, code);
+                await LogError(e, code);
                 throw new HubException("An error occured when running your code", e);
             }
         }
 
-        private void LogError(Exception e, string code)
+        private async Task LogError(Exception e, string code)
         {
             ExceptionLog log = new ExceptionLog
             {
@@ -100,7 +100,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             try
             {
                 // Log to database
-                sqlRep.InsertExceptionLog(log);
+                await sqlRep.InsertExceptionLogAsync(log);
             }
             catch
             {

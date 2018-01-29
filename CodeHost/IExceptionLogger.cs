@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.CodeHost
 {
     public interface IExceptionLogger
     {
-        void LogException(Exception e, string code);
+        Task LogException(Exception e, string code);
     }
 }

@@ -35,7 +35,10 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             }
             catch (Exception e) when (!(e is AggregateException || e is CompilationErrorException))
             {
-                exceptionLogger?.LogException(e, code);
+                if (exceptionLogger != null)
+                {
+                    await exceptionLogger.LogException(e, code);
+                }
                 throw;
             }
         }

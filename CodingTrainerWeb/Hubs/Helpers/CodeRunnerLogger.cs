@@ -4,6 +4,7 @@ using CodingTrainer.CSharpRunner.CodeHost;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
@@ -23,7 +24,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
         { }
 
 
-        public void LogException(Exception e, string code)
+        public async Task LogException(Exception e, string code)
         {
             ExceptionLog log = new ExceptionLog
             {
@@ -34,14 +35,14 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
             };
             try
             {
-                rep.InsertExceptionLog(log);
+                await rep.InsertExceptionLogAsync(log);
             }
             catch
             {
                 // Any exceptions, try again without the user id
                 // Probably could narrow this down to only foreign key violations...
                 log.UserId = null;
-                rep.InsertExceptionLog(log);
+                await rep.InsertExceptionLogAsync(log);
             }
         }
     }
