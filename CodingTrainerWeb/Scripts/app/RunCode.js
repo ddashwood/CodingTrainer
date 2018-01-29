@@ -35,11 +35,11 @@
                     e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
                 }
                 alert(e.message);
-                complete();
+                exports.complete();
             });
         } catch (e) {
             alert(e.message);
-            complete();
+            exports.complete();
         }
     };
 
