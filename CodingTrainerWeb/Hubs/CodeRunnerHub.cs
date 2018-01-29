@@ -111,10 +111,11 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         private async Task ProcessQueue(Connection connection)
         {
-            bool complete = false;
 
             await Task.Run(async () =>
             {
+                bool complete = false;
+
                 while (!complete)
                 {
                     var (type, message) = await connection.ConsoleQueue.ReceiveAsync();

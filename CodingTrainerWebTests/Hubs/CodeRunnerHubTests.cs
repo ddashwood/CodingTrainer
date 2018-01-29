@@ -73,11 +73,10 @@ namespace CodingTrainerWebTests.Hubs
                     done.Set();
                 }
             }
-            public Task RunCode(string code)
+            public async Task RunCode(string code)
             {
-                ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs("Hello Test"));
+                await Task.Run(()=>ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs("Hello Test")));
                 done.WaitOne();
-                return Task.CompletedTask;
             }
         }
 
