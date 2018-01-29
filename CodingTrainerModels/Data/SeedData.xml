@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Data>
+  <Chapters>
+    <Chapter Id="1">
+      <Name>Hello World</Name>
+      <Description>Write your first C# program!</Description>
+    </Chapter>
+    <Chapter Id="2">
+      <Name>Variables</Name>
+    </Chapter>
+  </Chapters>
+  <Exercises>
+    <Exercise Id="0">
+      <DefaultCode>
+using static System.Console;
+
+WriteLine("Enter some text");
+string text = ReadLine();
+WriteLine("You entered: " + text);
+      </DefaultCode>
+    </Exercise>
+    <Exercise Id="1">
+      <DefaultCode>
+int i = 0;
+int j = 5 / i;
+      </DefaultCode>
+    </Exercise>  </Exercises>
+</Data>

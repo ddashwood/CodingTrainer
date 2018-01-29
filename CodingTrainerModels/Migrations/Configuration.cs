@@ -5,8 +5,10 @@ namespace CodingTrainer.CodingTrainerModels.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Reflection;
+    using System.Xml.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CodingTrainer.CodingTrainerModels.Contexts.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Contexts.ApplicationDbContext>
     {
         public Configuration()
         {
@@ -17,25 +19,30 @@ namespace CodingTrainer.CodingTrainerModels.Migrations
         {
             //  This method will be called after migrating to the latest version.
 
-            context.Exercises.AddOrUpdate(
-                new Exercise
-                {
-                    ExerciseId = 0,
-                    DefaultCode =
-@"using static System.Console;
+            var resourceName = "CodingTrainer.CodingTrainerModels.Data.SeedData.xml";
+            var assembly = Assembly.GetExecutingAssembly();
+            var stream = assembly.GetManifestResourceStream(resourceName);
+            var xml = XDocument.Load(stream);
 
-WriteLine(""Enter some text"");
-string s = ReadLine();
-WriteLine(""You entered: "" + s);"
-                },
-                new Exercise
+            // Chapters
+            var chapters = xml.Element("Data").Element("Chapters").Elements("Chapter")
+                .Select(x => new Chapter()
                 {
-                    ExerciseId = 1,
-                    DefaultCode =
-@"int i = 0;
-int j = 5/i;"
-                });
+                    ChapterNumber = Convert.ToInt32(x.Attribute("Id").Value),
+                    ChapterName = x.Element("Name").Value,
+                    Description = x.Element("Description")?.Value
+                }).ToArray();
+            context.Chapters.AddOrUpdate(chapters);
 
+            // Exercises
+            var exercises = xml.Element("Data").Element("Exercises").Elements("Exercise")
+                .Select(x => new Exercise()
+                {
+                    ExerciseId = Convert.ToInt32(x.Attribute("Id").Value),
+                    DefaultCode = x.Element("DefaultCode").Value.Trim(),
+                    ModelAnswer = x.Element("ModelAnswer")?.Value
+                }).ToArray();
+            context.Exercises.AddOrUpdate(exercises);
         }
     }
 }
