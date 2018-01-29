@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.Scripting;
 
 // References:
@@ -25,13 +26,12 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             this.exceptionLogger = exceptionLogger;
         }
 
-        public void RunCode(string code)
+        public async Task RunCode(string code)
         {
             try
             {
-                byte[] pdb;
-                byte[] compiledCode = Compiler.Compile(code, out pdb);
-                new SandboxManager().RunInSandbox(this, compiledCode, pdb);
+                var compiled = await Compiler.Compile(code);
+                new SandboxManager().RunInSandbox(this, compiled.result, compiled.pdb);
             }
             catch (Exception e) when (!(e is AggregateException || e is CompilationErrorException))
             {

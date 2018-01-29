@@ -6,6 +6,7 @@ using CodingTrainer.CSharpRunner.PartiallyTrusted;
 using System;
 using System.IO;
 using System.Security.Policy;
+using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.CodeHost
 {
@@ -16,32 +17,38 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             private static readonly Type[] referencedTypes =
                 { typeof (CompiledCodeRunner) };
 
-            public static byte[] Compile(string code, out byte[] pdb)
+            public static async Task<(byte[] result, byte[] pdb)> Compile(string code)
             {
-                using (var memoryStream = new MemoryStream())
-                using (var pdbStream = new MemoryStream())
+                byte[] compiledCode = null;
+                byte[] pdb = null;
+
+                await Task.Run(() =>
                 {
-                    var script = CSharpScript.Create<object>(code);
-                    var options = new CSharpCompilationOptions(OutputKind.ConsoleApplication, scriptClassName: "EntryPoint");
-                    var compilation = script.GetCompilation().WithOptions(options);
-                    foreach (Type t in referencedTypes)
-                        compilation = compilation.AddReferences(MetadataReference.CreateFromFile(t.Assembly.Location));
-
-                    var emitResult = compilation.Emit(memoryStream, pdbStream);
-
-                    if (!emitResult.Success)
+                    using (var memoryStream = new MemoryStream())
+                    using (var pdbStream = new MemoryStream())
                     {
-                        throw new CompilationErrorException("Error during compilation", emitResult.Diagnostics);
-                    }
+                        var script = CSharpScript.Create<object>(code);
+                        var options = new CSharpCompilationOptions(OutputKind.ConsoleApplication, scriptClassName: "EntryPoint");
+                        var compilation = script.GetCompilation().WithOptions(options);
+                        foreach (Type t in referencedTypes)
+                            compilation = compilation.AddReferences(MetadataReference.CreateFromFile(t.Assembly.Location));
 
-                    byte[] compiledCode = memoryStream.ToArray();
-                    if (compiledCode.Length > 102400)
-                    {
-                        throw new PolicyException("The compiled code is too large");
+                        var emitResult = compilation.Emit(memoryStream, pdbStream);
+
+                        if (!emitResult.Success)
+                        {
+                            throw new CompilationErrorException("Error during compilation", emitResult.Diagnostics);
+                        }
+
+                        compiledCode = memoryStream.ToArray();
+                        if (compiledCode.Length > 102400)
+                        {
+                            throw new PolicyException("The compiled code is too large");
+                        }
+                        pdb = pdbStream.ToArray();
                     }
-                    pdb = pdbStream.ToArray();
-                    return compiledCode;
-                }
+                });
+                return (compiledCode, pdb);
             }
 
         }

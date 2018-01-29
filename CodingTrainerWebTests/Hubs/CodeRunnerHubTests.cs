@@ -34,7 +34,7 @@ namespace CodingTrainerWebTests.Hubs
             // Arrange - Runner
             string code = "<Test code>";
             var mockRunner = new Mock<ICodeRunner>();
-            mockRunner.Setup(r => r.RunCode(code)).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
+            mockRunner.Setup(r => r.RunCode(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
             var mockFactory = new Mock<ICodeRunnerFactory>();
             mockFactory.Setup(f => f.GetCodeRunner()).Returns(() => mockRunner.Object);
 
@@ -73,10 +73,11 @@ namespace CodingTrainerWebTests.Hubs
                     done.Set();
                 }
             }
-            public void RunCode(string code)
+            public Task RunCode(string code)
             {
                 ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs("Hello Test"));
                 done.WaitOne();
+                return Task.CompletedTask;
             }
         }
 
@@ -137,7 +138,7 @@ namespace CodingTrainerWebTests.Hubs
             // Arrange - Runner
             string code = "<Test code>";
             var mockRunner = new Mock<ICodeRunner>();
-            mockRunner.Setup(r => r.RunCode(code)).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
+            mockRunner.Setup(r => r.RunCode(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
             var mockFactory = new Mock<ICodeRunnerFactory>();
             mockFactory.Setup(f => f.GetCodeRunner()).Returns(() => mockRunner.Object);
 

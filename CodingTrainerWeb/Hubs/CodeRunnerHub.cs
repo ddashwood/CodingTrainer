@@ -10,12 +10,11 @@ using CodingTrainer.CSharpRunner.CodeHost;
 using System.Collections.Concurrent;
 using Microsoft.CodeAnalysis.Scripting;
 using CodingTrainer.CSharpRunner.CodeHost.Factories;
-using CodingTrainer.CodingTrainerModels.Models.Security;
-using Microsoft.AspNet.Identity;
-using System.Security.Principal;
+
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CodingTrainerModels.Models;
 using CodingTrainer.CodingTrainerModels.Repositories;
+using System.Threading.Tasks.Dataflow;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
@@ -41,14 +40,14 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         ICodingTrainerRepository sqlRep;
 
         // Constructors
-        public CodeRunnerHub(ICodeRunnerFactory runnerFactory=null, IHubContextRepository hubRepository = null, ICodingTrainerRepository dbRepository = null)
+        public CodeRunnerHub(ICodeRunnerFactory runnerFactory = null, IHubContextRepository hubRepository = null, ICodingTrainerRepository dbRepository = null)
         {
             hubRep = hubRepository ?? new HubContextRepository();
             sqlRep = dbRepository ?? new SqlCodingTrainerRepository();
             this.runnerFactory = runnerFactory ?? new CodeRunnerWithLoggerFactory(hubRep, sqlRep);
         }
         public CodeRunnerHub()
-            :this(null, null, null)
+            : this(null, null, null)
         { }
 
         public async Task Run(string code)
@@ -67,16 +66,16 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 runner.ConsoleWrite += runnerHandler.OnConsoleWrite;
                 connections[Context.ConnectionId] = connection;
 
-                Task queueProcess = Task.Run(() => ProcessQueue(connection));
+                Task queueProcess = ProcessQueue(connection);
 
                 if (userId == null)
                 {
-                    connection.ConsoleQueue.Add((QueueItemType.ConsoleOut, "Can't run code because you are not logged in"));
-                    connection.ConsoleQueue.Add((QueueItemType.Complete, null));
+                    connection.ConsoleQueue.Post((QueueItemType.ConsoleOut, "Can't run code because you are not logged in"));
+                    connection.ConsoleQueue.Post((QueueItemType.Complete, null));
                 }
                 else
                 {
-                    connection.ConsoleQueue.Add((QueueItemType.Run, code));
+                    connection.ConsoleQueue.Post((QueueItemType.Run, code));
                 }
 
                 await queueProcess;
@@ -110,62 +109,63 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             }
         }
 
-        private void ProcessQueue(Connection connection)
+        private async Task ProcessQueue(Connection connection)
         {
             bool complete = false;
 
-            while (!complete)
+            await Task.Run(async () =>
             {
-                var (type, message) = connection.ConsoleQueue.Take();
+                while (!complete)
+                {
+                    var (type, message) = await connection.ConsoleQueue.ReceiveAsync();
 
-                switch (type)
-                {
-                    case QueueItemType.Complete:
-                        connection.Caller.Complete();
-                        connections.TryRemove(connection.ConnectionID, out var ignore);
-                        complete = true;
-                        break;
-                    case QueueItemType.ConsoleOut:
-                        connection.Caller.ConsoleOut(message);
-                        break;
-                    case QueueItemType.Run:
-                        RunCode(connection, message);
-                        break;
-                }
-            }
-        }
-
-        private void RunCode(Connection connection, string message)
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    connection.Runner.RunCode(message);
-                }
-                catch (CompilationErrorException ex)
-                {
-                    Clients.Caller.ConsoleOut("Compiler error: " + Environment.NewLine + Environment.NewLine);
-                    foreach (var error in ex.Diagnostics.OrderBy(e => e.Location.SourceSpan.Start))
+                    switch (type)
                     {
-                        Clients.Caller.ConsoleOut("  " + error.GetMessage() + Environment.NewLine);
-                        Clients.Caller.ConsoleOut("    " + error.Location + Environment.NewLine);
+                        case QueueItemType.Complete:
+                            connection.Caller.Complete();
+                            connections.TryRemove(connection.ConnectionID, out var ignore);
+                            complete = true;
+                            break;
+                        case QueueItemType.ConsoleOut:
+                            connection.Caller.ConsoleOut(message);
+                            break;
+                        case QueueItemType.Run:
+                            // t is there to avoid compiler warnings, not actually used
+                            Task t = RunCode(connection, message);
+                            break;
                     }
-                }
-                catch (Exception e)
-                {
-                    Clients.Caller.ConsoleOut("Error: " + e.Message + Environment.NewLine);
-
-                    if (e.InnerException != null)
-                    {
-                        Clients.Caller.ConsoleOut(e.InnerException.Message);
-                    }
-                }
-                finally
-                {
-                    connection.ConsoleQueue.Add((QueueItemType.Complete, null));
                 }
             });
+        }
+
+        private async Task RunCode(Connection connection, string message)
+        {
+            try
+            {
+                await connection.Runner.RunCode(message);
+            }
+            catch (CompilationErrorException ex)
+            {
+                Clients.Caller.ConsoleOut("Compiler error: " + Environment.NewLine + Environment.NewLine);
+                foreach (var error in ex.Diagnostics.OrderBy(e => e.Location.SourceSpan.Start))
+                {
+                    Clients.Caller.ConsoleOut("  " + error.GetMessage() + Environment.NewLine);
+                    Clients.Caller.ConsoleOut("    " + error.Location + Environment.NewLine);
+                }
+            }
+            catch (Exception e)
+            {
+                Clients.Caller.ConsoleOut("Error: " + e.Message + Environment.NewLine);
+
+                if (e.InnerException != null)
+                {
+                    Clients.Caller.ConsoleOut(e.InnerException.Message);
+                }
+            }
+            finally
+            {
+                connection.ConsoleQueue.Post((QueueItemType.Complete, null));
+            }
         }
 
         public void ConsoleIn(string message)
@@ -179,7 +179,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             public string ConnectionID { get; private set; }
             public ICodeRunner Runner { get; private set; }
             public ICodeRunnerHubClient Caller { get; private set; }
-            public BlockingCollection<(QueueItemType type, string message)> ConsoleQueue { get; private set; }
+            public BufferBlock<(QueueItemType type, string message)> ConsoleQueue { get; private set; }
             public string UserId { get; private set; }
 
 
@@ -189,7 +189,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 Runner = runner;
                 Caller = caller;
                 UserId = userId;
-                ConsoleQueue = new BlockingCollection<(QueueItemType type, string message)>();
+                ConsoleQueue = new BufferBlock<(QueueItemType type, string message)>();
             }
         }
 
@@ -206,7 +206,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             {
                 if (!string.IsNullOrEmpty(e.Message))
                 {
-                    connection.ConsoleQueue.Add((QueueItemType.ConsoleOut, e.Message));
+                    connection.ConsoleQueue.Post((QueueItemType.ConsoleOut, e.Message));
                 }
             }
         }

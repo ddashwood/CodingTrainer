@@ -10,7 +10,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
     {
         event ConsoleWriteEventHandler ConsoleWrite;
 
-        void RunCode(string code);
+        Task RunCode(string code);
         void ConsoleIn(string text);
     }
 }
