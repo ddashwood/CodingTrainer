@@ -46,11 +46,13 @@ namespace CodingTrainer.CodingTrainerWeb
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
-            {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
-            };
+            //manager.UserValidator = new UserValidator<ApplicationUser>(manager)
+            //{
+            //    AllowOnlyAlphanumericUserNames = false,
+            //    RequireUniqueEmail = true
+            //};
+
+            manager.UserValidator = new UserValidatorDeDup(manager);
 
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator

@@ -10,7 +10,10 @@ namespace CodingTrainer.CodingTrainerModels.Models
 {
     public class Chapter
     {
-        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Required, Key]
+        public int ChapterId { get; set; }
+
+        [Required]
         public int ChapterNumber { get; set; }
 
         [Required]

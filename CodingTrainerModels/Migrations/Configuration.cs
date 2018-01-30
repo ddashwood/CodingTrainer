@@ -32,7 +32,7 @@ namespace CodingTrainer.CodingTrainerModels.Migrations
                     ChapterName = x.Element("Name").Value,
                     Description = x.Element("Description")?.Value
                 }).ToArray();
-            context.Chapters.AddOrUpdate(chapters);
+            context.Chapters.AddOrUpdate(c => c.ChapterNumber, chapters);
 
             // Exercises
             var exercises = xml.Element("Data").Element("Exercises").Elements("Exercise")
