@@ -20,15 +20,14 @@ namespace CodingTrainer.CodingTrainerWeb.Models
     /// <summary>
     /// Provides validation services for user classes.
     /// </summary>
-    /// <typeparam name="TUser">The type encapsulating a user.</typeparam>
     public class UserValidatorDeDup : UserValidator<ApplicationUser>
     {
         private UserManager<ApplicationUser, string> manager;
 
         /// <summary>
-        /// Creates a new instance of UserValidatorDeDup<typeparamref name="TUser"/>
+        /// Creates a new instance of UserValidatorDeDup
         /// </summary>
-        /// <param name="manager"></param>
+        /// <param name="manager">The <see cref="UserManager"/> that which check if the user already exists</param>
         public UserValidatorDeDup(UserManager<ApplicationUser, string> manager)
             :base(manager)
         {
