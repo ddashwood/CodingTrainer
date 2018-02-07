@@ -10,25 +10,25 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
 {
     public class SqlCodingTrainerRepository : ICodingTrainerRepository
     {
+        ApplicationDbContext context = new ApplicationDbContext();
+
         // Exercises
 
-        public async Task<Exercise> GetExerciseAsync(int id)
+        public async Task<Exercise> GetExerciseAsync(int chapterNo, int exercisesNo)
         {
-            using (var context = new ApplicationDbContext())
-            {
-                return await context.Exercises.SingleAsync(e => e.ExerciseId == id);
-            }
+            var exercise = from e in context.Exercises
+                           join c in context.Chapters on e.ChapterId equals c.ChapterId
+                           where c.ChapterNumber == chapterNo && e.ExerciseNo == exercisesNo
+                           select e;
+            return await exercise.SingleAsync();
         }
 
         // Exception logs
 
         public async Task InsertExceptionLogAsync(ExceptionLog log)
         {
-            using (var context = new ApplicationDbContext())
-            {
-                context.ExceptionLogs.Add(log);
-                await context.SaveChangesAsync();
-            }
+            context.ExceptionLogs.Add(log);
+            await context.SaveChangesAsync();
         }
     }
 }

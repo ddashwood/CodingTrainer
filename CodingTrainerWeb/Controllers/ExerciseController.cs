@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CodingTrainerModels.Repositories;
+using CodingTrainer.CodingTrainerWeb.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,9 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         [Authorize]
         public async Task<ActionResult> RunCode()
         {
-            var exercise = await rep.GetExerciseAsync(0);
+            var exercise = await rep.GetExerciseAsync(1, 1);
 
-            return View(exercise);
+            return View(new ExerciseViewModel(exercise));
         }
     }
 }

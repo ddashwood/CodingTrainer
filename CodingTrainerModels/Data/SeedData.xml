@@ -1,28 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Data>
-  <Chapters>
-    <Chapter Id="1">
-      <Name>Hello World</Name>
-      <Description>Write your first C# program!</Description>
-    </Chapter>
-    <Chapter Id="2">
-      <Name>Variables</Name>
-    </Chapter>
-  </Chapters>
-  <Exercises>
-    <Exercise Id="0">
-      <DefaultCode>
+<ArrayOfChapter>
+  <Chapter>
+    <ChapterNumber>1</ChapterNumber>
+    <ChapterName>Hello World</ChapterName>
+    <Description>Write your first C# program!</Description>
+    <Exercises>
+      <Exercise>
+        <ExerciseNo>1</ExerciseNo>
+        <DefaultCode>
 using static System.Console;
 
 WriteLine("Enter some text");
 string text = ReadLine();
 WriteLine("You entered: " + text);
-      </DefaultCode>
-    </Exercise>
-    <Exercise Id="1">
-      <DefaultCode>
+        </DefaultCode>
+      </Exercise>
+      <Exercise>
+        <ExerciseNo>2</ExerciseNo>
+        <DefaultCode>
 int i = 0;
 int j = 5 / i;
-      </DefaultCode>
-    </Exercise>  </Exercises>
-</Data>
+        </DefaultCode>
+      </Exercise>
+      <Exercise>
+        <ExerciseNo>3</ExerciseNo>
+        <DefaultCode>
+WriteLine("Hello World");
+        </DefaultCode>
+      </Exercise>
+    </Exercises>
+  </Chapter>
+  <Chapter>
+    <ChapterName>Variables</ChapterName>
+    <ChapterNumber>2</ChapterNumber>
+    <Exercises>
+      <Exercise>
+        <ExerciseNo>1</ExerciseNo>
+        <DefaultCode>
+WriteLine("Hello World");
+        </DefaultCode>
+      </Exercise>
+    </Exercises>
+  </Chapter>
+  <Chapter>
+    <ChapterId>-1</ChapterId>
+    <ChapterName>While Loops</ChapterName>
+    <ChapterNumber>3</ChapterNumber>
+  </Chapter>
+</ArrayOfChapter>

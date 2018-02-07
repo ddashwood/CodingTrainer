@@ -20,5 +20,7 @@ namespace CodingTrainer.CodingTrainerModels.Models
         public string ChapterName { get; set; }
 
         public string Description { get; set; }
+
+        public virtual HashSet<Exercise> Exercises { get; set; }
     }
 }

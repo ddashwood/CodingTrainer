@@ -9,7 +9,7 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
     public interface ICodingTrainerRepository
     {
         // Exercises
-        Task <Exercise> GetExerciseAsync(int number);
+        Task <Exercise> GetExerciseAsync(int chapterNo, int exercisesNo);
 
         // Exception logs
         Task InsertExceptionLogAsync(ExceptionLog log);

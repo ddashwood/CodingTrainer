@@ -6,7 +6,10 @@ namespace CodingTrainer.CodingTrainerModels.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Reflection;
+    using System.Xml;
     using System.Xml.Linq;
+    using System.Runtime.Serialization;
+    using System.Xml.Serialization;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Contexts.ApplicationDbContext>
     {
@@ -22,27 +25,36 @@ namespace CodingTrainer.CodingTrainerModels.Migrations
             var resourceName = "CodingTrainer.CodingTrainerModels.Data.SeedData.xml";
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(resourceName);
-            var xml = XDocument.Load(stream);
 
-            // Chapters
-            var chapters = xml.Element("Data").Element("Chapters").Elements("Chapter")
-                .Select(x => new Chapter()
-                {
-                    ChapterNumber = Convert.ToInt32(x.Attribute("Id").Value),
-                    ChapterName = x.Element("Name").Value,
-                    Description = x.Element("Description")?.Value
-                }).ToArray();
-            context.Chapters.AddOrUpdate(c => c.ChapterNumber, chapters);
+            //if (System.Diagnostics.Debugger.IsAttached == false)
+            //{
+            //    System.Diagnostics.Debugger.Launch();
+            //}
 
-            // Exercises
-            var exercises = xml.Element("Data").Element("Exercises").Elements("Exercise")
-                .Select(x => new Exercise()
+            using (XmlReader reader = XmlReader.Create(stream))
+            {
+                // Read data
+
+                XmlSerializer ser = new XmlSerializer(typeof(Chapter[]));
+                var chapters = (Chapter[])ser.Deserialize(reader);
+
+                // Save chapters
+                context.Chapters.AddOrUpdate(c => c.ChapterNumber, chapters);
+
+                // Save exercises - set their chapter first
+                Array.ForEach(chapters, c =>
                 {
-                    ExerciseId = Convert.ToInt32(x.Attribute("Id").Value),
-                    DefaultCode = x.Element("DefaultCode").Value.Trim(),
-                    ModelAnswer = x.Element("ModelAnswer")?.Value
-                }).ToArray();
-            context.Exercises.AddOrUpdate(exercises);
+                    if (c.Exercises != null)
+                    {
+                        foreach (Exercise e in c.Exercises)
+                        {
+                            e.DefaultCode = e.DefaultCode.Trim();
+                            e.ChapterId = c.ChapterId;
+                        }
+                        context.Exercises.AddOrUpdate(e => new { e.ChapterId, e.ExerciseNo }, c.Exercises.ToArray());
+                    }
+                });
+            }
         }
     }
 }
