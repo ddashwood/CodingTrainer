@@ -13,7 +13,7 @@ namespace CodingTrainer.CodingTrainerModels.Models
         [Required, Key]
         public int ChapterId { get; set; }
 
-        [Required]
+        [Required, Index("IX_ChapterNumber", IsUnique = true)]
         public int ChapterNumber { get; set; }
 
         [Required]

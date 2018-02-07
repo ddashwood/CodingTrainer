@@ -12,11 +12,10 @@ namespace CodingTrainer.CodingTrainerModels.Models
         [Required, Key]
         public int ExerciseId { get; set; }
 
-        [ForeignKey("Chapter")]
-        [Index("IX_ExerciseChapterSequence", IsUnique = true, Order = 0)]
+        [ForeignKey("Chapter"), Required, Index("IX_ExerciseChapterSequence", IsUnique = true, Order = 0)]
         public int ChapterId { get; set; }
 
-        [Index("IX_ExerciseChapterSequence", IsUnique = true, Order = 1)]
+        [Required, Index("IX_ExerciseChapterSequence", IsUnique = true, Order = 1)]
         public int ExerciseNo { get; set; }
 
         [Required]
