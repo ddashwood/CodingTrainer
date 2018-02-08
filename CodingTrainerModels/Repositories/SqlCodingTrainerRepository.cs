@@ -12,6 +12,18 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
     {
         ApplicationDbContext context = new ApplicationDbContext();
 
+        // Chapters
+
+        public async Task<IEnumerable<Chapter>> GetAllChaptersAsync()
+        {
+            var chapters = await context.Chapters.Include("Exercises").OrderBy(c=>c.ChapterNumber).ToListAsync();
+            foreach (var chapter in chapters)
+            {
+                chapter.Exercises.Sort();
+            }
+            return chapters;
+        }
+
         // Exercises
 
         public async Task<Exercise> GetExerciseAsync(int chapterNo, int exercisesNo)

@@ -8,6 +8,9 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
 {
     public interface ICodingTrainerRepository
     {
+        // Chapters
+        Task<IEnumerable<Chapter>> GetAllChaptersAsync();
+        
         // Exercises
         Task <Exercise> GetExerciseAsync(int chapterNo, int exercisesNo);
 

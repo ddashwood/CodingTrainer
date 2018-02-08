@@ -77,6 +77,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\ApplicationDbContext.cs" />
+    <Compile Include="Migrations\201802080803563_AddExerciseName.cs" />
+    <Compile Include="Migrations\201802080803563_AddExerciseName.Designer.cs">
+      <DependentUpon>201802080803563_AddExerciseName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Chapter.cs" />
     <Compile Include="Models\ExceptionLog.cs" />
@@ -101,6 +105,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
+    <EmbeddedResource Include="Migrations\201802080803563_AddExerciseName.resx">
+      <DependentUpon>201802080803563_AddExerciseName.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

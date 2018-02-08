@@ -21,6 +21,6 @@ namespace CodingTrainer.CodingTrainerModels.Models
 
         public string Description { get; set; }
 
-        public virtual HashSet<Exercise> Exercises { get; set; }
+        public virtual List<Exercise> Exercises { get; set; }
     }
 }
