@@ -56,8 +56,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             {
                 string userId = hubRep.GetUserIdFromContext(Context);
 
-                IRequiresContext contextFactory = runnerFactory as IRequiresContext;
-                if (contextFactory != null)
+                if (runnerFactory is IRequiresContext contextFactory)
                     contextFactory.Context = Context;
 
                 ICodeRunner runner = runnerFactory.GetCodeRunner();
@@ -147,12 +146,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             }
             catch (CompilationErrorException ex)
             {
-                Clients.Caller.ConsoleOut("Compiler error: " + Environment.NewLine + Environment.NewLine);
-                foreach (var error in ex.Diagnostics.OrderBy(e => e.Location.SourceSpan.Start))
-                {
-                    Clients.Caller.ConsoleOut("  " + error.GetMessage() + Environment.NewLine);
-                    Clients.Caller.ConsoleOut("    " + error.Location + Environment.NewLine);
-                }
+                Clients.Caller.CompilerError(CompilerError.ArrayFromException(ex));
             }
             catch (Exception e)
             {

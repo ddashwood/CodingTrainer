@@ -1,0 +1,17 @@
+﻿.body-content textarea {
+    max-width: none;
+    font-family: Consolas, Courier New, Courier, monospace
+}
+
+    .body-content textarea:disabled {
+        cursor: default;
+    }
+
+.CodeMirror {
+    border: solid 1px;
+}
+
+
+.error {
+    border-bottom: 2px dotted red;
+}

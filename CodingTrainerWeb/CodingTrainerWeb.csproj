@@ -301,6 +301,7 @@
     <Compile Include="Hubs\CodeRunnerHub.cs" />
     <Compile Include="Hubs\Helpers\CodeRunnerLogger.cs" />
     <Compile Include="Hubs\Helpers\CodeRunnerWithLoggerFactory.cs" />
+    <Compile Include="Hubs\Helpers\CompilerError.cs" />
     <Compile Include="Hubs\Helpers\HubContextRepository.cs" />
     <Compile Include="Hubs\ICodeRunnerHubClient.cs" />
     <Compile Include="Hubs\ICodeRunnerHubServer.cs" />
@@ -315,7 +316,7 @@
     <Compile Include="ViewModels\ExerciseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\app.css" />
+    <Content Include="Content\RunCode.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -327,6 +328,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\app\ChapterList.js" />
+    <Content Include="Scripts\app\Editor.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

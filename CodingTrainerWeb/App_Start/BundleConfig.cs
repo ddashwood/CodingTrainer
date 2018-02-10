@@ -25,7 +25,6 @@ namespace CodingTrainer.CodingTrainerWeb
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/app.css",
                       "~/Content/site.css"));
         }
     }

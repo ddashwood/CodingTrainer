@@ -24,8 +24,20 @@
         $('#console-out').append(document.createTextNode(message));
     };
 
-    hub.client.complete = function () {
+    var complete = function () {
         $('#run').prop('disabled', false);
+    };
+
+    hub.client.complete = complete;
+
+    hub.client.compilerError = function (details) {
+        $('#console-out').append(document.createTextNode('There were compiler errors...\n\n'));
+        for (var i = 0; i < details.length; i++) {
+            $('#console-out').append(document.createTextNode('  ' + details[i].Message + '\n'));
+            $('#console-out').append(document.createTextNode('    ' + details[i].LocationDescription + '\n'));
+        }
+
+        editor.showErrors(details);
     };
 
     //////////////////////////////////
@@ -35,6 +47,7 @@
     // User clicks run button
     $('#run').click(function () {
         // Prevent user from running again
+        editor.clearErrors();
         $('#run').prop('disabled', true);
         $('#console-out').text('');
         try {
@@ -45,11 +58,11 @@
                     e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
                 }
                 alert(e.message);
-                exports.complete();
+                complete();
             });
         } catch (e) {
             alert(e.message);
-            exports.complete();
+            complete();
         }
     });
 
@@ -62,10 +75,6 @@
     // Set up CodeMirror
     ////////////////////
 
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        lineNumbers: true,
-        matchBrackets: true,
-        mode: "text/x-csharp"
-    });
+    var editor = new Editor("code");
     editor.setSize(null, '35em');
 })();
