@@ -6,3 +6,7 @@
 .body-content textarea:disabled {
     cursor: default;
 }
+
+.CodeMirror {
+    border: solid 1px;
+}

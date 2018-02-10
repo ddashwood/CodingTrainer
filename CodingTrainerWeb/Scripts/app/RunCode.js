@@ -1,35 +1,45 @@
-﻿var app = {};
-
-(function (exports) {
+﻿(function () {
+    ///////////////////////////////////////////////////
     // Code for starting/maintaining SignalR connection
+    ///////////////////////////////////////////////////
 
-    exports.connected = function () {
-        // Allow users to submit code
+    // Set up and maintain the connection
+    $.connection.hub.start().done(function () {
+        // Once connected, allow users to submit code
         $('#run').prop('disabled', false).text('Run Code');
-    };
-
-    exports.disconnected = function () {
+    });
+    $.connection.hub.disconnected(function () {
         // Attempt to reconnect
         $.connection.hub.start();
-    };
+    });
 
+    ///////////////////////////////////
     // Code for handling SignalR events
+    ///////////////////////////////////
 
-    exports.consoleOut = function (message) {
+    var hub = $.connection.codeRunnerHub;
+
+    hub.client.consoleOut = function (message) {
+        // Display stdout data
         $('#console-out').append(document.createTextNode(message));
     };
 
-    exports.complete = function () {
+    hub.client.complete = function () {
         $('#run').prop('disabled', false);
     };
 
+    //////////////////////////////////
     // Code for handling window events
+    ////////////////////////////////// 
 
-    exports.run = function () {
+    // User clicks run button
+    $('#run').click(function () {
+        // Prevent user from running again
         $('#run').prop('disabled', true);
         $('#console-out').text('');
         try {
-            hub.server.run($('#code').val()).fail(function (e) {
+            // Send the code to the server to run
+            hub.server.run(editor.getValue()).fail(function (e) {
                 var message = e.message;
                 if (e.data) {
                     e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
@@ -41,29 +51,21 @@
             alert(e.message);
             exports.complete();
         }
-    };
+    });
 
-    exports.consoleIn = function () {
+    // User sending data to stdin
+    $('#console').click(function () {
         hub.server.consoleIn($('#console-in').val());
-    };
-})(app);
+    });
 
+    ////////////////////
+    // Set up CodeMirror
+    ////////////////////
 
-
-
-// Code that runs on startup:
-
-$('#code').val(model.DefaultCode);
-
-// Set up and maintain the connection
-$.connection.hub.start().done(app.connected);
-$.connection.hub.disconnected(app.disconnected);
-
-// Set up the hub client callbacks
-var hub = $.connection.codeRunnerHub;
-hub.client.consoleOut = app.consoleOut;
-hub.client.complete = app.complete;
-
-// Set up JQuery event handlers
-$('#run').click(app.run);
-$('#console').click(app.consoleIn);
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: "text/x-csharp"
+    });
+    editor.setSize(null, '35em');
+})();
