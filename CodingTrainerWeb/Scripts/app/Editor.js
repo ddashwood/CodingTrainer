@@ -81,4 +81,11 @@
     Editor.prototype.clearErrors = function () {
         this.codeMirror.performLint();
     };
+    Editor.prototype.hideFrstCharacters = function (howMany) {
+        if (howMany > 0) {
+            var startPos = this.codeMirror.posFromIndex(0);
+            var endPos = this.codeMirror.posFromIndex(howMany);
+            this.codeMirror.markText(startPos, endPos, { inclusiveRight: true, inclusiveLeft: true, collapsed: true });
+        }
+    };
 })();

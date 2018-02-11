@@ -27,6 +27,7 @@ namespace CodingTrainer.CodingTrainerModels.Models
         [JsonIgnore]
         public string ModelAnswer { get; set; }
 
+        public string HiddenCodeHeader { get; set; }
 
         [JsonIgnore]
         public virtual Chapter Chapter { get; set; }

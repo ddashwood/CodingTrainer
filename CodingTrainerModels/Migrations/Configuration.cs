@@ -49,6 +49,7 @@ namespace CodingTrainer.CodingTrainerModels.Migrations
                         foreach (Exercise e in c.Exercises)
                         {
                             e.DefaultCode = e.DefaultCode.Trim();
+                            e.HiddenCodeHeader = e.HiddenCodeHeader?.Trim();
                             e.ChapterId = c.ChapterId;
                         }
                         context.Exercises.AddOrUpdate(e => new { e.ChapterId, e.ExerciseNo }, c.Exercises.ToArray());

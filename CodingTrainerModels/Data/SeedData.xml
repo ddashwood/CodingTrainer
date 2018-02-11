@@ -9,12 +9,14 @@
         <ExerciseNo>1</ExerciseNo>
         <ExerciseName>Read line Write line</ExerciseName>
         <DefaultCode>
-using static System.Console;
-
 WriteLine("Enter some text");
 string text = ReadLine();
 WriteLine("You entered: " + text);
         </DefaultCode>
+        <HiddenCodeHeader>
+using static System.Math;
+using static System.Console;          
+        </HiddenCodeHeader>
       </Exercise>
       <Exercise>
         <ExerciseNo>2</ExerciseNo>

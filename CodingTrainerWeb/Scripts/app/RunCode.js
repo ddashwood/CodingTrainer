@@ -77,4 +77,5 @@
 
     var editor = new Editor("code");
     editor.setSize(null, '35em');
+    editor.hideFrstCharacters(hiddenHeaderLength);
 })();
