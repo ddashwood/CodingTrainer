@@ -1,4 +1,8 @@
-﻿using System.Web;
+﻿using CodingTrainer.CodingTrainerWeb.Models;
+using System.Collections.Generic;
+using System.IO;
+using System.Web;
+using System.Web.Hosting;
 using System.Web.Optimization;
 
 namespace CodingTrainer.CodingTrainerWeb
@@ -26,6 +30,20 @@ namespace CodingTrainer.CodingTrainerWeb
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/codemirror").Include(
+                        "~/Scripts/codemirror/lib/codemirror.js",
+                        "~/Scripts/codemirror/mode/clike/clike.js",
+                        "~/Scripts/codemirror/addon/edit/closebrackets.js",
+                        "~/Scripts/codemirror/addon/edit/matchbrackets.js",
+                        "~/Scripts/codemirror/addon/lint/lint.js"));
+
+            var codeMirrorStyles = new List<string> {
+                        "~/Scripts/codemirror/lib/codemirror.css",
+                        "~/Scripts/codemirror/addon/lint/lint.css"};
+            codeMirrorStyles.AddRange(CodeMirrorThemes.ThemeFiles);
+
+            bundles.Add(new StyleBundle("~/Content/codemirror").Include(codeMirrorStyles.ToArray()));
         }
     }
 }

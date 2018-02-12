@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CodingTrainerModels.Repositories;
+using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerWeb.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,9 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         [Authorize]
         public async Task<ActionResult> RunCode()
         {
+            ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
+                    { Text = char.ToUpper(t[0]) + t.Substring(1), Value = t, Selected = t == "elegant" });
+
             var exercise = await rep.GetExerciseAsync(1, 1);
 
             return View(new ExerciseViewModel(exercise));

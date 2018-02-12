@@ -85,7 +85,10 @@
         if (howMany > 0) {
             var startPos = this.codeMirror.posFromIndex(0);
             var endPos = this.codeMirror.posFromIndex(howMany);
-            this.codeMirror.markText(startPos, endPos, { inclusiveRight: true, inclusiveLeft: true, collapsed: true });
+            this.codeMirror.markText(startPos, endPos, { collapsed: true });
         }
+    };
+    Editor.prototype.setTheme = function(theme) {
+        this.codeMirror.setOption('theme', theme);
     };
 })();

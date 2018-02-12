@@ -308,6 +308,7 @@
     <Compile Include="Hubs\Helpers\IHubContextRepository.cs" />
     <Compile Include="Hubs\Helpers\IRequiresContext.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CodeMirrorThemes.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserValidatorDeDup.cs" />

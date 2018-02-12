@@ -71,6 +71,11 @@
         hub.server.consoleIn($('#console-in').val());
     });
 
+    // Change theme
+    $('#Theme').change(function () {
+        editor.setTheme($(this).val());
+    });
+
     ////////////////////
     // Set up CodeMirror
     ////////////////////

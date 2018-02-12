@@ -9,19 +9,13 @@
     </script>
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
     <script src="~/signalr/hubs"></script>
-    <script src="~/Scripts/codemirror/lib/codemirror.js"></script>
-    <script src="~/Scripts/codemirror/mode/clike/clike.js"></script>
-    <script src="~/Scripts/codemirror/addon/edit/closebrackets.js"></script>
-    <script src="~/Scripts/codemirror/addon/edit/matchbrackets.js"></script>
-    <script src="~/Scripts/codemirror/addon/lint/lint.js"></script>
+    @Scripts.Render("~/bundles/codemirror")
     <script src="~/Scripts/app/Editor.js"></script>
     <script src="~/Scripts/app/RunCode.js"></script>
 }
 @section Styles {
     <link href="~/Content/RunCode.css" rel="stylesheet" type="text/css" />
-    <link href="~/Scripts/codemirror/lib/codemirror.css" rel="stylesheet" type="text/css" />
-    <link href="~/Scripts/codemirror/addon/lint/lint.css" rel="stylesheet" type="text/css" />
-    <link href="~/Scripts/codemirror/theme/elegant.css" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/codemirror")
 }
 
 <div class="row">
@@ -29,6 +23,8 @@
 </div>
 <div class="row">
     <div class="col-md-6 col-sm-12">
+        <p>Select theme: @Html.DropDownList("Theme")</p>
+
         @Html.TextArea("code", Model.DefaultCode, new { style = "display:none" })
     </div>
     <div class="col-md-6 col-sm-12">
