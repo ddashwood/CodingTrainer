@@ -36,11 +36,15 @@ namespace CodingTrainer.CodingTrainerWeb
                         "~/Scripts/codemirror/mode/clike/clike.js",
                         "~/Scripts/codemirror/addon/edit/closebrackets.js",
                         "~/Scripts/codemirror/addon/edit/matchbrackets.js",
-                        "~/Scripts/codemirror/addon/lint/lint.js"));
+                        "~/Scripts/codemirror/addon/display/panel.js",
+                        "~/Scripts/codemirror/addon/lint/lint.js",
+                        "~/Scripts/codemirror/addon/comment/comment.js",
+                        "~/Scripts/codemirror-buttons/buttons.js"));
 
             var codeMirrorStyles = new List<string> {
                         "~/Scripts/codemirror/lib/codemirror.css",
-                        "~/Scripts/codemirror/addon/lint/lint.css"};
+                        "~/Scripts/codemirror/addon/lint/lint.css",
+                        "~/Scripts/codemirror-buttons/buttons.css"};
             codeMirrorStyles.AddRange(CodeMirrorThemes.ThemeFiles);
 
             bundles.Add(new StyleBundle("~/Content/codemirror").Include(codeMirrorStyles.ToArray()));

@@ -344,6 +344,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\CodingTrainer - Web Deploy.pubxml" />
+    <Content Include="Scripts\codemirror-buttons\buttons.css" />
+    <Content Include="Scripts\codemirror-buttons\buttons.js" />
     <Content Include="Scripts\codemirror\AUTHORS" />
     <Content Include="Scripts\codemirror\CHANGELOG.md" />
     <Content Include="Scripts\codemirror\CONTRIBUTING.md" />

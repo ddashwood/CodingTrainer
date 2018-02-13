@@ -9,8 +9,41 @@
         autoCloseBrackets: true,
         theme: 'elegant',
         lint: { lintOnChange: false },
-        gutters: ["CodeMirror-lint-markers"]
+        gutters: ["CodeMirror-lint-markers"],
+        buttons: [
+            {
+                hotkey: "Ctrl-Z",
+                class: "cm-btn-undo",
+                label: "&#x21BA;",
+                callback: function (cm) {
+                    cm.execCommand("undo");
+                }
+            },
+            {
+                hotkey: "Ctrl-Y",
+                class: "cm-btn-redo",
+                label: "&#x21BB;",
+                callback: function (cm) {
+                    cm.execCommand("redo");
+                }
+            },
+            {
+                hotkey: "Ctrl-/",
+                class: "cm-btn-comment",
+                label: "//",
+                callback: function (cm) {
+                    var sel = cm.listSelections();
+                    for (var i = 0; i < sel.length; i++) {
+                        cm.toggleComment(sel[i].anchor, sel[i].head);
+                    }
+                }
+            }
+        ]
     });
+
+    $('.cm-btn-undo').attr('data-toggle', 'tooltip').attr('title', 'Undo (Ctrl-Z)').tooltip();
+    $('.cm-btn-redo').attr('data-toggle', 'tooltip').attr('title', 'Redo (Ctrl-Y)').tooltip();
+    $('.cm-btn-comment').attr('data-toggle', 'tooltip').attr('title', 'Toggle comment (Ctrl-/)').tooltip();
 };
 
 (function () {
