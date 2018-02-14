@@ -73,14 +73,27 @@
 
     // Change theme
     $('#Theme').change(function () {
-        editor.setTheme($(this).val());
+        var theme = $(this).val();
+        // Update the current theme
+        editor.setTheme(theme);
+        // And send a request to the server to save the theme preference
+        $.ajax({
+            url: "/api/theme",
+            type: "PUT",
+            dataType: "json",
+            data: '=' + theme // The '=' is needed to put the un-named string into x-www-form-urlencoded format
+        }).fail(function (request, status, error) {
+            console.dir(request);
+            alert('Failed to save your theme preference: ' + status + " - " + error +
+                '\n\nThe JavaScript console contains more details of the problem');
+        });
     });
 
     ////////////////////
     // Set up CodeMirror
     ////////////////////
 
-    var editor = new Editor("code");
+    var editor = new Editor("code", $('#Theme').val());
     editor.setSize(null, '35em');
     editor.hideFrstCharacters(hiddenHeaderLength);
 })();

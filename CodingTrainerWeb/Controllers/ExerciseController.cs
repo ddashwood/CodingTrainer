@@ -1,6 +1,11 @@
-﻿using CodingTrainer.CodingTrainerModels.Repositories;
+﻿using CodingTrainer.CodingTrainerModels.Contexts;
+using CodingTrainer.CodingTrainerModels.Models.Security;
+using CodingTrainer.CodingTrainerModels.Repositories;
+using CodingTrainer.CodingTrainerWeb.ApiControllers;
 using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerWeb.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +30,13 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         [Authorize]
         public async Task<ActionResult> RunCode()
         {
-            ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
-                    { Text = char.ToUpper(t[0]) + t.Substring(1), Value = t, Selected = t == "elegant" });
+            Task<string> themeTask = new ThemeController(HttpContext.User).Get();
 
             var exercise = await rep.GetExerciseAsync(1, 1);
+            string theme = await themeTask;
+
+            ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
+                    { Text = char.ToUpper(t[0]) + t.Substring(1), Value = t, Selected = t == theme });
 
             return View(new ExerciseViewModel(exercise));
         }

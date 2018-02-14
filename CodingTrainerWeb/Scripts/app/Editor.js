@@ -1,4 +1,4 @@
-﻿var Editor = function (textAreaId) {
+﻿var Editor = function (textAreaId, theme) {
     // Set up CodeMirror
     this.codeMirror = CodeMirror.fromTextArea(document.getElementById(textAreaId), {
         lineNumbers: true,
@@ -7,7 +7,7 @@
         indentUnit: 4,
         dragDrop: false,
         autoCloseBrackets: true,
-        theme: 'elegant',
+        theme: theme,
         lint: { lintOnChange: false },
         gutters: ["CodeMirror-lint-markers"],
         buttons: [
