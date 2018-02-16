@@ -32,7 +32,7 @@ namespace CodingTrainer.CodingTrainerWeb.ApiControllers
 
         public ThemeController(IPrincipal principal)
         {
-            Principal = principal;
+            //Principal = principal;
         }
         public ThemeController()
         { }
