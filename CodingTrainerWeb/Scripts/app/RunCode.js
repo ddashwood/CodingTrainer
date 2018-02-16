@@ -39,7 +39,9 @@
             $('#console-out').append(document.createTextNode('    ' + details[i].LocationDescription + '\n'));
         }
 
-        editor.showErrors(details);
+        adjustment = 0;
+        adjustment += model.HiddenCodeHeader ? model.HiddenCodeHeader.length + 1 : 0; // Adjust for the hidden code header
+        editor.showErrors(details, adjustment);
     };
 
     //////////////////////////////////
@@ -56,7 +58,11 @@
         $('#console-out').text('');
         try {
             // Send the code to the server to run
-            hub.server.run(editor.getValue()).fail(function (e) {
+            var code = editor.getValue();
+            if (model.HiddenCodeHeader) {
+                code = model.HiddenCodeHeader + "\n" + code;
+            }
+            hub.server.run(code).fail(function (e) {
                 var message = e.message;
                 if (e.data) {
                     e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
@@ -95,7 +101,6 @@
 
     var editor = new Editor("code", $('#Theme').val());
     editor.setSize(null, '35em');
-    editor.hideFrstCharacters(hiddenHeaderLength);
 
     var console = new Console("console", $('#Theme').val());
     console.setSize(null, '35em');

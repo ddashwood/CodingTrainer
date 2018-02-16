@@ -5,7 +5,7 @@
 }
 @section Scripts {
     <script>
-        var hiddenHeaderLength = @Model.HiddenHeaderLength;
+        model = @Html.Raw(Json.Encode(Model));
     </script>
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
     <script src="~/signalr/hubs"></script>
@@ -19,21 +19,19 @@
     @Styles.Render("~/Content/codemirror")
 }
 
-<div class="row">
-    <h2>Run Code</h2>
-</div>
-<div class="row">
-    <div class="col-md-6 col-sm-12">
+<h2>Run Code</h2>
+<div>
+    <div class="row">
         <p>Select theme: @Html.DropDownList("Theme")</p>
-
+    </div>
+    <div class="col-md-6 col-sm-12">
         @Html.TextArea("code", Model.DefaultCode, new { style = "display:none" })
     </div>
     <div class="col-md-6 col-sm-12">
         @Html.TextArea("console", new { style = "display:none" })
     </div>
 </div>
+
 <div class="row">
-    <div class="col-md-6 col-sm-12">
-        <button id="run" disabled>Connecting</button>
-    </div>
+    <button id="run" class="top-buffer" disabled>Connecting</button>
 </div>

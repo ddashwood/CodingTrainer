@@ -37,6 +37,16 @@
                         cm.toggleComment(sel[i].anchor, sel[i].head);
                     }
                 }
+            },
+            {
+                hotkey: "Ctrl-B",
+                class: "cm-btn-indent",
+                label: "{ }",
+                callback: function (cm) {
+                    for (var i = 0; i < cm.lineCount(); i++) {
+                        cm.indentLine(i);
+                    }
+                }
             }
         ]
     });
@@ -44,6 +54,7 @@
     $('.cm-btn-undo').attr('data-toggle', 'tooltip').attr('title', 'Undo (Ctrl-Z)').tooltip();
     $('.cm-btn-redo').attr('data-toggle', 'tooltip').attr('title', 'Redo (Ctrl-Y)').tooltip();
     $('.cm-btn-comment').attr('data-toggle', 'tooltip').attr('title', 'Toggle comment (Ctrl-/)').tooltip();
+    $('.cm-btn-indent').attr('data-toggle', 'tooltip').attr('title', 'Beautify (Auto-indent) (Ctrl-B').tooltip();
 };
 
 (function () {
@@ -66,7 +77,7 @@
     Editor.prototype.getValue = function () {
         return this.codeMirror.getValue();
     };
-    Editor.prototype.showErrors = function (errors) {
+    Editor.prototype.showErrors = function (errors, adjustment) {
         unprocessedLints = [];
 
         // Start at the end - that way, if we need to add spaces in, it won't
@@ -74,8 +85,8 @@
         for (var i = errors.length - 1; i >= 0; i--) {
             var error = errors[i];
 
-            var startIdx = error.Location.SourceSpan.Start;
-            var endIdx = error.Location.SourceSpan.End;
+            var startIdx = error.Location.SourceSpan.Start - adjustment;
+            var endIdx = error.Location.SourceSpan.End - adjustment;
 
             var startPos = this.codeMirror.posFromIndex(startIdx);
             var endPos = this.codeMirror.posFromIndex(endIdx);
@@ -113,13 +124,6 @@
     };
     Editor.prototype.clearErrors = function () {
         this.codeMirror.performLint();
-    };
-    Editor.prototype.hideFrstCharacters = function (howMany) {
-        if (howMany > 0) {
-            var startPos = this.codeMirror.posFromIndex(0);
-            var endPos = this.codeMirror.posFromIndex(howMany);
-            this.codeMirror.markText(startPos, endPos, { collapsed: true, atomic: true, inclusiveLeft: true });
-        }
     };
     Editor.prototype.setTheme = function(theme) {
         this.codeMirror.setOption('theme', theme);
