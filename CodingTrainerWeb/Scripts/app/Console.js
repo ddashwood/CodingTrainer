@@ -29,4 +29,11 @@
     Console.prototype.setTheme = function (theme) {
         this.codeMirror.setOption('theme', theme);
     };
+    Console.prototype.clear = function () {
+        this.codeMirror.setValue("");
+        this.codeMirror.clearHistory();
+    };
+    Console.prototype.focus = function () {
+        this.codeMirror.focus();
+    };
 })();

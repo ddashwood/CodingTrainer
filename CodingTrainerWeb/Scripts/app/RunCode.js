@@ -48,6 +48,8 @@
 
     // User clicks run button
     $('#run').click(function () {
+        console.clear();
+        console.focus();
         // Prevent user from running again
         editor.clearErrors();
         $('#run').prop('disabled', true);

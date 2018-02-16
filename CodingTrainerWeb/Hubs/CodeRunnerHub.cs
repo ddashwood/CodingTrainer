@@ -165,8 +165,11 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         public void ConsoleIn(string message)
         {
-            ICodeRunner runner = connections[Context.ConnectionId].Runner;
-            runner.ConsoleIn(message);
+            if (connections.ContainsKey(Context.ConnectionId))
+            {
+                ICodeRunner runner = connections[Context.ConnectionId].Runner;
+                runner.ConsoleIn(message);
+            }
         }
 
         private class Connection
