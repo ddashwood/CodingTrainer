@@ -10,6 +10,7 @@
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
     <script src="~/signalr/hubs"></script>
     @Scripts.Render("~/bundles/codemirror")
+    <script src="~/Scripts/app/Console.js"></script>
     <script src="~/Scripts/app/Editor.js"></script>
     <script src="~/Scripts/app/RunCode.js"></script>
 }
@@ -28,14 +29,11 @@
         @Html.TextArea("code", Model.DefaultCode, new { style = "display:none" })
     </div>
     <div class="col-md-6 col-sm-12">
-        @Html.TextArea("console-out", new { @class = "form-control", rows = 30, spellcheck = false, disabled = true })
+        @Html.TextArea("console", new { style = "display:none" })
     </div>
 </div>
 <div class="row">
     <div class="col-md-6 col-sm-12">
         <button id="run" disabled>Connecting</button>
-    </div>
-    <div class="col-md-6 col-sm-12">
-        <input type="text" id="console-in" /> <button id="console">Send to console</button>
     </div>
 </div>

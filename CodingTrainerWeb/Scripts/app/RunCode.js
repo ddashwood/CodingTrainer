@@ -21,7 +21,9 @@
 
     hub.client.consoleOut = function (message) {
         // Display stdout data
-        $('#console-out').append(document.createTextNode(message));
+        //$('#console-out').append(document.createTextNode(message));
+
+        console.append(message);
     };
 
     var complete = function () {
@@ -66,16 +68,12 @@
         }
     });
 
-    // User sending data to stdin
-    $('#console').click(function () {
-        hub.server.consoleIn($('#console-in').val());
-    });
-
     // Change theme
     $('#Theme').change(function () {
         var theme = $(this).val();
         // Update the current theme
         editor.setTheme(theme);
+        console.setTheme(theme);
         // And send a request to the server to save the theme preference
         $.ajax({
             url: "/api/theme",
@@ -96,4 +94,10 @@
     var editor = new Editor("code", $('#Theme').val());
     editor.setSize(null, '35em');
     editor.hideFrstCharacters(hiddenHeaderLength);
+
+    var console = new Console("console", $('#Theme').val());
+    console.setSize(null, '35em');
+    console.onReturn = function (text) {
+        hub.server.consoleIn(text);
+    };
 })();

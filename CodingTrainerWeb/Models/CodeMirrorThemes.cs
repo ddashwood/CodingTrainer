@@ -23,6 +23,7 @@ namespace CodingTrainer.CodingTrainerWeb.Models
                 Themes.Add(Path.GetFileNameWithoutExtension(file.Name));
                 ThemeFiles.Add("~/Scripts/codemirror/theme/" + file.Name);
             }
+            Themes.Sort();
         }
     }
 }

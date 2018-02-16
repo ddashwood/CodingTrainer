@@ -118,7 +118,7 @@
         if (howMany > 0) {
             var startPos = this.codeMirror.posFromIndex(0);
             var endPos = this.codeMirror.posFromIndex(howMany);
-            this.codeMirror.markText(startPos, endPos, { collapsed: true });
+            this.codeMirror.markText(startPos, endPos, { collapsed: true, atomic: true, inclusiveLeft: true });
         }
     };
     Editor.prototype.setTheme = function(theme) {
