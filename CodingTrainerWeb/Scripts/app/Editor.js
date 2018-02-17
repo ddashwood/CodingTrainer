@@ -54,7 +54,7 @@
     $('.cm-btn-undo').attr('data-toggle', 'tooltip').attr('title', 'Undo (Ctrl-Z)').tooltip();
     $('.cm-btn-redo').attr('data-toggle', 'tooltip').attr('title', 'Redo (Ctrl-Y)').tooltip();
     $('.cm-btn-comment').attr('data-toggle', 'tooltip').attr('title', 'Toggle comment (Ctrl-/)').tooltip();
-    $('.cm-btn-indent').attr('data-toggle', 'tooltip').attr('title', 'Beautify (Auto-indent) (Ctrl-B').tooltip();
+    $('.cm-btn-indent').attr('data-toggle', 'tooltip').attr('title', 'Beautify (Auto-indent) (Ctrl-B)').tooltip();
 };
 
 (function () {
@@ -77,7 +77,7 @@
     Editor.prototype.getValue = function () {
         return this.codeMirror.getValue();
     };
-    Editor.prototype.showErrors = function (errors, adjustment) {
+    Editor.prototype.showErrors = function (errors) {
         unprocessedLints = [];
 
         // Start at the end - that way, if we need to add spaces in, it won't
@@ -85,8 +85,8 @@
         for (var i = errors.length - 1; i >= 0; i--) {
             var error = errors[i];
 
-            var startIdx = error.Location.SourceSpan.Start - adjustment;
-            var endIdx = error.Location.SourceSpan.End - adjustment;
+            var startIdx = error.Location.SourceSpan.Start;
+            var endIdx = error.Location.SourceSpan.End;
 
             var startPos = this.codeMirror.posFromIndex(startIdx);
             var endPos = this.codeMirror.posFromIndex(endIdx);
@@ -117,6 +117,8 @@
                 }
             }
 
+            error.line = startPos.line;
+
             var severity = error.Severity === 3 ? "error" : error.Severity === 2 ? "warning" : "";
             unprocessedLints.push({ message: error.Message, severity: severity, from: startPos, to: endPos });
         }
@@ -128,4 +130,8 @@
     Editor.prototype.setTheme = function(theme) {
         this.codeMirror.setOption('theme', theme);
     };
+    Editor.prototype.gotoLine = function (line) {
+        this.codeMirror.setCursor({ line: line, ch: 0 });
+        this.codeMirror.focus();
+    }
 })();

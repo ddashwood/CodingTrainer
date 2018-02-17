@@ -1,3 +1,8 @@
 ﻿.CodeMirror {
     border: solid 1px;
 }
+
+.line-link {
+    cursor: pointer;
+}
+}

@@ -32,16 +32,25 @@
 
     hub.client.complete = complete;
 
-    hub.client.compilerError = function (details) {
-        $('#console-out').append(document.createTextNode('There were compiler errors...\n\n'));
-        for (var i = 0; i < details.length; i++) {
-            $('#console-out').append(document.createTextNode('  ' + details[i].Message + '\n'));
-            $('#console-out').append(document.createTextNode('    ' + details[i].LocationDescription + '\n'));
+    hub.client.compilerError = function (errors) {
+        if (model.HiddenCodeHeader) {
+            adjustment = model.HiddenCodeHeader.length + 1;
+            for (var i = errors.length - 1; i >= 0; i--) {
+                errors[i].Location.SourceSpan.Start -= adjustment;
+                errors[i].Location.SourceSpan.End -= adjustment;
+            }
         }
 
-        adjustment = 0;
-        adjustment += model.HiddenCodeHeader ? model.HiddenCodeHeader.length + 1 : 0; // Adjust for the hidden code header
-        editor.showErrors(details, adjustment);
+        editor.showErrors(errors);
+
+        console.append('There were compiler errors...\n');
+        console.append('Click on an error to go to the affected line\n\n');
+        for (var i = 0; i < errors.length; i++) {
+            console.appendWithLineLink('  ' + errors[i].Message + '\n    Line ' + (errors[i].line + 1) + '\n', errors[i].line, function (line) {
+                editor.gotoLine(line);
+            });
+        }
+
     };
 
     //////////////////////////////////
