@@ -138,8 +138,6 @@
     ideHub.client.compilerError = function (errors, generation) {
         if (editor.isClean(generation)) {
             handleErrors(errors);
-        } else {
-            alert('Ignoring');
         }
     };
 
