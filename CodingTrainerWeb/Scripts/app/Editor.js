@@ -74,6 +74,8 @@
     // Set up the linter
     var unprocessedLints = null;
 
+    // N.b. this function doesn't actually do the linting, since that is done separately on the server
+    // This function simply provides the linter output to CodeMirror for displaying
     CodeMirror.registerHelper('lint', 'clike', function (text, options, editor) {
         if (unprocessedLints) {
             var temp = unprocessedLints;
@@ -82,6 +84,8 @@
         }
         return [];
     });
+
+    var addedSpaceMarks = [];
 
     // Exposed methods
     Editor.prototype.setSize = function (width, height) {
@@ -110,7 +114,7 @@
                 var nextPos = this.codeMirror.posFromIndex(endIdx + 1);
                 var prevPos = this.codeMirror.posFromIndex(endIdx - 1);
 
-                // Try to the left first, see if there's a space there that we can highlight
+                // Try to the left first, see if there's a space there that we can let the linter style
                 if (this.codeMirror.getRange(prevPos, startPos) === " ") {
                     startIdx--;
                     startPos = this.codeMirror.posFromIndex(startIdx);
@@ -119,7 +123,8 @@
                 else {
                     // We are going to mark a space to the right - first check if
                     // there's already a space there, and if not, add one
-                    if (this.codeMirror.getRange(startPos, nextPos) !== " ") {
+                    var addSpace = (this.codeMirror.getRange(startPos, nextPos) !== " ");
+                    if (addSpace) {
                         // It seems like the only time the start pos and end pos are the same
                         // is if the error is at the end of the line. In this case, it's safe to
                         // insert a space.
@@ -127,6 +132,11 @@
                     }
                     endIdx++;
                     endPos = this.codeMirror.posFromIndex(endIdx);
+
+                    // If we added a space, mark it so we can remove it later, and so the user can't click on it
+                    if (addSpace) {
+                        addedSpaceMarks.push(this.codeMirror.markText(startPos, endPos, { atomic: true, inclusiveRight: true }));
+                    }
                 }
             }
 
@@ -139,6 +149,12 @@
     };
     Editor.prototype.clearErrors = function () {
         this.codeMirror.performLint();
+        // Remove any spaces that we've added in for the purpose of showing the lint style
+        for (var i = 0; i < addedSpaceMarks.length; i++) {
+            this.codeMirror.replaceRange("", addedSpaceMarks[i].find().from, addedSpaceMarks[i].find().to);
+            addedSpaceMarks[i].clear();
+        }
+        addedSpaceMarks = [];
     };
     Editor.prototype.setTheme = function(theme) {
         this.codeMirror.setOption('theme', theme);
