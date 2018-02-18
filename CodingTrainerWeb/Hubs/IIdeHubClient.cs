@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
-    interface ICodeRunnerHubServer
+    public interface IIdeHubClient
     {
-        Task Run(string code);
-        void ConsoleIn(string message);
+        void CompilerError(CompilerError[] details, int generation);
     }
 }

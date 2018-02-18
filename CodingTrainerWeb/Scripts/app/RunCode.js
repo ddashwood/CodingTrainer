@@ -1,4 +1,33 @@
 ﻿(function () {
+    // This function used when errors occure during real-time linting, and also
+    // when they occur while running the program
+    var handleErrors = function (errors) {
+        console.clear();
+        if (!errors) {
+            editor.clearErrors();
+            return;
+        }
+
+        if (model.HiddenCodeHeader) {
+            adjustment = model.HiddenCodeHeader.length + 1;
+            for (var i = errors.length - 1; i >= 0; i--) {
+                errors[i].Location.SourceSpan.Start -= adjustment;
+                errors[i].Location.SourceSpan.End -= adjustment;
+            }
+        }
+
+        editor.showErrors(errors);
+
+        console.append('There were compiler errors...\n');
+        console.append('Click on an error to go to the affected line\n\n');
+        for (var j = 0; j < errors.length; j++) {
+            console.appendWithLineLink('  ' + errors[j].Message + '\n    Line ' + (errors[i = j].line + 1) + '\n', errors[j].line, function (line) {
+                editor.gotoLine(line);
+            });
+        }
+
+    };
+
     ///////////////////////////////////////////////////
     // Code for starting/maintaining SignalR connection
     ///////////////////////////////////////////////////
@@ -17,9 +46,9 @@
     // Code for handling SignalR events
     ///////////////////////////////////
 
-    var hub = $.connection.codeRunnerHub;
+    var runnerHub = $.connection.codeRunnerHub;
 
-    hub.client.consoleOut = function (message) {
+    runnerHub.client.consoleOut = function (message) {
         // Display stdout data
         //$('#console-out').append(document.createTextNode(message));
 
@@ -30,28 +59,9 @@
         $('#run').prop('disabled', false);
     };
 
-    hub.client.complete = complete;
+    runnerHub.client.complete = complete;
 
-    hub.client.compilerError = function (errors) {
-        if (model.HiddenCodeHeader) {
-            adjustment = model.HiddenCodeHeader.length + 1;
-            for (var i = errors.length - 1; i >= 0; i--) {
-                errors[i].Location.SourceSpan.Start -= adjustment;
-                errors[i].Location.SourceSpan.End -= adjustment;
-            }
-        }
-
-        editor.showErrors(errors);
-
-        console.append('There were compiler errors...\n');
-        console.append('Click on an error to go to the affected line\n\n');
-        for (var i = 0; i < errors.length; i++) {
-            console.appendWithLineLink('  ' + errors[i].Message + '\n    Line ' + (errors[i].line + 1) + '\n', errors[i].line, function (line) {
-                editor.gotoLine(line);
-            });
-        }
-
-    };
+    runnerHub.client.compilerError = handleErrors;
 
     //////////////////////////////////
     // Code for handling window events
@@ -71,7 +81,7 @@
             if (model.HiddenCodeHeader) {
                 code = model.HiddenCodeHeader + "\n" + code;
             }
-            hub.server.run(code).fail(function (e) {
+            runnerHub.server.run(code).fail(function (e) {
                 var message = e.message;
                 if (e.data) {
                     e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
@@ -114,6 +124,39 @@
     var console = new Console("console", $('#Theme').val());
     console.setSize(null, '35em');
     console.onReturn = function (text) {
-        hub.server.consoleIn(text);
+        runnerHub.server.consoleIn(text);
     };
+
+    ////////////////////
+    // Real-time linting
+    ////////////////////
+
+    var ideConnected = false;
+    var ideHub = $.connection.ideHub;
+
+    // Respond to callback from the hub
+    ideHub.client.compilerError = function (errors, generation) {
+        if (editor.isClean(generation)) {
+            handleErrors(errors);
+        } else {
+            alert('Ignoring');
+        }
+    };
+
+    // When there's a change, send it to the hub
+    editor.onChange(function () {
+        if (!ideConnected) {
+            if ($.connection.hub.state === $.signalR.connectionState.connected) {
+                ideConnected = true;
+            }
+        }
+        if (ideConnected) {
+            var generation = editor.changeGeneration(true);
+            var code = editor.getValue();
+            if (model.HiddenCodeHeader) {
+                code = model.HiddenCodeHeader + "\n" + code;
+            }
+            ideHub.server.validate(code, generation);
+        }
+    });
 })();

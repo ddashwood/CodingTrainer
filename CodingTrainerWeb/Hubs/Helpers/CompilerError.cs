@@ -35,14 +35,19 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
             WarningLevel = diagnostic.WarningLevel;
         }
 
-        public static CompilerError[] ArrayFromException(CompilationErrorException exception)
+        public static CompilerError[] ArrayFromDiagnostics(IEnumerable<Diagnostic> diagnostics)
         {
             List<CompilerError> errors = new List<CompilerError>();
-            foreach (var error in exception.Diagnostics.OrderBy(e => e.Location.SourceSpan.Start))
+            foreach (var error in diagnostics.OrderBy(e => e.Location.SourceSpan.Start))
             {
                 errors.Add(new CompilerError(error));
             }
             return errors.ToArray();
+        }
+
+        public static CompilerError[] ArrayFromException(CompilationErrorException exception)
+        {
+            return ArrayFromDiagnostics(exception.Diagnostics);
         }
     }
 }

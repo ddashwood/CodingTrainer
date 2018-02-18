@@ -287,6 +287,9 @@
     <Compile Include="Hubs\ICodeRunnerHubServer.cs" />
     <Compile Include="Hubs\Helpers\IHubContextRepository.cs" />
     <Compile Include="Hubs\Helpers\IRequiresContext.cs" />
+    <Compile Include="Hubs\IdeHub.cs" />
+    <Compile Include="Hubs\IIdeHubClient.cs" />
+    <Compile Include="Hubs\IIdeHubServer.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CodeMirrorThemes.cs" />
     <Compile Include="Models\Extensions.cs" />

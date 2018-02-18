@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
-    interface ICodeRunnerHubServer
+    public interface IIdeHubServer
     {
-        Task Run(string code);
-        void ConsoleIn(string message);
+        Task Validate(string code, int generation);
     }
 }

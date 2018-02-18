@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,6 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 
         Task RunCode(string code);
         void ConsoleIn(string text);
+        Task<IEnumerable<Diagnostic>> GetDiagnostics(string code);
     }
 }

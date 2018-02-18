@@ -1,9 +1,10 @@
 ﻿var Editor = function (textAreaId, theme) {
+    // Used by the button and by the key-press
     var autoIndent = function (cm) {
         for (var i = 0; i < cm.lineCount(); i++) {
             cm.indentLine(i);
         }
-    }
+    };
 
     // Set up CodeMirror
     this.codeMirror = CodeMirror.fromTextArea(document.getElementById(textAreaId), {
@@ -53,7 +54,7 @@
                 }
             }
         ],
-        extraKeys: CodeMirror.normalizeKeyMap ({
+        extraKeys: CodeMirror.normalizeKeyMap({
             Tab: function (cm) {
                 var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
                 cm.replaceSelection(spaces);
@@ -123,7 +124,7 @@
                 else {
                     // We are going to mark a space to the right - first check if
                     // there's already a space there, and if not, add one
-                    var addSpace = (this.codeMirror.getRange(startPos, nextPos) !== " ");
+                    var addSpace = this.codeMirror.getRange(startPos, nextPos) !== " ";
                     if (addSpace) {
                         // It seems like the only time the start pos and end pos are the same
                         // is if the error is at the end of the line. In this case, it's safe to
@@ -151,16 +152,27 @@
         this.codeMirror.performLint();
         // Remove any spaces that we've added in for the purpose of showing the lint style
         for (var i = 0; i < addedSpaceMarks.length; i++) {
-            this.codeMirror.replaceRange("", addedSpaceMarks[i].find().from, addedSpaceMarks[i].find().to);
+            if (addedSpaceMarks[i].find()) {
+                this.codeMirror.replaceRange("", addedSpaceMarks[i].find().from, addedSpaceMarks[i].find().to);
+            }
             addedSpaceMarks[i].clear();
         }
         addedSpaceMarks = [];
     };
-    Editor.prototype.setTheme = function(theme) {
+    Editor.prototype.setTheme = function (theme) {
         this.codeMirror.setOption('theme', theme);
     };
     Editor.prototype.gotoLine = function (line) {
         this.codeMirror.setCursor({ line: line, ch: 0 });
         this.codeMirror.focus();
-    }
+    };
+    Editor.prototype.onChange = function (callback) {
+        this.codeMirror.on("change", callback);
+    };
+    Editor.prototype.changeGeneration = function (closeEvent) {
+        return this.codeMirror.changeGeneration(closeEvent);
+    };
+    Editor.prototype.isClean = function (generation) {
+        return this.codeMirror.isClean(generation);
+    };
 })();

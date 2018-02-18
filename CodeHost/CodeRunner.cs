@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Scripting;
 
 // References:
@@ -13,7 +15,7 @@ using Microsoft.CodeAnalysis.Scripting;
 
 namespace CodingTrainer.CSharpRunner.CodeHost
 {
-    public partial class CodeRunner:ICodeRunner
+    public partial class CodeRunner : ICodeRunner
     {
         public event ConsoleWriteEventHandler ConsoleWrite;
         private TextWriter consoleInWriter;
@@ -30,8 +32,9 @@ namespace CodingTrainer.CSharpRunner.CodeHost
         {
             try
             {
-                var compiled = await Compiler.Compile(code);
-                new SandboxManager().RunInSandbox(this, compiled.result, compiled.pdb);
+                var compilation = await Compiler.GetCompilation(code);
+                var (result, pdb) = await Compiler.Emit(compilation);
+                new SandboxManager().RunInSandbox(this, result, pdb);
             }
             catch (Exception e) when (!(e is AggregateException || e is CompilationErrorException))
             {
@@ -41,6 +44,14 @@ namespace CodingTrainer.CSharpRunner.CodeHost
                 }
                 throw;
             }
+        }
+
+        public async Task<IEnumerable<Diagnostic>> GetDiagnostics(string code)
+        {
+            var compilation = await Compiler.GetCompilation(code);
+            var diagnostics = await Compiler.GetDiagnostics(compilation);
+
+            return diagnostics;
         }
 
         // Put some text into the console input stream
