@@ -1,4 +1,10 @@
 ﻿var Editor = function (textAreaId, theme) {
+    var autoIndent = function (cm) {
+        for (var i = 0; i < cm.lineCount(); i++) {
+            cm.indentLine(i);
+        }
+    }
+
     // Set up CodeMirror
     this.codeMirror = CodeMirror.fromTextArea(document.getElementById(textAreaId), {
         lineNumbers: true,
@@ -39,22 +45,29 @@
                 }
             },
             {
-                hotkey: "Ctrl-B",
+                hotkey: null, // Buttons doesn't support multiple keys, so set this up later with extraKeys instead
                 class: "cm-btn-indent",
                 label: "{ }",
                 callback: function (cm) {
-                    for (var i = 0; i < cm.lineCount(); i++) {
-                        cm.indentLine(i);
-                    }
+                    autoIndent(cm);
                 }
             }
-        ]
+        ],
+        extraKeys: CodeMirror.normalizeKeyMap ({
+            Tab: function (cm) {
+                var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                cm.replaceSelection(spaces);
+            },
+            'Ctrl-K Ctrl-D': function (cm) {
+                autoIndent(cm);
+            }
+        })
     });
 
     $('.cm-btn-undo').attr('data-toggle', 'tooltip').attr('title', 'Undo (Ctrl-Z)').tooltip();
     $('.cm-btn-redo').attr('data-toggle', 'tooltip').attr('title', 'Redo (Ctrl-Y)').tooltip();
     $('.cm-btn-comment').attr('data-toggle', 'tooltip').attr('title', 'Toggle comment (Ctrl-/)').tooltip();
-    $('.cm-btn-indent').attr('data-toggle', 'tooltip').attr('title', 'Beautify (Auto-indent) (Ctrl-B)').tooltip();
+    $('.cm-btn-indent').attr('data-toggle', 'tooltip').attr('title', 'Auto-indent (Ctrl-K Ctrl-D)').tooltip();
 };
 
 (function () {
