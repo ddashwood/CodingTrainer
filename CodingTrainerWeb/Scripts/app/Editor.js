@@ -1,11 +1,4 @@
 ﻿var Editor = function (textAreaId, theme) {
-    // Used by the button and by the key-press
-    var autoIndent = function (cm) {
-        for (var i = 0; i < cm.lineCount(); i++) {
-            cm.indentLine(i);
-        }
-    };
-
     // Set up CodeMirror
     this.codeMirror = CodeMirror.fromTextArea(document.getElementById(textAreaId), {
         lineNumbers: true,
@@ -46,19 +39,22 @@
                 }
             },
             {
-                hotkey: null, // Buttons doesn't support multiple keys, so set this up later with extraKeys instead
+                hotkey: 'Ctrl-K Ctrl-D',
                 class: "cm-btn-indent",
                 label: "{ }",
-                callback: autoIndent
+                callback: function (cm) {
+                    for (var i = 0; i < cm.lineCount(); i++) {
+                        cm.indentLine(i);
+                    }
+                }
             }
         ],
-        extraKeys: CodeMirror.normalizeKeyMap({
+        extraKeys: {
             Tab: function (cm) {
                 var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
                 cm.replaceSelection(spaces);
-            },
-            'Ctrl-K Ctrl-D': autoIndent
-        })
+            }
+        }
     });
 
     $('.cm-btn-undo').attr('data-toggle', 'tooltip').attr('title', 'Undo (Ctrl-Z)').tooltip();
