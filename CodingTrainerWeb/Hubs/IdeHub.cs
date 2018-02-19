@@ -43,7 +43,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         {
             var diags = await runner.GetDiagnostics(code);
 
-            // If cancelled, then don't both sending details back to the client
+            // If cancelled, then don't bother sending details back to the client
             token.ThrowIfCancellationRequested();
 
             inProgress.TryRemove(Context.ConnectionId, out var ignore);

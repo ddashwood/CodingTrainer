@@ -32,8 +32,11 @@
     // Code for starting/maintaining SignalR connection
     ///////////////////////////////////////////////////
 
+    var hubConnected = false;
+
     // Set up and maintain the connection
     $.connection.hub.start().done(function () {
+        hubConnected = true;
         // Once connected, allow users to submit code
         $('#run').prop('disabled', false).text('Run Code');
     });
@@ -131,7 +134,6 @@
     // Real-time linting
     ////////////////////
 
-    var ideConnected = false;
     var ideHub = $.connection.ideHub;
 
     // Respond to callback from the hub
@@ -143,12 +145,7 @@
 
     // When there's a change, send it to the hub
     editor.onChange(function () {
-        if (!ideConnected) {
-            if ($.connection.hub.state === $.signalR.connectionState.connected) {
-                ideConnected = true;
-            }
-        }
-        if (ideConnected) {
+        if (hubConnected) {
             var generation = editor.changeGeneration(true);
             var code = editor.getValue();
             if (model.HiddenCodeHeader) {

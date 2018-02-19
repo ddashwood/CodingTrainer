@@ -49,9 +49,7 @@
                 hotkey: null, // Buttons doesn't support multiple keys, so set this up later with extraKeys instead
                 class: "cm-btn-indent",
                 label: "{ }",
-                callback: function (cm) {
-                    autoIndent(cm);
-                }
+                callback: autoIndent
             }
         ],
         extraKeys: CodeMirror.normalizeKeyMap({
@@ -59,9 +57,7 @@
                 var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
                 cm.replaceSelection(spaces);
             },
-            'Ctrl-K Ctrl-D': function (cm) {
-                autoIndent(cm);
-            }
+            'Ctrl-K Ctrl-D': autoIndent
         })
     });
 
