@@ -13,13 +13,13 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
     public class IdeHub : Hub<IIdeHubClient>, IIdeHubServer
     {
-        private ICodeRunner runner;
-        public IdeHub(ICodeRunner runner)
+        private IIdeServices ideServices;
+        public IdeHub(IIdeServices ideServices)
         {
-            this.runner = runner;
+            this.ideServices = ideServices;
         }
         public IdeHub()
-            :this(new CodeRunner())
+            :this(new IdeServices())
         { }
 
         private static ConcurrentDictionary<string, CancellationTokenSource> inProgress = new ConcurrentDictionary<string, CancellationTokenSource>();
@@ -33,7 +33,6 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             }
 
             CancellationTokenSource cts = new CancellationTokenSource();
-            cts.Token.Register(CancelNotification);
             Task t = Task.Run(async () => await ValidateCancellable(code, generation, cts.Token), cts.Token);
             inProgress[Context.ConnectionId] = cts;
             await t;
@@ -41,7 +40,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         private async Task ValidateCancellable(string code, int generation, CancellationToken token)
         {
-            var diags = await runner.GetDiagnostics(code);
+            var diags = await ideServices.GetDiagnostics(code);
 
             // If cancelled, then don't bother sending details back to the client
             token.ThrowIfCancellationRequested();
@@ -55,10 +54,6 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             {
                 Clients.Caller.CompilerError(CompilerError.ArrayFromDiagnostics(diags), generation);
             }
-        }
-
-        private void CancelNotification()
-        {
         }
     }
 }

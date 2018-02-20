@@ -46,14 +46,6 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             }
         }
 
-        public async Task<IEnumerable<Diagnostic>> GetDiagnostics(string code)
-        {
-            var compilation = await Compiler.GetCompilation(code);
-            var diagnostics = await Compiler.GetDiagnostics(compilation);
-
-            return diagnostics;
-        }
-
         // Put some text into the console input stream
         public void ConsoleIn(string text)
         {

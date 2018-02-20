@@ -230,48 +230,6 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         }
         #endregion
 
-        #region DiagnosticsTests
-        [Test]
-        [Category("Diagnostics")]
-        public async Task NoDiagnosticsTest()
-        {
-            var diagnostics = await runner.GetDiagnostics(GetUsings(new string[] { "System" })
-                .Append(@"Console.WriteLine(""Hello World!"");").ToString());
-            Assert.AreEqual(null, diagnostics);
-        }
-
-        [Test]
-        [Category("Diagnostics")]
-        public async Task ErrorTest()
-        {
-            var diagnostics = await runner.GetDiagnostics(GetUsings(new string[] { "System" })
-                .Append(@"Console.Writeline(""Hello World!"");").ToString());
-            Assert.AreEqual(1, diagnostics.Count());
-            Assert.AreEqual("'Console' does not contain a definition for 'Writeline'", diagnostics.First().GetMessage());
-        }
-
-        [Test]
-        [Category("Diagnostics")]
-        public async Task ComplexErrorTest()
-        {
-            var diagnostics = await runner.GetDiagnostics(GetUsings(new string[] { "System" })
-                .Append(@"
-for (int i = 0; i < 5; i++)
-{
-    Console.Writeline(i);
-}
-Console.WriteLine(""Test"");
-if (5)
-{
-    return;
-}").ToString());
-            diagnostics = diagnostics.OrderBy(e => e.Location.SourceSpan.Start);
-            Assert.AreEqual(2, diagnostics.Count());
-            Assert.AreEqual("'Console' does not contain a definition for 'Writeline'", diagnostics.First().GetMessage());
-            Assert.AreEqual("Cannot implicitly convert type 'int' to 'bool'", diagnostics.Last().GetMessage());
-        }
-        #endregion
-
 
 
 

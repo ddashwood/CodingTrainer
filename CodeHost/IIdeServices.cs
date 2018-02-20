@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.CodeHost
 {
-    public interface ICodeRunner
+    public interface IIdeServices
     {
-        event ConsoleWriteEventHandler ConsoleWrite;
-
-        Task RunCode(string code);
-        void ConsoleIn(string text);
+        Task<IEnumerable<Diagnostic>> GetDiagnostics(string code);
+        Task<IEnumerable<string>> GetCompletions(string code, int position);
     }
 }
