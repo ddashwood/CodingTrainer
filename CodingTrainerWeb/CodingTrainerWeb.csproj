@@ -316,6 +316,7 @@
     <Compile Include="Hubs\Helpers\CodeRunnerWithLoggerFactory.cs" />
     <Compile Include="Hubs\Helpers\CompilerError.cs" />
     <Compile Include="Hubs\Helpers\HubContextRepository.cs" />
+    <Compile Include="Hubs\Helpers\IdeData.cs" />
     <Compile Include="Hubs\ICodeRunnerHubClient.cs" />
     <Compile Include="Hubs\ICodeRunnerHubServer.cs" />
     <Compile Include="Hubs\Helpers\IHubContextRepository.cs" />

@@ -19,41 +19,48 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             this.ideServices = ideServices;
         }
         public IdeHub()
-            :this(new IdeServices())
+            : this(new IdeServices())
         { }
 
-        private static ConcurrentDictionary<string, CancellationTokenSource> inProgress = new ConcurrentDictionary<string, CancellationTokenSource>();
+        private static ConcurrentDictionary<string, CancellationTokenSource> inProgressDiags = new ConcurrentDictionary<string, CancellationTokenSource>();
+        private static ConcurrentDictionary<string, CancellationTokenSource> inProgressCompletions = new ConcurrentDictionary<string, CancellationTokenSource>();
 
-        public async Task Validate(string code, int generation)
+        public async Task RequestDiags(string code, int generation)
         {
-            // If this connection already has a validation in progress, cancel it
-            if (inProgress.TryRemove(Context.ConnectionId, out var prevCts))
+            await DoCancellableAction(async (token) =>
             {
-                prevCts.Cancel();
+                var diags = await ideServices.GetDiagnostics(code, token);
+
+                // If cancelled, then don't bother sending details back to the client
+                token.ThrowIfCancellationRequested();
+
+                Clients.Caller.DiagsCallback(diags == null ? null : CompilerError.ArrayFromDiagnostics(diags), generation);
+            }, Context.ConnectionId, inProgressDiags);
+        }
+
+        public async Task RequestCompletions(string code, int cursorPosition, int generation)
+        {
+            await DoCancellableAction(async (token) =>
+            {
+                var completions = await ideServices.GetCompletions(code, cursorPosition, token);
+
+                // If cancelled, then don't bother sending details back to the client
+                token.ThrowIfCancellationRequested();
+
+                Clients.Caller.CompletionsCallback(completions, generation);
+            }, Context.ConnectionId, inProgressCompletions);
+        }
+
+        private static async Task DoCancellableAction(Func<CancellationToken, Task> action, string connectionId, ConcurrentDictionary<string, CancellationTokenSource> inProgressTokenSources)
+        {
+            if (inProgressTokenSources.TryRemove(connectionId, out var previousTokenSource))
+            {
+                previousTokenSource.Cancel();
             }
 
             CancellationTokenSource cts = new CancellationTokenSource();
-            Task t = Task.Run(async () => await ValidateCancellable(code, generation, cts.Token), cts.Token);
-            inProgress[Context.ConnectionId] = cts;
-            await t;
-        }
-
-        private async Task ValidateCancellable(string code, int generation, CancellationToken token)
-        {
-            var diags = await ideServices.GetDiagnostics(code);
-
-            // If cancelled, then don't bother sending details back to the client
-            token.ThrowIfCancellationRequested();
-
-            inProgress.TryRemove(Context.ConnectionId, out var ignore);
-            if (diags == null)
-            {
-                Clients.Caller.CompilerError(null, generation);
-            }
-            else
-            {
-                Clients.Caller.CompilerError(CompilerError.ArrayFromDiagnostics(diags), generation);
-            }
+            inProgressTokenSources[connectionId] = cts;
+            await action(cts.Token);
         }
     }
 }

@@ -167,4 +167,7 @@
     Editor.prototype.isClean = function (generation) {
         return this.codeMirror.isClean(generation);
     };
+    Editor.prototype.getCursorIndex = function () {
+        return this.codeMirror.indexFromPos(this.codeMirror.getCursor());
+    };
 })();

@@ -39,11 +39,13 @@ namespace CodingTrainer.CodingTrainerWeb
                         "~/Scripts/codemirror/addon/display/panel.js",
                         "~/Scripts/codemirror/addon/lint/lint.js",
                         "~/Scripts/codemirror/addon/comment/comment.js",
+                        "~/Scripts/codemirror/addon/hint/show-hint.js",
                         "~/Scripts/codemirror-buttons/buttons.js"));
 
             var codeMirrorStyles = new List<string> {
                         "~/Scripts/codemirror/lib/codemirror.css",
                         "~/Scripts/codemirror/addon/lint/lint.css",
+                        "~/Scripts/codemirror/addon/hint/show-hint.css",
                         "~/Scripts/codemirror-buttons/buttons.css"};
             codeMirrorStyles.AddRange(CodeMirrorThemes.ThemeFiles);
 

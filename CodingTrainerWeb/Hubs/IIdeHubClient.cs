@@ -9,6 +9,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
     public interface IIdeHubClient
     {
-        void CompilerError(CompilerError[] details, int generation);
+        void DiagsCallback(IEnumerable<CompilerError> diags, int generation);
+        void CompletionsCallback(IEnumerable<string> completions, int generation);
     }
 }

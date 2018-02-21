@@ -8,6 +8,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
     public interface IIdeHubServer
     {
-        Task Validate(string code, int generation);
+        Task RequestDiags(string code, int generation);
+        Task RequestCompletions(string code, int cursorPosition, int generation);
     }
 }
