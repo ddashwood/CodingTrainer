@@ -1,8 +1,90 @@
 ﻿(function () {
+    ////////////////////
+    // Set up CodeMirror
+    ////////////////////
+
+    // Editor
+
+    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: "text/x-csharp",
+        indentUnit: 4,
+        dragDrop: false,
+        autoCloseBrackets: true,
+        theme: $('#Theme').val(),
+        lint: { lintOnChange: false },
+        gutters: ["CodeMirror-lint-markers"],
+        buttons: [
+            {
+                hotkey: "Ctrl-Z",
+                class: "cm-btn-undo",
+                label: "&#x21BA;",
+                callback: function (cm) {
+                    cm.execCommand("undo");
+                }
+            },
+            {
+                hotkey: "Ctrl-Y",
+                class: "cm-btn-redo",
+                label: "&#x21BB;",
+                callback: function (cm) {
+                    cm.execCommand("redo");
+                }
+            },
+            {
+                hotkey: "Ctrl-/",
+                class: "cm-btn-comment",
+                label: "//",
+                callback: function (cm) {
+                    var sel = cm.listSelections();
+                    for (var i = 0; i < sel.length; i++) {
+                        cm.toggleComment(sel[i].anchor, sel[i].head);
+                    }
+                }
+            },
+            {
+                hotkey: 'Ctrl-K Ctrl-D',
+                class: "cm-btn-indent",
+                label: "{ }",
+                callback: function (cm) {
+                    for (var i = 0; i < cm.lineCount(); i++) {
+                        cm.indentLine(i);
+                    }
+                }
+            }
+        ],
+        extraKeys: {
+            Tab: function (cm) {
+                var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                cm.replaceSelection(spaces);
+            }
+        }
+    });
+
+    $('.cm-btn-undo').attr('data-toggle', 'tooltip').attr('title', 'Undo (Ctrl-Z)').tooltip();
+    $('.cm-btn-redo').attr('data-toggle', 'tooltip').attr('title', 'Redo (Ctrl-Y)').tooltip();
+    $('.cm-btn-comment').attr('data-toggle', 'tooltip').attr('title', 'Toggle comment (Ctrl-/)').tooltip();
+    $('.cm-btn-indent').attr('data-toggle', 'tooltip').attr('title', 'Auto-indent (Ctrl-K Ctrl-D)').tooltip();
+
+    editor.setSize(null, '35em');
+
+    // Console
+
+    var codeConsole = CodeMirror.fromTextArea(document.getElementById("console"), {
+        mode: "text/plain",
+        theme: $('#Theme').val()
+    });
+    codeConsole.setSize(null, '35em');
+    codeConsole.submitOnReturn(function (text) {
+        runnerHub.server.consoleIn(text);
+    });
+
+
     // This function used when errors occure during real-time linting, and also
     // when they occur while running the program
     var handleErrors = function (errors) {
-        codeConsole.clear();
+        codeConsole.clearAll();
         if (!errors) {
             editor.clearErrors();
             return;
@@ -16,13 +98,14 @@
             }
         }
 
-        editor.showErrors(errors);
+        editor.showPerformedLint(errors);
 
-        codeConsole.append('There were compiler errors...\n');
-        codeConsole.append('Click on an error to go to the affected line\n\n');
+        codeConsole.consoleAppend('There were compiler errors...\n');
+        codeConsole.consoleAppend('Click on an error to go to the affected line\n\n');
         for (var j = 0; j < errors.length; j++) {
-            codeConsole.appendWithLineLink('  ' + errors[j].Message + '\n    Line ' + (errors[i = j].line + 1) + '\n', errors[j].line, function (line) {
-                editor.gotoLine(line);
+            codeConsole.consoleAppendWithLineLink('  ' + errors[j].Message + '\n    Line ' + (errors[i = j].line + 1) + '\n', errors[j].line, function (line) {
+                editor.setCursor({ line: line, ch: 0 });
+                editor.focus();
             });
         }
 
@@ -45,17 +128,14 @@
         $.connection.hub.start();
     });
 
-    ///////////////////////////////////
-    // Code for handling SignalR events
-    ///////////////////////////////////
+    ////////////////////////////////////////////////////
+    // Code for handling SignalR events for running code
+    ////////////////////////////////////////////////////
 
     var runnerHub = $.connection.codeRunnerHub;
 
     runnerHub.client.consoleOut = function (message) {
-        // Display stdout data
-        //$('#console-out').append(document.createTextNode(message));
-
-        codeConsole.append(message);
+        codeConsole.consoleAppend(message);
     };
 
     var complete = function () {
@@ -72,7 +152,7 @@
 
     // User clicks run button
     $('#run').click(function () {
-        codeConsole.clear();
+        codeConsole.clearAll();
         codeConsole.focus();
         // Prevent user from running again
         editor.clearErrors();
@@ -102,8 +182,8 @@
     $('#Theme').change(function () {
         var theme = $(this).val();
         // Update the current theme
-        editor.setTheme(theme);
-        codeConsole.setTheme(theme);
+        editor.setOption('theme', theme);
+        codeConsole.setOption('theme', theme);
         // And send a request to the server to save the theme preference
         $.ajax({
             url: "/api/theme",
@@ -111,24 +191,12 @@
             dataType: "json",
             data: '=' + theme // The '=' is needed to put the un-named string into x-www-form-urlencoded format
         }).fail(function (request, status, error) {
-            codeConsole.dir(request);
+            console.dir(request);
             alert('Failed to save your theme preference: ' + status + " - " + error +
                 '\n\nThe JavaScript console contains more details of the problem');
         });
     });
 
-    ////////////////////
-    // Set up CodeMirror
-    ////////////////////
-
-    var editor = new Editor("code", $('#Theme').val());
-    editor.setSize(null, '35em');
-
-    var codeConsole = new Console("console", $('#Theme').val());
-    codeConsole.setSize(null, '35em');
-    codeConsole.onReturn = function (text) {
-        runnerHub.server.consoleIn(text);
-    };
 
     ////////////////////
     // Real-time linting
@@ -143,29 +211,28 @@
         }
     };
 
-    ideHub.client.completionsCallback = function (completions, generation) {
-        // Is just checking if clean sufficient? Need to check current token really.....
-        if (editor.isClean(generation)) {
-            codeConsole.clear();
-            if (completions) {
-                for (var i = 0; i < completions.length; i++) {
-                    codeConsole.append(completions[i] + '\n');
-                }
-            }
-        }
-    };
+    //ideHub.client.completionsCallback = function (completions, generation) {
+    //    // Is just checking if clean sufficient? Need to check current token really.....
+    //    if (editor.isClean(generation)) {
+    //        codeConsole.clear();
+    //        if (completions) {
+    //            for (var i = 0; i < completions.length; i++) {
+    //                codeConsole.append(completions[i] + '\n');
+    //            }
+    //        }
+    //    }
+    //};
     
     // When there's a change, send it to the hub
-    editor.onChange(function () {
+    editor.on('change', function () {
         if (hubConnected) {
             var generation = editor.changeGeneration(true);
             var code = editor.getValue();
-            var pos = editor.getCursorIndex();
+            //var pos = editor.indexFromPos(this.getCursor());
             if (model.HiddenCodeHeader) {
                 code = model.HiddenCodeHeader + "\n" + code;
-                pos += model.HiddenCodeHeader.length + 1;
+                //pos += model.HiddenCodeHeader.length + 1;
             }
-            console.log(pos);
             ideHub.server.requestDiags(code, generation);
         }
     });
