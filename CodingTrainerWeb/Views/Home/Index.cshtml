@@ -5,7 +5,7 @@
 <div class="jumbotron">
     <h1>Code Runner</h1>
     <p class="lead">The Code Runner is a website for running C# scripts.</p>
-    <p>@Html.ActionLink("Click here to start »", "RunCode", "Exercise" ,null, new { @class = "btn btn-primary btn-lg" })</p>
+    <p>@Html.ActionLink("Click here to start »", "RunCode", "Exercise", null, new { @class = "btn btn-primary btn-lg" })</p>
 </div>
 
 <div class="row">
@@ -19,12 +19,12 @@
         </p>
         <p>
             Other plans include:
-            <ul>
-                <li>Syntax highlighting</li>
-                <li>Compiler error highlighting</li>
-                <li>Basic  debugging</li>
-            </ul>
         </p>
+        <ul>
+            <li>Syntax highlighting</li>
+            <li>Compiler error highlighting</li>
+            <li>Basic  debugging</li>
+        </ul>
     </div>
     <div class="col-md-4">
         <h2>Instructions for use</h2>
@@ -47,11 +47,11 @@
     </div>
     <div class="col-md-4">
         <h2>Restrictions</h2>
-            <ul>
-                <li>Maximum of 5 seconds of processor time per script.</li>
-                <li>Total maximum running time of 5 minutes per script.</li>
-                <li>Maximum 5MB of heap memory per script.</li>
-            </ul>
+        <ul>
+            <li>Maximum of 5 seconds of processor time per script.</li>
+            <li>Total maximum running time of 5 minutes per script.</li>
+            <li>Maximum 5MB of heap memory per script.</li>
+        </ul>
         <h2>Known Issues</h2>
         <ul>
             <li>Stack overflows are not currently handled.</li>

@@ -1,4 +1,13 @@
 ﻿(function () {
+    ///////////////////////////////////////
+    // Functions for completion suggestions
+    ///////////////////////////////////////
+
+    var getHints = function (cm) {
+
+    };
+
+
     ////////////////////
     // Set up CodeMirror
     ////////////////////
@@ -14,6 +23,7 @@
         autoCloseBrackets: true,
         theme: $('#Theme').val(),
         lint: { lintOnChange: false },
+        loadHints: loadHints,
         gutters: ["CodeMirror-lint-markers"],
         buttons: [
             {
@@ -211,19 +221,7 @@
         }
     };
 
-    //ideHub.client.completionsCallback = function (completions, generation) {
-    //    // Is just checking if clean sufficient? Need to check current token really.....
-    //    if (editor.isClean(generation)) {
-    //        codeConsole.clear();
-    //        if (completions) {
-    //            for (var i = 0; i < completions.length; i++) {
-    //                codeConsole.append(completions[i] + '\n');
-    //            }
-    //        }
-    //    }
-    //};
-    
-    // When there's a change, send it to the hub
+    // When there's a change, send it to the hub to get diagnostics
     editor.on('change', function () {
         if (hubConnected) {
             var generation = editor.changeGeneration(true);
@@ -236,4 +234,25 @@
             ideHub.server.requestDiags(code, generation);
         }
     });
+
+    /////////////////////////
+    // Completion Suggestions
+    /////////////////////////
+
+    function loadHints(cm, tokenStart) {
+        // Send a SignalR request to get the hints
+        var code = cm.getValue();
+        var pos = cm.indexFromPos(cm.getCursor());
+        if (model.HiddenCodeHeader) {
+            code = model.HiddenCodeHeader + "\n" + code;
+            pos += model.HiddenCodeHeader.length + 1;
+        }
+
+        ideHub.server.requestCompletions(code, pos, tokenStart);
+    }
+
+    ideHub.client.completionsCallback = function (completions, tokenStart) {
+        editor.showHints(completions, tokenStart);
+    };
+
 })();

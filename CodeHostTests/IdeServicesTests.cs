@@ -19,7 +19,7 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         public async Task SuggestionsTest()
         {
             IEnumerable<string> actual = await ideServices.GetCompletions("using Sys",9);
-            string[] expected = { "static", "System", "Microsoft" };
+            string[] expected = { "System", "Microsoft" };
             CollectionAssert.AreEquivalent(expected, actual);
         }
 

@@ -13,7 +13,7 @@ namespace CodingTrainer.CSharpRunner.PartiallyTrusted
         public static void RunIt(byte[] compiledCode, byte[] pdb)
         {
             var assembly = Assembly.Load(compiledCode, pdb);
-            var type = assembly.GetType("EntryPoint");
+            var type = assembly.GetType("CodingTrainerExercise");
             var main = type?.GetMethod("Main");
 
 
@@ -33,13 +33,12 @@ namespace CodingTrainer.CSharpRunner.PartiallyTrusted
             // If we invoke the entry point, rather than a method, it gets wrapped in a Task.
             // This hides the exception from us.
             // Safest to always check if this has happened.
-            Task t = ret as Task;
-            if (t != null)
+            if (ret is Task task)
             {
-                if (t.Status == TaskStatus.Running) t.Wait();
-                if (t.Exception != null)
+                if (task.Status == TaskStatus.Running) task.Wait();
+                if (task.Exception != null)
                 {
-                    throw t.Exception;
+                    throw task.Exception;
                 }
             }
 

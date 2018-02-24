@@ -32,7 +32,7 @@
 
             if (startIdx === endIdx) {
                 // If start/end are the same, there's nothing to underline
-                // Adjust the selection to include an extra space
+                // Adjust the selection to include an extra space if possible
                 var nextPos = this.posFromIndex(endIdx + 1);
                 var prevPos = this.posFromIndex(endIdx - 1);
 
@@ -41,22 +41,25 @@
                     startIdx--;
                     startPos = this.posFromIndex(startIdx);
                 }
-
-                else {
-                    // We are going to mark a space to the right - first check if
-                    // there's already a space there, and if not, add one
-                    var addSpace = this.getRange(startPos, nextPos) !== " ";
-                    if (addSpace) {
-                        // It seems like the only time the start pos and end pos are the same
-                        // is if the error is at the end of the line. In this case, it's safe to
-                        // insert a space.
-                        this.replaceRange(" ", startPos, endPos);
-                    }
+                // Next, try to the right
+                else if (this.getRange(startPos, nextPos) === " ") {
                     endIdx++;
                     endPos = this.posFromIndex(endIdx);
+                }
+                else {
+                    // So long as this is the end of the line, we can add a space
 
-                    // If we added a space, mark it so we can remove it later, and so the user can't click on it
-                    if (addSpace) {
+                    if (this.getRange(startPos, nextPos) === "\n") {
+                        var currentCursor = this.indexFromPos(this.getCursor());
+                        this.replaceRange(" ", startPos, endPos);
+                        if (currentCursor !== this.indexFromPos(this.getCursor())) {
+                            // Oops - cursor moved when we added the space
+                            this.setCursor(this.posFromIndex(currentCursor));
+                        }
+                        endIdx++;
+                        endPos = this.posFromIndex(endIdx);
+
+                        // Mark the space so we can remove it later, and so the user can't click on it
                         addedSpaceMarks.push(this.markText(startPos, endPos, { atomic: true, inclusiveRight: true }));
                     }
                 }

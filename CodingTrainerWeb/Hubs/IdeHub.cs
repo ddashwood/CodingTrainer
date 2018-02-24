@@ -38,7 +38,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             }, Context.ConnectionId, inProgressDiags);
         }
 
-        public async Task RequestCompletions(string code, int cursorPosition, int generation)
+        public async Task RequestCompletions(string code, int cursorPosition, int tokenStart)
         {
             await DoCancellableAction(async (token) =>
             {
@@ -47,7 +47,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 // If cancelled, then don't bother sending details back to the client
                 token.ThrowIfCancellationRequested();
 
-                Clients.Caller.CompletionsCallback(completions, generation);
+                Clients.Caller.CompletionsCallback(completions, tokenStart);
             }, Context.ConnectionId, inProgressCompletions);
         }
 

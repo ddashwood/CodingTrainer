@@ -2,12 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
-using CodingTrainer.CSharpRunner.PartiallyTrusted;
-using System;
 using System.IO;
 using System.Security.Policy;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace CodingTrainer.CSharpRunner.CodeHost
 {
@@ -19,13 +16,10 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             await Task.Run(() =>
             {
                 var script = CSharpScript.Create<object>(code);
-                var options = new CSharpCompilationOptions(OutputKind.ConsoleApplication, scriptClassName: "EntryPoint");
+                var options = new CSharpCompilationOptions(OutputKind.ConsoleApplication, scriptClassName: "CodingTrainerExercise");
                 compilation = script.GetCompilation().WithOptions(options);
 
-                // Need to add the PartiallyTrusted assembly, as well as any assemblies the user might be using
-                var referencedAssemblies = References.ReferencedAssembliesData.Add(References.FromType(typeof(CompiledCodeRunner)));
-
-                compilation = compilation.AddReferences(referencedAssemblies);
+                compilation = compilation.AddReferences(References.ReferencedAssembliesData);
             });
 
             return compilation;

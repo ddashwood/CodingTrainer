@@ -16,39 +16,6 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 {
     public class IdeServices : IIdeServices
     {
-        //Task creating;
-
-        //AdhocWorkspace workspace;
-        //Project project;
-        //Document document;
-        //HostLanguageServices cSharpServices;
-        //object cSharpCompletionService;
-        //object trigger;
-
-        //public IdeServices()
-        //{
-        //    creating = Task.Run(() =>
-        //    {
-        //        // Create a document
-
-        //        workspace = new AdhocWorkspace();
-        //        project = workspace.AddProject("CodeRunner", "C#");
-        //        project = project.AddMetadataReferences(References.ReferencedAssembliesData);
-        //        document = project.AddDocument("script", string.Empty);
-        //        cSharpServices = workspace.Services.GetLanguageServices("C#");
-
-        //        // Get the completion services
-
-        //        var completionServiceFactory = MakeObject("CSharpCompletionServiceFactory");
-        //        var createLanguageServiceMethod = completionServiceFactory.GetType().GetMethod("CreateLanguageService");
-        //        cSharpCompletionService = createLanguageServiceMethod.Invoke(completionServiceFactory, new object[] { cSharpServices });
-
-        //        // Make a completion trigger
-
-        //        trigger = MakeObject("CompletionTrigger");
-        //    });
-        //}
-
         public async Task<IEnumerable<Diagnostic>> GetDiagnostics(string code, CancellationToken token)
         {
             var compilation = await Compiler.GetCompilation(code);
@@ -97,63 +64,5 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 
             return symbolNames;
         }
-
-
-        //public async Task<IEnumerable<string>> GetCompletions(string code, int position, CancellationToken token)
-        //{
-        //    await creating;
-
-        //    document = document.WithText(SourceText.From(code));
-
-        //    // Now get the completion suggestions
-
-        //    // http://source.roslyn.io/#Microsoft.CodeAnalysis.Features/Completion/CompletionServiceWithProviders.cs,da97458ac8890982
-        //    var parms = new object[] {
-        //        document,
-        //        position,
-        //        trigger,
-        //        null, // Roles
-        //        null, // Options
-        //        null  // CancellationToken
-        //    };
-
-        //    var getCompletionsAsyncMethod = cSharpCompletionService.GetType().GetMethod("GetCompletionsAsync");
-        //    token.ThrowIfCancellationRequested();
-        //    var completionList = await (Task<CompletionList>)getCompletionsAsyncMethod.Invoke(cSharpCompletionService, parms);
-        //    token.ThrowIfCancellationRequested();
-        //    return completionList?.Items.Select(c => c.DisplayText);
-        //}
-
-        //// Reflection services, used to generate internal class of Roslyn
-        //// First of all some data structors for defining the supported classes
-        //private struct ClassDetails
-        //{
-        //    public string Name { get; set; }
-        //    public string AssemblyFullName { get; set; }
-        //    public ClassDetails(string name, string assemblyFullName)
-        //    {
-        //        Name = name;
-        //        AssemblyFullName = assemblyFullName;
-        //    }
-        //}
-        //private ImmutableDictionary<string, ClassDetails> Methods = new Dictionary<string, ClassDetails>()
-        //{
-        //    { "CSharpCompletionServiceFactory", new ClassDetails("Microsoft.CodeAnalysis.CSharp.Completion.CSharpCompletionServiceFactory", "Microsoft.CodeAnalysis.CSharp.Features, Version=2.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35") },
-        //    { "CompletionTrigger", new ClassDetails("Microsoft.CodeAnalysis.Completion.CompletionTrigger", "Microsoft.CodeAnalysis.Features, Version=2.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35") }
-        //}.ToImmutableDictionary();
-
-
-
-
-        //// N.b. no ability to pass constructor parameters (yet!)
-        //private object MakeObject(string name)
-        //{
-        //    var classDetails = Methods[name];
-        //    var assembly = Assembly.Load(classDetails.AssemblyFullName);
-        //    var type = assembly.GetType(classDetails.Name);
-
-        //    var instance = Activator.CreateInstance(type, true);
-        //    return instance;
-        //}
     }
 }

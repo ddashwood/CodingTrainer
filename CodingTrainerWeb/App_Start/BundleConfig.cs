@@ -41,6 +41,7 @@ namespace CodingTrainer.CodingTrainerWeb
                         "~/Scripts/codemirror/addon/comment/comment.js",
                         "~/Scripts/codemirror/addon/hint/show-hint.js",
                         "~/Scripts/app/codemirror-addon/performed-lint.js",
+                        "~/Scripts/app/codemirror-addon/hint-loader.js",
                         "~/Scripts/app/codemirror-addon/console.js",
                         "~/Scripts/codemirror-buttons/buttons.js"));
 
