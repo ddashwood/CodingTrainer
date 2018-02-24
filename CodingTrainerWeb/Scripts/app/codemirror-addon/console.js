@@ -5,8 +5,14 @@
     self.addKeyMap({
         Enter: function () {
             if (self.onReturn) {
-                var line = self.getCursor().line;
-                self.onReturn(self.getLine(line));
+                // We can't return the whole of this line, because some of it
+                // might have been put there as output
+
+                // But the output should be read only, so if we select "everything",
+                // we should get just the bits the user typed
+                self.setSelection(self.posFromIndex(Infinity), self.posFromIndex(0));
+                var input = self.getSelection();
+                self.onReturn(input);
             }
             self.setSelection(self.posFromIndex(Infinity));
             self.replaceSelection('\n');
