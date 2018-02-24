@@ -115,11 +115,13 @@
                     }
                 }
             }
-            // If we haven't found a hint that starts with the current token, just selected
+            // If we haven't found a hint that starts with the current token, just select
             // the first item in the list
             if (selected === -1) selected = 0;
         }
 
+
+        // Now we can ask CodeMirror to display the hints for us
         var options = {
             hint: function () {
                 return {
@@ -137,10 +139,7 @@
             },
             completeSingle: false
         };
-        //options.on("pick", function () {
-        //    // Need to ensure the user-typed portion gets replaced, not added to
 
-        //});
         cm.showHint(options);
     }
 })();
