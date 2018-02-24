@@ -19,11 +19,12 @@
                 checkHints(cm, e.key);
             });
 
-            // TO DO - add Ctrl-Space keymap
-
-
-        } else {
-            // TO DO - Remove everything that's been registered
+            // Register the Ctrl-Space combination for bringing up hints
+            cm.addKeyMap ({
+                'Ctrl-Space': function () {
+                    checkHints(cm, 'Ctrl-Space');
+                }
+            });
         }
     });
     
@@ -45,14 +46,15 @@
         // Don't hint if code is selected
         if (cm.somethingSelected()) return;
 
-        // Don't hint if the code hasn't changed since last time - the user is just navigating
-        // N.B. THIS MAY NEED TO CHANGE WHEN WE IMPLEMENT Ctrl-Space
-        if (cm.isClean(cm.loadedHints.generation)) return;
-        cm.loadedHints.generation = cm.changeGeneration();
+        if (key !== 'Ctrl-Space') {
+            // Don't hint if the code hasn't changed since last time - the user is just navigating
+            if (cm.isClean(cm.loadedHints.generation)) return;
+            cm.loadedHints.generation = cm.changeGeneration();
 
-        // These keys can't be indicate that the token is not something we can hint:
-        var noToken = ['Enter', ';', ' ', '(', ')', '{', '}', '[', ']'];
-        if (noToken.indexOf(key) !== -1) return;
+            // These keys can't be indicate that the token is not something we can hint:
+            var noToken = ['Enter', ';', ' ', '(', ')', '{', '}', '[', ']'];
+            if (noToken.indexOf(key) !== -1) return;
+        }
 
         // Find the current token
         var token = cm.getTokenAt(cm.getCursor());
@@ -80,8 +82,8 @@
             cm.loadedHints.currentToken = token;
             cm.loadedHints.currentLine = line;
 
-            // Is this the start of a new token?
-            if (token.string.length === 1 && token.string === key) {
+            // Is this the START of a new token, or has the user explicitly requested hints?
+            if (key = 'Ctrl-Space' || (token.string.length === 1 && token.string === key)) {
                 console.log('Loading completions');
                 // This function will ask the server for the hints, then call showHints when it has the hints
                 cm.loadedHints.getHints(cm, cm.indexFromPos({ line: line, ch: token.start }));
