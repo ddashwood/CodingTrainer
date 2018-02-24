@@ -58,7 +58,6 @@
 
         // Find the current token
         var token = cm.getTokenAt(cm.getCursor());
-        console.log(token.string + ' is a ' + token.type + ', and the key was "' + key + '"');
         var line = cm.getCursor().line;
 
         // Literals don't have hints
@@ -71,21 +70,23 @@
             token.end = Math.max(token.start, token.end);
         }
 
-
         if (cm.loadedHints.currentToken && cm.loadedHints.currentToken.start === token.start && cm.loadedHints.currentLine === line) {
-            console.log('Continuing');
+            // Not a new hint
             cm.loadedHints.currentToken = token;  // Because the end point will have changed
-            if (cm.loadedHints.currentHints) filterAndShow(cm);
+            if (cm.loadedHints.currentHints) {
+                filterAndShow(cm);
+            } else if (key === 'Ctrl-Space') {
+                // This function will ask the server for the hints, then call showHints when it has the hints
+                cm.loadedHints.getHints(cm, cm.indexFromPos({ line: line, ch: token.start }));
+            }
         } else {
             // New token - get new hints if necessary
-            console.log('New token');
             cm.loadedHints.currentToken = token;
             cm.loadedHints.currentLine = line;
 
             // Is this the START of a new token, or has the user explicitly requested hints?
             var tokenStart = token.string.length === 1 && token.string === key;
             if (key === 'Ctrl-Space' || tokenStart) {
-                console.log('Loading completions');
                 // This function will ask the server for the hints, then call showHints when it has the hints
                 cm.loadedHints.getHints(cm, cm.indexFromPos({ line: line, ch: token.start }));
             }
