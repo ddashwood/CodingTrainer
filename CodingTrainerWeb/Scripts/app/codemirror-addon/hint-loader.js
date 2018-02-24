@@ -83,7 +83,8 @@
             cm.loadedHints.currentLine = line;
 
             // Is this the START of a new token, or has the user explicitly requested hints?
-            if (key = 'Ctrl-Space' || (token.string.length === 1 && token.string === key)) {
+            var tokenStart = token.string.length === 1 && token.string === key;
+            if (key === 'Ctrl-Space' || tokenStart) {
                 console.log('Loading completions');
                 // This function will ask the server for the hints, then call showHints when it has the hints
                 cm.loadedHints.getHints(cm, cm.indexFromPos({ line: line, ch: token.start }));
