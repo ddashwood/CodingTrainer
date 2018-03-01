@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.Completion;
 using Microsoft.CodeAnalysis.Host;
 using Microsoft.CodeAnalysis.Recommendations;
 using Microsoft.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -16,7 +17,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 {
     public class IdeServices : IIdeServices
     {
-        public async Task<IEnumerable<Diagnostic>> GetDiagnostics(string code, CancellationToken token)
+        public async Task<IEnumerable<Diagnostic>> GetDiagnosticsAsyc(string code, CancellationToken token)
         {
             var compilation = await Compiler.GetCompilation(code);
             token.ThrowIfCancellationRequested();
@@ -31,17 +32,13 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             var any = false;
             var diagnostics = new List<Diagnostic>();
 
-            // Will we ever have more than one syntax tree? Probably not if we're just compiling
-            // a script, but use a foreach just in case
-            foreach (var tree in compilation.SyntaxTrees)
+            var tree = compilation.SyntaxTrees.Single();
+            token.ThrowIfCancellationRequested();
+            var treeDiagnostics = await Task.Run(() => compilation.GetSemanticModel(tree).GetDiagnostics());
+            if (treeDiagnostics.Length > 0)
             {
-                token.ThrowIfCancellationRequested();
-                var treeDiagnostics = await Task.Run(() => compilation.GetSemanticModel(tree).GetDiagnostics());
-                if (treeDiagnostics.Length > 0)
-                {
-                    any = true;
-                    diagnostics.AddRange(treeDiagnostics);
-                }
+                any = true;
+                diagnostics.AddRange(treeDiagnostics);
             }
 
             token.ThrowIfCancellationRequested();
@@ -49,20 +46,50 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             return null;
         }
 
-        public async Task<IEnumerable<string>> GetCompletions(string code, int position, CancellationToken token)
+        public async Task<IEnumerable<string>> GetCompletionStringsAsync(string code, int position, CancellationToken token)
         {
             Workspace workspace = new AdhocWorkspace();
-            List<string> symbolNames = new List<string>();
 
             var compilation = await Compiler.GetCompilation(code);
-            foreach (var tree in compilation.SyntaxTrees)
+            var tree = compilation.SyntaxTrees.Single();
+
+            SemanticModel sm = compilation.GetSemanticModel(tree);
+            var symbols = await Recommender.GetRecommendedSymbolsAtPositionAsync(sm, position, workspace, cancellationToken: token);
+
+            return symbols.OrderBy(s => s.Name).Select(s => s.Name).Distinct();
+        }
+
+        public async Task<IEnumerable<ISymbol>> GetOverloadsAndParametersAsync(string code, int position, CancellationToken token = default(CancellationToken))
+        {
+            var compilation = await Compiler.GetCompilation(code);
+            var tree = compilation.SyntaxTrees.Single();
+
+            IEnumerable<ISymbol> overloads = new List<ISymbol>();
+
+            var semanticModel = compilation.GetSemanticModel(tree);
+            token.ThrowIfCancellationRequested();
+
+            var theNode = (await tree.GetRootAsync(token)).FindToken(position).Parent;
+            while (!theNode.IsKind(SyntaxKind.InvocationExpression))
             {
-                SemanticModel sm = compilation.GetSemanticModel(tree);
-                var symbols = await Recommender.GetRecommendedSymbolsAtPositionAsync(sm, position, workspace, cancellationToken: token);
-                symbolNames.AddRange(symbols.OrderBy(s => s.Name).Select(s => s.Name).Distinct());
+                theNode = theNode.Parent;
+                if (theNode == null) break; // There isn't an InvocationExpression in this branch of the tree
             }
 
-            return symbolNames;
+            if (theNode == null)
+            {
+                overloads = null;
+            }
+            else
+            {
+                var symbolInfo = semanticModel.GetSymbolInfo(theNode);
+                var symbol = symbolInfo.Symbol;
+                var containingType = symbol.ContainingType;
+
+                overloads = containingType.GetMembers(symbol.Name);
+            }
+
+            return overloads;
         }
     }
 }

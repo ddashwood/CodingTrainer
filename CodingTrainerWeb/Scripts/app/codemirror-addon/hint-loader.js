@@ -37,7 +37,7 @@
         if (tokenStart !== currentTokenStart) return;
 
         this.loadedHints.currentHints = hints;
-        var filtered = filterAndShow(this);
+        filterAndShow(this);
     });
 
 

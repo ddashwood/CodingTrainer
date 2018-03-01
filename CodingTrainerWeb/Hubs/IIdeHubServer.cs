@@ -10,5 +10,6 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
     {
         Task RequestDiags(string code, int generation);
         Task RequestCompletions(string code, int cursorPosition, int tokenStart);
+        Task RequestParameters(string code, int cursorPosition, int tokenStart);
     }
 }

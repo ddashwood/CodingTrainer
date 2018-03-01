@@ -10,7 +10,8 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 {
     public interface IIdeServices
     {
-        Task<IEnumerable<Diagnostic>> GetDiagnostics(string code, CancellationToken token = default(CancellationToken));
-        Task<IEnumerable<string>> GetCompletions(string code, int position, CancellationToken token = default(CancellationToken));
+        Task<IEnumerable<Diagnostic>> GetDiagnosticsAsyc(string code, CancellationToken token = default(CancellationToken));
+        Task<IEnumerable<string>> GetCompletionStringsAsync(string code, int position, CancellationToken token = default(CancellationToken));
+        Task<IEnumerable<ISymbol>> GetOverloadsAndParametersAsync(string code, int position, CancellationToken token = default(CancellationToken));
     }
 }

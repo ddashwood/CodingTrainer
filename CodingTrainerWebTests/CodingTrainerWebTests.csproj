@@ -203,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Hubs\CodeRunnerHubTests.cs" />
+    <Compile Include="Hubs\IdeHubTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>

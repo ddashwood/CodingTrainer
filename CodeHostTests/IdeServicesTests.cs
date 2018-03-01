@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CSharpRunner.CodeHost;
+using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,32 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
     {
         private IIdeServices ideServices = new IdeServices();
 
+        #region ParameterTests
+
+        [Test]
+        [Category("Paramters")]
+        public async Task ParametersTest()
+        {
+            IEnumerable<ISymbol> actual = await ideServices.GetOverloadsAndParametersAsync("private static void X() { System.Console.WriteLine(\"Blah blah blah\")  }", 53);
+            Assert.AreEqual(19, actual.Count()); 
+        }
+
+        [Test]
+        [Category("Paramters")]
+        public async Task InvalidParametersTest()
+        {
+            IEnumerable<ISymbol> actual = await ideServices.GetOverloadsAndParametersAsync("private static void X() { System.Console.WriteLine(\"Blah blah blah\")  }", 0);
+            Assert.AreEqual(null, actual);
+        }
+        #endregion
+
         #region CompletionsTests
 
         [Test]
         [Category("Completions")]
         public async Task SuggestionsTest()
         {
-            IEnumerable<string> actual = await ideServices.GetCompletions("using Sys",9);
+            IEnumerable<string> actual = await ideServices.GetCompletionStringsAsync("using Sys",9);
             string[] expected = { "System", "Microsoft" };
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -27,8 +47,8 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         [Category("Completions")]
         public async Task MultiSuggestionsTest()
         {
-            await ideServices.GetCompletions("using Sys", 9);
-            IEnumerable<string> actual = await ideServices.GetCompletions("using System.", 13);
+            await ideServices.GetCompletionStringsAsync("using Sys", 9);
+            IEnumerable<string> actual = await ideServices.GetCompletionStringsAsync("using System.", 13);
             string[] expected = { "Collections", "Configuration", "Deployment", "Diagnostics", "Globalization", "IO", "Reflection", "Resources", "Runtime", "Security", "Text", "Threading" };
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -37,8 +57,8 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         [Category("Completions")]
         public async Task ConcurrentSuggestionsTest()
         {
-            Task t = ideServices.GetCompletions("using Sys", 9); // To test concurrency, don't await this task!
-            IEnumerable<string> actual = await ideServices.GetCompletions("using System.", 13);
+            Task t = ideServices.GetCompletionStringsAsync("using Sys", 9); // To test concurrency, don't await this task!
+            IEnumerable<string> actual = await ideServices.GetCompletionStringsAsync("using System.", 13);
             string[] expected = { "Collections", "Configuration", "Deployment", "Diagnostics", "Globalization", "IO", "Reflection", "Resources", "Runtime", "Security", "Text", "Threading" };
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -50,7 +70,7 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         [Category("Diagnostics")]
         public async Task NoDiagnosticsTest()
         {
-            var diagnostics = await ideServices.GetDiagnostics(GetUsings(new string[] { "System" })
+            var diagnostics = await ideServices.GetDiagnosticsAsyc(GetUsings(new string[] { "System" })
                 .Append(@"Console.WriteLine(""Hello World!"");").ToString());
             Assert.AreEqual(null, diagnostics);
         }
@@ -59,7 +79,7 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         [Category("Diagnostics")]
         public async Task ErrorTest()
         {
-            var diagnostics = await ideServices.GetDiagnostics(GetUsings(new string[] { "System" })
+            var diagnostics = await ideServices.GetDiagnosticsAsyc(GetUsings(new string[] { "System" })
                 .Append(@"Console.Writeline(""Hello World!"");").ToString());
             Assert.AreEqual(1, diagnostics.Count());
             Assert.AreEqual("'Console' does not contain a definition for 'Writeline'", diagnostics.First().GetMessage());
@@ -69,7 +89,7 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         [Category("Diagnostics")]
         public async Task ComplexErrorTest()
         {
-            var diagnostics = await ideServices.GetDiagnostics(GetUsings(new string[] { "System" })
+            var diagnostics = await ideServices.GetDiagnosticsAsyc(GetUsings(new string[] { "System" })
                 .Append(@"
 for (int i = 0; i < 5; i++)
 {

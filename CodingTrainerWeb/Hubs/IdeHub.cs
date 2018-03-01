@@ -24,12 +24,13 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         private static ConcurrentDictionary<string, CancellationTokenSource> inProgressDiags = new ConcurrentDictionary<string, CancellationTokenSource>();
         private static ConcurrentDictionary<string, CancellationTokenSource> inProgressCompletions = new ConcurrentDictionary<string, CancellationTokenSource>();
+        private static ConcurrentDictionary<string, CancellationTokenSource> inProgressParams = new ConcurrentDictionary<string, CancellationTokenSource>();
 
         public async Task RequestDiags(string code, int generation)
         {
             await DoCancellableAction(async (token) =>
             {
-                var diags = await ideServices.GetDiagnostics(code, token);
+                var diags = await ideServices.GetDiagnosticsAsyc(code, token);
 
                 // If cancelled, then don't bother sending details back to the client
                 token.ThrowIfCancellationRequested();
@@ -42,13 +43,28 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         {
             await DoCancellableAction(async (token) =>
             {
-                var completions = await ideServices.GetCompletions(code, cursorPosition, token);
+                var completions = await ideServices.GetCompletionStringsAsync(code, cursorPosition, token);
 
                 // If cancelled, then don't bother sending details back to the client
                 token.ThrowIfCancellationRequested();
 
                 Clients.Caller.CompletionsCallback(completions, tokenStart);
             }, Context.ConnectionId, inProgressCompletions);
+        }
+
+        public async Task RequestParameters(string code, int cursorPosition, int tokenStart)
+        {
+            await DoCancellableAction(async (token) =>
+            {
+                var paramsRaw = await ideServices.GetOverloadsAndParametersAsync(code, cursorPosition, token);
+                var overloads = new Overloads(paramsRaw);
+
+                // If cancelled, then don't bother sending details back to the client
+                token.ThrowIfCancellationRequested();
+
+                Clients.Caller.ParamsCallback(overloads, tokenStart);
+
+            }, Context.ConnectionId, inProgressParams);
         }
 
         private static async Task DoCancellableAction(Func<CancellationToken, Task> action, string connectionId, ConcurrentDictionary<string, CancellationTokenSource> inProgressTokenSources)

@@ -11,5 +11,6 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
     {
         void DiagsCallback(IEnumerable<CompilerError> diags, int generation);
         void CompletionsCallback(IEnumerable<string> completions, int tokenStart);
+        void ParamsCallback(Overloads overloads, int tokenStart);
     }
 }
