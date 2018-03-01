@@ -57,12 +57,15 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             await DoCancellableAction(async (token) =>
             {
                 var paramsRaw = await ideServices.GetOverloadsAndParametersAsync(code, cursorPosition, token);
-                var overloads = new Overloads(paramsRaw);
 
                 // If cancelled, then don't bother sending details back to the client
                 token.ThrowIfCancellationRequested();
 
-                Clients.Caller.ParamsCallback(overloads, tokenStart);
+                if (paramsRaw != null) // Don't bother calling back if there is no parameter list to show
+                {
+                    var overloads = new Overloads(paramsRaw);
+                    Clients.Caller.ParamsCallback(overloads, tokenStart);
+                }
 
             }, Context.ConnectionId, inProgressParams);
         }

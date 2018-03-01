@@ -10,6 +10,8 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
     public class Overloads : IReadOnlyCollection<Overload>
     {
         private List<Overload> overloads = new List<Overload>();
+        public string Name { get; set; }
+        public string ReturnType { get; set; }
 
         public int Count => overloads.Count();
 
@@ -25,6 +27,11 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
 
         public Overloads(IEnumerable<ISymbol> overloadSymbols)
         {
+            // Name and return type should be the same for all overloads
+            var firstMethodSymbol = overloadSymbols.First(s => s is IMethodSymbol) as IMethodSymbol;
+            Name = firstMethodSymbol.Name;
+            ReturnType = RemoveNamespace(firstMethodSymbol.ReturnType.ToString());
+
             foreach (var symbol in overloadSymbols)
             {
                 if (symbol is IMethodSymbol method)
@@ -33,11 +40,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
                     foreach (var paramSymbol in method.Parameters)
                     {
                         string type = paramSymbol.Type.ToString();
-                        int dotPosition = type.LastIndexOf('.');
-                        if (dotPosition != -1)
-                        {
-                            type = type.Substring(dotPosition + 1);
-                        }
+                        type = RemoveNamespace(type);
                         overload.parameters.Add(new Parameter()
                         {
                             Name = paramSymbol.Name,
@@ -47,6 +50,17 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
                     overloads.Add(overload);
                 }
             }
+        }
+
+        private static string RemoveNamespace(string type)
+        {
+            int dotPosition = type.LastIndexOf('.');
+            if (dotPosition != -1)
+            {
+                type = type.Substring(dotPosition + 1);
+            }
+
+            return type;
         }
     }
 

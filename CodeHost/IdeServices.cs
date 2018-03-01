@@ -64,32 +64,25 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             var compilation = await Compiler.GetCompilation(code);
             var tree = compilation.SyntaxTrees.Single();
 
-            IEnumerable<ISymbol> overloads = new List<ISymbol>();
-
             var semanticModel = compilation.GetSemanticModel(tree);
             token.ThrowIfCancellationRequested();
 
-            var theNode = (await tree.GetRootAsync(token)).FindToken(position).Parent;
+            var theToken = (await tree.GetRootAsync(token)).FindToken(position);
+            var theNode = theToken.Parent;
+            bool foundArgumentList = false;
             while (!theNode.IsKind(SyntaxKind.InvocationExpression))
             {
+                if (theNode.IsKind(SyntaxKind.ArgumentList)) foundArgumentList = true;
                 theNode = theNode.Parent;
-                if (theNode == null) break; // There isn't an InvocationExpression in this branch of the tree
+                if (theNode == null) return null; // There isn't an InvocationExpression in this branch of the tree
             }
+            if (!foundArgumentList) return null;  // There isn't an ArgumentList in this branch of the tree
 
-            if (theNode == null)
-            {
-                overloads = null;
-            }
-            else
-            {
-                var symbolInfo = semanticModel.GetSymbolInfo(theNode);
-                var symbol = symbolInfo.Symbol;
-                var containingType = symbol.ContainingType;
+            var symbolInfo = semanticModel.GetSymbolInfo(theNode);
+            var symbol = symbolInfo.Symbol;
+            var containingType = symbol.ContainingType;
 
-                overloads = containingType.GetMembers(symbol.Name);
-            }
-
-            return overloads;
+            return containingType.GetMembers(symbol.Name);
         }
     }
 }
