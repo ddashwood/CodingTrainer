@@ -44,7 +44,8 @@ namespace CodingTrainer.CSharpRunner.CodeHost
                         newConsoleOut.Flushed += ConsoleFlushed;
 
                         object threadLock = new object();
-                        Thread thread = null, actualThread;
+                        Thread thread = null;
+                        Thread actualThread;
                         runner = Task.Run(() =>
                         {
                             // Set the thread on which the untrusted code is running - this can be used
