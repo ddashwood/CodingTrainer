@@ -1,8 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Reflection;
-using System.Security;
-using System.Security.Permissions;
 
 namespace CodingTrainer.CSharpRunner.SandboxHost
 {
@@ -10,36 +7,16 @@ namespace CodingTrainer.CSharpRunner.SandboxHost
     // Used to change Console streams, and then to invoke the CompiledCodeRunner
     public class Sandboxer : MarshalByRefObject
     {
-        public void ExecuteUntrustedCode(string assemblyName, string typeName, string entryPoint, Object[] parameters, StringWriter newConsoleOut, TextReader newConsoleIn)
+        public void ExecuteUntrustedCode(string assemblyName, string typeName, string entryPoint, Object[] parameters)
         {
             MethodInfo target = Assembly.Load(assemblyName).GetType(typeName).GetMethod(entryPoint);
-            ExecuteTarget(target, parameters, newConsoleOut, newConsoleIn);
+            ExecuteTarget(target, parameters);
         }
 
-        public void ExecuteTarget(MethodInfo target, Object[] parameters, StringWriter newConsoleOut, TextReader newConsoleIn)
+        protected virtual void ExecuteTarget(MethodInfo target, Object[] parameters)
         {
-            TextWriter oldConsoleOut = null;
-            TextReader oldConsoleIn = null;
-            try
-            {
-                (new PermissionSet(PermissionState.Unrestricted)).Assert();
-                oldConsoleOut = Console.Out;
-                oldConsoleIn = Console.In;
-                Console.SetOut(newConsoleOut);
-                Console.SetIn(newConsoleIn);
-                CodeAccessPermission.RevertAssert();
-
-                // Invoke the CompiledCodeRunner
-                target.Invoke(null, parameters);
-            }
-
-            finally
-            {
-                (new PermissionSet(PermissionState.Unrestricted)).Assert();
-                Console.SetOut(oldConsoleOut);
-                Console.SetIn(oldConsoleIn);
-                CodeAccessPermission.RevertAssert();
-            }
+            // Invoke the CompiledCodeRunner
+            target.Invoke(null, parameters);
         }
     }
 }

@@ -26,21 +26,24 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 
                 try
                 {
-                    // Create the sandbox for the code
-
-                    newDomain = CreateSandbox();
-                    AppDomain.MonitoringIsEnabled = true;
-
-                    ObjectHandle handle = Activator.CreateInstanceFrom(newDomain, typeof(Sandboxer).Assembly.ManifestModule.FullyQualifiedName, typeof(Sandboxer).FullName);
-                    Sandboxer newDomainInstance = (Sandboxer)handle.Unwrap();
-
-                    // Run the code
-
                     using (var consoleInStream = new BlockingMemoryStream())
                     using (parent.consoleInWriter = TextWriter.Synchronized(new StreamWriter(consoleInStream)))
                     using (var newConsoleIn = TextReader.Synchronized(new StreamReader(consoleInStream)))
                     using (var newConsoleOut = new EventStringWriter())
                     {
+                        // Create the sandbox for the code
+
+                        newDomain = CreateSandbox();
+                        AppDomain.MonitoringIsEnabled = true;
+
+                        ObjectHandle handle = Activator.CreateInstanceFrom(newDomain,
+                                typeof(SandboxerWithConsoleRedirect).Assembly.ManifestModule.FullyQualifiedName,
+                                typeof(SandboxerWithConsoleRedirect).FullName);
+                        var newDomainInstance = (SandboxerWithConsoleRedirect)handle.Unwrap();
+                        newDomainInstance.RedirectConsole(newConsoleOut, newConsoleIn);
+
+                        // Run the code
+
                         newConsoleOut.Flushed += ConsoleFlushed;
 
                         object threadLock = new object();
@@ -55,7 +58,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
                                 thread = Thread.CurrentThread;
                             }
 
-                            newDomainInstance.ExecuteUntrustedCode(typeof(CompiledCodeRunner).Assembly.FullName, typeof(CompiledCodeRunner).FullName, "RunIt", new object[] { compiledCode, pdb }, newConsoleOut, newConsoleIn);
+                            newDomainInstance.ExecuteUntrustedCode(typeof(CompiledCodeRunner).Assembly.FullName, typeof(CompiledCodeRunner).FullName, "RunIt", new object[] { compiledCode, pdb });
                         });
 
                         // The task should set its thread almost immediately
@@ -168,7 +171,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
                 PermissionSet permSet = new PermissionSet(PermissionState.None);
                 permSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
 
-                StrongName fullTrustAssembly = typeof(Sandboxer).Assembly.Evidence.GetHostEvidence<StrongName>();
+                StrongName fullTrustAssembly = typeof(SandboxerWithConsoleRedirect).Assembly.Evidence.GetHostEvidence<StrongName>();
 
                 AppDomainSetup adSetup = new AppDomainSetup
                 {
