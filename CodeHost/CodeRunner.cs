@@ -34,7 +34,14 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             {
                 var compilation = await Compiler.GetCompilation(code);
                 var (result, pdb) = await Compiler.Emit(compilation);
-                new SandboxManager().RunInSandbox(this, result, pdb);
+
+                using (var consoleInStream = new BlockingMemoryStream())
+                using (consoleInWriter = TextWriter.Synchronized(new StreamWriter(consoleInStream)))
+                {
+                    var sandboxMgr = new SandboxManager();
+                    sandboxMgr.ConsoleWrite += OnConsoleWrite;
+                    sandboxMgr.RunInSandbox(result, pdb, consoleInStream);
+                }
             }
             catch (Exception e) when (!(e is AggregateException || e is CompilationErrorException))
             {
@@ -43,6 +50,10 @@ namespace CodingTrainer.CSharpRunner.CodeHost
                     await exceptionLogger.LogException(e, code);
                 }
                 throw;
+            }
+            finally
+            {
+                consoleInWriter = null;
             }
         }
 
@@ -54,6 +65,12 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 
             consoleInWriter.WriteLine(text);
             consoleInWriter.Flush();
+        }
+
+        // Handle console writes to the output stream
+        public void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
+        {
+            ConsoleWrite?.Invoke(this, e);
         }
     }
 }

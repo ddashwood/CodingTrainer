@@ -15,19 +15,16 @@ namespace CodingTrainer.CSharpRunner.CodeHost
     {
         private class SandboxManager
         {
-            private CodeRunner parent;
+            public event ConsoleWriteEventHandler ConsoleWrite;
 
-            public void RunInSandbox(CodeRunner parent, byte[] compiledCode, byte[] pdb)
+            public void RunInSandbox(byte[] compiledCode, byte[] pdb, Stream consoleInStream)
             {
-                this.parent = parent;
                 AppDomain newDomain = null;
 
                 Task runner = null, timerTask = null, totalTimeTask = null, memoryTask = null;
 
                 try
                 {
-                    using (var consoleInStream = new BlockingMemoryStream())
-                    using (parent.consoleInWriter = TextWriter.Synchronized(new StreamWriter(consoleInStream)))
                     using (var newConsoleIn = TextReader.Synchronized(new StreamReader(consoleInStream)))
                     using (var newConsoleOut = new EventStringWriter())
                     {
@@ -157,8 +154,6 @@ namespace CodingTrainer.CSharpRunner.CodeHost
                 }
                 finally
                 {
-                    parent.consoleInWriter = null;
-
                     if (newDomain != null)
                         AppDomain.Unload(newDomain);
                     newDomain = null;
@@ -184,7 +179,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 
             private void DoConsoleWrite(string message)
             {
-                parent.ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs(message));
+                ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs(message));
             }
 
             // Event handler for handling the ConsoleFlush event - this is raised
