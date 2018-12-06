@@ -10,9 +10,9 @@
         if (unprocessedLints) {
             var temp = unprocessedLints;
             unprocessedLints = null;
-            return temp;
+            return temp; // Return the list of errors if there are any waiting to be displayed
         }
-        return [];
+        return []; // There are no errors waiting to be displayed
     });
 
     // The linting has already been performed on the server. But now show the results

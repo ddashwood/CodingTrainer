@@ -51,7 +51,7 @@
             if (cm.isClean(cm.loadedHints.generation)) return;
             cm.loadedHints.generation = cm.changeGeneration();
 
-            // These keys can't be indicate that the token is not something we can hint:
+            // These keys indicate that the token is not something we can hint:
             var noToken = ['Enter', ';', ' ', '(', ')', '{', '}', '[', ']'];
             if (noToken.indexOf(key) !== -1) return;
         }

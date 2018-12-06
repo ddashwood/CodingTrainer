@@ -45,6 +45,16 @@ namespace CodingTrainer.CodingTrainerWeb
                         "~/Scripts/app/codemirror-addon/console.js",
                         "~/Scripts/codemirror-buttons/buttons.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/runcode").Include(
+                        "~/scripts/app/runcode/signalRFactory.js",
+                        "~/scripts/app/runcode/serviceFactory.js",
+                        "~/scripts/app/runcode/codeRunner.js",
+                        "~/scripts/app/runcode/ideServices.js",
+                        "~/scripts/app/runcode/ideEditor.js",
+                        "~/scripts/app/runcode/ideConsole.js",
+                        "~/scripts/app/runcode/ide.js",
+                        "~/scripts/app/runcode/controller.js"));
+
             var codeMirrorStyles = new List<string> {
                         "~/Scripts/codemirror/lib/codemirror.css",
                         "~/Scripts/codemirror/addon/lint/lint.css",

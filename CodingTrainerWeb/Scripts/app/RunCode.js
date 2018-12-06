@@ -3,10 +3,6 @@
     // Functions for completion suggestions
     ///////////////////////////////////////
 
-    var getHints = function (cm) {
-
-    };
-
 
     ////////////////////
     // Set up CodeMirror
@@ -87,7 +83,7 @@
     });
     codeConsole.setSize(null, '35em');
     codeConsole.submitOnReturn(function (text) {
-        runnerHub.server.consoleIn(text);
+        hubsContainer.runnerHub.server.consoleIn(text);
     });
 
 
@@ -118,43 +114,48 @@
                 editor.focus();
             });
         }
-
     };
+
+
+    // Hubs
+
+    var hubsContainer = new hubs(editor, codeConsole, handleErrors);
+
 
     ///////////////////////////////////////////////////
     // Code for starting/maintaining SignalR connection
     ///////////////////////////////////////////////////
 
-    var hubConnected = false;
+    //var hubConnected = false;
 
-    // Set up and maintain the connection
-    $.connection.hub.start().done(function () {
-        hubConnected = true;
-        // Once connected, allow users to submit code
-        $('#run').prop('disabled', false).text('Run Code');
-    });
-    $.connection.hub.disconnected(function () {
-        // Attempt to reconnect
-        $.connection.hub.start();
-    });
+    //// Set up and maintain the connection
+    //$.connection.hub.start().done(function () {
+    //    hubConnected = true;
+    //    // Once connected, allow users to submit code
+    //    $('#run').prop('disabled', false).text('Run Code');
+    //});
+    //$.connection.hub.disconnected(function () {
+    //    // Attempt to reconnect
+    //    $.connection.hub.start();
+    //});
 
-    ////////////////////////////////////////////////////
-    // Code for handling SignalR events for running code
-    ////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //// Code for handling SignalR events for running code
+    //////////////////////////////////////////////////////
 
-    var runnerHub = $.connection.codeRunnerHub;
+    //var runnerHub = $.connection.codeRunnerHub;
 
-    runnerHub.client.consoleOut = function (message) {
-        codeConsole.consoleAppend(message);
-    };
+    //runnerHub.client.consoleOut = function (message) {
+    //    codeConsole.consoleAppend(message);
+    //};
 
-    var complete = function () {
-        $('#run').prop('disabled', false);
-    };
+    //var complete = function () {
+    //    $('#run').prop('disabled', false);
+    //};
 
-    runnerHub.client.complete = complete;
+    //runnerHub.client.complete = complete;
 
-    runnerHub.client.compilerError = handleErrors;
+    //runnerHub.client.compilerError = handleErrors;
 
     //////////////////////////////////
     // Code for handling window events
@@ -174,7 +175,7 @@
             if (model.HiddenCodeHeader) {
                 code = model.HiddenCodeHeader + "\n" + code;
             }
-            runnerHub.server.run(code).fail(function (e) {
+            hubsContainer.runnerHub.server.run(code).fail(function (e) {
                 var message = e.message;
                 if (e.data) {
                     e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
@@ -212,7 +213,7 @@
     // Real-time linting
     ////////////////////
 
-    var ideHub = $.connection.ideHub;
+    var ideHub = $.connection['ideHub'];
 
     // Respond to callbacks from the hub
     ideHub.client.diagsCallback = function (diags, generation) {
@@ -223,7 +224,7 @@
 
     // When there's a change, send it to the hub to get diagnostics
     editor.on('change', function () {
-        if (hubConnected) {
+        if (hubsContainer.hubConnected) {
             var generation = editor.changeGeneration(true);
             var code = editor.getValue();
             //var pos = editor.indexFromPos(this.getCursor());
