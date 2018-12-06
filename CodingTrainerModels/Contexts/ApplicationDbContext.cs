@@ -10,9 +10,20 @@ namespace CodingTrainer.CodingTrainerModels.Contexts
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        private class CreateAndSeedDatabaseIfNotExists:CreateDatabaseIfNotExists<ApplicationDbContext>
+        {
+            protected override void Seed(ApplicationDbContext context)
+            {
+                var config = new Migrations.Configuration();
+                config.RunSeed(context);
+                base.Seed(context);
+            }
+        }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer<ApplicationDbContext>(new CreateAndSeedDatabaseIfNotExists());
         }
 
         public static ApplicationDbContext Create()

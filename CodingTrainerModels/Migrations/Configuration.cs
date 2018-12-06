@@ -21,7 +21,11 @@ namespace CodingTrainer.CodingTrainerModels.Migrations
         protected override void Seed(Contexts.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
+            RunSeed(context);
+        }
 
+        public void RunSeed(Contexts.ApplicationDbContext context)
+        {
             var resourceName = "CodingTrainer.CodingTrainerModels.Data.SeedData.xml";
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(resourceName);
