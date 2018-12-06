@@ -349,7 +349,6 @@
     <Content Include="Scripts\app\codemirror-addon\console.js" />
     <Content Include="Scripts\app\codemirror-addon\hint-loader.js" />
     <Content Include="Scripts\app\codemirror-addon\performed-lint.js" />
-    <Content Include="Scripts\app\hubs.js" />
     <Content Include="Scripts\app\runcode\codeRunner.js" />
     <Content Include="Scripts\app\runcode\controller.js" />
     <Content Include="Scripts\app\runcode\ideConsole.js" />
@@ -707,7 +706,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\app\RunCode.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
