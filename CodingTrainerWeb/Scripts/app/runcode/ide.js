@@ -25,8 +25,8 @@
 
 
     // Make the CodeMirror editors
-    this.editor = getEditor(requestCompletions);
-    this.codeConsole = getConsole(consoleIn);
+    this.editor = this.getEditor(requestCompletions);
+    this.codeConsole = this.getConsole(consoleIn);
 
     // User clicks run button
     $('#run').click(function () {

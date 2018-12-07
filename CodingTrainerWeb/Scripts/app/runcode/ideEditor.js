@@ -1,4 +1,4 @@
-﻿function getEditor(requestCompletions) {
+﻿Ide.prototype.getEditor = function (requestCompletions) {
     var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
         lineNumbers: true,
         matchBrackets: true,
@@ -66,4 +66,4 @@
     editor.setSize(null, '35em');
 
     return editor;
-}
+};

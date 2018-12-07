@@ -60,12 +60,9 @@ namespace CodingTrainer.CodingTrainerWeb
                         "~/scripts/app/runcode/ideServicesWithCorrections.js",
 
                         // The editor
-                        "~/scripts/app/runcode/ideEditor.js",
-                        "~/scripts/app/runcode/ideConsole.js",
                         "~/scripts/app/runcode/ide.js",
-
-                        // Controller
-                        "~/scripts/app/runcode/controller.js"));
+                        "~/scripts/app/runcode/ideEditor.js",
+                        "~/scripts/app/runcode/ideConsole.js"));
 
             var codeMirrorStyles = new List<string> {
                         "~/Scripts/codemirror/lib/codemirror.css",

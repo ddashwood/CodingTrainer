@@ -4,13 +4,20 @@
     ViewBag.Title = "Run Code";
 }
 @section Scripts {
-    <script>
-        model = @Html.Raw(Json.Encode(Model));
-    </script>
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
     <script src="~/signalr/hubs"></script>
     @Scripts.Render("~/bundles/codemirror")
     @Scripts.Render("~/bundles/runcode")
+    <script>
+        // Get everything started
+        (function () {
+            var signalRFactory = new SignalRFactory();
+            //var serviceFactory = new ServiceFactory(signalRFactory);
+            var model = @Html.Raw(Json.Encode(Model));
+            var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, model.HiddenCodeHeader);
+            new Ide(serviceFactory);
+        })();
+    </script>
 }
 @section Styles {
     <link href="~/Content/RunCode.css" rel="stylesheet" type="text/css" />

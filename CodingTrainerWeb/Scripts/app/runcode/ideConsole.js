@@ -1,4 +1,4 @@
-﻿function getConsole(consoleIn) {
+﻿Ide.prototype.getConsole = function (consoleIn) {
     var console = CodeMirror.fromTextArea(document.getElementById("console"), {
         mode: "text/plain",
         theme: $('#Theme').val()
@@ -9,4 +9,4 @@
     });
 
     return console;
-}
+};

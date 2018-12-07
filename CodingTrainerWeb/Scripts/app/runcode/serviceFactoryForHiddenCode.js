@@ -1,23 +1,23 @@
-﻿function ServiceFactoryForHiddenCode(signalRFactory) {
+﻿function ServiceFactoryForHiddenCode(signalRFactory, hiddenCodeHeader) {
     // These corrections deal with hidden code in the model
     // They will be passed into the relevant services to be used as required
     this.corrections = {
         codeWithCorrections: function (code) {
-            if (model.HiddenCodeHeader) {
-                code = model.HiddenCodeHeader + "\n" + code;
+            if (hiddenCodeHeader) {
+                code = hiddenCodeHeader + "\n" + code;
             }
             return code;
         },
         positionCorrectionToServer: function (pos) {
-            if (model.HiddenCodeHeader) {
-                var adjustment = model.HiddenCodeHeader.length + 1;
+            if (hiddenCodeHeader) {
+                var adjustment = hiddenCodeHeader.length - 1;
                 pos += adjustment;
             }
             return pos;
         },
         positionCorrectionFromServer: function (pos) {
-            if (model.HiddenCodeHeader) {
-                var adjustment = model.HiddenCodeHeader.length + 1;
+            if (hiddenCodeHeader) {
+                var adjustment = hiddenCodeHeader.length + 1;
                 pos -= adjustment;
             }
             return pos;

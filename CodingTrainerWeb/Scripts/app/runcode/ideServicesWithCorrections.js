@@ -24,7 +24,7 @@ IdeServicesWithCorrections.prototype.requestDiagnostics = function (code, genera
 
 };
 
-IdeServicesWithCorrections.requestCompletions = function (code, pos, tokenStart) {
+IdeServicesWithCorrections.prototype.requestCompletions = function (code, pos, tokenStart) {
     IdeServices.prototype.requestCompletions.call(this,
         this.corrections.codeWithCorrections(code),
         this.corrections.positionCorrectionToServer(pos),
@@ -32,7 +32,7 @@ IdeServicesWithCorrections.requestCompletions = function (code, pos, tokenStart)
     );
 };
 
-IdeServicesWithCorrections.requestParameters = function (code, pos, tokenStart) {
+IdeServicesWithCorrections.prototype.requestParameters = function (code, pos, tokenStart) {
     IdeServices.prototype.requestParameters.call(this,
         this.corrections.codeWithCorrections(code),
         this.corrections.positionCorrectionToServer(pos),

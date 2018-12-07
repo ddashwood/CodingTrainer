@@ -351,7 +351,6 @@
     <Content Include="Scripts\app\codemirror-addon\performed-lint.js" />
     <Content Include="Scripts\app\runcode\codeRunner.js" />
     <Content Include="Scripts\app\runcode\codeRunnerWithCorrections.js" />
-    <Content Include="Scripts\app\runcode\controller.js" />
     <Content Include="Scripts\app\runcode\ideConsole.js" />
     <Content Include="Scripts\app\runcode\ide.js" />
     <Content Include="Scripts\app\runcode\ideEditor.js" />
