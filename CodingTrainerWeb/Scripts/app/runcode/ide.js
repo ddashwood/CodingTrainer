@@ -15,10 +15,6 @@
         // Send a SignalR request to get the hints
         var code = cm.getValue();
         var pos = cm.indexFromPos(cm.getCursor());
-        if (model.HiddenCodeHeader) {
-            code = model.HiddenCodeHeader + "\n" + code;
-            pos += model.HiddenCodeHeader.length + 1;
-        }
 
         ideServices.requestCompletions(code, pos, tokenStart);
     };
@@ -42,10 +38,6 @@
         $('#console-out').text('');
 
         var code = self.editor.getValue();
-        if (model.HiddenCodeHeader) {
-            code = model.HiddenCodeHeader + "\n" + code;
-        }
-
         codeRunner.run(code);
     });
 
@@ -72,9 +64,6 @@
     this.editor.on('change', function () {
         var generation = self.editor.changeGeneration(true);
         var code = self.editor.getValue();
-        if (model.HiddenCodeHeader) {
-            code = model.HiddenCodeHeader + "\n" + code;
-        }
         ideServices.requestDiagnostics(code, generation);
     });
 }
@@ -94,14 +83,6 @@ Ide.prototype.showErrors = function (errors) {
     if (!errors) {
         this.editor.clearErrors();
         return;
-    }
-
-    if (model.HiddenCodeHeader) {
-        var adjustment = model.HiddenCodeHeader.length + 1;
-        for (var i = 0; i < errors.length; i++) {
-            errors[i].Location.SourceSpan.Start -= adjustment;
-            errors[i].Location.SourceSpan.End -= adjustment;
-        }
     }
 
     this.editor.showPerformedLint(errors);

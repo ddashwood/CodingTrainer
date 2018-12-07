@@ -1,5 +1,8 @@
 ﻿function CodeRunner(signalRFactory, consoleOut, complete, errors) {
+    this.complete = complete;
     this.runnerHub = signalRFactory.createHub('codeRunnerHub');
+
+    // Callbacks from the server:
 
     // Called when the script wants to display something on the console
     this.runnerHub.client.consoleOut = consoleOut;
@@ -18,11 +21,11 @@ CodeRunner.prototype.run = function (code) {
                 e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
             }
             alert(e.message);
-            complete();
+            this.complete();
         });
     } catch (e) {
         alert(e.message);
-        complete();
+        this.complete();
     }
 };
 
