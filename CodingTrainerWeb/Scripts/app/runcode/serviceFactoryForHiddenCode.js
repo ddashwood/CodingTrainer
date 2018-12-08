@@ -10,7 +10,7 @@
         },
         positionCorrectionToServer: function (pos) {
             if (hiddenCodeHeader) {
-                var adjustment = hiddenCodeHeader.length - 1;
+                var adjustment = hiddenCodeHeader.length + 1;
                 pos += adjustment;
             }
             return pos;
