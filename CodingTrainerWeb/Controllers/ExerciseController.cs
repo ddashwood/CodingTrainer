@@ -23,9 +23,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         {
             rep = repository;
         }
-        public ExerciseController()
-            : this(new SqlCodingTrainerRepository())
-        { }
 
         [Authorize]
         public async Task<ActionResult> RunCode()

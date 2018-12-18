@@ -17,9 +17,6 @@ namespace CodingTrainer.CodingTrainerWeb.ApiControllers
         {
             rep = repository;
         }
-        public ChapterController()
-            :this(new SqlCodingTrainerRepository())
-        { }
 
         // GET api/<controller>
         public async Task<IEnumerable<Chapter>> Get()

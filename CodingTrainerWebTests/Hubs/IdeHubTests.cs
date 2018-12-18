@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Moq;
 using Microsoft.AspNet.SignalR.Hubs;
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
+using CodingTrainer.CSharpRunner.CodeHost;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs.Tests
 {
@@ -27,7 +28,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Tests
             var context = new HubCallerContext(null, "RequestParametersTestConnection");
 
             // Arrange - Hub
-            var hub = new IdeHub()
+            var hub = new IdeHub(new IdeServices())
             {
                 Clients = mockClients.Object,
                 Context = context
@@ -74,7 +75,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Tests
             var context = new HubCallerContext(null, "BuiltInReturnTypeTestConnection");
 
             // Arrange - Hub
-            var hub = new IdeHub()
+            var hub = new IdeHub(new IdeServices())
             {
                 Clients = mockClients.Object,
                 Context = context
@@ -108,7 +109,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Tests
             var context = new HubCallerContext(null, "BeforeParamsTestConnection");
 
             // Arrange - Hub
-            var hub = new IdeHub()
+            var hub = new IdeHub(new IdeServices())
             {
                 Clients = mockClients.Object,
                 Context = context
@@ -134,7 +135,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Tests
             var context = new HubCallerContext(null, "AfterParamsTestConnection");
 
             // Arrange - Hub
-            var hub = new IdeHub()
+            var hub = new IdeHub(new IdeServices())
             {
                 Clients = mockClients.Object,
                 Context = context

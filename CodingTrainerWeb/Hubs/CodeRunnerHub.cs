@@ -46,9 +46,6 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             sqlRep = dbRepository ?? new SqlCodingTrainerRepository();
             this.runnerFactory = runnerFactory ?? new CodeRunnerWithLoggerFactory(hubRep, sqlRep);
         }
-        public CodeRunnerHub()
-            : this(null, null, null)
-        { }
 
         public async Task Run(string code)
         {

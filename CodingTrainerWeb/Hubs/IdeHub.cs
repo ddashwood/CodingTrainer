@@ -18,13 +18,10 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         {
             this.ideServices = ideServices;
         }
-        public IdeHub()
-            : this(new IdeServices())
-        { }
 
-        private static ConcurrentDictionary<string, CancellationTokenSource> inProgressDiags = new ConcurrentDictionary<string, CancellationTokenSource>();
-        private static ConcurrentDictionary<string, CancellationTokenSource> inProgressCompletions = new ConcurrentDictionary<string, CancellationTokenSource>();
-        private static ConcurrentDictionary<string, CancellationTokenSource> inProgressParams = new ConcurrentDictionary<string, CancellationTokenSource>();
+        private static readonly ConcurrentDictionary<string, CancellationTokenSource> inProgressDiags = new ConcurrentDictionary<string, CancellationTokenSource>();
+        private static readonly ConcurrentDictionary<string, CancellationTokenSource> inProgressCompletions = new ConcurrentDictionary<string, CancellationTokenSource>();
+        private static readonly ConcurrentDictionary<string, CancellationTokenSource> inProgressParams = new ConcurrentDictionary<string, CancellationTokenSource>();
 
         public async Task RequestDiags(string code, int generation)
         {
