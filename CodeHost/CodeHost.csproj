@@ -158,8 +158,6 @@
     <Compile Include="CodeRunner.SandboxManager.cs" />
     <Compile Include="ConsoleWriteEventArgs.cs" />
     <Compile Include="EventStringWriter.cs" />
-    <Compile Include="Factories\CodeRunnerFactory.cs" />
-    <Compile Include="Factories\ICodeRunnerFactory.cs" />
     <Compile Include="ICodeRunner.cs" />
     <Compile Include="IdeServices.cs" />
     <Compile Include="IExceptionLogger.cs" />

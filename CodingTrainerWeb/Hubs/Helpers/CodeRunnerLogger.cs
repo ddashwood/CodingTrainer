@@ -1,9 +1,11 @@
 ﻿using CodingTrainer.CodingTrainerModels.Models;
 using CodingTrainer.CodingTrainerModels.Repositories;
 using CodingTrainer.CSharpRunner.CodeHost;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -14,15 +16,11 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
         ICodingTrainerRepository rep;
         string userId;
 
-        public CodeRunnerLogger(string userId, ICodingTrainerRepository repository)
+        public CodeRunnerLogger(ICodingTrainerRepository repository)
         {
-            this.userId = userId;
+            userId = Thread.CurrentPrincipal.Identity.GetUserId();
             rep = repository;
         }
-        public CodeRunnerLogger(string userId)
-            :this(userId, new SqlCodingTrainerRepository())
-        { }
-
 
         public async Task LogException(Exception e, string code)
         {

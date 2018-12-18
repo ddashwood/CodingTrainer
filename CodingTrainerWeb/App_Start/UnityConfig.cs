@@ -3,11 +3,10 @@ using CodingTrainer.CodingTrainerWeb.ApiControllers;
 using CodingTrainer.CodingTrainerWeb.Controllers;
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CSharpRunner.CodeHost;
-using CodingTrainer.CSharpRunner.CodeHost.Factories;
 using System;
-
 using Unity;
 using Unity.Injection;
+using Unity.Lifetime;
 using Unity.RegistrationByConvention;
 
 namespace CodingTrainer.CodingTrainerWeb
@@ -57,7 +56,8 @@ namespace CodingTrainer.CodingTrainerWeb
             container.RegisterType<ICodingTrainerRepository, SqlCodingTrainerRepository>();
             container.RegisterType<IIdeServices, IdeServices>();
             container.RegisterType<IHubContextRepository, HubContextRepository>();
-            container.RegisterType<ICodeRunnerFactory, CodeRunnerWithLoggerFactory>();
+            container.RegisterType<ICodeRunner, CodeRunner>();
+            container.RegisterType<IExceptionLogger, CodeRunnerLogger>(new PerResolveLifetimeManager());
 
             container.RegisterType<ThemeController>(new InjectionConstructor());
 

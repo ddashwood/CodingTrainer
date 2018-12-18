@@ -343,7 +343,6 @@
     </Compile>
     <Compile Include="Hubs\CodeRunnerHub.cs" />
     <Compile Include="Hubs\Helpers\CodeRunnerLogger.cs" />
-    <Compile Include="Hubs\Helpers\CodeRunnerWithLoggerFactory.cs" />
     <Compile Include="Hubs\Helpers\CompilerError.cs" />
     <Compile Include="Hubs\Helpers\HubContextRepository.cs" />
     <Compile Include="Hubs\Helpers\Overloads.cs" />

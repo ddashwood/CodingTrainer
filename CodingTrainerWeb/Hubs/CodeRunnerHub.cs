@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
 using CodingTrainer.CSharpRunner.CodeHost;
 using System.Collections.Concurrent;
 using Microsoft.CodeAnalysis.Scripting;
-using CodingTrainer.CSharpRunner.CodeHost.Factories;
-
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CodingTrainerModels.Models;
 using CodingTrainer.CodingTrainerModels.Repositories;
@@ -35,16 +28,16 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         // Instance fields
 
         // Dependencies
-        ICodeRunnerFactory runnerFactory;
+        ICodeRunner runner;
         IHubContextRepository hubRep;
         ICodingTrainerRepository sqlRep;
 
         // Constructors
-        public CodeRunnerHub(ICodeRunnerFactory runnerFactory = null, IHubContextRepository hubRepository = null, ICodingTrainerRepository dbRepository = null)
+        public CodeRunnerHub(ICodeRunner runner, IHubContextRepository hubRepository, ICodingTrainerRepository dbRepository)
         {
-            hubRep = hubRepository ?? new HubContextRepository();
-            sqlRep = dbRepository ?? new SqlCodingTrainerRepository();
-            this.runnerFactory = runnerFactory ?? new CodeRunnerWithLoggerFactory(hubRep, sqlRep);
+            hubRep = hubRepository;
+            sqlRep = dbRepository;
+            this.runner = runner;
         }
 
         public async Task Run(string code)
@@ -53,10 +46,6 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             {
                 string userId = hubRep.GetUserIdFromContext(Context);
 
-                if (runnerFactory is IRequiresContext contextFactory)
-                    contextFactory.Context = Context;
-
-                ICodeRunner runner = runnerFactory.GetCodeRunner();
                 var connection = new Connection(Context.ConnectionId, runner, Clients.Caller, userId);
                 var runnerHandler = new ConsoleOut(connection);
                 runner.ConsoleWrite += runnerHandler.OnConsoleWrite;
