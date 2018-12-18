@@ -1,5 +1,6 @@
 using CodingTrainer.CodingTrainerModels.Repositories;
 using CodingTrainer.CodingTrainerWeb.ApiControllers;
+using CodingTrainer.CodingTrainerWeb.Controllers;
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CSharpRunner.CodeHost;
 using CodingTrainer.CSharpRunner.CodeHost.Factories;
@@ -7,6 +8,7 @@ using System;
 
 using Unity;
 using Unity.Injection;
+using Unity.RegistrationByConvention;
 
 namespace CodingTrainer.CodingTrainerWeb
 {
@@ -48,12 +50,18 @@ namespace CodingTrainer.CodingTrainerWeb
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
+
+            container.RegisterTypes(AllClasses.FromLoadedAssemblies(), WithMappings.FromMatchingInterface, WithName.Default);
+
+
             container.RegisterType<ICodingTrainerRepository, SqlCodingTrainerRepository>();
             container.RegisterType<IIdeServices, IdeServices>();
             container.RegisterType<IHubContextRepository, HubContextRepository>();
             container.RegisterType<ICodeRunnerFactory, CodeRunnerWithLoggerFactory>();
 
             container.RegisterType<ThemeController>(new InjectionConstructor());
+
+            container.RegisterType<AccountController>(new InjectionConstructor());
         }
     }
 }
