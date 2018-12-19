@@ -333,6 +333,8 @@
     <Compile Include="App_Start\UnityActivator.cs" />
     <Compile Include="App_Start\UnityHubActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AspNet\IUserRepository.cs" />
+    <Compile Include="AspNet\UserRepository.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChapterController.cs" />
     <Compile Include="Controllers\ExerciseController.cs" />
@@ -344,12 +346,9 @@
     <Compile Include="Hubs\CodeRunnerHub.cs" />
     <Compile Include="Hubs\Helpers\CodeRunnerLogger.cs" />
     <Compile Include="Hubs\Helpers\CompilerError.cs" />
-    <Compile Include="Hubs\Helpers\HubContextRepository.cs" />
     <Compile Include="Hubs\Helpers\Overloads.cs" />
     <Compile Include="Hubs\ICodeRunnerHubClient.cs" />
     <Compile Include="Hubs\ICodeRunnerHubServer.cs" />
-    <Compile Include="Hubs\Helpers\IHubContextRepository.cs" />
-    <Compile Include="Hubs\Helpers\IRequiresContext.cs" />
     <Compile Include="Hubs\IdeHub.cs" />
     <Compile Include="Hubs\IIdeHubClient.cs" />
     <Compile Include="Hubs\IIdeHubServer.cs" />

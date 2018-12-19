@@ -1,5 +1,6 @@
 ﻿using CodingTrainer.CodingTrainerModels.Contexts;
 using CodingTrainer.CodingTrainerModels.Models.Security;
+using CodingTrainer.CodingTrainerWeb.AspNet;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -16,47 +17,25 @@ namespace CodingTrainer.CodingTrainerWeb.ApiControllers
 {
     public class ThemeController : ApiController
     {
-        private IPrincipal principal;
-        private IPrincipal Principal
-        {
-            get
-            {
-                if (principal == null) principal = RequestContext.Principal;
-                return principal;
-            }
-            set
-            {
-                principal = value;
-            }
-        }
+        private IUserRepository userRep;
 
-        public ThemeController(IPrincipal principal)
+        public ThemeController(IUserRepository userRepository)
         {
-            Principal = principal;
+            userRep = userRepository;
         }
-        public ThemeController()
-        { }
 
         public async Task<string> Get()
         {
-            var dbContext = new ApplicationDbContext();
-            var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(dbContext));
-            var user = await userManager.FindByIdAsync(Principal.Identity.GetUserId());
+            var user = await userRep.GetCurrentUserAsync();
 
-            return user.SelectedTheme;
+            return user?.SelectedTheme??"";
         }
 
         public async Task Put([FromBody]string theme)
         {
-            var dbContext = new ApplicationDbContext();
-            var store = new UserStore<ApplicationUser>(dbContext);
-            var userManager = new ApplicationUserManager(store);
-            var user = await userManager.FindByIdAsync(Principal.Identity.GetUserId());
-
+            var user = await userRep.GetCurrentUserAsync();
             user.SelectedTheme = theme;
-
-            await userManager.UpdateAsync(user);
-            await store.Context.SaveChangesAsync();
+            await userRep.SaveUserAsync(user);
         }
 
     }

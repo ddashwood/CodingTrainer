@@ -1,5 +1,6 @@
 using CodingTrainer.CodingTrainerModels.Repositories;
 using CodingTrainer.CodingTrainerWeb.ApiControllers;
+using CodingTrainer.CodingTrainerWeb.AspNet;
 using CodingTrainer.CodingTrainerWeb.Controllers;
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CSharpRunner.CodeHost;
@@ -55,12 +56,12 @@ namespace CodingTrainer.CodingTrainerWeb
 
             container.RegisterType<ICodingTrainerRepository, SqlCodingTrainerRepository>();
             container.RegisterType<IIdeServices, IdeServices>();
-            container.RegisterType<IHubContextRepository, HubContextRepository>();
             container.RegisterType<ICodeRunner, CodeRunner>();
             container.RegisterType<IExceptionLogger, CodeRunnerLogger>(new PerResolveLifetimeManager());
+            container.RegisterType<IUserRepository, UserRepository>();
 
-            container.RegisterType<ThemeController>(new InjectionConstructor());
-
+            // Controllers with more than one constructor, where
+            // we want the one with no parameters to be used
             container.RegisterType<AccountController>(new InjectionConstructor());
         }
     }

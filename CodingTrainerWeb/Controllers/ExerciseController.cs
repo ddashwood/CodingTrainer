@@ -18,16 +18,18 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
     public class ExerciseController : Controller
     {
         ICodingTrainerRepository rep;
+        ThemeController themeController;
 
-        public ExerciseController(ICodingTrainerRepository repository)
+        public ExerciseController(ICodingTrainerRepository repository, ThemeController themeController)
         {
             rep = repository;
+            this.themeController = themeController;
         }
 
         [Authorize]
         public async Task<ActionResult> RunCode()
         {
-            Task<string> themeTask = new ThemeController(HttpContext.User).Get();
+            Task<string> themeTask = themeController.Get();
 
             var exercise = await rep.GetExerciseAsync(1, 1);
             string theme = await themeTask;

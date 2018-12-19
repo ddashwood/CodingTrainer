@@ -1,5 +1,6 @@
 ﻿using CodingTrainer.CodingTrainerModels.Models;
 using CodingTrainer.CodingTrainerModels.Repositories;
+using CodingTrainer.CodingTrainerWeb.AspNet;
 using CodingTrainer.CSharpRunner.CodeHost;
 using Microsoft.AspNet.Identity;
 using System;
@@ -15,10 +16,10 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
     {
         ICodingTrainerRepository rep;
         string userId;
-
-        public CodeRunnerLogger(ICodingTrainerRepository repository)
+        
+        public CodeRunnerLogger(ICodingTrainerRepository repository, IUserRepository userRepository)
         {
-            userId = Thread.CurrentPrincipal.Identity.GetUserId();
+            userId = userRepository.GetCurrentUserId();
             rep = repository;
         }
 

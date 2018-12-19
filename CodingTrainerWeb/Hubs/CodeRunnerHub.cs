@@ -8,6 +8,7 @@ using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CodingTrainerModels.Models;
 using CodingTrainer.CodingTrainerModels.Repositories;
 using System.Threading.Tasks.Dataflow;
+using CodingTrainer.CodingTrainerWeb.AspNet;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
@@ -29,13 +30,13 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         // Dependencies
         ICodeRunner runner;
-        IHubContextRepository hubRep;
+        IUserRepository userRep;
         ICodingTrainerRepository sqlRep;
 
         // Constructors
-        public CodeRunnerHub(ICodeRunner runner, IHubContextRepository hubRepository, ICodingTrainerRepository dbRepository)
+        public CodeRunnerHub(ICodeRunner runner, IUserRepository userRepository, ICodingTrainerRepository dbRepository)
         {
-            hubRep = hubRepository;
+            userRep = userRepository;
             sqlRep = dbRepository;
             this.runner = runner;
         }
@@ -44,7 +45,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         {
             try
             {
-                string userId = hubRep.GetUserIdFromContext(Context);
+                string userId = userRep.GetCurrentUserId();
 
                 var connection = new Connection(Context.ConnectionId, runner, Clients.Caller, userId);
                 var runnerHandler = new ConsoleOut(connection);
@@ -81,7 +82,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 UserCode = $"<Not from user code>{Environment.NewLine}{code}"
             };
 
-            if (Context != null) log.UserId = hubRep?.GetUserIdFromContext(Context);
+            log.UserId = userRep.GetCurrentUserId();
             try
             {
                 // Log to database

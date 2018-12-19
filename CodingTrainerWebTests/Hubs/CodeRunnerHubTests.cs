@@ -12,6 +12,7 @@ using CodingTrainer.CSharpRunner.CodeHost;
 using System.Threading;
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CodingTrainerModels.Repositories;
+using CodingTrainer.CodingTrainerWeb.AspNet;
 
 namespace CodingTrainerWebTests.Hubs
 {
@@ -36,8 +37,8 @@ namespace CodingTrainerWebTests.Hubs
             mockRunner.Setup(r => r.RunCode(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
 
             // Arrange - Repository
-            var mockRepository = new Mock<IHubContextRepository>();
-            mockRepository.Setup(r => r.GetUserIdFromContext(It.IsAny<HubCallerContext>())).Returns("UnitTestId");
+            var mockRepository = new Mock<IUserRepository>();
+            mockRepository.Setup(r => r.GetCurrentUserId()).Returns("UnitTestId");
             var mockDb = new Mock<ICodingTrainerRepository>();
 
             // Arrange - Class under test - Hub
@@ -91,11 +92,11 @@ namespace CodingTrainerWebTests.Hubs
 
             // Arrange - Runner
             string code = "<Test code>";
-            ICodeRunner stubRunner = new CodeRunnerStub(); 
+            ICodeRunner stubRunner = new CodeRunnerStub();
 
             // Arrange - Repository
-            var mockRepository = new Mock<IHubContextRepository>();
-            mockRepository.Setup(r => r.GetUserIdFromContext(It.IsAny<HubCallerContext>())).Returns("UnitTestId");
+            var mockRepository = new Mock<IUserRepository>();
+            mockRepository.Setup(r => r.GetCurrentUserId()).Returns("UnitTestId");
             var mockDb = new Mock<ICodingTrainerRepository>();
 
             // Arrange - Class under test - Hub
@@ -136,8 +137,8 @@ namespace CodingTrainerWebTests.Hubs
             mockRunner.Setup(r => r.RunCode(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
 
             // Arrange - Repository
-            var mockRepository = new Mock<IHubContextRepository>();
-            mockRepository.Setup(r => r.GetUserIdFromContext(It.IsAny<HubCallerContext>())).Returns((string)null);
+            var mockRepository = new Mock<IUserRepository>();
+            mockRepository.Setup(r => r.GetCurrentUserId()).Returns<string>(null);
             var mockDb = new Mock<ICodingTrainerRepository>();
 
             // Arrange - Class under test - Hub
