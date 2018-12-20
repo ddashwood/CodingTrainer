@@ -19,18 +19,18 @@
 }
 @using (Html.BeginSection("styles"))
 {
-    <link href="~/Content/RunCode.css" rel="stylesheet" type="text/css" />
     @Styles.Render("~/Content/codemirror")
+    <link href="~/Content/RunCode.css" rel="stylesheet" type="text/css" />
 }
 
 <div>
-    <div>
+    <div class="row bottom-buffer">
         Select theme: @Html.DropDownList("Theme")
     </div>
-    <div>
+    <div class="row">
         @Html.TextArea("code", Model.DefaultCode, new { style = "display:none" })
     </div>
-    <div>
+    <div class="row">
         @Html.TextArea("console", new { style = "display:none" })
     </div>
 </div>

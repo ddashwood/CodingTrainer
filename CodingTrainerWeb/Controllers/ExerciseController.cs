@@ -34,6 +34,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         }
 
         [Authorize]
+        [ChildActionOnly]
         public ActionResult RunCode(int chapter, int exercise)
         {
             var syncContext = SynchronizationContext.Current;
