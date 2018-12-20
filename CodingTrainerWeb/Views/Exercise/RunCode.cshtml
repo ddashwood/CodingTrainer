@@ -1,9 +1,7 @@
 ﻿@model CodingTrainer.CodingTrainerWeb.ViewModels.ExerciseViewModel
 
-@{
-    ViewBag.Title = "Run Code";
-}
-@section Scripts {
+@using (Html.BeginSection("scripts"))
+{
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
     <script src="~/signalr/hubs"></script>
     @Scripts.Render("~/bundles/codemirror")
@@ -19,12 +17,12 @@
         })();
     </script>
 }
-@section Styles {
+@using (Html.BeginSection("styles"))
+{
     <link href="~/Content/RunCode.css" rel="stylesheet" type="text/css" />
     @Styles.Render("~/Content/codemirror")
 }
 
-<h2>Run Code</h2>
 <div>
     <div class="row">
         <p>Select theme: @Html.DropDownList("Theme")</p>

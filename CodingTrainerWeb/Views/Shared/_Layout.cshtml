@@ -6,9 +6,8 @@
     <title>@ViewBag.Title - Code Runner</title>
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
+    @Html.RenderSection("styles")
     @Scripts.Render("~/bundles/modernizr")
-
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,7 +25,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (Request.IsAuthenticated) // && User.IsInRole("...")
                     {
-                        <li>@Html.ActionLink("Run Code", "RunCode", "Exercise")</li>
+                        <li>@Html.ActionLink("Playground!", "Playground", "Exercise")</li>
                     }
                     <li>@Html.ActionLink("Chapters", "List", "Chapter")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
@@ -48,5 +47,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @Html.RenderSection("scripts")
 </body>
 </html>

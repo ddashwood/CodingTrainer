@@ -343,6 +343,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Hubs\CodeRunnerHub.cs" />
     <Compile Include="Hubs\Helpers\CodeRunnerLogger.cs" />
     <Compile Include="Hubs\Helpers\CompilerError.cs" />
@@ -750,7 +751,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -780,6 +783,7 @@
     <Content Include="Views\Chapter\List.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <Content Include="Views\Exercise\Playground.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
