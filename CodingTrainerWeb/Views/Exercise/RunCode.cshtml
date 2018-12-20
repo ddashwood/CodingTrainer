@@ -24,17 +24,14 @@
 }
 
 <div>
-    <div class="row">
-        <p>Select theme: @Html.DropDownList("Theme")</p>
+    <div>
+        Select theme: @Html.DropDownList("Theme")
     </div>
-    <div class="col-md-6 col-sm-12">
+    <div>
         @Html.TextArea("code", Model.DefaultCode, new { style = "display:none" })
     </div>
-    <div class="col-md-6 col-sm-12">
+    <div>
         @Html.TextArea("console", new { style = "display:none" })
     </div>
 </div>
 
-<div class="row">
-    <button id="run" class="top-buffer" disabled>Connecting</button>
-</div>

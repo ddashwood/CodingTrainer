@@ -1,4 +1,4 @@
-﻿Ide.prototype.getEditor = function (requestCompletions) {
+﻿Ide.prototype.getEditor = function (run, requestCompletions) {
     var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
         lineNumbers: true,
         matchBrackets: true,
@@ -11,6 +11,12 @@
         loadHints: requestCompletions,
         gutters: ["CodeMirror-lint-markers"],
         buttons: [
+            {
+                hotkey: "F5",
+                class: "cm-btn-run",
+                label: "Connecting",
+                callback: run
+            },
             {
                 hotkey: "Ctrl-Z",
                 class: "cm-btn-undo",
@@ -58,10 +64,15 @@
     });
 
     // Configure Bootstrap tooltips on IDE buttons
+    $('.cm-btn-run').attr('data-toggle', 'tooltip').attr('title', 'Run (F5)').tooltip().prop('disabled', true).css('color', 'lightgrey');
     $('.cm-btn-undo').attr('data-toggle', 'tooltip').attr('title', 'Undo (Ctrl-Z)').tooltip();
     $('.cm-btn-redo').attr('data-toggle', 'tooltip').attr('title', 'Redo (Ctrl-Y)').tooltip();
     $('.cm-btn-comment').attr('data-toggle', 'tooltip').attr('title', 'Toggle comment (Ctrl-/)').tooltip();
     $('.cm-btn-indent').attr('data-toggle', 'tooltip').attr('title', 'Auto-indent (Ctrl-K Ctrl-D)').tooltip();
+
+    $('[data-toggle="tooltip"]').tooltip({trigger: 'hover'}).on('click', function () {
+        $(this).tooltip('hide');
+    });
 
     editor.setSize(null, '35em');
 

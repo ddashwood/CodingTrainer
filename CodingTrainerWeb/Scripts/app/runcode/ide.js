@@ -2,9 +2,11 @@
     var self = this;
 
     // Connect to the server
-    // When done, do the same actions as when a run is complete,
-    // i.e. enable the "Run Code" button
-    serviceFactory.connect(this.runComplete.bind(this));
+    // When done, enable the Run button
+    serviceFactory.connect(function () {
+        $('.cm-btn-run').html('&#x25B6;&nbsp;Run');
+        self.enableRun();
+    });
 
     // Make the service objects
     var codeRunner = serviceFactory.getCodeRunner(this);
@@ -23,23 +25,23 @@
         codeRunner.consoleIn(message);
     };
 
-
-    // Make the CodeMirror editors
-    this.editor = this.getEditor(requestCompletions);
-    this.codeConsole = this.getConsole(consoleIn);
-
-    // User clicks run button
-    $('#run').click(function () {
+    var run = function () {
         self.codeConsole.clearAll();
         self.codeConsole.focus();
         // Prevent user from running again
         self.editor.clearErrors();
-        $('#run').prop('disabled', true).text('Running');
+        $('.cm-btn-run').prop('disabled', true).css('color','lightgrey');
         $('#console-out').text('');
 
         var code = self.editor.getValue();
         codeRunner.run(code);
-    });
+    };
+
+
+    // Make the CodeMirror editors
+    this.editor = this.getEditor(run, requestCompletions);
+    this.codeConsole = this.getConsole(consoleIn);
+
 
     // Change theme
     $('#Theme').change(function () {
@@ -72,8 +74,12 @@ Ide.prototype.consoleOut = function (message) {
     this.codeConsole.consoleAppend(message);
 };
 
+Ide.prototype.enableRun = function () {
+    $('.cm-btn-run').prop('disabled', false).css('color', 'black');
+};
+
 Ide.prototype.runComplete = function () {
-    $('#run').prop('disabled', false).text('Run Code');
+    this.enableRun();
 };
 
 // This method may be used when errors occure during real-time linting,

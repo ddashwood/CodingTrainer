@@ -5,7 +5,7 @@
 .CodeMirror-buttonsPanel button {
     padding: .5em;
     margin-right: .5em;
-    width: 3em;
+    min-width: 3em;
     height: 2.5em;
     text-align: center;
     vertical-align: top;

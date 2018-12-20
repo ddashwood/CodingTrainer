@@ -3,7 +3,7 @@
         mode: "text/plain",
         theme: $('#Theme').val()
     });
-    console.setSize(null, '35em');
+    console.setSize(null, '20em');
     console.submitOnReturn(function (text) {
         consoleIn(text);
     });
