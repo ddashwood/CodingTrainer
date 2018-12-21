@@ -8,15 +8,12 @@ using System.Web;
 
 namespace CodingTrainer.CodingTrainerModels.Models
 {
-    public class Exercise:IComparable<Exercise>
+    public class Exercise : IComparable<Exercise>
     {
-        [Required, Key]
-        public int ExerciseId { get; set; }
+        [Key, Column(Order = 0), ForeignKey("Chapter"), Required]
+        public int ChapterNo { get; set; }
 
-        [ForeignKey("Chapter"), Required, Index("IX_ExerciseChapterSequence", IsUnique = true, Order = 0)]
-        public int ChapterId { get; set; }
-
-        [Required, Index("IX_ExerciseChapterSequence", IsUnique = true, Order = 1)]
+        [Key, Column(Order = 1), Required]
         public int ExerciseNo { get; set; }
 
         [Required]
@@ -24,17 +21,16 @@ namespace CodingTrainer.CodingTrainerModels.Models
 
         [Required]
         public string DefaultCode { get; set; }
-        [JsonIgnore]
-        public string ModelAnswer { get; set; }
 
         public string HiddenCodeHeader { get; set; }
 
         [JsonIgnore]
         public virtual Chapter Chapter { get; set; }
 
+        // To sort exercises, e.g. in the exercise list, sort them by exercise number
         public int CompareTo(Exercise other)
         {
-            if (ChapterId!=other.ChapterId)
+            if (ChapterNo != other.ChapterNo)
             {
                 throw new InvalidOperationException("Can only compare two exercises with each other if they are both in the same chapter");
             }

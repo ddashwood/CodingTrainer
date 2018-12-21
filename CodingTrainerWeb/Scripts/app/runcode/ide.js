@@ -1,13 +1,6 @@
 ﻿function Ide(serviceFactory) {
     var self = this;
 
-    // Connect to the server
-    // When done, enable the Run button
-    serviceFactory.connect(function () {
-        $('.cm-btn-run').html('&#x25B6;&nbsp;Run');
-        self.enableRun();
-    });
-
     // Make the service objects
     var codeRunner = serviceFactory.getCodeRunner(this);
     var ideServices = serviceFactory.getIdeServices(this);
@@ -42,6 +35,13 @@
     this.editor = this.getEditor(run, requestCompletions);
     this.codeConsole = this.getConsole(consoleIn);
 
+    // Connect to the server
+    // When done, enable the Run button, etc
+    serviceFactory.connect(function () {
+        $('.cm-btn-run').html('&#x25B6;&nbsp;Run');
+        $('#theme-div').css('visibility', 'visible');
+        self.enableRun();
+    });
 
     // Change theme
     $('#Theme').change(function () {

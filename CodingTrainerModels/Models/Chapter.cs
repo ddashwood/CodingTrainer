@@ -10,11 +10,8 @@ namespace CodingTrainer.CodingTrainerModels.Models
 {
     public class Chapter
     {
-        [Required, Key]
-        public int ChapterId { get; set; }
-
-        [Required, Index("IX_ChapterNumber", IsUnique = true)]
-        public int ChapterNumber { get; set; }
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ChapterNo { get; set; }
 
         [Required]
         public string ChapterName { get; set; }

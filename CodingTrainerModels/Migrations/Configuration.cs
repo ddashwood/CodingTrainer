@@ -43,7 +43,7 @@ namespace CodingTrainer.CodingTrainerModels.Migrations
                 var chapters = (Chapter[])ser.Deserialize(reader);
 
                 // Save chapters
-                context.Chapters.AddOrUpdate(c => c.ChapterNumber, chapters);
+                context.Chapters.AddOrUpdate(c => c.ChapterNo, chapters);
 
                 // Save exercises - set their chapter first
                 Array.ForEach(chapters, c =>
@@ -54,9 +54,9 @@ namespace CodingTrainer.CodingTrainerModels.Migrations
                         {
                             e.DefaultCode = e.DefaultCode.Trim();
                             e.HiddenCodeHeader = e.HiddenCodeHeader?.Trim();
-                            e.ChapterId = c.ChapterId;
+                            e.ChapterNo = c.ChapterNo;
                         }
-                        context.Exercises.AddOrUpdate(e => new { e.ChapterId, e.ExerciseNo }, c.Exercises.ToArray());
+                        context.Exercises.AddOrUpdate(e => new { e.ChapterNo, e.ExerciseNo }, c.Exercises.ToArray());
                     }
                 });
             }

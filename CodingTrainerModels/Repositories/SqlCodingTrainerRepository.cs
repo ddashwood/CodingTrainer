@@ -16,7 +16,9 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
 
         public async Task<IEnumerable<Chapter>> GetAllChaptersAsync()
         {
-            var chapters = await context.Chapters.Include("Exercises").OrderBy(c=>c.ChapterNumber).ToListAsync();
+            // Ignore chapters <0 - these will be things like the Playground which
+            // are not real chapters
+            var chapters = await context.Chapters.Where(c => c.ChapterNo >= 0).Include("Exercises").OrderBy(c => c.ChapterNo).ToListAsync();
             foreach (var chapter in chapters)
             {
                 chapter.Exercises.Sort();
@@ -29,8 +31,8 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
         public async Task<Exercise> GetExerciseAsync(int chapterNo, int exercisesNo)
         {
             var exercise = from e in context.Exercises
-                           join c in context.Chapters on e.ChapterId equals c.ChapterId
-                           where c.ChapterNumber == chapterNo && e.ExerciseNo == exercisesNo
+                           join c in context.Chapters on e.ChapterNo equals c.ChapterNo
+                           where c.ChapterNo == chapterNo && e.ExerciseNo == exercisesNo
                            select e;
             return await exercise.SingleAsync();
         }

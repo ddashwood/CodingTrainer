@@ -63,6 +63,7 @@ namespace CodingTrainer.CodingTrainerWeb
             // Controllers with more than one constructor, where
             // we want the one with no parameters to be used
             container.RegisterType<AccountController>(new InjectionConstructor());
+            container.RegisterType<ManageController>(new InjectionConstructor());
         }
     }
 }

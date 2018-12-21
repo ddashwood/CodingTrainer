@@ -1,7 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ArrayOfChapter>
   <Chapter>
-    <ChapterNumber>1</ChapterNumber>
+    <ChapterName>Playground</ChapterName>
+    <ChapterNo>-1</ChapterNo>
+    <Exercises>
+      <Exercise>
+        <ExerciseNo>-1</ExerciseNo>
+        <ExerciseName>Playground</ExerciseName>
+        <DefaultCode>
+WriteLine("Welcome to the Playground! Enter some text");
+string text = ReadLine();
+WriteLine("You entered: " + text);
+        </DefaultCode>
+        <HiddenCodeHeader>
+using static System.Math;
+using static System.Console;
+        </HiddenCodeHeader>
+      </Exercise>
+    </Exercises>
+  </Chapter>
+  
+  <Chapter>
+    <ChapterNo>1</ChapterNo>
     <ChapterName>Hello World</ChapterName>
     <Description>Write your first C# program!</Description>
     <Exercises>
@@ -35,9 +55,10 @@ WriteLine("Hello World");
       </Exercise>
     </Exercises>
   </Chapter>
+  
   <Chapter>
     <ChapterName>Variables</ChapterName>
-    <ChapterNumber>2</ChapterNumber>
+    <ChapterNo>2</ChapterNo>
     <Exercises>
       <Exercise>
         <ExerciseNo>1</ExerciseNo>
@@ -48,9 +69,10 @@ WriteLine("Hello World");
       </Exercise>
     </Exercises>
   </Chapter>
+  
   <Chapter>
     <ChapterId>-1</ChapterId>
     <ChapterName>While Loops</ChapterName>
-    <ChapterNumber>3</ChapterNumber>
+    <ChapterNo>3</ChapterNo>
   </Chapter>
 </ArrayOfChapter>
