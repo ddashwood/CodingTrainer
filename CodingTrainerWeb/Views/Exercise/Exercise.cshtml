@@ -5,7 +5,13 @@
 }
 
 @section scripts {
+    <script>
+        var courseUrl = "@Url.Content("~/Content/Course/")";
+        var chapter = @Model.ChapterNo;
+        var exercise = @Model.ExerciseNo;
+    </script>
     <script src="~/Scripts/app/sidebar.js"></script>
+    <script src="~/Scripts/app/exercise.js"></script>
 }
 
 @Html.Action("ExerciseSidebar")
@@ -19,7 +25,7 @@
     <h2>@Model.Chapter.ChapterName</h2>
     <h4>@Model.ExerciseName</h4>
 
-    <p>Details of the exercise will be shown here</p>
+    <div id="exercise-content">Details of the exercise will be shown here</div>
 </div>
 
 <div class="col-md-6 col-sm-12 col-md-pull-3">

@@ -363,6 +363,8 @@
     <Compile Include="ViewModels\ExerciseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Course\1\1.html" />
+    <Content Include="Content\Course\1\1.mp4" />
     <Content Include="Content\RunCode.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -378,6 +380,7 @@
     <Content Include="Scripts\app\codemirror-addon\console.js" />
     <Content Include="Scripts\app\codemirror-addon\hint-loader.js" />
     <Content Include="Scripts\app\codemirror-addon\performed-lint.js" />
+    <Content Include="Scripts\app\exercise.js" />
     <Content Include="Scripts\app\runcode\codeRunner.js" />
     <Content Include="Scripts\app\runcode\codeRunnerWithCorrections.js" />
     <Content Include="Scripts\app\runcode\ideConsole.js" />
