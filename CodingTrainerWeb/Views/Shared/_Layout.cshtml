@@ -36,7 +36,11 @@
     </div>
     <div class="container body-content">
         <div class="row">
-            @RenderBody()
+            <div class="container-fluid">
+                <div class="row row-offcanvas row-offcanvas-left">
+                    @RenderBody()
+                </div>
+            </div>
         </div>
         <hr />
         <footer>

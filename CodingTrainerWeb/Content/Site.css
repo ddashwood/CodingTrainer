@@ -1,20 +1,28 @@
-﻿body {
+﻿/* Set padding to keep content from hitting the edges */
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
+footer {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 /* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
+   will truncate terms that are too long to fit in the left column */
+
 .dl-horizontal dt {
     white-space: normal;
 }
+
+/* Add spacing */
 
 .top-buffer {
     margin-top: 12px;
@@ -22,4 +30,44 @@
 
 .bottom-buffer {
     margin-bottom: 12px;
+}
+
+/* Off Canvas Sidebar */
+
+@media (max-width:992px) {
+    .row-offcanvas {
+        position: relative;
+        -webkit-transition: all 0.25s ease-out;
+        -moz-transition: all 0.25s ease-out;
+        transition: all 0.25s ease-out;
+    }
+
+    .row-offcanvas-left
+    .sidebar-offcanvas {
+        left: -33%;
+        visibility:hidden;
+    }
+
+    .row-offcanvas-left.active
+    .sidebar-offcanvas {
+        visibility: visible;
+    }
+
+    .row-offcanvas-left.active {
+        left: 33%;
+    }
+
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+        width: 30%;
+        margin-left: 12px;
+        margin-right:30px;
+    }
+}
+
+.sidebar-offcanvas {
+    background-color: #eee;
+    padding: 15px;
+    margin-right: 15px;
 }

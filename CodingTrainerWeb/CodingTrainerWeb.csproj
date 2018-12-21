@@ -388,6 +388,7 @@
     <Content Include="Scripts\app\runcode\serviceFactory.js" />
     <Content Include="Scripts\app\runcode\serviceFactoryForHiddenCode.js" />
     <Content Include="Scripts\app\runcode\signalRFactory.js" />
+    <Content Include="Scripts\app\sidebar.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -785,6 +786,7 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Exercise\Playground.cshtml" />
     <Content Include="Views\Exercise\Exercise.cshtml" />
+    <Content Include="Views\Exercise\ExerciseSidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

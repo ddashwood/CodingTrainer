@@ -1,0 +1,24 @@
+﻿@model IEnumerable<CodingTrainer.CodingTrainerModels.Models.Chapter>
+
+<div class="col-md-3">
+    <div class="sidebar-offcanvas" id="sidebar" role="navigation">
+        <div class="sidebar-nav">
+            <ul class="nav">
+                @foreach (var chapter in Model)
+                {
+                    <li>@chapter.ChapterName</li>
+                    foreach (var exercise in chapter.Exercises)
+                    {
+                        <li>@Html.ActionLink(exercise.ExerciseName, "Exercise", "Exercise", new { chapter = chapter.ChapterNo, exercise = exercise.ExerciseNo }, null)</li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="top-buffer">
+    <button type="button" class="visible-sm visible-xs top-buffer" data-toggle="offcanvas">
+        &#9776;
+    </button>
+</div>

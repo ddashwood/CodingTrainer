@@ -1,8 +1,15 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Playground";
 }
 
+@section scripts {
+    <script src="~/Scripts/app/sidebar.js"></script>
+}
+
+@Html.Action("ExerciseSidebar")
+
 <h2>Playground</h2>
 
-@Html.Action("RunCode", new { chapter = -1, exercise = -1 })
+<div class="col-md-9 col-sm-12">
+    @Html.Action("RunCode", new { chapter = -1, exercise = -1 })
+</div>

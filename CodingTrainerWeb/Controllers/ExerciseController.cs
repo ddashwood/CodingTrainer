@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CodingTrainerModels.Contexts;
+using CodingTrainer.CodingTrainerModels.Models;
 using CodingTrainer.CodingTrainerModels.Models.Security;
 using CodingTrainer.CodingTrainerModels.Repositories;
 using CodingTrainer.CodingTrainerWeb.ApiControllers;
@@ -38,14 +39,25 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return View(await rep.GetExerciseAsync(chapter, exercise));
         }
 
+        [ChildActionOnly]
+        public ActionResult ExerciseSidebar()
+        {
+            return RunWithoutSyncContext(() => ExerciseSidebarAsync());
+        }
+
         [Authorize]
         [ChildActionOnly]
         public ActionResult RunCode(int chapter, int exercise)
         {
+            return RunWithoutSyncContext(() => RunCodeAsync(chapter, exercise));
+        }
+
+        private ActionResult RunWithoutSyncContext(Func<Task<ActionResult>> task)
+        {
             var syncContext = SynchronizationContext.Current;
             SynchronizationContext.SetSynchronizationContext(null); // Can't run async from partial views without this
 
-            var result = RunCodeAsync(chapter, exercise).Result;
+            var result = task().Result;
 
             SynchronizationContext.SetSynchronizationContext(syncContext);
             return result;
@@ -62,6 +74,11 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                     { Text = char.ToUpper(t[0]) + t.Substring(1), Value = t, Selected = t == theme });
 
             return PartialView(new ExerciseViewModel(model));
+        }
+        
+        private async Task<ActionResult> ExerciseSidebarAsync()
+        {
+            return PartialView(await rep.GetAllChaptersAsync());
         }
     }
 }
