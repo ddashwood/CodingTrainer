@@ -337,6 +337,7 @@
     <Compile Include="AspNet\UserRepository.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChapterController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -363,7 +364,6 @@
     <Compile Include="ViewModels\ExerciseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Course\1\1.html" />
     <Content Include="Content\Course\1\1.mp4" />
     <Content Include="Content\RunCode.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -380,7 +380,6 @@
     <Content Include="Scripts\app\codemirror-addon\console.js" />
     <Content Include="Scripts\app\codemirror-addon\hint-loader.js" />
     <Content Include="Scripts\app\codemirror-addon\performed-lint.js" />
-    <Content Include="Scripts\app\exercise.js" />
     <Content Include="Scripts\app\runcode\codeRunner.js" />
     <Content Include="Scripts\app\runcode\codeRunnerWithCorrections.js" />
     <Content Include="Scripts\app\runcode\ideConsole.js" />
@@ -790,6 +789,8 @@
     <Content Include="Views\Exercise\Playground.cshtml" />
     <Content Include="Views\Exercise\Exercise.cshtml" />
     <Content Include="Views\Exercise\ExerciseSidebar.cshtml" />
+    <Content Include="Views\Course\NotFound.cshtml" />
+    <Content Include="Views\Course\c1_e1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
