@@ -1,0 +1,21 @@
+﻿@model CodingTrainer.CodingTrainerModels.Models.Exercise
+
+@{
+    ViewBag.Title = "Exercise";
+}
+
+<h2>Exercise - @Model.ExerciseName</h2>
+
+@*This div appears first so it shows first on mobile.
+  Bootstrap push/pull classes ensure it shows on the
+    right hand side of larger screen*@
+<div class="col-md-4 col-sm-12 col-md-push-8">
+    <h2>@Model.Chapter.ChapterName</h2>
+    <h4>@Model.ExerciseName</h4>
+
+    <p>Details of the exercise will be shown here</p>
+</div>
+
+<div class="col-md-8 col-sm-12 col-md-pull-4">
+    @Html.Action("RunCode", new { chapter = Model.Chapter.ChapterNumber, exercise = Model.ExerciseNo })
+</div>

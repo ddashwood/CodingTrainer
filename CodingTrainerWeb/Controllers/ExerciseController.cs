@@ -33,6 +33,11 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return View();
         }
 
+        public async Task<ActionResult> Exercise(int chapter, int exercise)
+        {
+            return View(await rep.GetExerciseAsync(chapter, exercise));
+        }
+
         [Authorize]
         [ChildActionOnly]
         public ActionResult RunCode(int chapter, int exercise)
@@ -50,7 +55,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         {
             Task<string> themeTask = themeController.Get();
 
-            var model = await rep.GetExerciseAsync(1, 1);
+            var model = await rep.GetExerciseAsync(chapter, exercise);
             string theme = await themeTask;
 
             ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
