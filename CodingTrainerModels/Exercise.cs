@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace CodingTrainer.CodingTrainerModels.Models
+namespace CodingTrainer.CodingTrainerModels
 {
     public class Exercise : IComparable<Exercise>
     {

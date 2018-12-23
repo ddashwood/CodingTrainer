@@ -7,7 +7,7 @@
 // then the only possible validation errors in user names would be duplicates of the same
 // errors in the e-mail address. Therefore, use this class to avoid the duplicates
 
-using CodingTrainer.CodingTrainerModels.Models.Security;
+using CodingTrainer.CodingTrainerModels.Security;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using CodingTrainer.CodingTrainerModels.Models;
+﻿using CodingTrainer.CodingTrainerModels;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System;
 using System.Collections.Generic;

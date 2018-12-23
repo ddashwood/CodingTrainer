@@ -1,8 +1,8 @@
 ﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using CodingTrainer.CodingTrainerModels.Models;
-using CodingTrainer.CodingTrainerModels.Models.Security;
+using CodingTrainer.CodingTrainerModels;
+using CodingTrainer.CodingTrainerModels.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 

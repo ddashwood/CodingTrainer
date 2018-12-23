@@ -1,4 +1,4 @@
-﻿using CodingTrainer.CodingTrainerModels.Models.Security;
+﻿using CodingTrainer.CodingTrainerModels.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;

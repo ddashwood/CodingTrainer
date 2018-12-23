@@ -8,7 +8,7 @@
         <ExerciseNo>-1</ExerciseNo>
         <ExerciseName>Playground</ExerciseName>
         <DefaultCode>
-WriteLine("Welcome to the Playground! Enter some text");
+WriteLine("Welcome to the Playground! Please enter some text");
 string text = ReadLine();
 WriteLine("You entered: " + text);
         </DefaultCode>

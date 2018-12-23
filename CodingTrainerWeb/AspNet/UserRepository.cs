@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using CodingTrainer.CodingTrainerEntityFrameworks.Contexts;
-using CodingTrainer.CodingTrainerModels.Models.Security;
+using CodingTrainer.CodingTrainerModels.Security;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

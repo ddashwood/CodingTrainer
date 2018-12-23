@@ -6,7 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using CodingTrainer.CodingTrainerWeb.Models;
-using CodingTrainer.CodingTrainerModels.Models.Security;
+using CodingTrainer.CodingTrainerModels.Security;
 using CodingTrainer.CodingTrainerEntityFrameworks.Contexts;
 
 namespace CodingTrainer.CodingTrainerWeb

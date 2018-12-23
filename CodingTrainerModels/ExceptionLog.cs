@@ -1,22 +1,25 @@
-﻿using System;
+﻿using CodingTrainer.CodingTrainerModels.Security;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CodingTrainer.CodingTrainerModels.Models.Security;
 
-namespace CodingTrainer.CodingTrainerModels.Models
+namespace CodingTrainer.CodingTrainerModels
 {
-    public class Submission
+    public class ExceptionLog
     {
         [Required, Key]
-        public int SubmissionId { get; set; }
+        public int Id { get; set; }
+
         [Required]
-        public string SubmittedCode { get; set; }
+        public string ExceptionText { get; set; }
         [Required]
-        public virtual Exercise Exercise { get; set; }
+        public DateTimeOffset ExceptionDateTime { get; set; }
+
+        public string UserCode { get; set; }
 
         [ForeignKey("User")]
         public string UserId { get; set; }

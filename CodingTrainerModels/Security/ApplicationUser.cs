@@ -1,4 +1,4 @@
-﻿using CodingTrainer.CodingTrainerModels.Models;
+﻿using CodingTrainer.CodingTrainerModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodingTrainer.CodingTrainerModels.Models.Security
+namespace CodingTrainer.CodingTrainerModels.Security
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser

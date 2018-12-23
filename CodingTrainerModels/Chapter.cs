@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodingTrainer.CodingTrainerModels.Models
+namespace CodingTrainer.CodingTrainerModels
 {
     public class Chapter
     {

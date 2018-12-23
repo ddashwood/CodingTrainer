@@ -1,6 +1,6 @@
 namespace CodingTrainer.CodingTrainerEntityFrameworks.Migrations
 {
-    using CodingTrainer.CodingTrainerModels.Models;
+    using CodingTrainer.CodingTrainerModels;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -26,7 +26,7 @@ namespace CodingTrainer.CodingTrainerEntityFrameworks.Migrations
 
         public void RunSeed(Contexts.ApplicationDbContext context)
         {
-            var resourceName = "CodingTrainer.CodingTrainerModels.Data.SeedData.xml";
+            var resourceName = "CodingTrainer.CodingTrainerEntityFramework.Data.SeedData.xml";
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(resourceName);
 
