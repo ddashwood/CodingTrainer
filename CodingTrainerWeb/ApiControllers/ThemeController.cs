@@ -1,14 +1,7 @@
-﻿using CodingTrainer.CodingTrainerModels.Contexts;
-using CodingTrainer.CodingTrainerModels.Models.Security;
-using CodingTrainer.CodingTrainerWeb.AspNet;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;

@@ -1,5 +1,5 @@
 ﻿using CodingTrainer.CodingTrainerModels.Models;
-using CodingTrainer.CodingTrainerModels.Repositories;
+using CodingTrainer.CodingTrainerWeb.Dependencies;
 using CodingTrainer.CodingTrainerWeb.AspNet;
 using CodingTrainer.CSharpRunner.CodeHost;
 using Microsoft.AspNet.Identity;

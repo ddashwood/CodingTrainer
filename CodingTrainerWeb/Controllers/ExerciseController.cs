@@ -1,12 +1,7 @@
-﻿using CodingTrainer.CodingTrainerModels.Contexts;
-using CodingTrainer.CodingTrainerModels.Models;
-using CodingTrainer.CodingTrainerModels.Models.Security;
-using CodingTrainer.CodingTrainerModels.Repositories;
-using CodingTrainer.CodingTrainerWeb.ApiControllers;
+﻿using CodingTrainer.CodingTrainerWeb.ApiControllers;
+using CodingTrainer.CodingTrainerWeb.Dependencies;
 using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerWeb.ViewModels;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;

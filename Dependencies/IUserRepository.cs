@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodingTrainer.CodingTrainerWeb.AspNet
+namespace CodingTrainer.CodingTrainerWeb.Dependencies
 {
     public interface IUserRepository
     {

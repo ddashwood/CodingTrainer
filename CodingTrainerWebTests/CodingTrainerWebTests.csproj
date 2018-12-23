@@ -230,6 +230,10 @@
       <Project>{83AF2E13-FA5C-4C36-BA3E-6E2290DF0EE5}</Project>
       <Name>CodingTrainerWeb</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Dependencies\Dependencies.csproj">
+      <Project>{ea66aaaa-2b8d-439d-83d8-b95ddf383e54}</Project>
+      <Name>Dependencies</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />

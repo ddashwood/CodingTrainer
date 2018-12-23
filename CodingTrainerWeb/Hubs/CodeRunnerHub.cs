@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 using Microsoft.CodeAnalysis.Scripting;
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CodingTrainerModels.Models;
-using CodingTrainer.CodingTrainerModels.Repositories;
+using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System.Threading.Tasks.Dataflow;
 using CodingTrainer.CodingTrainerWeb.AspNet;
 

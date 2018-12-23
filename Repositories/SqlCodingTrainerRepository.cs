@@ -1,12 +1,14 @@
-﻿using System;
+﻿using CodingTrainer.CodingTrainerModels.Contexts;
+using CodingTrainer.CodingTrainerModels.Models;
+using CodingTrainer.CodingTrainerWeb.Dependencies;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using CodingTrainer.CodingTrainerModels.Contexts;
-using CodingTrainer.CodingTrainerModels.Models;
 
-namespace CodingTrainer.CodingTrainerModels.Repositories
+namespace CodingTrainer.CodingTrainerWeb.Repositories
 {
     public class SqlCodingTrainerRepository : ICodingTrainerRepository
     {
@@ -45,4 +47,5 @@ namespace CodingTrainer.CodingTrainerModels.Repositories
             await context.SaveChangesAsync();
         }
     }
+
 }

@@ -1,5 +1,5 @@
 ﻿using CodingTrainer.CodingTrainerModels.Models;
-using CodingTrainer.CodingTrainerModels.Repositories;
+using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System;
 using System.Collections.Generic;
 using System.Linq;

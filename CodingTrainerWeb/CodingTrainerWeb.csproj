@@ -333,7 +333,6 @@
     <Compile Include="App_Start\UnityActivator.cs" />
     <Compile Include="App_Start\UnityHubActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="AspNet\IUserRepository.cs" />
     <Compile Include="AspNet\UserRepository.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChapterController.cs" />
@@ -806,6 +805,14 @@
     <ProjectReference Include="..\CodingTrainerModels\CodingTrainerModels.csproj">
       <Project>{dfa7a141-5d03-48dc-b604-c3a9659d2948}</Project>
       <Name>CodingTrainerModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\Dependencies.csproj">
+      <Project>{ea66aaaa-2b8d-439d-83d8-b95ddf383e54}</Project>
+      <Name>Dependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repositories\Repositories.csproj">
+      <Project>{ca6abe10-e22d-4250-9fb6-d22fe9bd0bb5}</Project>
+      <Name>Repositories</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

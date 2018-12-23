@@ -10,9 +10,8 @@ using System.Dynamic;
 using CodingTrainer.CodingTrainerWeb.Hubs;
 using CodingTrainer.CSharpRunner.CodeHost;
 using System.Threading;
-using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
-using CodingTrainer.CodingTrainerModels.Repositories;
 using CodingTrainer.CodingTrainerWeb.AspNet;
+using CodingTrainer.CodingTrainerWeb.Dependencies;
 
 namespace CodingTrainerWebTests.Hubs
 {

@@ -1,5 +1,4 @@
-using CodingTrainer.CodingTrainerModels.Repositories;
-using CodingTrainer.CodingTrainerWeb.ApiControllers;
+using CodingTrainer.CodingTrainerWeb.Dependencies;
 using CodingTrainer.CodingTrainerWeb.AspNet;
 using CodingTrainer.CodingTrainerWeb.Controllers;
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
@@ -9,6 +8,7 @@ using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
 using Unity.RegistrationByConvention;
+using CodingTrainer.CodingTrainerWeb.Repositories;
 
 namespace CodingTrainer.CodingTrainerWeb
 {
