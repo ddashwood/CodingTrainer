@@ -12,7 +12,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerModels.Security;
-using CodingTrainer.CodingTrainerEntityFrameworks.Contexts;
+using CodingTrainer.CodingTrainerEntityFramework.Contexts;
 
 namespace CodingTrainer.CodingTrainerWeb
 {

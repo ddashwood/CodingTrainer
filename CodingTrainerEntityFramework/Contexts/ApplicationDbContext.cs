@@ -6,7 +6,7 @@ using CodingTrainer.CodingTrainerModels.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace CodingTrainer.CodingTrainerEntityFrameworks.Contexts
+namespace CodingTrainer.CodingTrainerEntityFramework.Contexts
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
