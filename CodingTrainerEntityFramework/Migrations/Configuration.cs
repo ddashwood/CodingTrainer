@@ -1,4 +1,4 @@
-namespace CodingTrainer.CodingTrainerModels.Migrations
+namespace CodingTrainer.CodingTrainerEntityFrameworks.Migrations
 {
     using CodingTrainer.CodingTrainerModels.Models;
     using System;

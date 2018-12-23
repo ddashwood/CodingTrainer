@@ -75,8 +75,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\ApplicationDbContext.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Chapter.cs" />
     <Compile Include="Models\ExceptionLog.cs" />
     <Compile Include="Models\Security\ApplicationUser.cs" />
@@ -91,9 +89,6 @@
     <None Include="Scripts\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\SeedData.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <Content Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CA6ABE10-E22D-4250-9FB6-D22FE9BD0BB5}</ProjectGuid>
+    <ProjectGuid>{D9FF2617-78F0-4CD3-B48E-A1F92B2514AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodingTrainer.CodingTrainerWeb.Repositories</RootNamespace>
-    <AssemblyName>Repositories</AssemblyName>
+    <RootNamespace>CodingTrainer.CodingTrainerEntityFramework</RootNamespace>
+    <AssemblyName>CodingTrainerEntityFramework</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -38,10 +38,10 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -54,21 +54,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contexts\ApplicationDbContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlCodingTrainerRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CodingTrainerEntityFramework\CodingTrainerEntityFramework.csproj">
-      <Project>{d9ff2617-78f0-4cd3-b48e-a1f92b2514ad}</Project>
-      <Name>CodingTrainerEntityFramework</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Data\SeedData.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\CodingTrainerModels\CodingTrainerModels.csproj">
       <Project>{dfa7a141-5d03-48dc-b604-c3a9659d2948}</Project>
       <Name>CodingTrainerModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Dependencies\Dependencies.csproj">
-      <Project>{ea66aaaa-2b8d-439d-83d8-b95ddf383e54}</Project>
-      <Name>Dependencies</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

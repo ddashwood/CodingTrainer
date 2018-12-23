@@ -1,4 +1,4 @@
-﻿using CodingTrainer.CodingTrainerModels.Contexts;
+﻿using CodingTrainer.CodingTrainerEntityFrameworks.Contexts;
 using CodingTrainer.CodingTrainerModels.Models;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System;

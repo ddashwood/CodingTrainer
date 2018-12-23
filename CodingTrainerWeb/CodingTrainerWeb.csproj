@@ -360,7 +360,6 @@
     <Compile Include="Models\UserValidatorDeDup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\ExerciseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Course\1\1.mp4" />
@@ -801,6 +800,10 @@
     <ProjectReference Include="..\CodeHost\CodeHost.csproj">
       <Project>{0b5480bd-8879-4158-8c35-73fd207742a3}</Project>
       <Name>CodeHost</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodingTrainerEntityFramework\CodingTrainerEntityFramework.csproj">
+      <Project>{d9ff2617-78f0-4cd3-b48e-a1f92b2514ad}</Project>
+      <Name>CodingTrainerEntityFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodingTrainerModels\CodingTrainerModels.csproj">
       <Project>{dfa7a141-5d03-48dc-b604-c3a9659d2948}</Project>

@@ -1,4 +1,4 @@
-﻿@model CodingTrainer.CodingTrainerWeb.ViewModels.ExerciseViewModel
+﻿@model CodingTrainer.CodingTrainerModels.Models.Exercise
 
 @using (Html.BeginSection("scripts"))
 {
@@ -10,8 +10,7 @@
         // Get everything started
         (function () {
             var signalRFactory = new SignalRFactory();
-            //var serviceFactory = new ServiceFactory(signalRFactory);
-            var model = @Html.Raw(Json.Encode(Model));
+            var model = @Html.Raw(Json.Encode(new { Model.ChapterNo, Model.ExerciseNo, Model.DefaultCode, Model.HiddenCodeHeader }));
             var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, model.HiddenCodeHeader);
             new Ide(serviceFactory);
         })();

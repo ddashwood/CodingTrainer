@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using CodingTrainer.CodingTrainerModels.Contexts;
+using CodingTrainer.CodingTrainerEntityFrameworks.Contexts;
 using CodingTrainer.CodingTrainerModels.Models.Security;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using Microsoft.AspNet.Identity;

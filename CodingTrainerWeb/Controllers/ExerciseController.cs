@@ -1,7 +1,6 @@
 ﻿using CodingTrainer.CodingTrainerWeb.ApiControllers;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using CodingTrainer.CodingTrainerWeb.Models;
-using CodingTrainer.CodingTrainerWeb.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +67,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
                     { Text = char.ToUpper(t[0]) + t.Substring(1), Value = t, Selected = t == theme });
 
-            return PartialView(new ExerciseViewModel(model));
+            return PartialView(model);
         }
         
         private async Task<ActionResult> ExerciseSidebarAsync()
