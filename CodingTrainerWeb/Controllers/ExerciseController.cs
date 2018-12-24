@@ -1,4 +1,5 @@
-﻿using CodingTrainer.CodingTrainerWeb.ApiControllers;
+﻿using CodingTrainer.CodingTrainerModels;
+using CodingTrainer.CodingTrainerWeb.ApiControllers;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using CodingTrainer.CodingTrainerWeb.Models;
 using System;
@@ -36,15 +37,55 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         [ChildActionOnly]
         public ActionResult ExerciseSidebar()
         {
+            async Task<ActionResult> ExerciseSidebarAsync()
+            {
+                return PartialView(await rep.GetAllChaptersAsync());
+            }
+
             return RunWithoutSyncContext(() => ExerciseSidebarAsync());
         }
 
         [Authorize]
         [ChildActionOnly]
-        public ActionResult RunCode(int chapter, int exercise)
+        public ActionResult RunCode(Exercise exercise)
         {
+            async Task<ActionResult> RunCodeAsync(Exercise _exercise)
+            {
+                string activeTheme = await themeController.Get();
+
+                ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
+                    { Text = char.ToUpper(t[0]) + t.Substring(1), Value = t, Selected = t == activeTheme });
+
+                return PartialView(_exercise);
+            }
+
+            return RunWithoutSyncContext(() => RunCodeAsync(exercise));
+        }
+
+        [Authorize]
+        [ChildActionOnly]
+        public ActionResult RunCodeById(int chapter, int exercise)
+        {
+            async Task<ActionResult> RunCodeAsync(int _chapter, int _exercise)
+            {
+                Task<string> themeTask = themeController.Get();
+                Task<Exercise> exerciseTask = rep.GetExerciseAsync(_chapter, _exercise);
+
+                await Task.WhenAll(themeTask, exerciseTask);
+
+                string activeTheme = themeTask.Result;
+                Exercise model = exerciseTask.Result;
+
+                ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
+                    { Text = char.ToUpper(t[0]) + t.Substring(1), Value = t, Selected = t == activeTheme });
+
+                return PartialView("RunCode", model);
+            }
+
             return RunWithoutSyncContext(() => RunCodeAsync(chapter, exercise));
         }
+
+        // Helpers
 
         private ActionResult RunWithoutSyncContext(Func<Task<ActionResult>> task)
         {
@@ -55,24 +96,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
 
             SynchronizationContext.SetSynchronizationContext(syncContext);
             return result;
-        }
-
-        private async Task<ActionResult> RunCodeAsync(int chapter, int exercise)
-        {
-            Task<string> themeTask = themeController.Get();
-
-            var model = await rep.GetExerciseAsync(chapter, exercise);
-            string theme = await themeTask;
-
-            ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
-                    { Text = char.ToUpper(t[0]) + t.Substring(1), Value = t, Selected = t == theme });
-
-            return PartialView(model);
-        }
-        
-        private async Task<ActionResult> ExerciseSidebarAsync()
-        {
-            return PartialView(await rep.GetAllChaptersAsync());
         }
     }
 }

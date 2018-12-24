@@ -55,12 +55,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\ApplicationDbContext.cs" />
+    <Compile Include="Migrations\201812240955356_Initial.cs" />
+    <Compile Include="Migrations\201812240955356_Initial.Designer.cs">
+      <DependentUpon>201812240955356_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\SeedData.xml">
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812240955356_Initial.resx">
+      <DependentUpon>201812240955356_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

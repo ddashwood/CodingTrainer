@@ -19,9 +19,9 @@
     <h2>@Model.Chapter.ChapterName</h2>
     <h4>@Model.ExerciseName</h4>
 
-    @Html.Action("Content", "Course", new { chapter = Model.ChapterNo, exercise = Model.ExerciseNo})
+    @Html.Action("Content", "Course", new { Exercise = Model })
 </div>
 
 <div class="col-md-6 col-sm-12 col-md-pull-3">
-    @Html.Action("RunCode", new { chapter = Model.Chapter.ChapterNo, exercise = Model.ExerciseNo })
+    @Html.Action("RunCode", new { Exercise = Model })
 </div>

@@ -21,7 +21,7 @@ namespace CodingTrainer.CodingTrainerWeb.Models
 
                 var UserManager = HttpContext.Current.Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var appUser = UserManager.FindById(user.Identity.GetUserId());
-                name = appUser.FirstName + " " + appUser.LastName;
+                name = appUser == null ? "Unknown" : appUser.FirstName + " " + appUser.LastName;
                 HttpContext.Current.Session["FullName"] = name;
             }
             return name;
