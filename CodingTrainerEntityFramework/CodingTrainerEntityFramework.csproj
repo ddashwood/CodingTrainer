@@ -63,6 +63,10 @@
     <Compile Include="Migrations\201812241011145_AddExerciseContent.Designer.cs">
       <DependentUpon>201812241011145_AddExerciseContent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812241729525_CurrentExercise.cs" />
+    <Compile Include="Migrations\201812241729525_CurrentExercise.Designer.cs">
+      <DependentUpon>201812241729525_CurrentExercise.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -75,6 +79,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812241011145_AddExerciseContent.resx">
       <DependentUpon>201812241011145_AddExerciseContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812241729525_CurrentExercise.resx">
+      <DependentUpon>201812241729525_CurrentExercise.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

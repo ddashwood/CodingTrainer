@@ -325,6 +325,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\AuthorizeExerciseAttribute.cs" />
     <Compile Include="ApiControllers\ChapterController.cs" />
     <Compile Include="ApiControllers\ThemeController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -789,6 +790,7 @@
     <Content Include="Views\Exercise\Playground.cshtml" />
     <Content Include="Views\Exercise\Exercise.cshtml" />
     <Content Include="Views\Exercise\ExerciseSidebar.cshtml" />
+    <Content Include="Views\Exercise\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

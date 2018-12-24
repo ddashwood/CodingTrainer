@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CodingTrainer.CodingTrainerModels.Security;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -38,6 +39,13 @@ namespace CodingTrainer.CodingTrainerModels
                 throw new InvalidOperationException("Can only compare two exercises with each other if they are both in the same chapter");
             }
             return ExerciseNo.CompareTo(other.ExerciseNo);
+        }
+
+        public bool Permitted(ApplicationUser user)
+        {
+            if (user == null) return false; // Not logged on
+
+            return user.ExercisePermitted(this);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CodingTrainerModels;
+using CodingTrainer.CodingTrainerWeb.ActionFilters;
 using CodingTrainer.CodingTrainerWeb.ApiControllers;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using CodingTrainer.CodingTrainerWeb.Models;
@@ -21,11 +22,13 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
     {
         ICodingTrainerRepository rep;
         ThemeController themeController;
+        IUserRepository userRepository;
 
-        public ExerciseController(ICodingTrainerRepository repository, ThemeController themeController)
+        public ExerciseController(ICodingTrainerRepository repository, ThemeController themeController, IUserRepository userRepository)
         {
             rep = repository;
             this.themeController = themeController;
+            this.userRepository = userRepository;
         }
 
         [Authorize]
@@ -34,6 +37,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return View();
         }
 
+        [AuthorizeExercise]
         public async Task<ActionResult> Exercise(int chapter, int exercise)
         {
             return View(await rep.GetExerciseAsync(chapter, exercise));
@@ -44,13 +48,13 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         {
             async Task<ActionResult> ExerciseSidebarAsync()
             {
+                ViewBag.UserRepository = userRepository;
                 return PartialView(await rep.GetAllChaptersAsync());
             }
 
             return RunWithoutSyncContext(() => ExerciseSidebarAsync());
         }
 
-        [Authorize]
         [ChildActionOnly]
         public ActionResult RunCode(Exercise exercise)
         {
@@ -67,7 +71,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return RunWithoutSyncContext(() => RunCodeAsync(exercise));
         }
 
-        [Authorize]
         [ChildActionOnly]
         public ActionResult RunCodeById(int chapter, int exercise)
         {
@@ -114,6 +117,11 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             
             // Finally, compile and run the content source
             return Content(service.RunCompile(key));
+        }
+
+        public ActionResult AccessDenied()
+        {
+            return View();
         }
 
         // Helpers

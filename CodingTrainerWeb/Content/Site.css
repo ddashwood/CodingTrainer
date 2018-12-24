@@ -32,8 +32,13 @@ footer {
     margin-bottom: 12px;
 }
 
-/* Off Canvas Sidebar */
+/* Allow link items in lists to be disabled */
 
+.nav > li > a.disabled {
+    color: black;
+}
+
+/* Off Canvas Sidebar */
 @media (max-width:992px) {
     .row-offcanvas {
         position: relative;
