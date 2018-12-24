@@ -2,9 +2,14 @@
 using CodingTrainer.CodingTrainerWeb.ApiControllers;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using CodingTrainer.CodingTrainerWeb.Models;
+using RazorEngine;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -83,6 +88,32 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             }
 
             return RunWithoutSyncContext(() => RunCodeAsync(chapter, exercise));
+        }
+
+        [Authorize]
+        [ChildActionOnly]
+        public ActionResult Content(Exercise exercise)
+        {
+            // Make a razor engine service with the System.Web.Mvc namespace open
+            var config = new TemplateServiceConfiguration();
+            var namespaces = config.Namespaces;
+            namespaces.Add("System.Web.Mvc");
+            var service = RazorEngineService.Create(config);
+            
+            // Make the UrlHelper extension methods available
+            string fullSource = "@{var Url = new UrlHelper(System.Web.HttpContext.Current.Request.RequestContext);} "
+                    + exercise.Content;
+
+            // Including the hash code in the key allows this to work even if the source changes
+            // However, this will result in memory leaks. The fix for this is to write a new
+            // caching provider - however, this is considered to be a minor issue, and is
+            // acceptable for now - see this post by Matthias Dittrich
+            // https://github.com/Antaris/RazorEngine/issues/232#issuecomment-128802285
+            var key = $"ContentTemplate{exercise.ChapterNo}-{exercise.ExerciseNo}-{fullSource.GetHashCode()}";
+            service.AddTemplate(key, new LoadedTemplateSource(fullSource));
+            
+            // Finally, compile and run the content source
+            return Content(service.RunCompile(key));
         }
 
         // Helpers

@@ -24,6 +24,9 @@ namespace CodingTrainer.CodingTrainerModels
 
         public string HiddenCodeHeader { get; set; }
 
+        [Required]
+        public string Content { get; set; }
+
         [JsonIgnore]
         public virtual Chapter Chapter { get; set; }
 

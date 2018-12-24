@@ -1,7 +1,7 @@
 ﻿@model CodingTrainer.CodingTrainerModels.Exercise
 
 @{
-    ViewBag.Title = "Exercise";
+    ViewBag.Title = "Exercise - " + Model.ExerciseName;
 }
 
 @section scripts {
@@ -19,7 +19,8 @@
     <h2>@Model.Chapter.ChapterName</h2>
     <h4>@Model.ExerciseName</h4>
 
-    @Html.Action("Content", "Course", new { Exercise = Model })
+    @*@Html.Action("Content", "Course", new { Exercise = Model })*@
+    @Html.Action("Content", new { Exercise = Model })
 </div>
 
 <div class="col-md-6 col-sm-12 col-md-pull-3">
