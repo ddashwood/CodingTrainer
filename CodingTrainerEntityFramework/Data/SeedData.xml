@@ -7,18 +7,6 @@
       <Exercise>
         <ExerciseNo>-1</ExerciseNo>
         <ExerciseName>Playground</ExerciseName>
-        <DefaultCode>
-WriteLine("Welcome to the Playground! Please enter some text");
-string text = ReadLine();
-WriteLine("You entered: " + text);
-        </DefaultCode>
-        <HiddenCodeHeader>
-using static System.Math;
-using static System.Console;
-        </HiddenCodeHeader>
-        <Content>
-&lt;p&gt;Course material will appear here soon...&lt;/p&gt;
-        </Content>
       </Exercise>
     </Exercises>
   </Chapter>
@@ -31,39 +19,14 @@ using static System.Console;
       <Exercise>
         <ExerciseNo>1</ExerciseNo>
         <ExerciseName>Read line Write line</ExerciseName>
-        <DefaultCode>
-WriteLine("Enter some text");
-string text = ReadLine();
-WriteLine("You entered: " + text);
-        </DefaultCode>
-        <HiddenCodeHeader>
-using static System.Math;
-using static System.Console;          
-        </HiddenCodeHeader>
-        <Content>
-&lt;p&gt;Course material will appear here soon...&lt;/p&gt;
-        </Content>
       </Exercise>
       <Exercise>
         <ExerciseNo>2</ExerciseNo>
         <ExerciseName>Divide By Zero</ExerciseName>
-        <DefaultCode>
-int i = 0;
-int j = 5 / i;
-        </DefaultCode>
-        <Content>
-&lt;p&gt;Course material will appear here soon...&lt;/p&gt;
-        </Content>
       </Exercise>
       <Exercise>
         <ExerciseNo>3</ExerciseNo>
         <ExerciseName>Hello world</ExerciseName>
-        <DefaultCode>
-WriteLine("Hello World");
-        </DefaultCode>
-        <Content>
-&lt;p&gt;Course material will appear here soon...&lt;/p&gt;
-        </Content>
       </Exercise>
     </Exercises>
   </Chapter>
@@ -75,12 +38,6 @@ WriteLine("Hello World");
       <Exercise>
         <ExerciseNo>1</ExerciseNo>
         <ExerciseName>Hello world</ExerciseName>
-        <DefaultCode>
-WriteLine("Hello World");
-        </DefaultCode>
-        <Content>
-&lt;p&gt;Course material will appear here soon...&lt;/p&gt;
-        </Content>
       </Exercise>
     </Exercises>
   </Chapter>

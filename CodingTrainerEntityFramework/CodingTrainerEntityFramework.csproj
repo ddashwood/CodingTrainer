@@ -85,7 +85,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EmbeddedResource Include="Data\Content1-1.cshtml" />
+    <EmbeddedResource Include="Data\Content1-2.cshtml" />
+    <EmbeddedResource Include="Data\Default-1--1.csx" />
+    <EmbeddedResource Include="Data\Default1-1.csx" />
+    <EmbeddedResource Include="Data\Default1-2.csx" />
+    <EmbeddedResource Include="Data\Default1-3.csx" />
+    <EmbeddedResource Include="Data\Header-1--1.csx" />
+    <EmbeddedResource Include="Data\Header1-1.csx" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

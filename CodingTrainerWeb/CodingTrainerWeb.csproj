@@ -789,8 +789,6 @@
     <Content Include="Views\Exercise\Playground.cshtml" />
     <Content Include="Views\Exercise\Exercise.cshtml" />
     <Content Include="Views\Exercise\ExerciseSidebar.cshtml" />
-    <Content Include="Views\Course\NotFound.cshtml" />
-    <Content Include="Views\Course\c1_e1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
