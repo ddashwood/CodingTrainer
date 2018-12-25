@@ -119,11 +119,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return Content(service.RunCompile(key));
         }
 
-        public ActionResult AccessDenied()
-        {
-            return View();
-        }
-
         // Helpers
 
         private ActionResult RunWithoutSyncContext(Func<Task<ActionResult>> task)
