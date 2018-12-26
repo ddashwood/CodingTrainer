@@ -48,7 +48,6 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
             else
             {
                 // Logged in, but no permission to access this exercise
-                filterContext.HttpContext.Response.StatusCode = 403;
                 filterContext.Result = new ViewResult() { ViewName = "~/Views/Exercise/AccessDenied.cshtml" };
             }
         }
