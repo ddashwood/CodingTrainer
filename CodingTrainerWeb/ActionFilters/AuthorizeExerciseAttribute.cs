@@ -4,6 +4,7 @@ using CodingTrainer.CodingTrainerWeb.AspNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -43,11 +44,17 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
             {
                 // Not logged in, send to normal login page
                 base.HandleUnauthorizedRequest(filterContext);
-
             }
             else
             {
                 // Logged in, but no permission to access this exercise
+
+                // This line removed because the message body of 401 responses get
+                // overwritten by Azure. Will put this line back in once the Azure issue is
+                // fixed
+
+                // filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+
                 filterContext.Result = new ViewResult() { ViewName = "~/Views/Exercise/AccessDenied.cshtml" };
             }
         }

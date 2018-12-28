@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerModels.Security;
+using CodingTrainer.CodingTrainerWeb.ActionFilters;
 
 namespace CodingTrainer.CodingTrainerWeb.Controllers
 {

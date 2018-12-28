@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,15 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         ICodingTrainerRepository rep;
         ThemeController themeController;
         IUserRepository userRepository;
+
+        /////////////////////////////
+        /// Temporary test method ///
+        /////////////////////////////
+        public ActionResult AzureError()
+        {
+            HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return View("AccessDenied");
+        }
 
         public ExerciseController(ICodingTrainerRepository repository, ThemeController themeController, IUserRepository userRepository)
         {
@@ -55,6 +65,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return RunWithoutSyncContext(() => ExerciseSidebarAsync());
         }
 
+        [Authorize]
         [ChildActionOnly]
         public ActionResult RunCode(Exercise exercise)
         {
@@ -71,6 +82,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return RunWithoutSyncContext(() => RunCodeAsync(exercise));
         }
 
+        [Authorize]
         [ChildActionOnly]
         public ActionResult RunCodeById(int chapter, int exercise)
         {

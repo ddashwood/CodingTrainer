@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CodingTrainer.CodingTrainerWeb.Models;
+using CodingTrainer.CodingTrainerWeb.ActionFilters;
 
 namespace CodingTrainer.CodingTrainerWeb.Controllers
 {

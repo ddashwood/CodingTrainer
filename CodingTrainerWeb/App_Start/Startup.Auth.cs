@@ -8,11 +8,30 @@ using Owin;
 using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerModels.Security;
 using CodingTrainer.CodingTrainerEntityFramework.Contexts;
+using System.Security.Principal;
 
 namespace CodingTrainer.CodingTrainerWeb
 {
     public partial class Startup
     {
+        /// <summary>
+        /// An implmentation of CookieAuthenticationProvider which only
+        /// applies the redirect if the user is not authenticated
+        /// </summary>
+        private class CookieAuthenticationProviderWithLoggedInCheck : CookieAuthenticationProvider
+        {
+            public override void ApplyRedirect(CookieApplyRedirectContext context)
+            {
+                IPrincipal principal;
+                principal = context.Response.Environment["server.User"] as IPrincipal;
+
+                if (principal == null || !principal.Identity.IsAuthenticated)
+                {
+                    base.ApplyRedirect(context);
+                }
+            }
+        }
+
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -28,7 +47,7 @@ namespace CodingTrainer.CodingTrainerWeb
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
-                Provider = new CookieAuthenticationProvider
+                Provider = new CookieAuthenticationProviderWithLoggedInCheck
                 {
                     // Enables the application to validate the security stamp when the user logs in.
                     // This is a security feature which is used when you change a password or add an external login to your account.  
@@ -36,7 +55,7 @@ namespace CodingTrainer.CodingTrainerWeb
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
