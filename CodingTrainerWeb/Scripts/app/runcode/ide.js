@@ -82,7 +82,7 @@ Ide.prototype.runComplete = function () {
     this.enableRun();
 };
 
-// This method may be used when errors occure during real-time linting,
+// This method may be used when errors occur during real-time linting,
 // as well as when they occur while running the program
 Ide.prototype.showErrors = function (errors) {
     this.codeConsole.clearAll();
