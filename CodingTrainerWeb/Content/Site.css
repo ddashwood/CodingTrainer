@@ -66,17 +66,17 @@ footer {
     .row-offcanvas-left.active
     .sidebar-offcanvas {
         visibility: visible;
-        left: -33%;
+        left: -38%;
     }
 
     .row-offcanvas-left.active {
-        left: 33%;
+        left: 38%;
     }
 
     .sidebar-offcanvas {
         position: absolute;
         top: 0;
-        width: 30%;
+        width: 33%;
         margin-left: 12px;
         margin-right:30px;
     }
