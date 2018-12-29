@@ -53,16 +53,5 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     @Html.RenderSection("scripts")
-
-    @*Ensure entire page shows even when nav bar takes up more than one line*@
-    <script>
-        $(window).resize(function () {
-            $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+1);
-        });
-    
-        $(function () { 
-            $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+1);        
-        });
-    </script>
 </body>
 </html>

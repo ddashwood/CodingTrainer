@@ -365,12 +365,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
     <Content Include="Content\Course\1\1.mp4" />
     <Content Include="Content\RunCode.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\_bootstrap.css" />
+    <Content Include="Content\_bootstrap.min.css" />
     <Content Include="Content\img\GitHub-Mark-64px.png" />
     <Content Include="Content\img\Reddit_logo.png" />
     <Content Include="favicon.ico" />
@@ -381,6 +382,8 @@
     <Content Include="Scripts\app\codemirror-addon\console.js" />
     <Content Include="Scripts\app\codemirror-addon\hint-loader.js" />
     <Content Include="Scripts\app\codemirror-addon\performed-lint.js" />
+    <Content Include="Scripts\app\exercise-tabs.js" />
+    <Content Include="Scripts\app\navbar-fix.js" />
     <Content Include="Scripts\app\runcode\codeRunner.js" />
     <Content Include="Scripts\app\runcode\codeRunnerWithCorrections.js" />
     <Content Include="Scripts\app\runcode\ideConsole.js" />
@@ -406,6 +409,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.min.css" />
     <None Include="Properties\PublishProfiles\CodingTrainer - Web Deploy.pubxml" />
     <Content Include="Scripts\codemirror-buttons\buttons.css" />
     <Content Include="Scripts\codemirror-buttons\buttons.js" />

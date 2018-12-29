@@ -22,8 +22,15 @@ footer {
     white-space: normal;
 }
 
-/* Add spacing */
+/* Ensure checkboxes show on mobile */
 
+@media (max-width:788px) { /* Checkboxes start disappearing at just bigger than extra-small */
+    div.form-group input[type='checkbox'] {
+        margin-left:0px;
+    }
+}
+
+/* Add spacing */
 .top-buffer {
     margin-top: 12px;
 }
