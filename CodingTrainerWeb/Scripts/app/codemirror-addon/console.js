@@ -29,14 +29,16 @@ CodeMirror.defineExtension("consoleAppend", function (text) {
 CodeMirror.defineExtension("consoleAppendWithLineLink", function (text, line, action) {
     var startOfNewText = this.indexFromPos({ line: Infinity, ch: 0 });
     this.consoleAppend(text);
-    this.markText(this.posFromIndex(startOfNewText), this.posFromIndex(Infinity), { title: "new-link", className: 'line-link' });
-    $('[title="new-link"]')
+
+    var el = $("<span>").text(text)
         .attr('data-line', line.toString())
-        .removeAttr('title')
+        .addClass('line-link')
         .click(function (event) {
+            event.preventDefault();
             action($(event.target).attr('data-line'));
         });
 
+    this.markText(this.posFromIndex(startOfNewText), this.posFromIndex(Infinity), { replacedWith: el.get(0) });
 });
 
 CodeMirror.defineExtension("clearAll", function () {

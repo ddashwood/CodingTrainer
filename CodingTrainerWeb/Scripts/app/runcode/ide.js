@@ -23,7 +23,7 @@
         self.codeConsole.focus();
         // Prevent user from running again
         self.editor.clearErrors();
-        $('.cm-btn-run').prop('disabled', true).css('color','lightgrey');
+        $('.cm-btn-run').prop('disabled', true).css('color', 'lightgrey');
         $('#console-out').text('');
 
         var code = self.editor.getValue();
@@ -41,6 +41,9 @@
         $('.cm-btn-run').html('&#x25B6;&nbsp;Run');
         $('#theme-div').css('visibility', 'visible');
         self.enableRun();
+
+        // Apply linting to the default code
+        changed();
     });
 
     // Change theme
@@ -63,10 +66,15 @@
     });
 
     // Real-time linting
-    this.editor.on('change', function () {
+
+    var changed = function () {
         var generation = self.editor.changeGeneration(true);
         var code = self.editor.getValue();
         ideServices.requestDiagnostics(code, generation);
+    };
+
+    this.editor.on('change', function () {
+        changed();
     });
 }
 
@@ -98,8 +106,30 @@ Ide.prototype.showErrors = function (errors) {
     var self = this;
     for (var j = 0; j < errors.length; j++) {
         this.codeConsole.consoleAppendWithLineLink('  ' + errors[j].Message + '\n    Line ' + (errors[i = j].line + 1) + '\n', errors[j].line, function (line) {
-            self.editor.setCursor({ line: line, ch: 0 });
             self.editor.focus();
+            self.editor.setCursor({ line: line, ch: 0 });
+
+            // Check that the top of the editor is not hidden behind the nav bar
+            try {
+                var cursor = $('.CodeMirror-cursor');
+                var cursorY;
+                if (cursor.length > 0) {
+                    cursorY = cursor.get(0).getBoundingClientRect().top;
+                } else {
+                    // CodeMirror-cursor class is not always present, especially on mobile
+                    // CodeMirrow-scroll is not as accurate, but still works
+                    cursorY = $('.CodeMirror-scroll').get(0).getBoundingClientRect().top;
+                }
+                var navBarHeight = parseInt($('#main-navbar').css("height"));
+                if (cursorY < navBarHeight) {
+                    var currentScroll = $(window).scrollTop();
+                    $(window).scrollTop(currentScroll - (navBarHeight - cursorY));
+                }
+            }
+            catch{
+                // Exceptions might occur if the classes we are looking for are not present.
+                // In this case, ignore it
+            }
         });
     }
 };
