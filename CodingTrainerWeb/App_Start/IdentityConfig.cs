@@ -13,16 +13,48 @@ using Microsoft.Owin.Security;
 using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerModels.Security;
 using CodingTrainer.CodingTrainerEntityFramework.Contexts;
+using SendGrid.Helpers.Mail;
+using System.Net;
+using System.Configuration;
+using System.Diagnostics;
+using SendGrid;
+using System.Web.Configuration;
 
 namespace CodingTrainer.CodingTrainerWeb
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            var client = new SendGridClient(GetConfigKey("SendGridApiKey"));
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress(GetConfigKey("EmailFromAddress"), GetConfigKey("EmailFromName")),
+                Subject = message.Subject,
+                PlainTextContent = message.Body,
+                HtmlContent = message.Body
+            };
+            msg.AddTo(new EmailAddress(message.Destination));
+
+            // Disable click tracking.
+            // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
+            msg.SetClickTracking(false, false);
+
+            await client.SendEmailAsync(msg);
+
+            string GetConfigKey(string key)
+            {
+                string result = WebConfigurationManager.AppSettings[key];
+                if (string.IsNullOrEmpty(result))
+                {
+                    // Most likely caused by settings not being present on this PC
+                    // See https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure for more details
+                    throw new ConfigurationErrorsException($"No value found for [{key}] in config file");
+                }
+                return result;
+            }
         }
+
     }
 
     public class SmsService : IIdentityMessageService
