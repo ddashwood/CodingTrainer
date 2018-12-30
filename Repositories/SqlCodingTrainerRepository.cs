@@ -36,7 +36,15 @@ namespace CodingTrainer.CodingTrainerWeb.Repositories
                            join c in context.Chapters on e.ChapterNo equals c.ChapterNo
                            where c.ChapterNo == chapterNo && e.ExerciseNo == exercisesNo
                            select e;
-            return await exercise.SingleAsync();
+            return await exercise.SingleOrDefaultAsync();
+        }
+        public Exercise GetExercise(int chapterNo, int exercisesNo)
+        {
+            var exercise = from e in context.Exercises
+                           join c in context.Chapters on e.ChapterNo equals c.ChapterNo
+                           where c.ChapterNo == chapterNo && e.ExerciseNo == exercisesNo
+                           select e;
+            return exercise.SingleOrDefault();
         }
 
         // Exception logs

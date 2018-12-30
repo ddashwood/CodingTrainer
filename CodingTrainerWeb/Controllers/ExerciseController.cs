@@ -25,15 +25,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         ThemeController themeController;
         IUserRepository userRepository;
 
-        /////////////////////////////
-        /// Temporary test method ///
-        /////////////////////////////
-        public ActionResult AzureError()
-        {
-            HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            return View("AccessDenied");
-        }
-
         public ExerciseController(ICodingTrainerRepository repository, ThemeController themeController, IUserRepository userRepository)
         {
             rep = repository;
@@ -50,7 +41,9 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         [AuthorizeExercise]
         public async Task<ActionResult> Exercise(int chapter, int exercise)
         {
-            return View(await rep.GetExerciseAsync(chapter, exercise));
+            var exerciseDetails = await rep.GetExerciseAsync(chapter, exercise);
+            if (exerciseDetails == null) throw new HttpException(404, "Not found");
+            return View(exerciseDetails);
         }
 
         [ChildActionOnly]

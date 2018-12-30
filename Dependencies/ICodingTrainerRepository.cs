@@ -14,6 +14,7 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
 
         // Exercises
         Task<Exercise> GetExerciseAsync(int chapterNo, int exercisesNo);
+        Exercise GetExercise(int chapterNo, int exercisesNo);
 
         // Exception logs
         Task InsertExceptionLogAsync(ExceptionLog log);

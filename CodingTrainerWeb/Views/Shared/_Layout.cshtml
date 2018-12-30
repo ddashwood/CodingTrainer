@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Code Runner", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Coding Trainer", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -28,7 +28,6 @@
                         <li>@Html.ActionLink("Playground!", "Playground", "Exercise")</li>
                     }
                     <li>@Html.ActionLink("Chapters", "List", "Chapter")</li>
-                    <li>@Html.ActionLink("Azure Error Test", "AzureError", "Exercise")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -45,7 +44,7 @@
         </div>
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Code Runner</p>
+            <p>&copy; @DateTime.Now.Year - Coding Trainer</p>
         </footer>
     </div>
 

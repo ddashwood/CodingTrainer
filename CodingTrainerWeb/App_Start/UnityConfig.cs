@@ -9,6 +9,7 @@ using Unity.Injection;
 using Unity.Lifetime;
 using Unity.RegistrationByConvention;
 using CodingTrainer.CodingTrainerWeb.Repositories;
+using CodingTrainer.CodingTrainerWeb.ActionFilters;
 
 namespace CodingTrainer.CodingTrainerWeb
 {
@@ -64,6 +65,10 @@ namespace CodingTrainer.CodingTrainerWeb
             // we want the one with no parameters to be used
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
+
+            // Action Filters aren't created using Unity's resolver, so we need to inject dependencies into them
+            AuthorizeExerciseAttribute.UserRepository = container.Resolve<IUserRepository>();
+            AuthorizeExerciseAttribute.DbRepository = container.Resolve<ICodingTrainerRepository>();
         }
     }
 }

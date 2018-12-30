@@ -1,6 +1,7 @@
 ﻿using CodingTrainer.CodingTrainerModels;
 using CodingTrainer.CodingTrainerModels.Security;
 using CodingTrainer.CodingTrainerWeb.AspNet;
+using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,19 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
 {
     public class AuthorizeExerciseAttribute : AuthorizeAttribute
     {
+        public static IUserRepository UserRepository { get; set; }
+        public static ICodingTrainerRepository DbRepository { get; set; }
+        private int chapter;
+        private int exercise;
+
+        public AuthorizeExerciseAttribute()
+        {
+            if (UserRepository == null)
+                throw new InvalidOperationException("The User Repository has not been set");
+            if (DbRepository == null)
+                throw new InvalidOperationException("The Database Repository has not been set");
+        }
+
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             if (!base.AuthorizeCore(httpContext))
@@ -28,13 +42,10 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
             {
                 throw new InvalidOperationException("No Exercise details found in route parameters");
             }
+            chapter = Convert.ToInt32(oChapter);
+            exercise = Convert.ToInt32(oExercise);
 
-            UserRepository userRepository = new UserRepository();
-            ApplicationUser user = userRepository.GetCurrentUser();
-
-            int chapter = Convert.ToInt32(oChapter);
-            int exercise = Convert.ToInt32(oExercise);
-
+            ApplicationUser user = UserRepository.GetCurrentUser();
             return user.ExercisePermitted(chapter, exercise);
         }
 
@@ -49,13 +60,16 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
             {
                 // Logged in, but no permission to access this exercise
 
-                // This line removed because the message body of 401 responses get
-                // overwritten by Azure. Will put this line back in once the Azure issue is
-                // fixed
-
-                // filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-
-                filterContext.Result = new ViewResult() { ViewName = "~/Views/Exercise/AccessDenied.cshtml" };
+                // If the exercise doesn't even exist, we'd prefer the user to see a 404
+                if (DbRepository.GetExercise(chapter, exercise) == null)
+                {
+                    throw new HttpException(404, "Not found");
+                }
+                else
+                {
+                    filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    filterContext.Result = new ViewResult() { ViewName = "~/Views/Exercise/AccessDenied.cshtml" };
+                }
             }
         }
     }

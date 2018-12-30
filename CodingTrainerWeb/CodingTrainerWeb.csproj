@@ -374,6 +374,7 @@
     <Content Include="Content\_bootstrap.min.css" />
     <Content Include="Content\img\GitHub-Mark-64px.png" />
     <Content Include="Content\img\Reddit_logo.png" />
+    <Content Include="Error\NotFound.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -763,7 +764,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Exercise\RunCode.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -795,10 +795,10 @@
     <Content Include="Views\Exercise\Exercise.cshtml" />
     <Content Include="Views\Exercise\ExerciseSidebar.cshtml" />
     <Content Include="Views\Exercise\AccessDenied.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
