@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Code Runner</title>
+    <title>Not Found - Code Runner</title>
     <link href="/Content/bootstrap.css" rel="stylesheet" />
     <link href="/Content/site.css" rel="stylesheet" />
 </head>
