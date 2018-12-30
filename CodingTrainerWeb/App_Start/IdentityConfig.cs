@@ -19,6 +19,7 @@ using System.Configuration;
 using System.Diagnostics;
 using SendGrid;
 using System.Web.Configuration;
+using System.Net.Mail;
 
 namespace CodingTrainer.CodingTrainerWeb
 {
@@ -26,22 +27,39 @@ namespace CodingTrainer.CodingTrainerWeb
     {
         public async Task SendAsync(IdentityMessage message)
         {
-            var client = new SendGridClient(GetConfigKey("SendGridApiKey"));
-            var msg = new SendGridMessage()
-            {
-                From = new EmailAddress(GetConfigKey("EmailFromAddress"), GetConfigKey("EmailFromName")),
-                Subject = message.Subject,
-                PlainTextContent = message.Body,
-                HtmlContent = message.Body
-            };
-            msg.AddTo(new EmailAddress(message.Destination));
+            MailMessage mail = new MailMessage(GetConfigKey("EmailFromAddress"), message.Destination);
+            mail.Subject = message.Subject;
+            mail.Body = message.Body;
+            mail.IsBodyHtml = true;
 
-            // Disable click tracking.
-            // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
-            msg.SetClickTracking(false, false);
+            SmtpClient client = new SmtpClient();
+            client.Port = int.Parse(GetConfigKey("EmailPort"));
+            client.EnableSsl = true;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.Credentials = new NetworkCredential(GetConfigKey("EmailFromAddress"), GetConfigKey("EmailFromPassword"));
+            client.Host = GetConfigKey("EmailHost");
 
-            await client.SendEmailAsync(msg);
+            await client.SendMailAsync(mail);
 
+
+
+            // SendGrid implementation
+
+            //var client = new SendGridClient(GetConfigKey("SendGridApiKey"));
+            //var msg = new SendGridMessage()
+            //{
+            //    From = new EmailAddress(GetConfigKey("EmailFromAddress"), GetConfigKey("EmailFromName")),
+            //    Subject = message.Subject,
+            //    PlainTextContent = message.Body,
+            //    HtmlContent = message.Body
+            //};
+            //msg.AddTo(new EmailAddress(message.Destination));
+
+            //// Disable click tracking.
+            //// See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
+            //msg.SetClickTracking(false, false);
+
+            //await client.SendEmailAsync(msg);
             string GetConfigKey(string key)
             {
                 string result = WebConfigurationManager.AppSettings[key];
