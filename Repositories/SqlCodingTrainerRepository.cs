@@ -54,6 +54,14 @@ namespace CodingTrainer.CodingTrainerWeb.Repositories
             context.ExceptionLogs.Add(log);
             await context.SaveChangesAsync();
         }
+
+        // Unhandled exceptions
+
+        public void InsertUnhandledControllerException(UnhandledControllerException exception)
+        {
+            context.UnhandledControllerExceptions.Add(exception);
+            context.SaveChanges();
+        }
     }
 
 }

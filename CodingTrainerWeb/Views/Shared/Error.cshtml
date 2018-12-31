@@ -5,13 +5,30 @@
 }
 <h1 class="text-danger">Error.</h1>
 @{
+
     if (String.IsNullOrEmpty(ViewBag.errorMessage))
     {
-        <h2 class="text-danger">An error occurred while processing your request.</h2>
+        <h2>An error occurred while processing your request.</h2>
     }
     else
     {
-        <h2 class="text-danger">@ViewBag.errorMessage</h2>
+        <h2>@ViewBag.errorMessage</h2>
+    }
+
+    if (ViewBag.LoggingException != null)
+    {
+        <h4>Note that this error has <em>not</em> been logged, due to a problem with the error logger</h4>
+        <h4>Please contact the system administrator and inform them of the following error:</h4>
+        <p>@Model.Exception.Message</p>
+        <p>
+            @{
+                var stackTrace = Model.Exception.StackTrace.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                foreach (var line in stackTrace)
+                {
+                    @line<br />
+                }
+            }
+        </p>
     }
 }
 @*<p>@Model.Exception.ToString()</p>*@

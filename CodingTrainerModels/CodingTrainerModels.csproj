@@ -63,6 +63,7 @@
     <Compile Include="Exercise.cs" />
     <Compile Include="Submission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnhandledControllerException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

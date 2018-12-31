@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using CodingTrainer.CodingTrainerWeb.ActionFilters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace CodingTrainer.CodingTrainerWeb
@@ -7,7 +8,7 @@ namespace CodingTrainer.CodingTrainerWeb
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new LogAndHandleErrorAttribute());
         }
     }
 }

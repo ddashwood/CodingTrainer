@@ -18,5 +18,8 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
 
         // Exception logs
         Task InsertExceptionLogAsync(ExceptionLog log);
+
+        // Unhandled exceptions
+        void InsertUnhandledControllerException(UnhandledControllerException exception);
     }
 }

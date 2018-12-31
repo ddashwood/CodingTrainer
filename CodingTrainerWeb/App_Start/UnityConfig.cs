@@ -69,6 +69,7 @@ namespace CodingTrainer.CodingTrainerWeb
             // Action Filters aren't created using Unity's resolver, so we need to inject dependencies into them
             AuthorizeExerciseAttribute.UserRepository = container.Resolve<IUserRepository>();
             AuthorizeExerciseAttribute.DbRepository = container.Resolve<ICodingTrainerRepository>();
+            LogAndHandleErrorAttribute.Repository = container.Resolve<ICodingTrainerRepository>();
         }
     }
 }
