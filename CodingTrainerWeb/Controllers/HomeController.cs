@@ -14,7 +14,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult About()
         {
             return View();
         }

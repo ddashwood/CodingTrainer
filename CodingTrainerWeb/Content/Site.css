@@ -1,8 +1,21 @@
-﻿/* Set padding to keep content from hitting the edges */
+﻿.logo {
+    display:inline-block;
+    width:3em;
+    text-align:center;
+}
+
+/* Set padding to keep content from hitting the edges */
 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+}
+
+@media (max-width:768px) {
+    body {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 }
 
 .body-content {
