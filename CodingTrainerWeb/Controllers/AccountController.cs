@@ -11,6 +11,8 @@ using Microsoft.Owin.Security;
 using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerModels.Security;
 using CodingTrainer.CodingTrainerWeb.ActionFilters;
+using System.Reflection;
+using System.IO;
 
 namespace CodingTrainer.CodingTrainerWeb.Controllers
 {
@@ -81,7 +83,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             {
                 if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                 {
-                    await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account - Resend");
+                    await SendEmailConfirmationTokenAsync(user.Id, user.FirstName, "Verify your e-mail address - Resend");
 
                     ViewBag.errorMessage = "You must have a confirmed email to log on. The confirmation e-mail has been re-sent to your e-mail address.";
                     return View("Error");
@@ -180,7 +182,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
+                    await SendEmailConfirmationTokenAsync(user.Id, user.FirstName, "Verify your e-mail address");
 
                     ViewBag.Message = "Please check your e-mails. You must confirm your e-mail before you can log on";
 
@@ -228,14 +230,14 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return RedirectToAction("ForgotPasswordConfirmation", "Account");
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", LoadEmailResourceFile("ResetPassword.html", user.FirstName, callbackUrl));
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -505,15 +507,29 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             }
         }
 
-        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
+        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string name, string subject)
         {
             string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
             var callbackUrl = Url.Action("ConfirmEmail", "Account",
-               new { userId = userID, code = code }, protocol: Request.Url.Scheme);
-            await UserManager.SendEmailAsync(userID, subject,
-               "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    new { userId = userID, code = code }, protocol: Request.Url.Scheme);
+            string body = LoadEmailResourceFile("Verify.html", name, callbackUrl);
+            await UserManager.SendEmailAsync(userID, subject, body);
 
             return callbackUrl;
+        }
+
+        private string LoadEmailResourceFile(string filename, string name, string url)
+        {
+            var fullFilename = "CodingTrainer.CodingTrainerWeb.Emails." + filename;
+            var fileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fullFilename);
+            if (fileStream == null)
+            {
+                throw new FileNotFoundException("The email template could not be found", filename);
+            }
+
+            var fileReader = new StreamReader(fileStream);
+            string body = fileReader.ReadToEnd();
+            return string.Format(body, name, url);
         }
         #endregion
     }

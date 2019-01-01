@@ -381,6 +381,8 @@
     <Content Include="Content\_bootstrap.min.css" />
     <Content Include="Content\img\GitHub-Mark-64px.png" />
     <Content Include="Content\img\Reddit_logo.png" />
+    <EmbeddedResource Include="Emails\Verify.html" />
+    <EmbeddedResource Include="Emails\ResetPassword.html" />
     <Content Include="Error\NotFound.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

@@ -27,7 +27,10 @@ namespace CodingTrainer.CodingTrainerWeb
     {
         public async Task SendAsync(IdentityMessage message)
         {
-            MailMessage mail = new MailMessage(GetConfigKey("EmailFromAddress"), message.Destination);
+            MailAddress from = new MailAddress(GetConfigKey("EmailFromAddress"), GetConfigKey("EmailFromName"));
+            MailAddress to = new MailAddress(message.Destination, message.Destination);
+
+            MailMessage mail = new MailMessage(from, to);
             mail.Subject = message.Subject;
             mail.Body = message.Body;
             mail.IsBodyHtml = true;
@@ -36,7 +39,7 @@ namespace CodingTrainer.CodingTrainerWeb
             client.Port = int.Parse(GetConfigKey("EmailPort"));
             client.EnableSsl = true;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.Credentials = new NetworkCredential(GetConfigKey("EmailFromAddress"), GetConfigKey("EmailFromPassword"));
+            client.Credentials = new NetworkCredential(GetConfigKey("EmailAccount"), GetConfigKey("EmailPassword"));
             client.Host = GetConfigKey("EmailHost");
 
             await client.SendMailAsync(mail);
