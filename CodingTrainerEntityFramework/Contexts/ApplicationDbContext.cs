@@ -26,5 +26,20 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Contexts
         public DbSet<Chapter> Chapters { get; set; }
 
         public DbSet<UnhandledControllerException> UnhandledControllerExceptions { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Submission>()
+                .HasOptional(s => s.User)
+                .WithMany(u => u.Submissions)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<ExceptionLog>()
+                .HasOptional(e => e.User)
+                .WithMany(u => u.ExceptionLogs)
+                .WillCascadeOnDelete();
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

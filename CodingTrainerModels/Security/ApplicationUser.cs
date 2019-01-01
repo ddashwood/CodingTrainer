@@ -35,6 +35,9 @@ namespace CodingTrainer.CodingTrainerModels.Security
 
         public virtual Exercise CurrentExercise { get; set; }
 
+        public virtual ICollection<Submission> Submissions { get; set; }
+        public virtual ICollection<ExceptionLog> ExceptionLogs { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
