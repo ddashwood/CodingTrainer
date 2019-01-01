@@ -9,5 +9,5 @@
 /* Override the width from the default buttons.css */
 .CodeMirror-buttonsPanel button {
     min-width:3em;
-    width:unset;
+    width:auto;
 }

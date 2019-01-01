@@ -126,7 +126,7 @@ Ide.prototype.showErrors = function (errors) {
                     $(window).scrollTop(currentScroll - (navBarHeight - cursorY));
                 }
             }
-            catch{
+            catch (e){
                 // Exceptions might occur if the classes we are looking for are not present.
                 // In this case, ignore it
             }
