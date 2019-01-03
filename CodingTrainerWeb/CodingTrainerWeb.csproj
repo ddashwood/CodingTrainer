@@ -760,6 +760,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Rx.js" />
+    <Content Include="Scripts\Rx.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -806,6 +808,8 @@
     <Content Include="Views\Exercise\AccessDenied.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
+    <None Include="Scripts\Rx.js.map" />
+    <None Include="Scripts\Rx.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

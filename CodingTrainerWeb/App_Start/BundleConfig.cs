@@ -47,6 +47,9 @@ namespace CodingTrainer.CodingTrainerWeb
                         "~/Scripts/codemirror-buttons/buttons.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/runcode").Include(
+                        // RxJS
+                        "~/scripts/Rx.js",
+
                         // Factories
                         "~/scripts/app/runcode/signalRFactory.js",
                         "~/scripts/app/runcode/serviceFactory.js",
