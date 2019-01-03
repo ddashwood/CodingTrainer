@@ -1,18 +1,22 @@
-﻿@using Microsoft.AspNet.Identity
-@using CodingTrainer.CodingTrainerWeb.Models
+﻿@using CodingTrainer.CodingTrainerWeb.Models
 
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
-
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.GetName() + "!", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Change Password" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        @Html.AntiForgeryToken()
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    @User.GetName()
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Change password", "ChangePassword", "Manage")</li>
+                    <li>@Html.ActionLink("Close account", "CloseAccount", "Manage")</li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+        </ul>
     }
 }
 else

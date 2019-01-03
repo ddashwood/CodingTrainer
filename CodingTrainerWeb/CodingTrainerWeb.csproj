@@ -810,9 +810,11 @@
     <Content Include="Views\Shared\Info.cshtml" />
     <None Include="Scripts\Rx.js.map" />
     <None Include="Scripts\Rx.min.js.map" />
+    <Content Include="Views\Manage\CloseAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

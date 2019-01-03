@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Close Account";
+}
+
+<h2>Close Account</h2>
+
+<h3>Are you sure you want to close your account?</h3>
+<div>
+    <h4>Your data will be deleted!</h4>
+    <p>
+        Clicking the "Delete" button will immediately remove all of the data we hold about you.
+        This includes your personal details, as well all of your completed work, records of your
+        progress, etc.
+    </p>
+    <p><strong>This action <span class="text-danger">can not be undone</span>!</strong></p>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Cancel", "Index", "Home")
+        </div>
+    }
+</div>

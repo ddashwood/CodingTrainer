@@ -330,6 +330,24 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
+        // GET: /Manage/CloseAccount
+        public ActionResult CloseAccount()
+        {
+            return View();
+        }
+
+        // POST: /Manage/CloseAccount
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CloseAccount(FormCollection collection)
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            await UserManager.DeleteAsync(user);
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+            return RedirectToAction("Index", "Home");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
