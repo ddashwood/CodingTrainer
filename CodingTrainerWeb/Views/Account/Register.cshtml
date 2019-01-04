@@ -45,11 +45,30 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+            <p>
+                Please click here to acknowledge that you have read
+                and understood our @Html.ActionLink("Terms and Conditions", "TermsAndConditions", "Home") and
+                @Html.ActionLink("Privacy Policy", "PrivacyPolicy", "Home"), and will abide by them.
+                <input id="ts-and-cs" type="checkbox" />
+            </p>
+        </div>
+
+        <div class="col-md-offset-2 col-md-10">
+            <input id="submit" type="submit" class="btn btn-default" value="Register" disabled />
         </div>
     </div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $('#ts-and-cs').change(function () {
+            if (this.checked) {
+                $('#submit').removeAttr('disabled');
+            } else {
+                $('#submit').attr('disabled', 'disabled');
+            }
+        });
+    </script>
 }

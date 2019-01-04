@@ -378,6 +378,7 @@
     <Content Include="Content\RunCode.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\TsAndCs.css" />
     <Content Include="Content\_bootstrap.css" />
     <Content Include="Content\_bootstrap.min.css" />
     <Content Include="Content\img\GitHub-Mark-64px.png" />
@@ -812,6 +813,8 @@
     <None Include="Scripts\Rx.js.map" />
     <None Include="Scripts\Rx.min.js.map" />
     <Content Include="Views\Manage\CloseAccount.cshtml" />
+    <Content Include="Views\Home\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

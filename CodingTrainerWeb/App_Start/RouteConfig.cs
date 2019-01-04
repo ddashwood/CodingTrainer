@@ -14,6 +14,18 @@ namespace CodingTrainer.CodingTrainerWeb
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Home",
+                url: "",
+                defaults: new { controller = "Home", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "HomeController",
+                url: "{action}",
+                defaults: new { controller = "Home" }
+            );
+
+            routes.MapRoute(
                 name: "Exercise",
                 url: "Exercise/{chapter}/{exercise}",
                 defaults: new { controller = "Exercise", action = "Exercise" }
