@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -10,9 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerModels.Security;
-using CodingTrainer.CodingTrainerWeb.ActionFilters;
-using System.Reflection;
-using System.IO;
+using CodingTrainer.CodingTrainerWeb.Emails;
 
 namespace CodingTrainer.CodingTrainerWeb.Controllers
 {
@@ -21,6 +17,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private EmailMaker _emailMaker;
 
         public AccountController()
         {
@@ -56,6 +53,18 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             }
         }
 
+        public EmailMaker EmailMaker
+        {
+            get
+            {
+                return _emailMaker ?? (_emailMaker = new EmailMaker());
+            }
+            private set
+            {
+                _emailMaker = value;
+            }
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -83,7 +92,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             {
                 if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                 {
-                    await SendEmailConfirmationTokenAsync(user.Id, user.FirstName, "Verify your e-mail address - Resend");
+                    await SendEmailTokenAsync(user, UserManager.GenerateEmailConfirmationTokenAsync, "Verify", "Confirm your e-mail address before logging on", "ConfirmEmail");
 
                     ViewBag.errorMessage = "You must have a confirmed email to log on. The confirmation e-mail has been re-sent to your e-mail address.";
                     return View("Error");
@@ -180,9 +189,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await SendEmailConfirmationTokenAsync(user.Id, user.FirstName, "Verify your e-mail address");
+                    await SendEmailTokenAsync(user, UserManager.GenerateEmailConfirmationTokenAsync, "Verify", "Confirm your e-mail address", "ConfirmEmail");
 
                     ViewBag.Message = "Please check your e-mails. You must confirm your e-mail before you can log on";
 
@@ -235,9 +242,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", LoadEmailResourceFile("ResetPassword.html", user.FirstName, callbackUrl));
+                await SendEmailTokenAsync(user, UserManager.GeneratePasswordResetTokenAsync, "ResetPassword", "Reset Password", "ResetPassword");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -507,29 +512,15 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             }
         }
 
-        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string name, string subject)
+        private async Task<string> SendEmailTokenAsync(ApplicationUser user, Func<string, Task<string>> codeGeneratorAsync, string templateName, string subject, string callbackAction)
         {
-            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
-            var callbackUrl = Url.Action("ConfirmEmail", "Account",
-                    new { userId = userID, code = code }, protocol: Request.Url.Scheme);
-            string body = LoadEmailResourceFile("Verify.html", name, callbackUrl);
-            await UserManager.SendEmailAsync(userID, subject, body);
+            string code = await codeGeneratorAsync(user.Id);
+            var callbackUrl = Url.Action(callbackAction, "Account",
+                    new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            string body = EmailMaker.MakeEmail(templateName + ".html", user.FirstName, callbackUrl);
+            await UserManager.SendEmailAsync(user.Id, subject, body);
 
             return callbackUrl;
-        }
-
-        private string LoadEmailResourceFile(string filename, string name, string url)
-        {
-            var fullFilename = "CodingTrainer.CodingTrainerWeb.Emails." + filename;
-            var fileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fullFilename);
-            if (fileStream == null)
-            {
-                throw new FileNotFoundException("The email template could not be found", filename);
-            }
-
-            var fileReader = new StreamReader(fileStream);
-            string body = fileReader.ReadToEnd();
-            return string.Format(body, name, url);
         }
         #endregion
     }

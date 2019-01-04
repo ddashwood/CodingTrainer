@@ -48,25 +48,25 @@ namespace CodingTrainer.CodingTrainerWeb
 
             bundles.Add(new ScriptBundle("~/bundles/runcode").Include(
                         // RxJS
-                        "~/scripts/Rx.js",
+                        "~/Scripts/Rx.js",
 
                         // Factories
-                        "~/scripts/app/runcode/signalRFactory.js",
-                        "~/scripts/app/runcode/serviceFactory.js",
-                        "~/scripts/app/runcode/serviceFactoryForHiddenCode.js",
+                        "~/Scripts/app/runcode/signalRFactory.js",
+                        "~/Scripts/app/runcode/serviceFactory.js",
+                        "~/Scripts/app/runcode/serviceFactoryForHiddenCode.js",
 
                         // SignalR wrappers
-                        "~/scripts/app/runcode/codeRunner.js",
-                        "~/scripts/app/runcode/ideServices.js",
+                        "~/Scripts/app/runcode/codeRunner.js",
+                        "~/Scripts/app/runcode/ideServices.js",
 
                         // Code corrections for dealing with hidden code
-                        "~/scripts/app/runcode/codeRunnerWithCorrections.js",
-                        "~/scripts/app/runcode/ideServicesWithCorrections.js",
+                        "~/Scripts/app/runcode/codeRunnerWithCorrections.js",
+                        "~/Scripts/app/runcode/ideServicesWithCorrections.js",
 
                         // The editor
-                        "~/scripts/app/runcode/ide.js",
-                        "~/scripts/app/runcode/ideEditor.js",
-                        "~/scripts/app/runcode/ideConsole.js"));
+                        "~/Scripts/app/runcode/ide.js",
+                        "~/Scripts/app/runcode/ideEditor.js",
+                        "~/Scripts/app/runcode/ideConsole.js"));
 
             var codeMirrorStyles = new List<string> {
                         "~/Scripts/codemirror/lib/codemirror.css",

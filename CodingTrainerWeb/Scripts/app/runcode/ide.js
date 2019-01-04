@@ -1,34 +1,17 @@
 ﻿function Ide(serviceFactory) {
-    // Nested class: CodeSubmitter
-    
-    // Constructor parameter: submitFunction - a callback that takes {code,  data}
-    var CodeSubmitter = function (submitFunction) {
-        this.currentCode = new Rx.Subject();
-        this.currentCode.pipe(
-            Rx.operators.debounceTime(300),
-            Rx.operators.distinctUntilChanged(o => o.text)
-        ).subscribe(submitFunction);
-    };
-    // Methood: submit - call submit with code and data - it will call submitFunction if code has not changed
-    CodeSubmitter.prototype.submit = function (code, data) {
-        this.currentCode.next({code:code, data:data});
-    };
-
     var self = this;
-
-
 
     // Make the service objects
     var codeRunner = serviceFactory.getCodeRunner(this);
     var ideServices = serviceFactory.getIdeServices(this);
 
     // Callbacks that are needed for the CodeMirror editors
-    var completionsCodeSubmitter = new CodeSubmitter(function (codeData) {
-        // Send a SignalR request to get the hints
-        ideServices.requestCompletions(codeData.code, codeData.data.pos, codeData.data.tokenStart);
-    });
     var requestCompletions = function (cm, tokenStart) {
-        completionsCodeSubmitter.submit(cm.getValue(), { pos: cm.indexFromPos(cm.getCursor()), tokenStart: tokenStart });
+        // Send a SignalR request to get the hints
+        var code = cm.getValue();
+        var pos = cm.indexFromPos(cm.getCursor());
+
+        ideServices.requestCompletions(code, pos, tokenStart);
     };
 
     var consoleIn = function (message) {
@@ -84,13 +67,10 @@
 
     // Real-time linting
 
-    var changedCodeSubmitter = new CodeSubmitter(function (codeData) {
-        ideServices.requestDiagnostics(codeData.code, codeData.data /* generation */ );
-    });
-
-
     var changed = function () {
-        changedCodeSubmitter.submit(self.editor.getValue(), self.editor.changeGeneration(true));
+        var generation = self.editor.changeGeneration(true);
+        var code = self.editor.getValue();
+        ideServices.requestDiagnostics(code, generation);
     };
 
     this.editor.on('change', function () {
@@ -146,7 +126,7 @@ Ide.prototype.showErrors = function (errors) {
                     $(window).scrollTop(currentScroll - (navBarHeight - cursorY));
                 }
             }
-            catch (e){
+            catch (e) {
                 // Exceptions might occur if the classes we are looking for are not present.
                 // In this case, ignore it
             }
