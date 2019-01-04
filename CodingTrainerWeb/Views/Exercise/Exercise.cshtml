@@ -11,6 +11,9 @@
 
 @Html.Action("ExerciseSidebar")
 
+@*Seperation from "Show/Hide Sidebar" button - only required on small screens when button is displayed*@
+<div class="visible-sm visible-xs top-buffer"></div>
+
 <ul class="nav nav-tabs col-md-9 col-sm-12">
     <li class="active"><a id="both-button" href="#both" data-toggle="tab">Exercise with Code</a></li>
     <li><a id="code-button" href="#codeonly" data-toggle="tab">Code</a></li>
