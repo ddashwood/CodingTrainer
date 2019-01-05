@@ -9,7 +9,7 @@
     <script src="~/Scripts/app/exercise-tabs.js"></script>
 }
 
-@Html.Action("ExerciseSidebar")
+@Html.Action("ExerciseSidebar", new { currentExercise = Model })
 
 @*Seperation from "Show/Hide Sidebar" button - only required on small screens when button is displayed*@
 <div class="visible-sm visible-xs top-buffer"></div>

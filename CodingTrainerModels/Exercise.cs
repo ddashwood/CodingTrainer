@@ -47,5 +47,16 @@ namespace CodingTrainer.CodingTrainerModels
 
             return user.ExercisePermitted(this);
         }
+
+        public static bool operator==(Exercise a, Exercise b)
+        {
+            if (ReferenceEquals(a, null) && ReferenceEquals(b, null)) return true;
+            if (ReferenceEquals(a, null) || ReferenceEquals(b, null)) return false;
+            return (a.ChapterNo == b.ChapterNo) && (a.ExerciseNo == b.ExerciseNo);
+        }
+        public static bool operator!=(Exercise a, Exercise b)
+        {
+            return !(a == b);
+        }
     }
 }

@@ -47,10 +47,12 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult ExerciseSidebar()
+        public ActionResult ExerciseSidebar(Exercise currentExercise)
         {
             async Task<ActionResult> ExerciseSidebarAsync()
             {
+                ViewBag.CurrentExercise = currentExercise;
+
                 ViewBag.User = await userRepository.GetCurrentUserAsync();
                 return PartialView(await rep.GetAllChaptersAsync());
             }

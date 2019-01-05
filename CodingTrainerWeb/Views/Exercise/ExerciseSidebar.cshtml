@@ -2,30 +2,35 @@
 
 <div class="col-md-3">
     <div class="sidebar-offcanvas" id="sidebar" role="navigation">
-        <div class="sidebar-nav">
-            <nav class="navbar navbar-default navbar-fixed-side">
-                <ul class="nav">
-                    <li><h4>Chapter List</h4></li>
+        <nav class="navbar navbar-default">
+            <ul class="nav">
+                <li><h4>Chapter List</h4></li>
 
-                    @foreach (var chapter in Model)
+                @foreach (var chapter in Model)
+                {
+                    <li><strong>Chapter @chapter.ChapterNo</strong> - @chapter.ChapterName</li>
+                    foreach (var exercise in chapter.Exercises)
                     {
-                        <li><strong>Chapter @chapter.ChapterNo</strong> - @chapter.ChapterName</li>
-                        foreach (var exercise in chapter.Exercises)
+                        if (exercise.Permitted(ViewBag.User))
                         {
-                            if (exercise.Permitted(ViewBag.User))
+                            if (exercise == ViewBag.CurrentExercise)
                             {
-                                <li>@Html.ActionLink(exercise.ExerciseName, "Exercise", "Exercise", new { chapter = chapter.ChapterNo, exercise = exercise.ExerciseNo }, null)</li>
+                                <li><a class="active disabled">@exercise.ExerciseName</a></li>
                             }
                             else
                             {
-                                <li><a class="disabled">@exercise.ExerciseName</a></li>
+                                <li>@Html.ActionLink(exercise.ExerciseName, "Exercise", "Exercise", new { chapter = chapter.ChapterNo, exercise = exercise.ExerciseNo }, null)</li>
                             }
                         }
+                        else
+                        {
+                            <li><a class="disabled">@exercise.ExerciseName</a></li>
+                        }
                     }
+                }
 
-                </ul>
-            </nav>
-        </div>
+            </ul>
+        </nav>
     </div>
 </div>
 
