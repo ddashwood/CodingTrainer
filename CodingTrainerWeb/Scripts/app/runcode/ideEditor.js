@@ -63,17 +63,30 @@
         }
     });
 
+    $('.cm-btn-run').prop('disabled', true).css('color', 'lightgrey');
+
     // Configure Bootstrap tooltips on IDE buttons
-    $('.cm-btn-run').attr('data-toggle', 'tooltip').attr('title', 'Run (F5)').tooltip().prop('disabled', true).css('color', 'lightgrey');
-    $('.cm-btn-undo').attr('data-toggle', 'tooltip').attr('title', 'Undo (Ctrl-Z)').tooltip();
-    $('.cm-btn-redo').attr('data-toggle', 'tooltip').attr('title', 'Redo (Ctrl-Y)').tooltip();
-    $('.cm-btn-comment').attr('data-toggle', 'tooltip').attr('title', 'Toggle comment (Ctrl-/)').tooltip();
-    $('.cm-btn-indent').attr('data-toggle', 'tooltip').attr('title', 'Auto-indent (Ctrl-K Ctrl-D)').tooltip();
+    // Tooltips don't give a good experience on touchscreens
 
-    $('[data-toggle="tooltip"]').tooltip({trigger: 'hover'}).on('click', function () {
-        $(this).tooltip('hide');
-    });
+    var ie = false;
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ")
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) ie = true; // Internet Explorer doesn't support matchMedia of pointer type
 
+    if (ie || matchMedia('(pointer:fine)').matches) {
+        // Device has a mouse
+        $('.cm-btn-run').attr('data-toggle', 'tooltip').attr('title', 'Run (F5)').tooltip();
+        $('.cm-btn-undo').attr('data-toggle', 'tooltip').attr('title', 'Undo (Ctrl-Z)').tooltip();
+        $('.cm-btn-redo').attr('data-toggle', 'tooltip').attr('title', 'Redo (Ctrl-Y)').tooltip();
+        $('.cm-btn-comment').attr('data-toggle', 'tooltip').attr('title', 'Toggle comment (Ctrl-/)').tooltip();
+        $('.cm-btn-indent').attr('data-toggle', 'tooltip').attr('title', 'Auto-indent (Ctrl-K Ctrl-D)').tooltip();
+
+
+        $('[data-toggle="tooltip"]').tooltip({ trigger: 'hover' }).on('click', function () {
+            $(this).tooltip('hide');
+        });
+    }
+    
     editor.setSize(null, '35em');
 
     return editor;

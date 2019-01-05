@@ -93,24 +93,30 @@ footer {
         margin-left: 12px;
         margin-right: 30px;
     }
+}
 
-    /* On very small screens, prevent the sidebar from
-        getting so small that words spill out of it
-    */
-    @media (max-width:512px) {
-        .row-offcanvas-left.active {
-            left: 194px;
-        }
-
-        .row-offcanvas-left.active
-        .sidebar-offcanvas {
-            left: -194px;
-        }
-
-        .sidebar-offcanvas {
-            width: 171px;
-        }
+/* On very small screens, prevent the sidebar from
+    getting so small that words spill out of it
+*/
+@media (max-width:550px) {
+    .row-offcanvas-left.active {
+        left: 194px;
     }
+
+    .row-offcanvas-left.active
+    .sidebar-offcanvas {
+        left: -194px;
+    }
+
+    .sidebar-offcanvas {
+        width: 171px;
+    }
+
+    .row-offcanvas-left
+    .sidebar-offcanvas {
+        left: -240px;
+    }
+}
 
 /* Sidebar elements are styled with Bootstrap styles, which mostly do what we 
     want, but we need a few tweaks
