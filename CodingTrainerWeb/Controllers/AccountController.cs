@@ -23,10 +23,11 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, EmailMaker emailMaker)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            EmailMaker = emailMaker;
         }
 
         public ApplicationSignInManager SignInManager
