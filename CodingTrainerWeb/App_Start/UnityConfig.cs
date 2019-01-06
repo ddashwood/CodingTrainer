@@ -1,5 +1,5 @@
 using CodingTrainer.CodingTrainerWeb.Dependencies;
-using CodingTrainer.CodingTrainerWeb.AspNet;
+using CodingTrainer.CodingTrainerWeb.Users;
 using CodingTrainer.CodingTrainerWeb.Controllers;
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CSharpRunner.CodeHost;
@@ -59,15 +59,15 @@ namespace CodingTrainer.CodingTrainerWeb
             container.RegisterType<IIdeServices, IdeServices>();
             container.RegisterType<ICodeRunner, CodeRunner>();
             container.RegisterType<IExceptionLogger, CodeRunnerLogger>(new PerResolveLifetimeManager());
-            container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IUserServices, UserServices>(new ContainerControlledLifetimeManager());
 
             // Controllers with more than one constructor, where
-            // we want the one with no parameters to be used
+            // we want the one with fewer parameters to be used
             container.RegisterType<AccountController>(new InjectionConstructor());
-            container.RegisterType<ManageController>(new InjectionConstructor(new Type[] { typeof(IUserRepository) }));
+            container.RegisterType<ManageController>(new InjectionConstructor(new Type[] { typeof(IUserServices) }));
 
             // Action Filters aren't created using Unity's resolver, so we need to inject dependencies into them
-            AuthorizeExerciseAttribute.UserRepository = container.Resolve<IUserRepository>();
+            AuthorizeExerciseAttribute.UserServices = container.Resolve<IUserServices>();
             AuthorizeExerciseAttribute.DbRepository = container.Resolve<ICodingTrainerRepository>();
             LogAndHandleErrorAttribute.Repository = container.Resolve<ICodingTrainerRepository>();
         }

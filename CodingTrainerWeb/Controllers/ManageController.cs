@@ -18,16 +18,16 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private IUserRepository userRep;
+        private IUserServices userServices;
 
 
-        public ManageController(IUserRepository userRepository)
+        public ManageController(IUserServices userServices)
         {
-            userRep = userRepository;
+            this.userServices = userServices;
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserRepository userRepository)
-            :this(userRepository)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserServices userServices)
+            : this(userServices)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -82,14 +82,23 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> Details()
+        public async Task<ActionResult> Details(ManageMessageId? message)
         {
-            return View(await userRep.GetCurrentUserAsync());
+            ViewBag.StatusMessage =
+                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
+                : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
+                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : "";
+
+            return View(await userServices.GetCurrentUserAsync());
         }
 
         public async Task<ActionResult> Edit()
         {
-            return View(await userRep.GetCurrentUserAsync());
+            return View(await userServices.GetCurrentUserAsync());
         }
 
         [HttpPost]
@@ -97,14 +106,10 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                                                              nameof(ApplicationUser.LastName))]
                                                 ApplicationUser editedUser)
         {
-            var user = await userRep.GetCurrentUserAsync();
-            user.FirstName = editedUser.FirstName;
-            user.LastName = editedUser.LastName;
-            await userRep.SaveUserAsync(user);
+            await userServices.UpdateNameAsync(editedUser.FirstName, editedUser.LastName);
 
             // The name is stored in the context to be used in the LoginPartial partial view
-
-            Session["FullName"] = user.FirstName + " " + user.LastName;
+            Session["FullName"] = editedUser.FirstName + " " + editedUser.LastName;
 
             return RedirectToAction("Details");
         }
@@ -122,7 +127,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
-                    Session.Remove("FullName");
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
                 message = ManageMessageId.RemoveLoginSuccess;
@@ -175,7 +179,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
-                Session.Remove("FullName");
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             return RedirectToAction("Index", "Manage");
@@ -191,7 +194,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
-                Session.Remove("FullName");
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             return RedirectToAction("Index", "Manage");
@@ -222,7 +224,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
-                    Session.Remove("FullName");
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
@@ -246,7 +247,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
-                Session.Remove("FullName");
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
@@ -275,10 +275,9 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
-                    Session.Remove("FullName");
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Details", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
             return View(model);
@@ -305,7 +304,6 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                     var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                     if (user != null)
                     {
-                        Session.Remove("FullName");
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     }
                     return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });

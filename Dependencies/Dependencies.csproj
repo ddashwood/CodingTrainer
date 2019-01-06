@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICodingTrainerRepository.cs" />
-    <Compile Include="IUserRepository.cs" />
+    <Compile Include="IUserServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

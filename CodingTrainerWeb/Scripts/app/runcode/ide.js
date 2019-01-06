@@ -39,7 +39,6 @@
     // When done, enable the Run button, etc
     serviceFactory.connect(function () {
         $('.cm-btn-run').html('&#x25B6;&nbsp;Run');
-        $('#theme-div').css('visibility', 'visible');
         self.enableRun();
 
         // Apply linting to the default code
@@ -52,17 +51,6 @@
         // Update the current theme
         self.editor.setOption('theme', theme);
         self.codeConsole.setOption('theme', theme);
-        // And send a request to the server to save the theme preference
-        $.ajax({
-            url: "/api/theme",
-            type: "PUT",
-            dataType: "json",
-            data: '=' + theme // The '=' is needed to put the un-named string into x-www-form-urlencoded format
-        }).fail(function (request, status, error) {
-            console.dir(request);
-            alert('Failed to save your theme preference: ' + status + " - " + error +
-                '\n\nThe JavaScript console contains more details of the problem');
-        });
     });
 
     // Real-time linting

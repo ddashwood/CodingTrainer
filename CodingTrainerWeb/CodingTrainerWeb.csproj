@@ -334,7 +334,6 @@
     <Compile Include="ActionFilters\AuthorizeExerciseAttribute.cs" />
     <Compile Include="ActionFilters\LogAndHandleErrorAttribute.cs" />
     <Compile Include="ApiControllers\ChapterController.cs" />
-    <Compile Include="ApiControllers\ThemeController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -344,7 +343,7 @@
     <Compile Include="App_Start\UnityActivator.cs" />
     <Compile Include="App_Start\UnityHubActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="AspNet\UserRepository.cs" />
+    <Compile Include="Users\UserServices.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChapterController.cs" />
     <Compile Include="Controllers\ExerciseController.cs" />
@@ -366,21 +365,22 @@
     <Compile Include="Hubs\IIdeHubServer.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CodeMirrorThemes.cs" />
-    <Compile Include="Models\Extensions.cs" />
+    <Compile Include="ViewExtensions\UrlExtensions.cs" />
+    <Compile Include="ViewExtensions\UserExtensions.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserValidatorDeDup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\Themes\Cyborg\bootstrap.css" />
+    <Content Include="Content\Themes\Cyborg\bootstrap.min.css" />
+    <Content Include="Content\Themes\SpaceLab\bootstrap.css" />
     <Content Include="Content\Course\1\1.mp4" />
     <Content Include="Content\RunCode.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\TsAndCs.css" />
-    <Content Include="Content\_bootstrap.css" />
-    <Content Include="Content\_bootstrap.min.css" />
+    <Content Include="Content\Themes\_bootstrap.css" />
+    <Content Include="Content\Themes\_bootstrap.min.css" />
     <Content Include="Content\img\GitHub-Mark-64px.png" />
     <Content Include="Content\img\Reddit_logo.png" />
     <EmbeddedResource Include="Emails\Templates\Verify.html" />
@@ -417,11 +417,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Themes\SpaceLab\bootstrap.min.css.map" />
+    <Content Include="Content\Themes\SpaceLab\bootstrap.css.map" />
+    <Content Include="Content\Themes\SpaceLab\bootstrap.min.css" />
+    <Content Include="Content\Themes\Cyborg\bootstrap.css.map" />
+    <Content Include="Content\Themes\Cyborg\bootstrap.min.css.map" />
     <None Include="Properties\PublishProfiles\CodingTrainer - Web Deploy.pubxml" />
     <Content Include="Scripts\codemirror-buttons\buttons.css" />
     <Content Include="Scripts\codemirror-buttons\buttons.js" />
@@ -820,7 +820,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

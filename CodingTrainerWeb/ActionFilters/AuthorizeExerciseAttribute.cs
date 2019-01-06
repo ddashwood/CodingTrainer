@@ -1,6 +1,6 @@
 ﻿using CodingTrainer.CodingTrainerModels;
 using CodingTrainer.CodingTrainerModels.Security;
-using CodingTrainer.CodingTrainerWeb.AspNet;
+using CodingTrainer.CodingTrainerWeb.Users;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System;
 using System.Collections.Generic;
@@ -14,15 +14,15 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
 {
     public class AuthorizeExerciseAttribute : AuthorizeAttribute
     {
-        public static IUserRepository UserRepository { get; set; }
+        public static IUserServices UserServices { get; set; }
         public static ICodingTrainerRepository DbRepository { get; set; }
         private int chapter;
         private int exercise;
 
         public AuthorizeExerciseAttribute()
         {
-            if (UserRepository == null)
-                throw new InvalidOperationException("The User Repository has not been set");
+            if (UserServices == null)
+                throw new InvalidOperationException("The User Services have not been set");
             if (DbRepository == null)
                 throw new InvalidOperationException("The Database Repository has not been set");
         }
@@ -45,7 +45,7 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
             chapter = Convert.ToInt32(oChapter);
             exercise = Convert.ToInt32(oExercise);
 
-            ApplicationUser user = UserRepository.GetCurrentUser();
+            ApplicationUser user = UserServices.GetCurrentUser();
             return user.ExercisePermitted(chapter, exercise);
         }
 

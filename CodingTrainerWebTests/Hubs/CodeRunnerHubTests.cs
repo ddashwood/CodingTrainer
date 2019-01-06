@@ -10,7 +10,7 @@ using System.Dynamic;
 using CodingTrainer.CodingTrainerWeb.Hubs;
 using CodingTrainer.CSharpRunner.CodeHost;
 using System.Threading;
-using CodingTrainer.CodingTrainerWeb.AspNet;
+using CodingTrainer.CodingTrainerWeb.Users;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 
 namespace CodingTrainerWebTests.Hubs
@@ -36,12 +36,12 @@ namespace CodingTrainerWebTests.Hubs
             mockRunner.Setup(r => r.RunCode(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
 
             // Arrange - Repository
-            var mockRepository = new Mock<IUserRepository>();
-            mockRepository.Setup(r => r.GetCurrentUserId()).Returns("UnitTestId");
+            var userServices = new Mock<IUserServices>();
+            userServices.Setup(r => r.GetCurrentUserId()).Returns("UnitTestId");
             var mockDb = new Mock<ICodingTrainerRepository>();
 
             // Arrange - Class under test - Hub
-            var hub = new CodeRunnerHub(mockRunner.Object, mockRepository.Object, mockDb.Object)
+            var hub = new CodeRunnerHub(mockRunner.Object, userServices.Object, mockDb.Object)
             {
                 Clients = mockClients.Object,
                 Context = context
@@ -94,12 +94,12 @@ namespace CodingTrainerWebTests.Hubs
             ICodeRunner stubRunner = new CodeRunnerStub();
 
             // Arrange - Repository
-            var mockRepository = new Mock<IUserRepository>();
-            mockRepository.Setup(r => r.GetCurrentUserId()).Returns("UnitTestId");
+            var userServices = new Mock<IUserServices>();
+            userServices.Setup(r => r.GetCurrentUserId()).Returns("UnitTestId");
             var mockDb = new Mock<ICodingTrainerRepository>();
 
             // Arrange - Class under test - Hub
-            var hub = new CodeRunnerHub(stubRunner, mockRepository.Object, mockDb.Object)
+            var hub = new CodeRunnerHub(stubRunner, userServices.Object, mockDb.Object)
             {
                 Clients = mockClients.Object,
                 Context = context
@@ -136,12 +136,12 @@ namespace CodingTrainerWebTests.Hubs
             mockRunner.Setup(r => r.RunCode(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
 
             // Arrange - Repository
-            var mockRepository = new Mock<IUserRepository>();
-            mockRepository.Setup(r => r.GetCurrentUserId()).Returns<string>(null);
+            var userServices = new Mock<IUserServices>();
+            userServices.Setup(r => r.GetCurrentUserId()).Returns<string>(null);
             var mockDb = new Mock<ICodingTrainerRepository>();
 
             // Arrange - Class under test - Hub
-            var hub = new CodeRunnerHub(mockRunner.Object, mockRepository.Object, mockDb.Object)
+            var hub = new CodeRunnerHub(mockRunner.Object, userServices.Object, mockDb.Object)
             {
                 Clients = mockClients.Object,
                 Context = context

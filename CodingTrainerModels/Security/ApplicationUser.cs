@@ -26,15 +26,15 @@ namespace CodingTrainer.CodingTrainerModels.Security
         public string LastName { get; set; }
 
         [Required]
-        public string SelectedTheme { get; set; }
-
-        [Required]
         [ForeignKey("CurrentExercise"), Column(Order = 0)]
         public int CurrentChapterNo { get; set; }
 
         [Required]
         [ForeignKey("CurrentExercise"), Column(Order = 1)]
         public int CurrentExerciseNo { get; set; }
+
+        [Required]
+        public bool Dark { get; set; }
 
         public virtual Exercise CurrentExercise { get; set; }
 

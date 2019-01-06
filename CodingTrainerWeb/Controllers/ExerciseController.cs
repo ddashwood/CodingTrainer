@@ -22,14 +22,12 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
     public class ExerciseController : Controller
     {
         ICodingTrainerRepository rep;
-        ThemeController themeController;
-        IUserRepository userRepository;
+        IUserServices userServices;
 
-        public ExerciseController(ICodingTrainerRepository repository, ThemeController themeController, IUserRepository userRepository)
+        public ExerciseController(ICodingTrainerRepository repository, IUserServices userServices)
         {
             rep = repository;
-            this.themeController = themeController;
-            this.userRepository = userRepository;
+            this.userServices = userServices;
         }
 
         [Authorize]
@@ -53,7 +51,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             {
                 ViewBag.CurrentExercise = currentExercise;
 
-                ViewBag.User = await userRepository.GetCurrentUserAsync();
+                ViewBag.User = await userServices.GetCurrentUserAsync();
                 return PartialView(await rep.GetAllChaptersAsync());
             }
 
@@ -66,7 +64,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         {
             async Task<ActionResult> RunCodeAsync(Exercise _exercise)
             {
-                string activeTheme = await themeController.Get();
+                string activeTheme = await userServices.GetCodeMirrorThemeAsync();
                 return RunCode(_exercise, activeTheme);
             }
 
@@ -79,7 +77,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         {
             async Task<ActionResult> RunCodeAsync(int _chapter, int _exercise)
             {
-                Task<string> themeTask = themeController.Get();
+                Task<string> themeTask = userServices.GetCodeMirrorThemeAsync();
                 Task<Exercise> exerciseTask = rep.GetExerciseAsync(_chapter, _exercise);
 
                 await Task.WhenAll(themeTask, exerciseTask);

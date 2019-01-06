@@ -23,7 +23,8 @@
 }
 
 <div>
-    <div id="theme-div" class="row bottom-buffer" style="visibility:hidden">
+    @*Theme div is not displayed - can be enabled in browser developer tools if required*@
+    <div id="theme-div" class="row bottom-buffer" style="display:none">
         Select theme: @Html.DropDownList("Theme")
     </div>
     <div class="row">

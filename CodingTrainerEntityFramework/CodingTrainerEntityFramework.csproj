@@ -71,6 +71,10 @@
     <Compile Include="Migrations\201901012105082_CascadeOnDelete.Designer.cs">
       <DependentUpon>201901012105082_CascadeOnDelete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901061345497_DarkTheme.cs" />
+    <Compile Include="Migrations\201901061345497_DarkTheme.Designer.cs">
+      <DependentUpon>201901061345497_DarkTheme.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -89,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901012105082_CascadeOnDelete.resx">
       <DependentUpon>201901012105082_CascadeOnDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901061345497_DarkTheme.resx">
+      <DependentUpon>201901061345497_DarkTheme.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

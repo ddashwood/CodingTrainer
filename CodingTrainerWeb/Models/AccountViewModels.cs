@@ -97,9 +97,10 @@ namespace CodingTrainer.CodingTrainerWeb.Models
                 UserName = Email,
                 FirstName = FirstName,
                 LastName = LastName,
-                SelectedTheme = "elegant",
+//                SelectedTheme = "elegant",
                 CurrentChapterNo = 1,
-                CurrentExerciseNo = 1
+                CurrentExerciseNo = 1,
+                Dark = false
             };
         }
     }
