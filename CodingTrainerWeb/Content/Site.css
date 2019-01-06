@@ -54,8 +54,8 @@ footer {
 
 /* Allow link items in lists to be disabled */
 
-.nav > li > a.disabled {
-    color: black;
+.sidebar-offcanvas ul.nav a.disabled:hover {
+    background-color: transparent;
 }
 
 /* Off Canvas Sidebar */
@@ -116,42 +116,4 @@ footer {
     .sidebar-offcanvas {
         left: -240px;
     }
-}
-
-/* Sidebar elements are styled with Bootstrap styles, which mostly do what we 
-    want, but we need a few tweaks
-*/
-.sidebar-offcanvas {
-    padding: 15px;
-    margin-right: 15px;
-}
-
-.sidebar-offcanvas ul.nav a.disabled {
-    color: #aaaaaa;
-}
-
-.sidebar-offcanvas ul.nav a {
-    color: #666666;
-}
-
-.sidebar-offcanvas ul.nav a:hover:not(.disabled) {
-    background-color:#fbfbfb;
-}
-
-.sidebar-offcanvas ul.nav a.active {
-    color:#333333;
-    font-weight:600;
-}
-
-.sidebar-offcanvas ul.nav {
-    padding: 0 15px 15px 15px;
-}
-
-.sidebar-offcanvas .navbar {
-    background-image: none;
-}
-
-/* Cookie consent button */
-a.cc-btn {
-    background-image: linear-gradient(#6d94bf, #446e9b 50%, #3e648d);
 }

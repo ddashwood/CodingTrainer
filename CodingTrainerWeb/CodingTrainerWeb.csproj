@@ -375,9 +375,11 @@
   <ItemGroup>
     <Content Include="Content\Themes\Cyborg\bootstrap.css" />
     <Content Include="Content\Themes\Cyborg\bootstrap.min.css" />
+    <Content Include="Content\Themes\Cyborg\Site.css" />
     <Content Include="Content\Themes\SpaceLab\bootstrap.css" />
     <Content Include="Content\Course\1\1.mp4" />
     <Content Include="Content\RunCode.css" />
+    <Content Include="Content\Themes\SpaceLab\Site.css" />
     <Content Include="Content\TsAndCs.css" />
     <Content Include="Content\Themes\_bootstrap.css" />
     <Content Include="Content\Themes\_bootstrap.min.css" />

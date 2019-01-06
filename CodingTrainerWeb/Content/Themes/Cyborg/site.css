@@ -1,0 +1,45 @@
+﻿/* Dark theme */
+
+
+/* Sidebar elements are styled with Bootstrap styles, which mostly do what we 
+    want, but we need a few tweaks
+*/
+.sidebar-offcanvas {
+    padding: 15px;
+    margin-right: 15px;
+}
+
+.sidebar-offcanvas ul.nav a.disabled {
+    color: #666666;
+}
+
+.sidebar-offcanvas ul.nav a {
+    color: #aaaaaa;
+}
+
+.sidebar-offcanvas ul.nav a:hover:not(.disabled) {
+    background-color: #333333;
+}
+
+.sidebar-offcanvas ul.nav a.active {
+    color: #cccccc;
+    font-weight: 600;
+}
+
+.sidebar-offcanvas ul.nav {
+    padding: 0 15px 15px 15px;
+}
+
+.sidebar-offcanvas .navbar {
+    background-image: none;
+}
+
+/* Cookie consent button */
+.cc-color-override-49464600.cc-window.cc-banner, .cc-color-override-49464600.cc-window.cc-banner a {
+    color: #ffffff;
+}
+
+/* Cookie consent button */
+.cc-color-override-49464600.cc-window.cc-banner {
+    background-color: #000000;
+}
