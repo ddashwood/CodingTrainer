@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -17,9 +18,11 @@ namespace CodingTrainer.CodingTrainerModels.Security
     public class ApplicationUser : IdentityUser
     {
         [Required]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
 
         [Required]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
 
         [Required]

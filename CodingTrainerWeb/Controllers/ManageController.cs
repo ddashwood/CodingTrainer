@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CodingTrainer.CodingTrainerWeb.Models;
 using CodingTrainer.CodingTrainerWeb.ActionFilters;
+using CodingTrainer.CodingTrainerWeb.Dependencies;
+using CodingTrainer.CodingTrainerModels.Security;
 
 namespace CodingTrainer.CodingTrainerWeb.Controllers
 {
@@ -16,12 +18,16 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IUserRepository userRep;
 
-        public ManageController()
+
+        public ManageController(IUserRepository userRepository)
         {
+            userRep = userRepository;
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserRepository userRepository)
+            :this(userRepository)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -74,6 +80,33 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
+        }
+
+        public async Task<ActionResult> Details()
+        {
+            return View(await userRep.GetCurrentUserAsync());
+        }
+
+        public async Task<ActionResult> Edit()
+        {
+            return View(await userRep.GetCurrentUserAsync());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit([Bind(Include = nameof(ApplicationUser.FirstName) + "," +
+                                                             nameof(ApplicationUser.LastName))]
+                                                ApplicationUser editedUser)
+        {
+            var user = await userRep.GetCurrentUserAsync();
+            user.FirstName = editedUser.FirstName;
+            user.LastName = editedUser.LastName;
+            await userRep.SaveUserAsync(user);
+
+            // The name is stored in the context to be used in the LoginPartial partial view
+
+            Session["FullName"] = user.FirstName + " " + user.LastName;
+
+            return RedirectToAction("Details");
         }
 
         //

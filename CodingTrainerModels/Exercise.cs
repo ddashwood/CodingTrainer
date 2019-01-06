@@ -58,5 +58,19 @@ namespace CodingTrainer.CodingTrainerModels
         {
             return !(a == b);
         }
+        public override bool Equals(object obj)
+        {
+            return this == (Exercise)obj;
+        }
+        public override int GetHashCode()
+        {
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 17;
+                hash = hash * 23 + ChapterNo.GetHashCode();
+                hash = hash * 23 + ExerciseNo.GetHashCode();
+                return hash;
+            }
+        }
     }
 }

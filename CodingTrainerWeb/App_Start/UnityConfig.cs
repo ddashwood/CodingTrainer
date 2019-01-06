@@ -64,7 +64,7 @@ namespace CodingTrainer.CodingTrainerWeb
             // Controllers with more than one constructor, where
             // we want the one with no parameters to be used
             container.RegisterType<AccountController>(new InjectionConstructor());
-            container.RegisterType<ManageController>(new InjectionConstructor());
+            container.RegisterType<ManageController>(new InjectionConstructor(new Type[] { typeof(IUserRepository) }));
 
             // Action Filters aren't created using Unity's resolver, so we need to inject dependencies into them
             AuthorizeExerciseAttribute.UserRepository = container.Resolve<IUserRepository>();

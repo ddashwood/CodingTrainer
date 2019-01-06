@@ -150,3 +150,8 @@ footer {
 .sidebar-offcanvas .navbar {
     background-image: none;
 }
+
+/* Cookie consent button */
+a.cc-btn {
+    background-image: linear-gradient(#6d94bf, #446e9b 50%, #3e648d);
+}
