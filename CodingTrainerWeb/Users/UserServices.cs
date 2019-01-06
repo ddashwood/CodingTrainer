@@ -85,14 +85,12 @@ namespace CodingTrainer.CodingTrainerWeb.Users
             await userStore.Context.SaveChangesAsync();
         }
 
-        public async Task UpdateThemeAsync(string theme)
+        public async Task UpdateSettings(bool dark)
         {
             var user = await GetCurrentUserAsync();
-            //            user.SelectedTheme = theme;
+            user.Dark = dark;
             await userManager.UpdateAsync(user);
             await userStore.Context.SaveChangesAsync();
         }
-
-
     }
 }

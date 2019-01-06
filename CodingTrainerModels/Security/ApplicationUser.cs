@@ -34,6 +34,7 @@ namespace CodingTrainer.CodingTrainerModels.Security
         public int CurrentExerciseNo { get; set; }
 
         [Required]
+        [DisplayName("Dark Theme")]
         public bool Dark { get; set; }
 
         public virtual Exercise CurrentExercise { get; set; }

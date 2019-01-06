@@ -19,7 +19,6 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
         Task<string> GetCodeMirrorThemeAsync();
 
         Task UpdateNameAsync(string firstName, string lastName);
-        Task UpdateThemeAsync(string theme);
-
+        Task UpdateSettings(bool dark);
     }
 }

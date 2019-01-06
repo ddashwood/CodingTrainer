@@ -819,6 +819,7 @@
     <Content Include="Views\Home\TermsAndConditions.cshtml" />
     <Content Include="Views\Manage\Details.cshtml" />
     <Content Include="Views\Manage\Edit.cshtml" />
+    <Content Include="Views\Manage\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -55,7 +55,6 @@ p.MsoBodyText, li.MsoBodyText, div.MsoBodyText {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.mainhead, li.mainhead, div.mainhead {
@@ -69,7 +68,6 @@ p.mainhead, li.mainhead, div.mainhead {
     line-height: 115%;
     font-size: 12.5pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -77,7 +75,6 @@ span.mainheadCar {
     mso-style-name: mainheadCar;
     mso-style-link: mainhead;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -92,7 +89,6 @@ p.DocumentName, li.DocumentName, div.DocumentName {
     line-height: 115%;
     font-size: 14.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -100,7 +96,6 @@ span.DocumentNameCar {
     mso-style-name: "Document NameCar";
     mso-style-link: "Document Name";
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -114,7 +109,6 @@ p.parthead, li.parthead, div.parthead {
     line-height: 115%;
     font-size: 12.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -123,7 +117,6 @@ span.partheadCar {
     mso-style-name: partheadCar;
     mso-style-link: parthead;
     font-family: "Verdana",sans-serif;
-    color: black;
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -138,7 +131,6 @@ p.IntroHeading, li.IntroHeading, div.IntroHeading {
     line-height: 115%;
     font-size: 12.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -147,7 +139,6 @@ span.IntroHeadingCar {
     mso-style-name: "Intro HeadingCar";
     mso-style-link: "Intro Heading";
     font-family: "Verdana",sans-serif;
-    color: black;
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -162,7 +153,6 @@ p.Schedule, li.Schedule, div.Schedule {
     line-height: 115%;
     font-size: 12.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -171,7 +161,6 @@ span.ScheduleCar {
     mso-style-name: ScheduleCar;
     mso-style-link: Schedule;
     font-family: "Verdana",sans-serif;
-    color: black;
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -186,7 +175,6 @@ p.sectionhead, li.sectionhead, div.sectionhead {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -194,7 +182,6 @@ span.sectionheadCar {
     mso-style-name: sectionheadCar;
     mso-style-link: sectionhead;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -208,7 +195,6 @@ p.Level1Heading, li.Level1Heading, div.Level1Heading {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -216,7 +202,6 @@ span.Level1HeadingCar {
     mso-style-name: "Level 1 HeadingCar";
     mso-style-link: "Level 1 Heading";
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -230,7 +215,6 @@ p.Sch1Heading, li.Sch1Heading, div.Sch1Heading {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -238,7 +222,6 @@ span.Sch1HeadingCar {
     mso-style-name: "Sch 1 HeadingCar";
     mso-style-link: "Sch 1 Heading";
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -252,7 +235,6 @@ p.unithead, li.unithead, div.unithead {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -260,7 +242,6 @@ span.unitheadCar {
     mso-style-name: unitheadCar;
     mso-style-link: unithead;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -274,7 +255,6 @@ p.Sch2Heading, li.Sch2Heading, div.Sch2Heading {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -282,7 +262,6 @@ span.Sch2HeadingCar {
     mso-style-name: "Sch 2 HeadingCar";
     mso-style-link: "Sch 2 Heading";
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -296,7 +275,6 @@ p.italichead, li.italichead, div.italichead {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-style: italic;
 }
 
@@ -304,7 +282,6 @@ span.italicheadCar {
     mso-style-name: italicheadCar;
     mso-style-link: italichead;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-style: italic;
 }
 
@@ -319,14 +296,12 @@ p.unitbody, li.unitbody, div.unitbody {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.unitbodyCar {
     mso-style-name: unitbodyCar;
     mso-style-link: unitbody;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Parties1, li.Parties1, div.Parties1 {
@@ -340,14 +315,12 @@ p.Parties1, li.Parties1, div.Parties1 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Parties1Car {
     mso-style-name: "Parties 1Car";
     mso-style-link: "Parties 1";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Background1, li.Background1, div.Background1 {
@@ -361,14 +334,12 @@ p.Background1, li.Background1, div.Background1 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Background1Car {
     mso-style-name: "Background 1Car";
     mso-style-link: "Background 1";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Level1Number, li.Level1Number, div.Level1Number {
@@ -382,14 +353,12 @@ p.Level1Number, li.Level1Number, div.Level1Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Level1NumberCar {
     mso-style-name: "Level 1 NumberCar";
     mso-style-link: "Level 1 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Sch1Number, li.Sch1Number, div.Sch1Number {
@@ -403,14 +372,12 @@ p.Sch1Number, li.Sch1Number, div.Sch1Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Sch1NumberCar {
     mso-style-name: "Sch 1 NumberCar";
     mso-style-link: "Sch 1 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Level2Numbernotlist, li.Level2Numbernotlist, div.Level2Numbernotlist {
@@ -424,14 +391,12 @@ p.Level2Numbernotlist, li.Level2Numbernotlist, div.Level2Numbernotlist {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Level2NumbernotlistCar {
     mso-style-name: "Level 2 Number \(not list\)Car";
     mso-style-link: "Level 2 Number \(not list\)";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.unindentedunitbody, li.unindentedunitbody, div.unindentedunitbody {
@@ -444,21 +409,18 @@ p.unindentedunitbody, li.unindentedunitbody, div.unindentedunitbody {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.unindentedunitbodyCar {
     mso-style-name: unindentedunitbodyCar;
     mso-style-link: unindentedunitbody;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.BodyTextChar {
     mso-style-name: "Body Text Char";
     mso-style-link: "Body Text";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Definition, li.Definition, div.Definition {
@@ -471,14 +433,12 @@ p.Definition, li.Definition, div.Definition {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.DefinitionCar {
     mso-style-name: DefinitionCar;
     mso-style-link: Definition;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.partor, li.partor, div.partor {
@@ -492,7 +452,6 @@ p.partor, li.partor, div.partor {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -500,7 +459,6 @@ span.partorCar {
     mso-style-name: partorCar;
     mso-style-link: partor;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -515,7 +473,6 @@ p.sectionor, li.sectionor, div.sectionor {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -523,7 +480,6 @@ span.sectionorCar {
     mso-style-name: sectionorCar;
     mso-style-link: sectionor;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -538,7 +494,6 @@ p.unitor, li.unitor, div.unitor {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -546,7 +501,6 @@ span.unitorCar {
     mso-style-name: unitorCar;
     mso-style-link: unitor;
     font-family: "Verdana",sans-serif;
-    color: black;
     font-weight: bold;
 }
 
@@ -561,14 +515,12 @@ p.docularlist0, li.docularlist0, div.docularlist0 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.docularlist0Car {
     mso-style-name: docularlist0Car;
     mso-style-link: docularlist0;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Level2Number, li.Level2Number, div.Level2Number {
@@ -582,14 +534,12 @@ p.Level2Number, li.Level2Number, div.Level2Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Level2NumberCar {
     mso-style-name: "Level 2 NumberCar";
     mso-style-link: "Level 2 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Sch2Number, li.Sch2Number, div.Sch2Number {
@@ -603,14 +553,12 @@ p.Sch2Number, li.Sch2Number, div.Sch2Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Sch2NumberCar {
     mso-style-name: "Sch 2 NumberCar";
     mso-style-link: "Sch 2 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.BodyText1, li.BodyText1, div.BodyText1 {
@@ -624,14 +572,12 @@ p.BodyText1, li.BodyText1, div.BodyText1 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.BodyText1Car {
     mso-style-name: "Body Text 1Car";
     mso-style-link: "Body Text 1";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.docularlist1, li.docularlist1, div.docularlist1 {
@@ -645,14 +591,12 @@ p.docularlist1, li.docularlist1, div.docularlist1 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.docularlist1Car {
     mso-style-name: docularlist1Car;
     mso-style-link: docularlist1;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Parties2, li.Parties2, div.Parties2 {
@@ -666,14 +610,12 @@ p.Parties2, li.Parties2, div.Parties2 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Parties2Car {
     mso-style-name: "Parties 2Car";
     mso-style-link: "Parties 2";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Background2, li.Background2, div.Background2 {
@@ -687,14 +629,12 @@ p.Background2, li.Background2, div.Background2 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Background2Car {
     mso-style-name: "Background 2Car";
     mso-style-link: "Background 2";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Level3Number, li.Level3Number, div.Level3Number {
@@ -708,14 +648,12 @@ p.Level3Number, li.Level3Number, div.Level3Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Level3NumberCar {
     mso-style-name: "Level 3 NumberCar";
     mso-style-link: "Level 3 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Sch3Number, li.Sch3Number, div.Sch3Number {
@@ -729,15 +667,12 @@ p.Sch3Number, li.Sch3Number, div.Sch3Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Sch3NumberCar {
     mso-style-name: "Sch 3 NumberCar";
     mso-style-link: "Sch 3 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
-}
 
 p.Definition1, li.Definition1, div.Definition1 {
     mso-style-name: "Definition 1";
@@ -750,14 +685,12 @@ p.Definition1, li.Definition1, div.Definition1 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Definition1Car {
     mso-style-name: "Definition 1Car";
     mso-style-link: "Definition 1";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.docularlist2, li.docularlist2, div.docularlist2 {
@@ -771,14 +704,12 @@ p.docularlist2, li.docularlist2, div.docularlist2 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.docularlist2Car {
     mso-style-name: docularlist2Car;
     mso-style-link: docularlist2;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Level4Number, li.Level4Number, div.Level4Number {
@@ -792,14 +723,12 @@ p.Level4Number, li.Level4Number, div.Level4Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Level4NumberCar {
     mso-style-name: "Level 4 NumberCar";
     mso-style-link: "Level 4 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Sch4Number, li.Sch4Number, div.Sch4Number {
@@ -813,14 +742,12 @@ p.Sch4Number, li.Sch4Number, div.Sch4Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Sch4NumberCar {
     mso-style-name: "Sch 4 NumberCar";
     mso-style-link: "Sch 4 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Definition2, li.Definition2, div.Definition2 {
@@ -834,14 +761,12 @@ p.Definition2, li.Definition2, div.Definition2 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Definition2Car {
     mso-style-name: "Definition 2Car";
     mso-style-link: "Definition 2";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.docularlist3, li.docularlist3, div.docularlist3 {
@@ -855,14 +780,12 @@ p.docularlist3, li.docularlist3, div.docularlist3 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.docularlist3Car {
     mso-style-name: docularlist3Car;
     mso-style-link: docularlist3;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Level5Number, li.Level5Number, div.Level5Number {
@@ -876,14 +799,12 @@ p.Level5Number, li.Level5Number, div.Level5Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Level5NumberCar {
     mso-style-name: "Level 5 NumberCar";
     mso-style-link: "Level 5 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Sch5Number, li.Sch5Number, div.Sch5Number {
@@ -897,14 +818,12 @@ p.Sch5Number, li.Sch5Number, div.Sch5Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Sch5NumberCar {
     mso-style-name: "Sch 5 NumberCar";
     mso-style-link: "Sch 5 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Definition3, li.Definition3, div.Definition3 {
@@ -918,14 +837,12 @@ p.Definition3, li.Definition3, div.Definition3 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Definition3Car {
     mso-style-name: "Definition 3Car";
     mso-style-link: "Definition 3";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.docularlist4, li.docularlist4, div.docularlist4 {
@@ -939,14 +856,12 @@ p.docularlist4, li.docularlist4, div.docularlist4 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.docularlist4Car {
     mso-style-name: docularlist4Car;
     mso-style-link: docularlist4;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Level6Number, li.Level6Number, div.Level6Number {
@@ -960,14 +875,12 @@ p.Level6Number, li.Level6Number, div.Level6Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Level6NumberCar {
     mso-style-name: "Level 6 NumberCar";
     mso-style-link: "Level 6 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Sch6Number, li.Sch6Number, div.Sch6Number {
@@ -981,14 +894,12 @@ p.Sch6Number, li.Sch6Number, div.Sch6Number {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Sch6NumberCar {
     mso-style-name: "Sch 6 NumberCar";
     mso-style-link: "Sch 6 Number";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Definition4, li.Definition4, div.Definition4 {
@@ -1002,14 +913,12 @@ p.Definition4, li.Definition4, div.Definition4 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Definition4Car {
     mso-style-name: "Definition 4Car";
     mso-style-link: "Definition 4";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.unnumberedlist0, li.unnumberedlist0, div.unnumberedlist0 {
@@ -1022,14 +931,12 @@ p.unnumberedlist0, li.unnumberedlist0, div.unnumberedlist0 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.unnumberedlist0Car {
     mso-style-name: unnumberedlist0Car;
     mso-style-link: unnumberedlist0;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Definitionunnumbered, li.Definitionunnumbered, div.Definitionunnumbered {
@@ -1042,14 +949,12 @@ p.Definitionunnumbered, li.Definitionunnumbered, div.Definitionunnumbered {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.DefinitionunnumberedCar {
     mso-style-name: "Definition \(unnumbered\)Car";
     mso-style-link: "Definition \(unnumbered\)";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.unnumberedlist1, li.unnumberedlist1, div.unnumberedlist1 {
@@ -1062,14 +967,12 @@ p.unnumberedlist1, li.unnumberedlist1, div.unnumberedlist1 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.unnumberedlist1Car {
     mso-style-name: unnumberedlist1Car;
     mso-style-link: unnumberedlist1;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Definition1unnumbered, li.Definition1unnumbered, div.Definition1unnumbered {
@@ -1082,14 +985,12 @@ p.Definition1unnumbered, li.Definition1unnumbered, div.Definition1unnumbered {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Definition1unnumberedCar {
     mso-style-name: "Definition 1 \(unnumbered\)Car";
     mso-style-link: "Definition 1 \(unnumbered\)";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.unnumberedlist2, li.unnumberedlist2, div.unnumberedlist2 {
@@ -1102,14 +1003,12 @@ p.unnumberedlist2, li.unnumberedlist2, div.unnumberedlist2 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.unnumberedlist2Car {
     mso-style-name: unnumberedlist2Car;
     mso-style-link: unnumberedlist2;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Definition2unnumbered, li.Definition2unnumbered, div.Definition2unnumbered {
@@ -1122,14 +1021,12 @@ p.Definition2unnumbered, li.Definition2unnumbered, div.Definition2unnumbered {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Definition2unnumberedCar {
     mso-style-name: "Definition 2 \(unnumbered\)Car";
     mso-style-link: "Definition 2 \(unnumbered\)";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.unnumberedlist3, li.unnumberedlist3, div.unnumberedlist3 {
@@ -1142,14 +1039,12 @@ p.unnumberedlist3, li.unnumberedlist3, div.unnumberedlist3 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.unnumberedlist3Car {
     mso-style-name: unnumberedlist3Car;
     mso-style-link: unnumberedlist3;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Definition3unnumbered, li.Definition3unnumbered, div.Definition3unnumbered {
@@ -1162,14 +1057,12 @@ p.Definition3unnumbered, li.Definition3unnumbered, div.Definition3unnumbered {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Definition3unnumberedCar {
     mso-style-name: "Definition 3 \(unnumbered\)Car";
     mso-style-link: "Definition 3 \(unnumbered\)";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.unnumberedlist4, li.unnumberedlist4, div.unnumberedlist4 {
@@ -1182,14 +1075,12 @@ p.unnumberedlist4, li.unnumberedlist4, div.unnumberedlist4 {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.unnumberedlist4Car {
     mso-style-name: unnumberedlist4Car;
     mso-style-link: unnumberedlist4;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 p.Definition4unnumbered, li.Definition4unnumbered, div.Definition4unnumbered {
@@ -1202,14 +1093,12 @@ p.Definition4unnumbered, li.Definition4unnumbered, div.Definition4unnumbered {
     line-height: 115%;
     font-size: 10.0pt;
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.Definition4unnumberedCar {
     mso-style-name: "Definition 4 \(unnumbered\)Car";
     mso-style-link: "Definition 4 \(unnumbered\)";
     font-family: "Verdana",sans-serif;
-    color: black;
 }
 
 span.HeaderChar {

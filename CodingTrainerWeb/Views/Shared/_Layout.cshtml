@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Code Runner</title>
 
-    <link id="bootstrap-css" href="@Url.Content($"~/Content/Themes/{User.GetBootstrapTheme()}/bootstrap{Url.IncludeMin()}.css")" rel="stylesheet" />
+    <link href="@Url.Content($"~/Content/Themes/{User.GetBootstrapTheme()}/bootstrap{Url.IncludeMin()}.css")" rel="stylesheet" />
     @Styles.Render("~/Content/css")
-    <link id="site-css" href="@Url.Content($"~/Content/Themes/{User.GetBootstrapTheme()}/site.css")" rel="stylesheet" />
+    <link href="@Url.Content($"~/Content/Themes/{User.GetBootstrapTheme()}/site.css")" rel="stylesheet" />
     @RenderSection("styles", required: false)
     @Html.RenderSection("styles")
     @Scripts.Render("~/bundles/modernizr")

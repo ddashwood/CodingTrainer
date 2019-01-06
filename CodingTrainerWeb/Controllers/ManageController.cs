@@ -107,11 +107,19 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                                                 ApplicationUser editedUser)
         {
             await userServices.UpdateNameAsync(editedUser.FirstName, editedUser.LastName);
-
-            // The name is stored in the context to be used in the LoginPartial partial view
-            Session["FullName"] = editedUser.FirstName + " " + editedUser.LastName;
-
             return RedirectToAction("Details");
+        }
+
+        public async Task<ActionResult> Settings()
+        {
+            return View(await userServices.GetCurrentUserAsync());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Settings([Bind (Include = nameof(ApplicationUser.Dark))] ApplicationUser editedUser)
+        {
+            await userServices.UpdateSettings(editedUser.Dark);
+            return View();
         }
 
         //
