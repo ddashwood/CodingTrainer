@@ -6,7 +6,6 @@
 
 @section scripts {
     <script src="~/Scripts/app/sidebar.js"></script>
-    <script src="~/Scripts/app/exercise-tabs.js"></script>
 }
 
 @Html.Action("ExerciseSidebar", new { currentExercise = Model })
@@ -15,40 +14,34 @@
 <div class="visible-sm visible-xs top-buffer"></div>
 
 <ul class="nav nav-tabs col-md-9 col-sm-12">
-    <li class="active"><a id="both-button" href="#both" data-toggle="tab">Exercise with Code</a></li>
-    <li><a id="code-button" href="#codeonly" data-toggle="tab">Code</a></li>
-    <li><a id="exercise-button" href="#exercise" data-toggle="tab">Exercise</a></li>
-    <li><a id="submissions-button" href="#submissions-block" data-toggle="tab">Submissions</a></li>
+    <li class="active"><a href="#exercise" data-toggle="tab">Exercise</a></li>
+    <li><a href="#submissions" data-toggle="tab">Submissions</a></li>
+    <li><a href="#answer" data-toggle="tab">Model Answer</a></li>
 </ul>
 
 <h2>Exercise - @Model.ExerciseName</h2>
 
-<div class="tab-content">
-    @*This will never be displayed, but is required to make the Bootstrap tabs work properly.
-      We need to control this ourself because of content that is shared between multiple tabs *@
-    <div style="display:none">
-        <div id="both" class="tab-pane active"></div>
-        <div id="codeonly" class="tab-pane"></div>
-        <div id="exercise" class="tab-pane"></div>
+<div class="tab-content col-md-9 col-sm-12">
+    <div id="exercise" class="tab-pane fade in active">
+        <h2>@Model.Chapter.ChapterName</h2>
+        <h4>@Model.ExerciseName</h4>
+        @{
+            var contentVm = new CodingTrainer.CodingTrainerWeb.Models.ExerciseContentViewModel();
+            contentVm.Exercise = Model;
+            contentVm.Url = Url;
+            contentVm.Html = Html;
+        }
+        @Html.Action("Content", contentVm)
     </div>
 
-    <div id="submissions-block" class="tab-pane">
+
+    <div id="submissions" class="tab-pane fade">
         <h3>Submissions</h3>
         <p>Submissions are not yet supported</p>
     </div>
-</div>
 
-
-@*This div appears first so it shows first on mobile.
-  Bootstrap push/pull classes ensure it shows on the
-  right hand side of larger screen*@
-<div id="exercise-display" class="col-md-3 col-sm-12 col-md-push-6">
-    <h2>@Model.Chapter.ChapterName</h2>
-    <h4>@Model.ExerciseName</h4>
-
-    @Html.Action("Content", new { Exercise = Model })
-</div>
-
-<div id="code-display" class="col-md-6 col-sm-12 col-md-pull-3">
-    @Html.Action("RunCode", new { Exercise = Model })
+    <div id="answer" class="tab-pane fade">
+        <h3>Model Answer</h3>
+        <p>The model answer will be shown here once you have completed some or all of the exercise</p>
+    </div>
 </div>

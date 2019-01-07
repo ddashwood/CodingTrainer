@@ -343,6 +343,7 @@
     <Compile Include="App_Start\UnityActivator.cs" />
     <Compile Include="App_Start\UnityHubActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\ExerciseContentViewModel.cs" />
     <Compile Include="Users\UserServices.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChapterController.cs" />
@@ -365,6 +366,7 @@
     <Compile Include="Hubs\IIdeHubServer.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CodeMirrorThemes.cs" />
+    <Compile Include="ViewExtensions\MvcHtmlStringExtensions.cs" />
     <Compile Include="ViewExtensions\UrlExtensions.cs" />
     <Compile Include="ViewExtensions\UserExtensions.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -396,7 +398,6 @@
     <Content Include="Scripts\app\codemirror-addon\console.js" />
     <Content Include="Scripts\app\codemirror-addon\hint-loader.js" />
     <Content Include="Scripts\app\codemirror-addon\performed-lint.js" />
-    <Content Include="Scripts\app\exercise-tabs.js" />
     <Content Include="Scripts\app\navbar-fix.js" />
     <Content Include="Scripts\app\runcode\codeRunner.js" />
     <Content Include="Scripts\app\runcode\codeRunnerWithCorrections.js" />

@@ -60,7 +60,9 @@ namespace CodingTrainer.CodingTrainerModels
         }
         public override bool Equals(object obj)
         {
-            return this == (Exercise)obj;
+            var other = obj as Exercise;
+            if (other == null) return false;
+            return this == other;
         }
         public override int GetHashCode()
         {

@@ -101,7 +101,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
 
         [Authorize]
         [ChildActionOnly]
-        public ActionResult Content(Exercise exercise)
+        public ActionResult Content(ExerciseContentViewModel viewModel)
         {
             // Make a razor engine service with the System.Web.Mvc namespace open
             var config = new TemplateServiceConfiguration();
@@ -109,20 +109,25 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             namespaces.Add("System.Web.Mvc");
             var service = RazorEngineService.Create(config);
             
-            // Make the UrlHelper extension methods available
-            string fullSource = "@{var Url = new UrlHelper(System.Web.HttpContext.Current.Request.RequestContext);} "
-                    + exercise.Content;
+            // Make the UrlHelper and HtmlHelper extension methods available in (close to) the same
+            // way as a normal view
+            string fullSource = "@using System.Web.Mvc.Html; " +
+                                "@using CodingTrainer.CodingTrainerWeb.ViewExtensions; " +
+                                "@{var Url = Model.Url; var Html = Model.Html;} "
+                    + viewModel.Exercise.Content;
 
             // Including the hash code in the key allows this to work even if the source changes
             // However, this will result in memory leaks. The fix for this is to write a new
             // caching provider - however, this is considered to be a minor issue, and is
             // acceptable for now - see this post by Matthias Dittrich
             // https://github.com/Antaris/RazorEngine/issues/232#issuecomment-128802285
-            var key = $"ContentTemplate{exercise.ChapterNo}-{exercise.ExerciseNo}-{fullSource.GetHashCode()}";
+            var key = $"ContentTemplate{viewModel.Exercise.ChapterNo}-{viewModel.Exercise.ExerciseNo}-{fullSource.GetHashCode()}";
             service.AddTemplate(key, new LoadedTemplateSource(fullSource));
-            
+
+
             // Finally, compile and run the content source
-            return Content(service.RunCompile(key));
+            var result = service.RunCompile(key, typeof(ExerciseContentViewModel), viewModel);
+            return Content(result);
         }
 
         // Helpers

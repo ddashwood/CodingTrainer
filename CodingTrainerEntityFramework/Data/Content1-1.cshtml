@@ -7,4 +7,8 @@
         </video>
     </div>
 </div>
-<p>I hope this video was useful</p>
+<br>
+<p>I hope this video was useful. Now please try this very helpful exercise:</p>
+<br>
+
+@Html.Action("RunCode", new { Exercise = Model.Exercise }).Raw()
