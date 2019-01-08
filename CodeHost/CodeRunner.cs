@@ -28,22 +28,21 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             this.exceptionLogger = exceptionLogger;
         }
 
-        public async Task RunCode(string code)
+        public async Task CompileAndRun(string code)
+        {
+            var compiled = await Compile(code);
+            await Run(compiled);
+        }
+
+        public async Task<CompiledCode> Compile(string code)
         {
             try
             {
                 var compilation = await Compiler.GetCompilation(code);
-                var (result, pdb) = await Compiler.Emit(compilation);
-
-                using (var consoleInStream = new BlockingMemoryStream())
-                using (consoleInWriter = TextWriter.Synchronized(new StreamWriter(consoleInStream)))
-                {
-                    var sandboxMgr = new SandboxManager();
-                    sandboxMgr.ConsoleWrite += OnConsoleWrite;
-                    sandboxMgr.RunInSandbox(result, pdb, consoleInStream);
-                }
+                (byte[] bin, byte[] pdb) = await Compiler.Emit(compilation);
+                return new CompiledCode(code, bin, pdb);
             }
-            catch (Exception e) when (!(e is AggregateException || e is CompilationErrorException))
+            catch (Exception e) when (!(e is CompilationErrorException))
             {
                 if (exceptionLogger != null)
                 {
@@ -51,9 +50,40 @@ namespace CodingTrainer.CSharpRunner.CodeHost
                 }
                 throw;
             }
+        }
+
+        public async Task Run(CompiledCode compiledCode)
+        {
+            try
+            {
+                using (var consoleInStream = new BlockingMemoryStream())
+                using (consoleInWriter = TextWriter.Synchronized(new StreamWriter(consoleInStream)))
+                using (var newConsoleIn = TextReader.Synchronized(new StreamReader(consoleInStream)))
+                {
+                    await Run(compiledCode, newConsoleIn);
+                }
+            }
             finally
             {
                 consoleInWriter = null;
+            }
+        }
+
+        public async Task Run(CompiledCode compiledCode, TextReader consoleInTextReader)
+        {
+            try
+            {
+                var sandboxMgr = new SandboxManager();
+                sandboxMgr.ConsoleWrite += OnConsoleWrite;
+                sandboxMgr.RunInSandbox(compiledCode.bin, compiledCode.pdb, consoleInTextReader);
+            }
+            catch (Exception e) when (!(e is AggregateException))
+            {
+                if (exceptionLogger != null)
+                {
+                    await exceptionLogger.LogException(e, compiledCode.source);
+                }
+                throw;
             }
         }
 
@@ -61,7 +91,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
         public void ConsoleIn(string text)
         {
             if (consoleInWriter == null)
-                throw new InvalidOperationException("Can't send input text to the console until the code is running");
+                throw new InvalidOperationException("Can't send input text to the console");
 
             consoleInWriter.WriteLine(text);
             consoleInWriter.Flush();

@@ -17,7 +17,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
         {
             public event ConsoleWriteEventHandler ConsoleWrite;
 
-            public void RunInSandbox(byte[] compiledCode, byte[] pdb, Stream consoleInStream)
+            public void RunInSandbox(byte[] compiledCode, byte[] pdb, TextReader newConsoleIn)
             {
                 AppDomain newDomain = null;
 
@@ -25,9 +25,13 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 
                 try
                 {
-                    using (var newConsoleIn = TextReader.Synchronized(new StreamReader(consoleInStream)))
                     using (var newConsoleOut = new EventStringWriter())
                     {
+                        if (newConsoleIn is ITextWriterInjectable toWriter)
+                        {
+                            toWriter.TextWriter = newConsoleOut;
+                        }
+
                         // Create the sandbox for the code
 
                         newDomain = CreateSandbox();

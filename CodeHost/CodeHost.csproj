@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockingMemoryStream.cs" />
+    <Compile Include="CompiledCode.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="CodeRunner.cs" />
     <Compile Include="CodeRunner.SandboxManager.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="IIdeServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="References.cs" />
+    <Compile Include="ITextWriterInjectable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

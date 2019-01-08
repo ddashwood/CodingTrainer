@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CSharpRunner.CodeHost;
+using CodingTrainer.CSharpRunner.TestingCommon;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.CodeHostTests
 {
-    class IdeServicesTests
+    class IdeServicesTests:CodeHostTestBase
     {
         private IIdeServices ideServices = new IdeServices();
 
@@ -108,20 +109,5 @@ if (5)
         #endregion
 
 
-        #region Helpers
-
-        private static StringBuilder GetUsings(string[] usings)
-        {
-            StringBuilder codeBuilder = new StringBuilder();
-
-            foreach (string ns in usings)
-            {
-                codeBuilder.Append($"using {ns}; ");
-            }
-
-            return codeBuilder;
-        }
-
-        #endregion
     }
 }

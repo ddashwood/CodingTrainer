@@ -10,11 +10,12 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
+using CodingTrainer.CSharpRunner.TestingCommon;
 
 namespace CodingTrainer.CSharpRunner.CodeHostTests
 {
     [TestFixture]
-    public class CodeRunnerTests
+    class CodeRunnerTests:CodeHostTestBase
     {
         #region CompilerTests
         [Test]
@@ -22,7 +23,7 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         public void CompilerErrorTest()
         {
             Exception e = Assert.ThrowsAsync(typeof(CompilationErrorException), () =>
-                runner.RunCode(GetUsings(new string[] { "System" })
+                runner.CompileAndRun(GetUsings(new string[] { "System" })
                     .Append(WrapInMain(@"int a = 1.5;")).ToString()));
             StringAssert.Contains("Cannot implicitly convert type 'double' to 'int'", ((CompilationErrorException)e).Diagnostics[0].GetMessage());
         }
@@ -38,7 +39,7 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
             }
 
             Assert.ThrowsAsync(typeof(PolicyException), () =>
-                runner.RunCode(GetUsings(new string[] { "System" })
+                runner.CompileAndRun(GetUsings(new string[] { "System" })
                     .Append(code).ToString()));
         }
         #endregion
@@ -58,7 +59,7 @@ C[] ca = new C[500];
 for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.Thread.Sleep(0); }
 ";
             Exception e = Assert.ThrowsAsync(typeof(OutOfMemoryException), () =>
-                runner.RunCode(GetUsings(new string[] { "System", "System.Threading" })
+                runner.CompileAndRun(GetUsings(new string[] { "System", "System.Threading" })
                     .Append(code).ToString()));
             Assert.AreEqual("The memory limit of 5MB has been exceded", e.Message);
         }
@@ -68,7 +69,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         public void TimeOutTest()
         {
             Assert.ThrowsAsync(typeof(TimeoutException), () =>
-                runner.RunCode(GetUsings(new string[] { "System" })
+                runner.CompileAndRun(GetUsings(new string[] { "System" })
                     .Append(WrapInMain(@"while(true) { }")).ToString()));
         }
 
@@ -78,7 +79,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         public void TimeOutInFinallyTest()
         {
             Assert.ThrowsAsync(typeof(TimeoutException), () =>
-                runner.RunCode(GetUsings(new string[] { "System" })
+                runner.CompileAndRun(GetUsings(new string[] { "System" })
                     .Append(WrapInMain(@"try {} finally { while(true) { } }")).ToString()));
 
         }
@@ -89,7 +90,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         public void StackOverflowTest()
         {
             Assert.ThrowsAsync(typeof(StackOverflowException), () =>
-                runner.RunCode(GetUsings(new string[] { "System" })
+                runner.CompileAndRun(GetUsings(new string[] { "System" })
                     .Append(WrapInMain(@"Main();")).ToString()));
         }
         #endregion
@@ -99,7 +100,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         [Category("Normal")]
         public async Task ConsoleWriteLineTest()
         {
-            await runner.RunCode(GetUsings(new string[] { "System" })
+            await runner.CompileAndRun(GetUsings(new string[] { "System" })
                 .Append(WrapInMain(@"Console.WriteLine(""Hello World!"");")).ToString());
             Assert.AreEqual("Hello World!\r\n", console.ToString());
         }
@@ -108,7 +109,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         [Category("Normal")]
         public async Task ConsoleWriteLineWithoutMainTest()
         {
-            await runner.RunCode(GetUsings(new string[] { "System" })
+            await runner.CompileAndRun(GetUsings(new string[] { "System" })
                 .Append(@"Console.WriteLine(""Hello World!"");").ToString());
             Assert.AreEqual("Hello World!\r\n", console.ToString());
         }
@@ -119,7 +120,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         public async Task ConsoleInTest()
         {
             runner.ConsoleWrite += ConsoleInTestSendString;
-            await runner.RunCode(GetUsings(new string[] { "System" }).
+            await runner.CompileAndRun(GetUsings(new string[] { "System" }).
                 Append(WrapInMain("Console.WriteLine(); Console.WriteLine(Console.ReadLine());")).ToString());
             runner.ConsoleWrite -= ConsoleInTestSendString;
             StringAssert.Contains("From the unit test", console.ToString());
@@ -134,7 +135,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         public void ExceptionTest()
         {
             Exception e = Assert.ThrowsAsync(typeof(AggregateException), () =>
-                runner.RunCode(GetUsings(new string[] { "System" })
+                runner.CompileAndRun(GetUsings(new string[] { "System" })
                     .Append(WrapInMain(@"int i = 0; int j = 5 / i;")).ToString()));
             Assert.That(e.InnerException, Is.TypeOf<DivideByZeroException>());
         }
@@ -144,7 +145,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         public void ExceptionWithoutMainTest()
         {
             Exception e = Assert.ThrowsAsync(typeof(AggregateException), () =>
-                runner.RunCode(GetUsings(new string[] { "System" })
+                runner.CompileAndRun(GetUsings(new string[] { "System" })
                             .Append(@"int i = 0; int j = 5 / i;").ToString()));
             Assert.That(e.InnerException, Is.TypeOf<DivideByZeroException>());
         }
@@ -156,7 +157,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         public void IOForbiddenTest()
         {
             Exception e = Assert.ThrowsAsync(typeof(AggregateException), () =>
-                runner.RunCode(GetUsings(new string[] { "System", "System.IO" })
+                runner.CompileAndRun(GetUsings(new string[] { "System", "System.IO" })
                     .Append(WrapInMain(@"using (var s = new StreamWriter(""test.txt"")) { s.WriteLine(""Testing""); }"))
                     .ToString()));
             Assert.That(e.InnerException, Is.TypeOf<SecurityException>());
@@ -167,7 +168,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         public void IOForbiddenWithoutMainTest()
         {
             Exception e = Assert.ThrowsAsync(typeof(AggregateException), () =>
-            runner.RunCode(GetUsings(new string[] { "System", "System.IO" })
+            runner.CompileAndRun(GetUsings(new string[] { "System", "System.IO" })
                             .Append(@"using (var s = new StreamWriter(""test.txt"")) { s.WriteLine(""Testing""); }").ToString()));
             Assert.That(e.InnerException, Is.TypeOf<SecurityException>());
         }
@@ -187,7 +188,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
 
             // Act
             Exception e = Assert.ThrowsAsync(typeof(AggregateException), () =>
-                runner.RunCode(code));
+                runner.CompileAndRun(code));
 
             // Assert
             log.Verify(l => l.LogException(It.IsAny<Exception>(), It.IsAny<string>()), Times.Never());
@@ -205,7 +206,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
 
             // Act
             Exception e = Assert.ThrowsAsync(typeof(CompilationErrorException), () =>
-                runner.RunCode(code));
+                runner.CompileAndRun(code));
 
             // Assert
             log.Verify(l => l.LogException(It.IsAny<Exception>(), It.IsAny<string>()), Times.Never());
@@ -223,61 +224,12 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
 
             // Act
             Exception e = Assert.ThrowsAsync(typeof(TimeoutException), () =>
-                runner.RunCode(code));
+                runner.CompileAndRun(code));
 
             // Assert
             log.Verify(l => l.LogException(e, code));
         }
         #endregion
 
-
-
-
-        #region Helpers
-        private string WrapInMain(string code)
-        {
-            StringBuilder codeBuilder = new StringBuilder();
-            codeBuilder.Append("public static void Main() { ");
-            codeBuilder.Append(code);
-            codeBuilder.Append(" }");
-
-            return codeBuilder.ToString();
-        }
-
-        private static StringBuilder GetUsings(string[] usings)
-        {
-            StringBuilder codeBuilder = new StringBuilder();
-
-            foreach (string ns in usings)
-            {
-                codeBuilder.Append($"using {ns}; ");
-            }
-
-            return codeBuilder;
-        }
-        #endregion
-
-        #region Setup
-        CodeRunner runner;
-        StringBuilder console;
-
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            runner = new CodeRunner();
-            runner.ConsoleWrite += OnConsoleWrite;
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            console = new StringBuilder();
-        }
-
-        private void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
-        {
-            console.Append(e.Message);
-        }
-        #endregion
     }
 }

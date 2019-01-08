@@ -12,6 +12,7 @@ using CodingTrainer.CSharpRunner.CodeHost;
 using System.Threading;
 using CodingTrainer.CodingTrainerWeb.Users;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
+using System.IO;
 
 namespace CodingTrainerWebTests.Hubs
 {
@@ -33,7 +34,7 @@ namespace CodingTrainerWebTests.Hubs
             // Arrange - Runner
             string code = "<Test code>";
             var mockRunner = new Mock<ICodeRunner>();
-            mockRunner.Setup(r => r.RunCode(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
+            mockRunner.Setup(r => r.CompileAndRun(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
 
             // Arrange - Repository
             var userServices = new Mock<IUserServices>();
@@ -71,10 +72,23 @@ namespace CodingTrainerWebTests.Hubs
                     done.Set();
                 }
             }
-            public async Task RunCode(string code)
+            public async Task CompileAndRun(string code)
             {
                 await Task.Run(()=>ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs("Hello Test")));
                 done.WaitOne();
+            }
+
+            public Task<CompiledCode> Compile(string code)
+            {
+                throw new NotImplementedException();
+            }
+            public Task Run(CompiledCode compiledCode)
+            {
+                throw new NotImplementedException();
+            }
+            public Task Run(CompiledCode compiledCode, TextReader consoleInTextReader)
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -133,7 +147,7 @@ namespace CodingTrainerWebTests.Hubs
             // Arrange - Runner
             string code = "<Test code>";
             var mockRunner = new Mock<ICodeRunner>();
-            mockRunner.Setup(r => r.RunCode(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
+            mockRunner.Setup(r => r.CompileAndRun(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
 
             // Arrange - Repository
             var userServices = new Mock<IUserServices>();
