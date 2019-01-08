@@ -10,7 +10,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 {
     internal static class Compiler
     {
-        public static async Task<Compilation> GetCompilation(string code)
+        public static async Task<Compilation> GetCompilationAsync(string code)
         {
             Compilation compilation = null;
             await Task.Run(() =>
@@ -25,7 +25,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             return compilation;
         }
 
-        public static async Task<(byte[] result, byte[] pdb)> Emit(Compilation compilation)
+        public static async Task<(byte[] result, byte[] pdb)> EmitAsync(Compilation compilation)
         {
             byte[] compiledCode = null;
             byte[] pdb = null;

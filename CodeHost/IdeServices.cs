@@ -19,7 +19,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
     {
         public async Task<IEnumerable<Diagnostic>> GetDiagnosticsAsyc(string code, CancellationToken token)
         {
-            var compilation = await Compiler.GetCompilation(code);
+            var compilation = await Compiler.GetCompilationAsync(code);
             token.ThrowIfCancellationRequested();
             var diagnostics = await GetDiagnostics(compilation, token);
             token.ThrowIfCancellationRequested();
@@ -50,7 +50,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
         {
             Workspace workspace = new AdhocWorkspace();
 
-            var compilation = await Compiler.GetCompilation(code);
+            var compilation = await Compiler.GetCompilationAsync(code);
             var tree = compilation.SyntaxTrees.Single();
 
             SemanticModel sm = compilation.GetSemanticModel(tree);
@@ -61,7 +61,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 
         public async Task<IEnumerable<ISymbol>> GetOverloadsAndParametersAsync(string code, int position, CancellationToken token = default(CancellationToken))
         {
-            var compilation = await Compiler.GetCompilation(code);
+            var compilation = await Compiler.GetCompilationAsync(code);
             var tree = compilation.SyntaxTrees.Single();
 
             var semanticModel = compilation.GetSemanticModel(tree);

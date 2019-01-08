@@ -10,7 +10,7 @@ using Microsoft.AspNet.SignalR.Hubs;
 using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CSharpRunner.CodeHost;
 
-namespace CodingTrainer.CodingTrainerWeb.Hubs.Tests
+namespace CodingTrainer.CodingTrainerWebTests
 {
     [Category("Ide Hub")]
     [TestFixture]

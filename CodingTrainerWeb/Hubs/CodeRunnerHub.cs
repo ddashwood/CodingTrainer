@@ -129,7 +129,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         {
             try
             {
-                await connection.Runner.CompileAndRun(message);
+                await connection.Runner.CompileAndRunAsync(message);
             }
             catch (CompilationErrorException ex)
             {

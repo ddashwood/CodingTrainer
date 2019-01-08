@@ -28,18 +28,18 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             this.exceptionLogger = exceptionLogger;
         }
 
-        public async Task CompileAndRun(string code)
+        public async Task CompileAndRunAsync(string code)
         {
-            var compiled = await Compile(code);
-            await Run(compiled);
+            var compiled = await CompileAsync(code);
+            await RunAsync(compiled);
         }
 
-        public async Task<CompiledCode> Compile(string code)
+        public async Task<CompiledCode> CompileAsync(string code)
         {
             try
             {
-                var compilation = await Compiler.GetCompilation(code);
-                (byte[] bin, byte[] pdb) = await Compiler.Emit(compilation);
+                var compilation = await Compiler.GetCompilationAsync(code);
+                (byte[] bin, byte[] pdb) = await Compiler.EmitAsync(compilation);
                 return new CompiledCode(code, bin, pdb);
             }
             catch (Exception e) when (!(e is CompilationErrorException))
@@ -52,15 +52,15 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             }
         }
 
-        public async Task Run(CompiledCode compiledCode)
+        public async Task RunAsync(CompiledCode compiledCode)
         {
             try
             {
                 using (var consoleInStream = new BlockingMemoryStream())
                 using (consoleInWriter = TextWriter.Synchronized(new StreamWriter(consoleInStream)))
-                using (var newConsoleIn = TextReader.Synchronized(new StreamReader(consoleInStream)))
+                using (var consoleInReader = TextReader.Synchronized(new StreamReader(consoleInStream)))
                 {
-                    await Run(compiledCode, newConsoleIn);
+                    await RunAsync(compiledCode, consoleInReader);
                 }
             }
             finally
@@ -69,13 +69,15 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             }
         }
 
-        public async Task Run(CompiledCode compiledCode, TextReader consoleInTextReader)
+        public async Task RunAsync(CompiledCode compiledCode, TextReader consoleInTextReader)
         {
             try
             {
                 var sandboxMgr = new SandboxManager();
                 sandboxMgr.ConsoleWrite += OnConsoleWrite;
-                sandboxMgr.RunInSandbox(compiledCode.bin, compiledCode.pdb, consoleInTextReader);
+                await Task.Run( () =>
+                    sandboxMgr.RunInSandbox(compiledCode.bin, compiledCode.pdb, consoleInTextReader)
+                );
             }
             catch (Exception e) when (!(e is AggregateException))
             {

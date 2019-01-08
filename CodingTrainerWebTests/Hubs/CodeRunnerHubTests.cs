@@ -14,7 +14,7 @@ using CodingTrainer.CodingTrainerWeb.Users;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System.IO;
 
-namespace CodingTrainerWebTests.Hubs
+namespace CodingTrainer.CodingTrainerWebTests
 {
     [Category("Code Runner Hub")]
     [TestFixture]
@@ -34,7 +34,7 @@ namespace CodingTrainerWebTests.Hubs
             // Arrange - Runner
             string code = "<Test code>";
             var mockRunner = new Mock<ICodeRunner>();
-            mockRunner.Setup(r => r.CompileAndRun(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
+            mockRunner.Setup(r => r.CompileAndRunAsync(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
 
             // Arrange - Repository
             var userServices = new Mock<IUserServices>();
@@ -72,21 +72,21 @@ namespace CodingTrainerWebTests.Hubs
                     done.Set();
                 }
             }
-            public async Task CompileAndRun(string code)
+            public async Task CompileAndRunAsync(string code)
             {
                 await Task.Run(()=>ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs("Hello Test")));
                 done.WaitOne();
             }
 
-            public Task<CompiledCode> Compile(string code)
+            public Task<CompiledCode> CompileAsync(string code)
             {
                 throw new NotImplementedException();
             }
-            public Task Run(CompiledCode compiledCode)
+            public Task RunAsync(CompiledCode compiledCode)
             {
                 throw new NotImplementedException();
             }
-            public Task Run(CompiledCode compiledCode, TextReader consoleInTextReader)
+            public Task RunAsync(CompiledCode compiledCode, TextReader consoleInTextReader)
             {
                 throw new NotImplementedException();
             }
@@ -147,7 +147,7 @@ namespace CodingTrainerWebTests.Hubs
             // Arrange - Runner
             string code = "<Test code>";
             var mockRunner = new Mock<ICodeRunner>();
-            mockRunner.Setup(r => r.CompileAndRun(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
+            mockRunner.Setup(r => r.CompileAndRunAsync(code)).Returns(Task.CompletedTask).Raises(r => r.ConsoleWrite += null, new ConsoleWriteEventArgs("Hello Test"));
 
             // Arrange - Repository
             var userServices = new Mock<IUserServices>();

@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssessmentByRunningBase.cs" />
+    <Compile Include="AssessmentMethodBase.cs" />
+    <Compile Include="Methods\CheckLastLineOfOutputAssessment.cs" />
     <Compile Include="PreProgrammedTextReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -50,5 +53,6 @@
       <Name>CodeHost</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

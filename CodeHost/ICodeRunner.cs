@@ -12,10 +12,10 @@ namespace CodingTrainer.CSharpRunner.CodeHost
     {
         event ConsoleWriteEventHandler ConsoleWrite;
 
-        Task CompileAndRun(string code);
-        Task<CompiledCode> Compile(string code);
-        Task Run(CompiledCode compiledCode);
-        Task Run(CompiledCode compiledCode, TextReader consoleInTextReader);
+        Task CompileAndRunAsync(string code);
+        Task<CompiledCode> CompileAsync(string code);
+        Task RunAsync(CompiledCode compiledCode);
+        Task RunAsync(CompiledCode compiledCode, TextReader consoleInTextReader);
 
         void ConsoleIn(string text);
     }
