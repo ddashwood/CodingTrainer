@@ -6,6 +6,11 @@
     cursor: pointer;
 }
 
+
+.cm-btn-submit {
+    float: right;
+}
+
 /* Override the width from the default buttons.css */
 .CodeMirror-buttonsPanel button {
     min-width:3em;

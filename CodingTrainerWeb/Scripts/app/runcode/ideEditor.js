@@ -12,6 +12,11 @@
         gutters: ["CodeMirror-lint-markers"],
         buttons: [
             {
+                class: "cm-btn-submit",
+                label: "Submit",
+                callback: run
+            },
+            {
                 hotkey: "F5",
                 class: "cm-btn-run",
                 label: "Connecting",
@@ -64,14 +69,18 @@
     });
 
     $('.cm-btn-run').prop('disabled', true).css('color', 'lightgrey');
+    $('.cm-btn-submit').css('display', 'none'); // Will be displayed only for submittable exercises,
+                                                // and only after user has run their code once
 
     // Configure Bootstrap tooltips on IDE buttons
-    // Tooltips don't give a good experience on touchscreens
 
+    // Tooltips don't give a good experience on touchscreens - only show them
+    // if we have a mouse. Assume we have a mouse if using IE, since it doesn't
+    // support matchMedia('(pointer:fine)')
     var ie = false;
     var ua = window.navigator.userAgent;
-    var msie = ua.indexOf("MSIE ")
-    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) ie = true; // Internet Explorer doesn't support matchMedia of pointer type
+    var msie = ua.indexOf("MSIE ");
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) ie = true;
 
     if (ie || matchMedia('(pointer:fine)').matches) {
         // Device has a mouse

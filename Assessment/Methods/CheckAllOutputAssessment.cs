@@ -1,13 +1,13 @@
-﻿using System;
+﻿using CodingTrainer.CSharpRunner.CodeHost;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CodingTrainer.CSharpRunner.CodeHost;
 
 namespace CodingTrainer.CSharpRunner.Assessment.Methods
 {
-    class CheckLastLineOfOutputAssessment : AssessmentByRunningBase
+    class CheckAllOutputAssessment:AssessmentByRunningBase
     {
         protected override bool CheckResult(string consoleOut)
         {

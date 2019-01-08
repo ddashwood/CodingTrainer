@@ -1,27 +1,42 @@
 ﻿using CodingTrainer.CSharpRunner.CodeHost;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.Assessment
 {
-    internal abstract class AssessmentMethodBase
+    public abstract class AssessmentMethodBase
     {
+        // Events
         public event ConsoleWriteEventHandler ConsoleWrite;
 
-        protected CompiledCode CompiledCode { get; }
-        protected string Title { get; }
-
-        protected AssessmentMethodBase(string title, CompiledCode compiledCode)
+        // Not mapped onto Entity Framework
+        private bool compiledCodeSet = false;
+        private CompiledCode compiledCode;
+        [NotMapped]
+        internal CompiledCode CompiledCode
         {
-            Title = title;
-            CompiledCode = compiledCode;
+            get
+            {
+                return compiledCode;
+            }
+            set
+            {
+                compiledCode = value;
+                compiledCodeSet = true;
+            }
         }
+
+        // Entity Framework properties
+        public string Title { get; set; }
 
         public virtual async Task<bool> AssessAsync()
         {
+            if (!compiledCodeSet) throw new InvalidOperationException("Attempt to run assessment without any compiled code");
+
             DisplayStartMessage();
             var result = await DoAssessmentAsync();
             DisplayEndMessage(result);
@@ -30,7 +45,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         protected virtual void DisplayStartMessage()
         {
-            WriteToConsole($"Starting test: {Title}...");
+            WriteToConsole($"Starting test: {Title}...\r\n");
         }
 
         protected abstract Task<bool> DoAssessmentAsync();

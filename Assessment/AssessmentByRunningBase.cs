@@ -1,28 +1,42 @@
 ﻿using CodingTrainer.CSharpRunner.CodeHost;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.Assessment
 {
-    internal abstract class AssessmentByRunningBase:AssessmentMethodBase
+    internal abstract class AssessmentByRunningBase : AssessmentMethodBase
     {
-        private readonly CodeRunner codeRunner;
-        private readonly string consoleInText;
-
-        protected AssessmentByRunningBase(string title, CompiledCode compiledCode, CodeRunner codeRunner, string consoleInText)
-            :base(title, compiledCode)
+        // Not mapped onto Entity Framework
+        private bool codeRunnerSet = false;
+        private CodeRunner codeRunner;
+        [NotMapped]
+        public CodeRunner CodeRunner
         {
-            this.codeRunner = codeRunner;
-            this.consoleInText = consoleInText;
+            get
+            {
+                return codeRunner;
+            }
+            set
+            {
+                codeRunnerSet = true;
+                codeRunner = value;
+            }
         }
+
+        // Entity Framework properties
+        public string ConsoleInText { get; set; }
+        public string ExpectedResult { get; set; }
 
         protected abstract bool CheckResult(string consoleOut);
 
         protected sealed override async Task<bool> DoAssessmentAsync()
         {
+            if (!codeRunnerSet) throw new InvalidOperationException("Attempt to run assessment without a code runner");
+
             StringBuilder console = new StringBuilder();
             void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
             {
@@ -30,9 +44,9 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 console.Append(e.Message);
             }
 
-            codeRunner.ConsoleWrite += OnConsoleWrite;
-            await codeRunner.RunAsync(CompiledCode, new PreProgrammedTextReader(consoleInText));
-            codeRunner.ConsoleWrite -= OnConsoleWrite;
+            CodeRunner.ConsoleWrite += OnConsoleWrite;
+            await CodeRunner.RunAsync(CompiledCode, new PreProgrammedTextReader(ConsoleInText));
+            CodeRunner.ConsoleWrite -= OnConsoleWrite;
 
             return CheckResult(console.ToString());
         }
