@@ -8,7 +8,7 @@ using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
 using Unity.RegistrationByConvention;
-using CodingTrainer.CodingTrainerWeb.Repositories;
+using CodingTrainer.Repositories;
 using CodingTrainer.CodingTrainerWeb.ActionFilters;
 
 namespace CodingTrainer.CodingTrainerWeb

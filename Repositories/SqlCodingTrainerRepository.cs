@@ -1,6 +1,7 @@
 ﻿using CodingTrainer.CodingTrainerEntityFramework.Contexts;
 using CodingTrainer.CodingTrainerModels;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
+using CodingTrainer.CSharpRunner.Assessment;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodingTrainer.CodingTrainerWeb.Repositories
+namespace CodingTrainer.Repositories
 {
     public class SqlCodingTrainerRepository : ICodingTrainerRepository
     {
@@ -45,6 +46,14 @@ namespace CodingTrainer.CodingTrainerWeb.Repositories
                            where c.ChapterNo == chapterNo && e.ExerciseNo == exercisesNo
                            select e;
             return exercise.SingleOrDefault();
+        }
+
+        // Assessments
+
+        public async Task<IEnumerable<AssessmentMethodBase>> GetAssessmentsMethodsForExerciseAsync(int chapterNo, int exerciseNo)
+        {
+            return await context.Assessments.Where(a => a.ChapterNo == chapterNo && a.ExerciseNo == exerciseNo)
+                .OrderBy(a => a.AssessmentId).Select(a => (AssessmentMethodBase)a).ToListAsync();
         }
 
         // Exception logs

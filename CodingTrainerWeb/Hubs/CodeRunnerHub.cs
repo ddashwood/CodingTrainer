@@ -52,7 +52,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 runner.ConsoleWrite += runnerHandler.OnConsoleWrite;
                 connections[Context.ConnectionId] = connection;
 
-                Task queueProcess = ProcessQueue(connection);
+                Task queueProcess = ProcessQueueAsync(connection);
 
                 if (userId == null)
                 {
@@ -68,12 +68,12 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             }
             catch (Exception e)
             {
-                await LogError(e, code);
+                await LogErrorAsync(e, code);
                 throw new HubException("An error occured when running your code", e);
             }
         }
 
-        private async Task LogError(Exception e, string code)
+        private async Task LogErrorAsync(Exception e, string code)
         {
             ExceptionLog log = new ExceptionLog
             {
@@ -95,7 +95,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             }
         }
 
-        private async Task ProcessQueue(Connection connection)
+        private async Task ProcessQueueAsync(Connection connection)
         {
 
             await Task.Run(async () =>
@@ -118,14 +118,14 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                             break;
                         case QueueItemType.Run:
                             // t is there to avoid compiler warnings, not actually used
-                            Task t = RunCode(connection, message);
+                            Task t = RunCodeAsync(connection, message);
                             break;
                     }
                 }
             });
         }
 
-        private async Task RunCode(Connection connection, string message)
+        private async Task RunCodeAsync(Connection connection, string message)
         {
             try
             {

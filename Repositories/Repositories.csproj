@@ -58,6 +58,10 @@
     <Compile Include="SqlCodingTrainerRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Assessment\Assessment.csproj">
+      <Project>{51427C2D-00F5-44B3-A7DB-C24F40BE5E16}</Project>
+      <Name>Assessment</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodingTrainerEntityFramework\CodingTrainerEntityFramework.csproj">
       <Project>{d9ff2617-78f0-4cd3-b48e-a1f92b2514ad}</Project>
       <Name>CodingTrainerEntityFramework</Name>
