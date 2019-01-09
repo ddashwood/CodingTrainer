@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.Assessment.Methods
 {
-    class AlwaysPassAssessment : AssessmentByInspectionBase
+    public class AlwaysPassAssessment : AssessmentByInspectionBase
     {
         protected override Task<bool> DoAssessmentAsync()
         {

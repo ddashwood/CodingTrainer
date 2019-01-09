@@ -7,7 +7,7 @@ using CodingTrainer.CSharpRunner.CodeHost;
 
 namespace CodingTrainer.CSharpRunner.Assessment.Methods
 {
-    class CheckLastLineOfOutputAssessment : AssessmentByRunningBase
+    public class CheckLastLineOfOutputAssessment : AssessmentByRunningBase
     {
         protected override bool CheckResult(string consoleOut)
         {

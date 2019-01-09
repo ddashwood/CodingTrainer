@@ -4,18 +4,20 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.Assessment
 {
-    [Table("AssessmentByRunning")]
+    [Table("AssessmentsByRunning")]
     public abstract class AssessmentByRunningBase : AssessmentMethodBase
     {
         // Not mapped onto Entity Framework
         private bool codeRunnerSet = false;
         private CodeRunner codeRunner;
         [NotMapped]
+        [IgnoreDataMember]
         public CodeRunner CodeRunner
         {
             get

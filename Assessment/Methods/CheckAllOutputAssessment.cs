@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.Assessment.Methods
 {
-    class CheckAllOutputAssessment:AssessmentByRunningBase
+    public class CheckAllOutputAssessment:AssessmentByRunningBase
     {
         protected override bool CheckResult(string consoleOut)
         {

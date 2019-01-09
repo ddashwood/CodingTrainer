@@ -1,50 +1,91 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ArrayOfChapter>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfChapter xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CodingTrainerModels">
   <Chapter>
     <ChapterName>Playground</ChapterName>
     <ChapterNo>-1</ChapterNo>
+    <Description i:nil="true" />
     <Exercises>
       <Exercise>
-        <ExerciseNo>-1</ExerciseNo>
+        <Assessments />
+        <ChapterNo>-1</ChapterNo>
         <ExerciseName>Playground</ExerciseName>
+        <ExerciseNo>-1</ExerciseNo>
       </Exercise>
     </Exercises>
   </Chapter>
-  
   <Chapter>
-    <ChapterNo>1</ChapterNo>
     <ChapterName>Hello World</ChapterName>
+    <ChapterNo>1</ChapterNo>
     <Description>Write your first C# program!</Description>
     <Exercises>
       <Exercise>
-        <ExerciseNo>1</ExerciseNo>
+        <Assessments>
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckAllOutputAssessment">
+            <AssessmentId>3</AssessmentId>
+            <ChapterNo>1</ChapterNo>
+            <ExerciseNo>1</ExerciseNo>
+            <Title>All</Title>
+            <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
+            <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ExpectedResult>
+          </AssessmentBase>
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckLastLineOfOutputAssessment">
+            <AssessmentId>4</AssessmentId>
+            <ChapterNo>1</ChapterNo>
+            <ExerciseNo>1</ExerciseNo>
+            <Title>Last line</Title>
+            <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
+            <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ExpectedResult>
+          </AssessmentBase>
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:AlwaysPassAssessment">
+            <AssessmentId>1</AssessmentId>
+            <ChapterNo>1</ChapterNo>
+            <ExerciseNo>1</ExerciseNo>
+            <Title>Always pass</Title>
+            <InspectionInstructions xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">test</InspectionInstructions>
+          </AssessmentBase>
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:VariableTypeAssessment">
+            <AssessmentId>2</AssessmentId>
+            <ChapterNo>1</ChapterNo>
+            <ExerciseNo>1</ExerciseNo>
+            <Title>Variable</Title>
+            <InspectionInstructions xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">test</InspectionInstructions>
+          </AssessmentBase>
+        </Assessments>
+        <ChapterNo>1</ChapterNo>
         <ExerciseName>Read line Write line</ExerciseName>
+        <ExerciseNo>1</ExerciseNo>
       </Exercise>
       <Exercise>
-        <ExerciseNo>2</ExerciseNo>
+        <Assessments />
+        <ChapterNo>1</ChapterNo>
         <ExerciseName>Divide By Zero</ExerciseName>
+        <ExerciseNo>2</ExerciseNo>
       </Exercise>
       <Exercise>
-        <ExerciseNo>3</ExerciseNo>
+        <Assessments />
+        <ChapterNo>1</ChapterNo>
         <ExerciseName>Hello world</ExerciseName>
+        <ExerciseNo>3</ExerciseNo>
       </Exercise>
     </Exercises>
   </Chapter>
-  
   <Chapter>
     <ChapterName>Variables</ChapterName>
     <ChapterNo>2</ChapterNo>
+    <Description i:nil="true" />
     <Exercises>
       <Exercise>
-        <ExerciseNo>1</ExerciseNo>
+        <Assessments />
+        <ChapterNo>2</ChapterNo>
         <ExerciseName>Hello world</ExerciseName>
+        <ExerciseNo>1</ExerciseNo>
       </Exercise>
     </Exercises>
   </Chapter>
-  
   <Chapter>
-    <ChapterId>-1</ChapterId>
     <ChapterName>While Loops</ChapterName>
     <ChapterNo>3</ChapterNo>
+    <Description i:nil="true" />
+    <Exercises />
   </Chapter>
 </ArrayOfChapter>

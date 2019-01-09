@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.Assessment
 {
-    [Table("Assessment")]
-    public abstract class AssessmentMethodBase:IAssessment
+    public abstract class AssessmentMethodBase:AssessmentBase
     {
         // Events
         public event ConsoleWriteEventHandler ConsoleWrite;
@@ -20,6 +20,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
         private bool compiledCodeSet = false;
         private CompiledCode compiledCode;
         [NotMapped]
+        [IgnoreDataMember]
         internal CompiledCode CompiledCode
         {
             get
@@ -33,22 +34,8 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
         }
 
-        // Entity Framework properties
-        [Key, Required]
-        public int AssessmentId { get; set; }
 
-        [Required]
-        public int ChapterNo { get; set; }
-
-        [Required]
-        public int ExerciseNo { get; set; }
-
-        [Required]
-        public string Title { get; set; }
-
-        public virtual Exercise Exercise { get; set; }
-
-        public virtual async Task<bool> AssessAsync()
+        public override async Task<bool> AssessAsync()
         {
             if (!compiledCodeSet) throw new InvalidOperationException("Attempt to run assessment without any compiled code");
 

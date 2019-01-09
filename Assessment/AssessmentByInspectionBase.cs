@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.Assessment
 {
-    [Table("AssessmentByInspection")]
+    [Table("AssessmentsByInspection")]
     public abstract class AssessmentByInspectionBase : AssessmentMethodBase
     {
         // Entity Framework properties

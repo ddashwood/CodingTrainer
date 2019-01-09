@@ -11,6 +11,9 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Migrations
     using System.Runtime.Serialization;
     using System.Xml.Serialization;
     using System.IO;
+    using CodingTrainer.CSharpRunner.Assessment.Methods;
+    using System.Collections.Generic;
+    using CodingTrainer.CSharpRunner.Assessment;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Contexts.ApplicationDbContext>
     {
@@ -33,32 +36,46 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Migrations
             var resourceName = "CodingTrainer.CodingTrainerEntityFramework.Data.SeedData.xml";
             var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
 
-            using (XmlReader reader = XmlReader.Create(stream))
+            // Read data
+            Type[] referencedTypes =
             {
-                // Read data
+                typeof(Exercise),
+                typeof(AlwaysPassAssessment),
+                typeof(CheckAllOutputAssessment),
+                typeof(CheckLastLineOfOutputAssessment),
+                typeof(VariableTypeAssessment)
+            };
 
-                XmlSerializer ser = new XmlSerializer(typeof(Chapter[]));
-                var chapters = (Chapter[])ser.Deserialize(reader);
+            DataContractSerializer ser = new DataContractSerializer(typeof(List<Chapter>), referencedTypes);
 
-                // Save chapters
-                context.Chapters.AddOrUpdate(c => c.ChapterNo, chapters);
+            var chapters = (List<Chapter>)ser.ReadObject(stream);
 
-                // Save exercises - set their chapter first
-                Array.ForEach(chapters, c =>
+            // Save the chapters
+            context.Chapters.AddOrUpdate(c => c.ChapterNo, chapters.ToArray());
+            chapters.ForEach(c =>
+            {
+                if (c.Exercises != null)
                 {
-                    if (c.Exercises != null)
+                    // Save the exercises
+                    foreach (Exercise e in c.Exercises)
                     {
-                        foreach (Exercise e in c.Exercises)
-                        {
-                            e.ChapterNo = c.ChapterNo;
-                            e.Content = LoadManifestResourceFile($"Content{c.ChapterNo}-{ e.ExerciseNo}.cshtml", "<p>No course material is available for this exercise</p>");
-                            e.DefaultCode = LoadManifestResourceFile($"Default{c.ChapterNo}-{ e.ExerciseNo}.csx", "// Enter your code here:" + Environment.NewLine + Environment.NewLine);
-                            e.HiddenCodeHeader = LoadManifestResourceFile($"Header{c.ChapterNo}-{ e.ExerciseNo}.csx");
-                        }
-                        context.Exercises.AddOrUpdate(e => new { e.ChapterNo, e.ExerciseNo }, c.Exercises.ToArray());
+                        // Some data is kept in files rather than in the XML, for readability. Fetch that data now
+                        e.Content = LoadManifestResourceFile($"Content{c.ChapterNo}-{ e.ExerciseNo}.cshtml", "<p>No course material is available for this exercise</p>");
+                        e.DefaultCode = LoadManifestResourceFile($"Default{c.ChapterNo}-{ e.ExerciseNo}.csx", "// Enter your code here:" + Environment.NewLine + Environment.NewLine);
+                        e.HiddenCodeHeader = LoadManifestResourceFile($"Header{c.ChapterNo}-{ e.ExerciseNo}.csx");
                     }
-                });
-            }
+                    context.Exercises.AddOrUpdate(e => new { e.ChapterNo, e.ExerciseNo }, c.Exercises.ToArray());
+
+                    // Save the assessments
+                    foreach (Exercise e in c.Exercises)
+                    {
+                        if (e.Assessments != null)
+                        {
+                            context.Assessments.AddOrUpdate<AssessmentMethodBase>(a => a.AssessmentId, e.Assessments.Select(a => (AssessmentMethodBase)a).ToArray());
+                        }
+                    }
+                }
+            });
         }
 
         private string LoadManifestResourceFile(string filename, string notFoundDefault = null)

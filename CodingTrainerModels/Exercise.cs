@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 using System.Xml.Serialization;
 
@@ -22,19 +23,22 @@ namespace CodingTrainer.CodingTrainerModels
         public string ExerciseName { get; set; }
 
         [Required]
+        [IgnoreDataMember]
         public string DefaultCode { get; set; }
 
+        [IgnoreDataMember]
         public string HiddenCodeHeader { get; set; }
 
         [Required]
+        [IgnoreDataMember]
         public string Content { get; set; }
 
         [JsonIgnore]
+        [IgnoreDataMember]
         public virtual Chapter Chapter { get; set; }
 
         [JsonIgnore]
-        [XmlIgnore]
-        public virtual ICollection<IAssessment> Assessments { get; set; }
+        public virtual ICollection<AssessmentBase> Assessments { get; set; }
 
         // To sort exercises, e.g. in the exercise list, sort them by exercise number
         public int CompareTo(Exercise other)
