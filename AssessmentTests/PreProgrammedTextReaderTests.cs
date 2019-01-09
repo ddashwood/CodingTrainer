@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.AssessmentTests
 {
-    class PreProgrammedTextReaderTests: CodeHostTestBase
+    class PreProgrammedTextReaderTests : CodeHostTestBase
     {
         [Test]
         [Category("Assessment")]
