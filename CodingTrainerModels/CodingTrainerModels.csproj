@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Chapter.cs" />
     <Compile Include="ExceptionLog.cs" />
+    <Compile Include="IAssessment.cs" />
     <Compile Include="Security\ApplicationUser.cs" />
     <Compile Include="Exercise.cs" />
     <Compile Include="Submission.cs" />

@@ -1,6 +1,8 @@
-﻿using CodingTrainer.CSharpRunner.CodeHost;
+﻿using CodingTrainer.CodingTrainerModels;
+using CodingTrainer.CSharpRunner.CodeHost;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.Assessment
 {
-    public abstract class AssessmentMethodBase
+    [Table("Assessment")]
+    public abstract class AssessmentMethodBase:IAssessment
     {
         // Events
         public event ConsoleWriteEventHandler ConsoleWrite;
@@ -31,7 +34,19 @@ namespace CodingTrainer.CSharpRunner.Assessment
         }
 
         // Entity Framework properties
+        [Key, Required]
+        public int AssessmentId { get; set; }
+
+        [Required]
+        public int ChapterNo { get; set; }
+
+        [Required]
+        public int ExerciseNo { get; set; }
+
+        [Required]
         public string Title { get; set; }
+
+        public virtual Exercise Exercise { get; set; }
 
         public virtual async Task<bool> AssessAsync()
         {

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Xml.Serialization;
 
 namespace CodingTrainer.CodingTrainerModels
 {
@@ -30,6 +31,10 @@ namespace CodingTrainer.CodingTrainerModels
 
         [JsonIgnore]
         public virtual Chapter Chapter { get; set; }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public virtual ICollection<IAssessment> Assessments { get; set; }
 
         // To sort exercises, e.g. in the exercise list, sort them by exercise number
         public int CompareTo(Exercise other)

@@ -1,6 +1,7 @@
 ﻿using CodingTrainer.CSharpRunner.CodeHost;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.Assessment
 {
-    internal abstract class AssessmentByRunningBase : AssessmentMethodBase
+    [Table("AssessmentByRunning")]
+    public abstract class AssessmentByRunningBase : AssessmentMethodBase
     {
         // Not mapped onto Entity Framework
         private bool codeRunnerSet = false;
@@ -28,7 +30,9 @@ namespace CodingTrainer.CSharpRunner.Assessment
         }
 
         // Entity Framework properties
+        [Required]
         public string ConsoleInText { get; set; }
+        [Required]
         public string ExpectedResult { get; set; }
 
         protected abstract bool CheckResult(string consoleOut);
