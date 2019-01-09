@@ -8,7 +8,6 @@ using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CodingTrainerModels;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System.Threading.Tasks.Dataflow;
-using CodingTrainer.CodingTrainerWeb.Users;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
@@ -47,7 +46,8 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             {
                 string userId = userServices.GetCurrentUserId();
 
-                var connection = new Connection(Context.ConnectionId, runner, Clients.Caller, userId);
+                var connectionTask = new ConnectionCodeRunner(runner);
+                var connection = new Connection(Context.ConnectionId, connectionTask, Clients.Caller, userId);
                 var runnerHandler = new ConsoleOut(connection);
                 runner.ConsoleWrite += runnerHandler.OnConsoleWrite;
                 connections[Context.ConnectionId] = connection;
@@ -129,7 +129,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         {
             try
             {
-                await connection.Runner.CompileAndRunAsync(message);
+                await connection.Runner.Run(message);
             }
             catch (CompilationErrorException ex)
             {
@@ -154,21 +154,67 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         {
             if (connections.ContainsKey(Context.ConnectionId))
             {
-                ICodeRunner runner = connections[Context.ConnectionId].Runner;
+                if (connections[Context.ConnectionId].Runner is IConnectionTaskWithInput runner)
+                {
+                    runner.Input(message);
+                }
+            }
+        }
+
+        private interface IConnectionTask
+        {
+            Task Run(string message);
+        }
+        private interface IConnectionTaskWithInput : IConnectionTask
+        {
+            void Input(string message);
+        }
+
+        private class ConnectionCodeRunner : IConnectionTaskWithInput
+        {
+            private ICodeRunner runner;
+            public ConnectionCodeRunner(ICodeRunner runner)
+            {
+                this.runner = runner;
+            }
+
+            public async Task Run(string message)
+            {
+                await runner.CompileAndRunAsync(message);
+            }
+            public void Input(string message)
+            {
                 runner.ConsoleIn(message);
             }
         }
 
+        //private class ConnectionAssessmentRunner : IConnectionTask
+        //{
+        //    private AssessmentManager runner;
+        //    int chapter;
+        //    int exercise;
+        //    public ConnectionAssessmentRunner(AssessmentManager runner, int chapter, int exercise)
+        //    {
+        //        this.runner = runner;
+        //        this.chapter = chapter;
+        //        this.exercise = exercise;
+        //    }
+        //    public async Task Run(string message)
+        //    {
+        //        await runner.RunAssessmentsForExercise(message, chapter, exercise);
+        //    }
+        //}
+
         private class Connection
         {
             public string ConnectionID { get; private set; }
-            public ICodeRunner Runner { get; private set; }
+            public IConnectionTask Runner { get; private set; }
             public ICodeRunnerHubClient Caller { get; private set; }
             public BufferBlock<(QueueItemType type, string message)> ConsoleQueue { get; private set; }
             public string UserId { get; private set; }
 
 
-            public Connection(string connectionId, ICodeRunner runner, ICodeRunnerHubClient caller, string userId)
+            public Connection(string connectionId, IConnectionTask runner, ICodeRunnerHubClient caller, string userId)
             {
                 ConnectionID = connectionId;
                 Runner = runner;
