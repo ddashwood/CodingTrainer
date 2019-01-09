@@ -13,19 +13,16 @@ namespace CodingTrainer.CSharpRunner.Assessment
     public class AssessmentRunner
     {
         public event ConsoleWriteEventHandler ConsoleWrite;
-        private IExceptionLogger exceptionLogger;
+        private ICodeRunner runner;
 
-        public AssessmentRunner()
-        { }
-        public AssessmentRunner(IExceptionLogger exceptionLogger)
+        public AssessmentRunner(ICodeRunner runner)
         {
-            this.exceptionLogger = exceptionLogger;
+            this.runner = runner;
         }
 
         public async Task<bool> RunAssessmentsAsync(string code, IEnumerable<AssessmentMethodBase> assessments)
         {
             CompiledCode compiledCode;
-            var runner = new CodeRunner(exceptionLogger);
             try
             {
                 compiledCode = await runner.CompileAsync(code);

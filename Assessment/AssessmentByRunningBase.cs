@@ -15,10 +15,10 @@ namespace CodingTrainer.CSharpRunner.Assessment
     {
         // Not mapped onto Entity Framework
         private bool codeRunnerSet = false;
-        private CodeRunner codeRunner;
+        private ICodeRunner codeRunner;
         [NotMapped]
         [IgnoreDataMember]
-        public CodeRunner CodeRunner
+        public ICodeRunner CodeRunner
         {
             get
             {
