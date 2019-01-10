@@ -8,6 +8,7 @@ using CodingTrainer.CodingTrainerWeb.Hubs.Helpers;
 using CodingTrainer.CodingTrainerModels;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System.Threading.Tasks.Dataflow;
+using CodingTrainer.CSharpRunner.Assessment;
 
 namespace CodingTrainer.CodingTrainerWeb.Hubs
 {
@@ -42,14 +43,26 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         public async Task Run(string code)
         {
+            Assess(code, 1, 1);
+            return; 
+
+            var task = new ConnectionCodeRunner(runner);
+            await StartTaskIfLoggedOn(task, code);
+        }
+
+        public async Task Assess(string code, int chapter, int exercise)
+        {
+            var task = new ConnectionAssessmentRunner(runner, userServices, sqlRep, chapter, exercise);
+            await StartTaskIfLoggedOn(task, code);
+        }
+
+        private async Task StartTaskIfLoggedOn(IConnectionTask task, string code)
+        {
             try
             {
                 string userId = userServices.GetCurrentUserId();
 
-                var connectionTask = new ConnectionCodeRunner(runner);
-                var connection = new Connection(Context.ConnectionId, connectionTask, Clients.Caller, userId);
-                var runnerHandler = new ConsoleOut(connection);
-                runner.ConsoleWrite += runnerHandler.OnConsoleWrite;
+                var connection = new Connection(Context.ConnectionId, task, Clients.Caller, userId);
                 connections[Context.ConnectionId] = connection;
 
                 Task queueProcess = ProcessQueueAsync(connection);
@@ -129,7 +142,8 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         {
             try
             {
-                await connection.Runner.Run(message);
+                var runnerHandler = new ConsoleOut(connection);
+                await connection.Runner.Run(runnerHandler, message);
             }
             catch (CompilationErrorException ex)
             {
@@ -163,7 +177,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         private interface IConnectionTask
         {
-            Task Run(string message);
+            Task Run(ConsoleOut runnerHandler, string message);
         }
         private interface IConnectionTaskWithInput : IConnectionTask
         {
@@ -178,9 +192,11 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 this.runner = runner;
             }
 
-            public async Task Run(string message)
+            public async Task Run(ConsoleOut runnerHandler, string message)
             {
+                runner.ConsoleWrite += runnerHandler.OnConsoleWrite;
                 await runner.CompileAndRunAsync(message);
+                runner.ConsoleWrite -= runnerHandler.OnConsoleWrite;
             }
             public void Input(string message)
             {
@@ -188,22 +204,30 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             }
         }
 
-        //private class ConnectionAssessmentRunner : IConnectionTask
-        //{
-        //    private AssessmentManager runner;
-        //    int chapter;
-        //    int exercise;
-        //    public ConnectionAssessmentRunner(AssessmentManager runner, int chapter, int exercise)
-        //    {
-        //        this.runner = runner;
-        //        this.chapter = chapter;
-        //        this.exercise = exercise;
-        //    }
-        //    public async Task Run(string message)
-        //    {
-        //        await runner.RunAssessmentsForExercise(message, chapter, exercise);
-        //    }
-        //}
+        private class ConnectionAssessmentRunner : IConnectionTask
+        {
+            private ICodeRunner runner;
+            ICodingTrainerRepository rep;
+            IUserServices userServices;
+            int chapter;
+            int exercise;
+            public ConnectionAssessmentRunner(ICodeRunner runner, IUserServices userServices, ICodingTrainerRepository rep, int chapter, int exercise)
+            {
+                this.runner = runner;
+                this.userServices = userServices;
+                this.rep = rep;
+                this.chapter = chapter;
+                this.exercise = exercise;
+            }
+            public async Task Run(ConsoleOut runnerHandler, string message)
+            {
+                var assessmentManager = new AssessmentManager(runner, rep);
+                assessmentManager.ConsoleWrite += runnerHandler.OnConsoleWrite;
+                await assessmentManager.RunAssessmentsForExercise(userServices.GetCurrentUser(), message, chapter, exercise);
+                assessmentManager.ConsoleWrite -= runnerHandler.OnConsoleWrite;
+
+            }
+        }
 
         private class Connection
         {

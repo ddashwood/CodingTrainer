@@ -39,6 +39,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
 
             var result = true;
+            var failCount = 0;
             foreach (var assessment in assessments)
             {
                 assessment.CompiledCode = compiledCode;
@@ -48,9 +49,20 @@ namespace CodingTrainer.CSharpRunner.Assessment
                     runningAssessment.CodeRunner = runner;
                 }
                 var thisResult = await assessment.AssessAsync();
-                if (!thisResult) result = false;
+                if (!thisResult)
+                {
+                    result = false;
+                    failCount++;
+                }
+            }
 
-                // TO DO - Decide whether to carry on?
+            if (result)
+            {
+                WriteToConsole("Congratulations!");
+            }
+            else
+            {
+                WriteToConsole($"There are still {failCount} tests which have not passed");
             }
 
             return result;

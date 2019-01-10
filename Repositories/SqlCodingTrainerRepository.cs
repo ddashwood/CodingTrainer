@@ -50,10 +50,10 @@ namespace CodingTrainer.Repositories
 
         // Assessments
 
-        public async Task<IEnumerable<AssessmentMethodBase>> GetAssessmentsMethodsForExerciseAsync(int chapterNo, int exerciseNo)
+        public async Task<IEnumerable<AssessmentBase>> GetAssessmentsMethodsForExerciseAsync(int chapterNo, int exerciseNo)
         {
             return await context.Assessments.Where(a => a.ChapterNo == chapterNo && a.ExerciseNo == exerciseNo)
-                .OrderBy(a => a.AssessmentId).Select(a => (AssessmentMethodBase)a).ToListAsync();
+                .OrderBy(a => a.AssessmentId).ToListAsync();
         }
 
         // Exception logs

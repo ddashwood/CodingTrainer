@@ -125,6 +125,7 @@
   <ItemGroup>
     <Compile Include="AssessmentByInspectionBase.cs" />
     <Compile Include="AssessmentByRunningBase.cs" />
+    <Compile Include="AssessmentManager.cs" />
     <Compile Include="AssessmentMethodBase.cs" />
     <Compile Include="AssessmentRunner.cs" />
     <Compile Include="Methods\AlwaysPassAssessment.cs" />
@@ -142,6 +143,10 @@
     <ProjectReference Include="..\CodingTrainerModels\CodingTrainerModels.csproj">
       <Project>{dfa7a141-5d03-48dc-b604-c3a9659d2948}</Project>
       <Name>CodingTrainerModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\Dependencies.csproj">
+      <Project>{ea66aaaa-2b8d-439d-83d8-b95ddf383e54}</Project>
+      <Name>Dependencies</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

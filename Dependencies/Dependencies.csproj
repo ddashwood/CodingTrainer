@@ -46,10 +46,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Assessment\Assessment.csproj">
-      <Project>{51427c2d-00f5-44b3-a7db-c24f40be5e16}</Project>
-      <Name>Assessment</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CodingTrainerModels\CodingTrainerModels.csproj">
       <Project>{dfa7a141-5d03-48dc-b604-c3a9659d2948}</Project>
       <Name>CodingTrainerModels</Name>

@@ -52,6 +52,11 @@ namespace CodingTrainer.CodingTrainerWeb
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
 
+
+            // NOTE: Default lifetime manager is a Transient lifetime manager -
+            // a new object every time one is needed
+
+
             container.RegisterTypes(AllClasses.FromLoadedAssemblies(), WithMappings.FromMatchingInterface, WithName.Default);
 
 

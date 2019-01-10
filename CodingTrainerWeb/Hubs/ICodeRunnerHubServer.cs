@@ -9,6 +9,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
     interface ICodeRunnerHubServer
     {
         Task Run(string code);
+        Task Assess(string code, int chapter, int exercise);
         void ConsoleIn(string message);
     }
 }

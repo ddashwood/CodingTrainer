@@ -1,5 +1,4 @@
 ﻿using CodingTrainer.CodingTrainerModels;
-using CodingTrainer.CSharpRunner.Assessment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +17,7 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
         Exercise GetExercise(int chapterNo, int exercisesNo);
 
         // Assessments
-        Task<IEnumerable<AssessmentMethodBase>> GetAssessmentsMethodsForExerciseAsync(int chapterNo, int exerciseNo);
+        Task<IEnumerable<AssessmentBase>> GetAssessmentsMethodsForExerciseAsync(int chapterNo, int exerciseNo);
 
         // Exception logs
         Task InsertExceptionLogAsync(ExceptionLog log);

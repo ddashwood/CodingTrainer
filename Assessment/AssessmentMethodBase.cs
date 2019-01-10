@@ -40,8 +40,18 @@ namespace CodingTrainer.CSharpRunner.Assessment
             if (!compiledCodeSet) throw new InvalidOperationException("Attempt to run assessment without any compiled code");
 
             DisplayStartMessage();
-            var result = await DoAssessmentAsync();
-            DisplayEndMessage(result);
+            bool result = true;
+            try
+            {
+                result = await DoAssessmentAsync();
+                DisplayEndMessage(result);
+            }
+            catch (Exception e)
+            {
+                WriteToConsole("Something went wrong with this test\r\n");
+                WriteToConsole("The error message is:\r\n  ");
+                WriteToConsole(e.Message + "\r\n\r\n");
+            }
             return result;
         }
 
@@ -54,7 +64,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         protected virtual void DisplayEndMessage(bool success)
         {
-            WriteToConsole(success ? "Test passed!" : "Test failed!");
+            WriteToConsole(success ? "Test passed!\r\n\r\n" : "Test failed!\r\n\r\n");
         }
 
         protected void WriteToConsole(string s)
