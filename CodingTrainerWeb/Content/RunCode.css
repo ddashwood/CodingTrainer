@@ -11,8 +11,17 @@
     float: right;
 }
 
+/* Submit button not available until user has run their code once */
+.cm-btn-submit {
+    display:none;
+}
+.cm-btn-submit.cm-btn-submit-enabled {
+    display:initial;
+}
+
+
 /* Override the width from the default buttons.css */
 .CodeMirror-buttonsPanel button {
-    min-width:3em;
-    width:auto;
+    min-width: 3em;
+    width: auto;
 }

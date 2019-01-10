@@ -1,13 +1,8 @@
 ﻿using CodingTrainer.CodingTrainerModels.Security;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
-using System.Xml.Serialization;
 
 namespace CodingTrainer.CodingTrainerModels
 {
@@ -23,21 +18,19 @@ namespace CodingTrainer.CodingTrainerModels
         public string ExerciseName { get; set; }
 
         [Required]
-        [IgnoreDataMember]
+        [System.Runtime.Serialization.IgnoreDataMember]
         public string DefaultCode { get; set; }
 
-        [IgnoreDataMember]
+        [System.Runtime.Serialization.IgnoreDataMember]
         public string HiddenCodeHeader { get; set; }
 
         [Required]
-        [IgnoreDataMember]
+        [System.Runtime.Serialization.IgnoreDataMember]
         public string Content { get; set; }
 
-        [JsonIgnore]
-        [IgnoreDataMember]
+        [System.Runtime.Serialization.IgnoreDataMember]
         public virtual Chapter Chapter { get; set; }
 
-        [JsonIgnore]
         public virtual ICollection<AssessmentBase> Assessments { get; set; }
 
         // To sort exercises, e.g. in the exercise list, sort them by exercise number

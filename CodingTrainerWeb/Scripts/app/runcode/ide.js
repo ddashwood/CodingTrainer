@@ -1,5 +1,6 @@
-﻿function Ide(serviceFactory) {
+﻿function Ide(serviceFactory, isSubmittable) {
     var self = this;
+    this.isSubmittable = isSubmittable;
 
     // Make the service objects
     var codeRunner = serviceFactory.getCodeRunner(this);
@@ -76,6 +77,10 @@ Ide.prototype.enableRun = function () {
 
 Ide.prototype.runComplete = function () {
     this.enableRun();
+    // After user has tested their code, allow them to submit it
+    if (this.isSubmittable) {
+        $('.cm-btn-submit').addClass('cm-btn-submit-enabled');
+    }
 };
 
 // This method may be used when errors occur during real-time linting,

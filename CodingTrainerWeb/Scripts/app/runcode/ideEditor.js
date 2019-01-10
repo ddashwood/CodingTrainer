@@ -69,8 +69,6 @@
     });
 
     $('.cm-btn-run').prop('disabled', true).css('color', 'lightgrey');
-    $('.cm-btn-submit').css('display', 'none'); // Will be displayed only for submittable exercises,
-                                                // and only after user has run their code once
 
     // Configure Bootstrap tooltips on IDE buttons
 
