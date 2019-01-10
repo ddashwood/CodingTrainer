@@ -1,4 +1,4 @@
-﻿function ServiceFactoryForHiddenCode(signalRFactory, hiddenCodeHeader) {
+﻿function ServiceFactoryForHiddenCode(signalRFactory, hiddenCodeHeader, chapter, exercise) {
     // These corrections deal with hidden code in the model
     // They will be passed into the relevant services to be used as required
     this.corrections = {
@@ -24,7 +24,7 @@
         }
     };
 
-    ServiceFactory.call(this, signalRFactory);
+    ServiceFactory.call(this, signalRFactory, chapter, exercise);
 }
 
 ServiceFactoryForHiddenCode.prototype = Object.create(ServiceFactory.prototype);
@@ -34,7 +34,7 @@ ServiceFactoryForHiddenCode.prototype.getCodeRunner = function (callbacks) {
         callbacks.consoleOut.bind(callbacks),
         callbacks.runComplete.bind(callbacks),
         callbacks.showErrors.bind(callbacks),
-        this.corrections
+        this.corrections, this.chapter, this.exercise
     );
 };
 

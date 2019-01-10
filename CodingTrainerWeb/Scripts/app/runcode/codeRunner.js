@@ -1,6 +1,8 @@
-﻿function CodeRunner(signalRFactory, consoleOut, complete, errors) {
+﻿function CodeRunner(signalRFactory, consoleOut, complete, errors, chapter, exercise) {
     this.complete = complete;
     this.runnerHub = signalRFactory.createHub('codeRunnerHub');
+    this.chapter = chapter;
+    this.exercise = exercise;
 
     // Callbacks from the server:
 
@@ -14,9 +16,12 @@
     this.runnerHub.client.compilerError = errors;
 }
 
-CodeRunner.prototype.run = function (code) {
+CodeRunner.prototype.run = function (code, forAssessment) {
     try {
-        this.runnerHub.server.run(code).fail(function (e) {
+        var serverFunc = forAssessment ?
+            code => this.runnerHub.server.assess (code, this.chapter, this.exercise) :
+            this.runnerHub.server.run;
+        serverFunc(code).fail(function (e) {
             if (e.data) {
                 e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
             }

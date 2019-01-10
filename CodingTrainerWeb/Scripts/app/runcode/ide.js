@@ -19,16 +19,16 @@
         codeRunner.consoleIn(message);
     };
 
-    var run = function () {
+    var run = function (forAssessment) {
         self.codeConsole.clearAll();
         self.codeConsole.focus();
         // Prevent user from running again
         self.editor.clearErrors();
-        $('.cm-btn-run').prop('disabled', true).css('color', 'lightgrey');
+        $('.cm-btn-disable-on-run').prop('disabled', true).css('color', 'lightgrey');
         $('#console-out').text('');
 
         var code = self.editor.getValue();
-        codeRunner.run(code);
+        codeRunner.run(code, forAssessment);
     };
 
 
@@ -72,7 +72,7 @@ Ide.prototype.consoleOut = function (message) {
 };
 
 Ide.prototype.enableRun = function () {
-    $('.cm-btn-run').prop('disabled', false).css('color', 'black');
+    $('.cm-btn-disable-on-run').prop('disabled', false).css('color', 'black');
 };
 
 Ide.prototype.runComplete = function () {

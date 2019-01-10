@@ -1,5 +1,7 @@
-﻿function ServiceFactory(signalRFactory) {
+﻿function ServiceFactory(signalRFactory, chapter, exercise) {
     this.signalRFactory = signalRFactory;
+    this.chapter = chapter;
+    this.exercise = exercise;
 }
 
 ServiceFactory.prototype.connect = function (done) {
@@ -10,7 +12,8 @@ ServiceFactory.prototype.getCodeRunner = function (callbacks) {
     return new CodeRunner(this.signalRFactory,
         callbacks.consoleOut.bind(callbacks),
         callbacks.runComplete.bind(callbacks),
-        callbacks.showErrors.bind(callbacks)
+        callbacks.showErrors.bind(callbacks),
+        this.chapter, this.exercise
     );
 };
 

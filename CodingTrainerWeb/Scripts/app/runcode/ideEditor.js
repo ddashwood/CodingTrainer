@@ -12,15 +12,15 @@
         gutters: ["CodeMirror-lint-markers"],
         buttons: [
             {
-                class: "cm-btn-submit",
+                class: "cm-btn-submit cm-btn-disable-on-run",
                 label: "Submit",
-                callback: run
+                callback: () => run(true)
             },
             {
                 hotkey: "F5",
-                class: "cm-btn-run",
+                class: "cm-btn-run cm-btn-disable-on-run",
                 label: "Connecting",
-                callback: run
+                callback: () => run(false)
             },
             {
                 hotkey: "Ctrl-Z",

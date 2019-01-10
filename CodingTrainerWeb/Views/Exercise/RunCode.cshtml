@@ -11,7 +11,7 @@
         (function () {
             var signalRFactory = new SignalRFactory();
             var model = @Html.Raw(Json.Encode(new { Model.ChapterNo, Model.ExerciseNo, Model.DefaultCode, Model.HiddenCodeHeader }));
-            var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, model.HiddenCodeHeader);
+            var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, model.HiddenCodeHeader, @Model.ChapterNo, @Model.ExerciseNo);
             new Ide(serviceFactory, @((Model.ChapterNo > 0 && Model.ExerciseNo > 0).ToString().ToLower()));
         })();
     </script>

@@ -22,8 +22,9 @@
 
 CodeMirror.defineExtension("consoleAppend", function (text) {
     this.replaceRange(text, { line: Infinity });
+    this.focus();
+    this.setCursor({ line: Infinity, ch: 0 });
     this.markText(this.posFromIndex(0), this.posFromIndex(Infinity), { atomic: true, inclusiveLeft: true });
-
 });
 
 CodeMirror.defineExtension("consoleAppendWithLineLink", function (text, line, action) {
