@@ -43,9 +43,6 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         public async Task Run(string code)
         {
-            Assess(code, 1, 1);
-            return; 
-
             var task = new ConnectionCodeRunner(runner);
             await StartTaskIfLoggedOn(task, code);
         }
