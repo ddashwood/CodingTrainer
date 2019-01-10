@@ -11,6 +11,7 @@ namespace CodingTrainer.CodingTrainerModels
     public abstract class AssessmentBase
     {
         [Key, Required]
+        [System.Runtime.Serialization.IgnoreDataMember]
         public int AssessmentId { get; set; }
 
         [Column(Order = 0), ForeignKey("Exercise"), Required]

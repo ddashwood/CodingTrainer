@@ -71,7 +71,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Migrations
                     {
                         if (e.Assessments != null)
                         {
-                            context.Assessments.AddOrUpdate<AssessmentMethodBase>(a => a.AssessmentId, e.Assessments.Select(a => (AssessmentMethodBase)a).ToArray());
+                            context.Assessments.AddOrUpdate<AssessmentMethodBase>(a => new { a.ChapterNo, a.ExerciseNo, a.Title }, e.Assessments.Select(a => (AssessmentMethodBase)a).ToArray());
                         }
                     }
                 }
