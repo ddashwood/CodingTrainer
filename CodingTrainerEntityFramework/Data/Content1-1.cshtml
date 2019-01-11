@@ -1,14 +1,33 @@
 ﻿<p>This is the course material for chapter 1 exercise 1</p>
-<div class="sizer">
-    <div class="embed-responsive embed-responsive-16by9">
-        <video controls>
-            <source src="@Url.Content("~/Content/Course/1/1.mp4")" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+<p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit aliquid alias
+    quam quae illum quis qui voluptatum similique praesentium ullam aperiam, minus eveniet
+    incidunt nostrum amet! Dignissimos voluptatibus earum autem.
+</p>
+<p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad impedit cupiditate, est
+    doloremque numquam nam inventore eligendi quis sed beatae ab fugit omnis itaque
+    deserunt hic, nihil quos voluptas facere.
+</p>
+
+<div class="row">
+    <div class="sizer pull-left" style="width:70%">
+        <div class="embed-responsive embed-responsive-16by9">
+            <video controls>
+                <source src="@Url.Content("~/Content/Course/1/1.mp4")" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
     </div>
+
+    <br>
+    <p>I hope this video was useful. Now please try this very helpful exercise:</p>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo at expedita
+        soluta velit nesciunt sint! Quos voluptates commodi voluptate, incidunt qui
+        molestias sunt, maxime voluptatibus, asperiores aut architecto est non.
+    </p>
 </div>
-<br>
-<p>I hope this video was useful. Now please try this very helpful exercise:</p>
 <br>
 
 @Html.Action("RunCode", new { Exercise = Model.Exercise }).Raw()

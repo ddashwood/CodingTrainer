@@ -28,6 +28,10 @@ footer {
     padding-right: 15px;
 }
 
+button {
+    color:black;
+}
+
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column */
 
