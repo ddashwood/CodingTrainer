@@ -48,7 +48,8 @@ namespace CodingTrainer.SerializeSeedData
                 typeof(AlwaysPassAssessment),
                 typeof(CheckAllOutputAssessment),
                 typeof(CheckLastLineOfOutputAssessment),
-                typeof(VariableTypeAssessment)
+                typeof(VariableTypeAssessment),
+                typeof(LastLineLinqAssessment)
             };
 
             DataContractSerializer ser = new DataContractSerializer(typeof(List<Chapter>), referencedTypes);
