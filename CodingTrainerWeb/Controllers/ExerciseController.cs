@@ -44,6 +44,13 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return View(exerciseDetails);
         }
 
+        [Authorize]
+        public async Task<ActionResult> CurrentExercise()
+        {
+            var user = await userServices.GetCurrentUserAsync();
+            return RedirectToAction("Exercise", new { chapter = user.CurrentChapterNo, exercise = user.CurrentExerciseNo });
+        }
+
         [ChildActionOnly]
         public ActionResult ExerciseSidebar(Exercise currentExercise)
         {

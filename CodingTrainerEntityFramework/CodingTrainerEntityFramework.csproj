@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201901091022512_AddAssessments.Designer.cs">
       <DependentUpon>201901091022512_AddAssessments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901111346578_AssessmentsCascadeDelete.cs" />
+    <Compile Include="Migrations\201901111346578_AssessmentsCascadeDelete.Designer.cs">
+      <DependentUpon>201901111346578_AssessmentsCascadeDelete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -104,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901091022512_AddAssessments.resx">
       <DependentUpon>201901091022512_AddAssessments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901111346578_AssessmentsCascadeDelete.resx">
+      <DependentUpon>201901111346578_AssessmentsCascadeDelete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
