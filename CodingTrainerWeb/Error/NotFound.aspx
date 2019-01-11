@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Not Found - Code Runner</title>
-    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/Themes/SpaceLab/bootstrap.css" rel="stylesheet" />
     <link href="/Content/site.css" rel="stylesheet" />
 </head>
 <body>
@@ -42,7 +42,7 @@
         </div>
         <hr />
         <footer>
-            <p>&copy; 2018 - Coding Trainer</p>
+            <p>&copy; 2017-<%=DateTime.Now.Year%> - Dean Dashwood</p>
         </footer>
     </div>
 </body>
