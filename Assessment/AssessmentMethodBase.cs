@@ -48,11 +48,23 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
             catch (Exception e)
             {
-                WriteToConsole("Something went wrong with this test\r\n");
-                WriteToConsole("The error message is:\r\n  ");
-                WriteToConsole(e.Message + "\r\n\r\n");
+                HandleExceptionInTest(e);
             }
             return result;
+        }
+
+        /// <summary>
+        /// Handles exceptions in a test
+        /// </summary>
+        /// <param name="e">The exception</param>
+        /// <returns>True if the test passes, false if the test fails. Throw e if the test run should be aborted</returns>
+        protected virtual bool HandleExceptionInTest(Exception e)
+        {
+            WriteToConsole("Something went wrong with this test\r\n");
+            WriteToConsole("The error message is:\r\n  ");
+            WriteToConsole(e.Message + "\r\n\r\n");
+
+            throw e;
         }
 
         protected virtual void DisplayStartMessage()

@@ -51,10 +51,37 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
 
             CodeRunner.ConsoleWrite += OnConsoleWrite;
-            await CodeRunner.RunAsync(CompiledCode, new PreProgrammedTextReader(ConsoleInText));
-            CodeRunner.ConsoleWrite -= OnConsoleWrite;
+            try
+            {
+                await CodeRunner.RunAsync(CompiledCode, new PreProgrammedTextReader(ConsoleInText));
+            }
+            finally
+            {
+                CodeRunner.ConsoleWrite -= OnConsoleWrite;
+            }
 
             return CheckResult(console.ToString());
+        }
+
+        protected sealed override bool HandleExceptionInTest(Exception e)
+        {
+            if (e is AggregateException userCodeException)
+            {
+                return HandleExceptionInUsersCode(userCodeException);
+            }
+            else
+            {
+                return base.HandleExceptionInTest(e);
+            }
+        }
+
+        protected virtual bool HandleExceptionInUsersCode(AggregateException e)
+        {
+            WriteToConsole("There was an exception when running your code\r\n");
+            WriteToConsole("The exception message is:\r\n");
+            WriteToConsole($"  {e.InnerException.Message}\r\n\r\n");
+
+            throw e;
         }
     }
 }

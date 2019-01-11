@@ -22,21 +22,22 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         public async Task<bool> RunAssessmentsAsync(string code, IEnumerable<AssessmentMethodBase> assessments)
         {
+            // Compile the code first
+
             CompiledCode compiledCode;
             try
             {
                 compiledCode = await runner.CompileAsync(code);
             }
-            catch (CompilationErrorException e)
+            catch (Exception e) when (!(e is CompilationErrorException))
             {
-                // TO DO - Report the error to the user
+                WriteToConsole("Something went wrong with the compilation\r\n");
+                WriteToConsole("The error message is:\r\n");
+                WriteToConsole("  " + e.Message);
                 return false;
             }
-            catch (Exception e)
-            {
-                // TO DO - Report the error to the user
-                return false;
-            }
+
+            // Now run each of the tests
 
             var result = true;
             var failCount = 0;
@@ -48,11 +49,22 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 {
                     runningAssessment.CodeRunner = runner;
                 }
-                var thisResult = await assessment.AssessAsync();
-                if (!thisResult)
+                try
                 {
+                    var thisResult = await assessment.AssessAsync();
+
+                    if (!thisResult)
+                    {
+                        result = false;
+                        failCount++;
+                    }
+                }
+                catch
+                {
+                    WriteToConsole("No further tests will be run, due to errors in this test\r\n");
                     result = false;
                     failCount++;
+                    break;
                 }
             }
 

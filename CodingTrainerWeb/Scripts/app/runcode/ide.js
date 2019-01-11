@@ -94,8 +94,8 @@ Ide.prototype.showErrors = function (errors) {
 
     this.editor.showPerformedLint(errors);
 
-    this.codeConsole.consoleAppend('There were compiler errors...\n');
-    this.codeConsole.consoleAppend('Click on an error to go to the affected line\n\n');
+    this.codeConsole.consoleAppend('There were compiler errors...\n', true);
+    this.codeConsole.consoleAppend('Click on an error to go to the affected line\n\n', true);
     var self = this;
     for (var j = 0; j < errors.length; j++) {
         this.codeConsole.consoleAppendWithLineLink('  ' + errors[j].Message + '\n    Line ' + (errors[i = j].line + 1) + '\n', errors[j].line, function (line) {

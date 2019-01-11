@@ -20,16 +20,18 @@
     });
 });
 
-CodeMirror.defineExtension("consoleAppend", function (text) {
+CodeMirror.defineExtension("consoleAppend", function (text, preventScroll) {
     this.replaceRange(text, { line: Infinity });
-    this.focus();
-    this.setCursor({ line: Infinity, ch: 0 });
+    if (preventScroll !== true) {
+        this.focus();
+        this.setCursor({ line: Infinity, ch: 0 });
+    }
     this.markText(this.posFromIndex(0), this.posFromIndex(Infinity), { atomic: true, inclusiveLeft: true });
 });
 
 CodeMirror.defineExtension("consoleAppendWithLineLink", function (text, line, action) {
     var startOfNewText = this.indexFromPos({ line: Infinity, ch: 0 });
-    this.consoleAppend(text);
+    this.consoleAppend(text, true);
 
     var el = $("<span>").text(text)
         .attr('data-line', line.toString())
