@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CodingTrainerModels.Security;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,6 +29,7 @@ namespace CodingTrainer.CodingTrainerModels
         [System.Runtime.Serialization.IgnoreDataMember]
         public string Content { get; set; }
 
+        [JsonIgnore]
         [System.Runtime.Serialization.IgnoreDataMember]
         public virtual Chapter Chapter { get; set; }
 
