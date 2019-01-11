@@ -12,6 +12,7 @@ using CodingTrainer.CodingTrainerModels;
 using System.Xml;
 using System.IO;
 using System.Data.Entity.Migrations;
+using System.Reflection;
 
 namespace CodingTrainer.SerializeSeedData
 {
@@ -19,17 +20,24 @@ namespace CodingTrainer.SerializeSeedData
     {
         static void Main(string[] args)
         {
-            Console.Write("Loading chapter and exercise data from the database... ");
-
             var ent = new ApplicationDbContext();
-            ent.Configuration.ProxyCreationEnabled = false;
 
-            // Load chapters and exercises
+            Console.WriteLine("Do you want to add an Assessment to the database before serializing?");
+            string reply = Console.ReadLine();
+            while (reply == "y" || reply == "Y")
+            {
+                AddAssessment(ent);
+
+                Console.WriteLine("Do you want to add another Assessment?");
+                reply = Console.ReadLine();
+            }
+
+            Console.Write("Loading chapter and exercise data from the database... ");
+            ent.Configuration.ProxyCreationEnabled = false;
             var chapters = ent.Chapters
                 .Include(c => c.Exercises)
                 .Include(c => c.Exercises.Select(e => e.Assessments))
                 .ToList();
-
             Console.WriteLine("done");
 
             Console.Write("Saving data in XML format... ");
@@ -54,6 +62,58 @@ namespace CodingTrainer.SerializeSeedData
             Console.WriteLine();
             Console.WriteLine("Data has been saved in SeedData.xml in the CodingTrainerEntityFramework project");
             Console.WriteLine("Run 'update-database' in the Package Manager Console to reset data in database");
+        }
+
+        private static void AddAssessment(ApplicationDbContext ent)
+        {
+            try
+            {
+                Console.WriteLine("Enter the name of the Assessment class");
+                string className = Console.ReadLine();
+
+                var assembly = typeof(AssessmentMethodBase).Assembly;
+                var type = assembly.GetType("CodingTrainer.CSharpRunner.Assessment.Methods." + className);
+                var obj = Activator.CreateInstance(type);
+                var attribute = typeof(IgnoreDataMemberAttribute);
+
+                foreach (var member in type.GetProperties())
+                {
+                    if (member.GetCustomAttribute(attribute) == null)
+                    {
+                        if (member.PropertyType == typeof(string))
+                        {
+                            Console.WriteLine($"Enter the value for the {member.Name} string property");
+                            string input = Console.ReadLine();
+                            member.SetValue(obj, input);
+                        }
+                        else if (member.PropertyType == typeof(bool))
+                        {
+                            Console.WriteLine($"Enter the value for the {member.Name} bool property - T for true, anything else for false");
+                            string input = Console.ReadLine();
+                            bool bInput = (input == "t" || input == "T");
+                            member.SetValue(obj, bInput);
+                        }
+                        else if (member.PropertyType == typeof(int))
+                        {
+                            Console.WriteLine($"Enter the value for the {member.Name} int property");
+                            string input = Console.ReadLine();
+                            member.SetValue(obj, Convert.ToInt32(input));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Only string, bool and int are supported at the moment.");
+                            Console.WriteLine($"Can't set value of {member.Name} because it is a {member.PropertyType.Name}");
+                        }
+                    }
+                }
+
+                ent.Assessments.Add(obj as AssessmentMethodBase);
+                ent.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
         }
     }
 }
