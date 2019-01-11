@@ -147,6 +147,9 @@
     <EmbeddedResource Include="Data\Default1-3.csx" />
     <EmbeddedResource Include="Data\Header-1--1.csx" />
     <EmbeddedResource Include="Data\Header1-1.csx" />
+    <EmbeddedResource Include="Data\Content2-2.cshtml" />
+    <EmbeddedResource Include="Data\Default2-2.csx" />
+    <EmbeddedResource Include="Data\Header2-2.csx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

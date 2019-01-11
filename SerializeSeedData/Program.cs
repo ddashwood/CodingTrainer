@@ -83,8 +83,24 @@ namespace CodingTrainer.SerializeSeedData
                         if (member.PropertyType == typeof(string))
                         {
                             Console.WriteLine($"Enter the value for the {member.Name} string property");
-                            string input = Console.ReadLine();
-                            member.SetValue(obj, input);
+                            Console.WriteLine("Finish a line with \\ to indicate a new line character and more on next line");
+
+                            StringBuilder sb = new StringBuilder();
+                            bool cont;
+
+                            do
+                            {
+                                cont = false;
+                                string input = Console.ReadLine();
+                                if (input.EndsWith("\\"))
+                                {
+                                    input = input.Substring(0, input.Length - 1) + Environment.NewLine;
+                                    cont = true;
+                                }
+                                sb.Append(input);
+                            } while (cont);
+
+                            member.SetValue(obj, sb.ToString());
                         }
                         else if (member.PropertyType == typeof(bool))
                         {

@@ -1,0 +1,24 @@
+﻿<p>Inputting Numbers</p>
+<p>
+    Please modify the program below so it inputs two numbers, adds them together,
+    and shows the result
+</p>
+
+<div class="row">
+    <div class="sizer pull-left" style="width:70%">
+        <div class="embed-responsive embed-responsive-16by9">
+            <video controls>
+                <source src="@Url.Content("~/Content/Course/1/1.mp4")" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <br>
+    <p>
+        Remember to use <code>int.Parse()</code> to turn a string into a number!
+    </p>
+</div>
+<br>
+
+@Html.Action("RunCode", new { Exercise = Model.Exercise }).Raw()

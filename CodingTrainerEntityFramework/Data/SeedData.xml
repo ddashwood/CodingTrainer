@@ -24,19 +24,19 @@
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>1</ExerciseNo>
-            <Sequence>1</Sequence>
-            <Title>All</Title>
+            <Sequence>2</Sequence>
+            <Title>Last line</Title>
             <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
-            <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ExpectedResult>
+            <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">You entered: blah</ExpectedResult>
           </AssessmentBase>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckLastLineOfOutputAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>1</ExerciseNo>
-            <Sequence>2</Sequence>
-            <Title>Last line</Title>
+            <Sequence>1</Sequence>
+            <Title>All</Title>
             <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
-            <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">You entered: blah</ExpectedResult>
+            <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ExpectedResult>
           </AssessmentBase>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:AlwaysPassAssessment">
             <AbortOnFail>false</AbortOnFail>
@@ -83,9 +83,9 @@
     </Exercises>
   </Chapter>
   <Chapter>
-    <ChapterName>Variables</ChapterName>
+    <ChapterName>Development</ChapterName>
     <ChapterNo>2</ChapterNo>
-    <Description i:nil="true" />
+    <Description>For development of assessments</Description>
     <Exercises>
       <Exercise>
         <Assessments />
@@ -93,12 +93,52 @@
         <ExerciseName>Hello world</ExerciseName>
         <ExerciseNo>1</ExerciseNo>
       </Exercise>
+      <Exercise>
+        <Assessments>
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckLastLineOfOutputAssessment">
+            <AbortOnFail>false</AbortOnFail>
+            <ChapterNo>2</ChapterNo>
+            <ExerciseNo>2</ExerciseNo>
+            <Sequence>2</Sequence>
+            <Title>Big numbers</Title>
+            <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">53
+21</ConsoleInText>
+            <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">The answer is 74</ExpectedResult>
+          </AssessmentBase>
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckLastLineOfOutputAssessment">
+            <AbortOnFail>false</AbortOnFail>
+            <ChapterNo>2</ChapterNo>
+            <ExerciseNo>2</ExerciseNo>
+            <Sequence>1</Sequence>
+            <Title>Last line is correct</Title>
+            <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">5
+3</ConsoleInText>
+            <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">The answer is 8</ExpectedResult>
+          </AssessmentBase>
+        </Assessments>
+        <ChapterNo>2</ChapterNo>
+        <ExerciseName>Add two numbers</ExerciseName>
+        <ExerciseNo>2</ExerciseNo>
+      </Exercise>
+      <Exercise>
+        <Assessments />
+        <ChapterNo>2</ChapterNo>
+        <ExerciseName>In development</ExerciseName>
+        <ExerciseNo>3</ExerciseNo>
+      </Exercise>
     </Exercises>
   </Chapter>
   <Chapter>
     <ChapterName>While Loops</ChapterName>
     <ChapterNo>3</ChapterNo>
     <Description i:nil="true" />
-    <Exercises />
+    <Exercises>
+      <Exercise>
+        <Assessments />
+        <ChapterNo>3</ChapterNo>
+        <ExerciseName>The next chapter</ExerciseName>
+        <ExerciseNo>1</ExerciseNo>
+      </Exercise>
+    </Exercises>
   </Chapter>
 </ArrayOfChapter>
