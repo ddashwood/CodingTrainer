@@ -84,6 +84,14 @@
     <Compile Include="Migrations\201901111346578_AssessmentsCascadeDelete.Designer.cs">
       <DependentUpon>201901111346578_AssessmentsCascadeDelete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901111407368_AssessmentAbortOnFail.cs" />
+    <Compile Include="Migrations\201901111407368_AssessmentAbortOnFail.Designer.cs">
+      <DependentUpon>201901111407368_AssessmentAbortOnFail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901111454120_AssessmentSequence.cs" />
+    <Compile Include="Migrations\201901111454120_AssessmentSequence.Designer.cs">
+      <DependentUpon>201901111454120_AssessmentSequence.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -111,6 +119,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901111346578_AssessmentsCascadeDelete.resx">
       <DependentUpon>201901111346578_AssessmentsCascadeDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901111407368_AssessmentAbortOnFail.resx">
+      <DependentUpon>201901111407368_AssessmentAbortOnFail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901111454120_AssessmentSequence.resx">
+      <DependentUpon>201901111454120_AssessmentSequence.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

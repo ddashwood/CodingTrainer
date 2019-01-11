@@ -28,10 +28,10 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Migrations
 
             // Un-comment to debug:
 
-            //if (System.Diagnostics.Debugger.IsAttached == false)
-            //{
-            //    System.Diagnostics.Debugger.Launch();
-            //}
+            if (System.Diagnostics.Debugger.IsAttached == false)
+            {
+                System.Diagnostics.Debugger.Launch();
+            }
 
             var resourceName = "CodingTrainer.CodingTrainerEntityFramework.Data.SeedData.xml";
             var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);

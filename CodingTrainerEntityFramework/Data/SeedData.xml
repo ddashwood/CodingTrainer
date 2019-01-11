@@ -21,28 +21,36 @@
       <Exercise>
         <Assessments>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckAllOutputAssessment">
+            <AbortOnFail>false</AbortOnFail>
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>1</ExerciseNo>
+            <Sequence>1</Sequence>
             <Title>All</Title>
             <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
             <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ExpectedResult>
           </AssessmentBase>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckLastLineOfOutputAssessment">
+            <AbortOnFail>false</AbortOnFail>
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>1</ExerciseNo>
+            <Sequence>2</Sequence>
             <Title>Last line</Title>
             <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
-            <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ExpectedResult>
+            <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">You entered: blah</ExpectedResult>
           </AssessmentBase>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:AlwaysPassAssessment">
+            <AbortOnFail>false</AbortOnFail>
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>1</ExerciseNo>
+            <Sequence>3</Sequence>
             <Title>Always pass</Title>
             <InspectionInstructions xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">test</InspectionInstructions>
           </AssessmentBase>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:VariableTypeAssessment">
+            <AbortOnFail>false</AbortOnFail>
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>1</ExerciseNo>
+            <Sequence>4</Sequence>
             <Title>Variable</Title>
             <InspectionInstructions xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">test</InspectionInstructions>
           </AssessmentBase>
@@ -54,8 +62,10 @@
       <Exercise>
         <Assessments>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:AlwaysPassAssessment">
+            <AbortOnFail>false</AbortOnFail>
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>2</ExerciseNo>
+            <Sequence>1</Sequence>
             <Title>Exercise 2 assessment</Title>
             <InspectionInstructions xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">...</InspectionInstructions>
           </AssessmentBase>

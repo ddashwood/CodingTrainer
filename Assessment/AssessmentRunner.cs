@@ -40,6 +40,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
             // Now run each of the tests
 
             var result = true;
+            var aborted = false;
             var failCount = 0;
             foreach (var assessment in assessments)
             {
@@ -57,12 +58,19 @@ namespace CodingTrainer.CSharpRunner.Assessment
                     {
                         result = false;
                         failCount++;
+                        if (assessment.AbortOnFail)
+                        {
+                            WriteToConsole("No further tests will be run, please fix this test then re-submit\r\n");
+                            aborted = true;
+                            break;
+                        }
                     }
                 }
                 catch
                 {
                     WriteToConsole("No further tests will be run, due to errors in this test\r\n");
                     result = false;
+                    aborted = true;
                     failCount++;
                     break;
                 }
@@ -72,7 +80,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
             {
                 WriteToConsole("Congratulations!");
             }
-            else
+            else if (!aborted)
             {
                 WriteToConsole($"There are still {failCount} tests which have not passed");
             }
