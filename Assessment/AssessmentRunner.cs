@@ -27,11 +27,12 @@ namespace CodingTrainer.CSharpRunner.Assessment
             // Prepare to compile the code
 
             LazyAsync<CompiledCode> compiledCode;
+            CompilationWithSource compilation;
             try
             {
-                var compilation = await runner.GetCompilationAsync(code);
-                var tree = compilation.Compilation.SyntaxTrees.Single();
-                var diags = compilation.Compilation.GetSemanticModel(tree).GetDiagnostics();
+                compilation = await runner.GetCompilationAsync(code);
+                var tree = compilation.CompilationObject.SyntaxTrees.Single();
+                var diags = compilation.CompilationObject.GetSemanticModel(tree).GetDiagnostics();
                 var errors = diags.Any(d => d.Severity == DiagnosticSeverity.Error);
                 if (errors) throw new CompilationErrorException("Error compiling your code", diags.ToImmutableArray());
 
@@ -54,7 +55,11 @@ namespace CodingTrainer.CSharpRunner.Assessment
             foreach (var assessment in assessments)
             {
                 assessment.ConsoleWrite += OnConsoleWrite;
-                if (assessment is AssessmentByRunningBase runningAssessment)
+                if (assessment is AssessmentByInspectionBase inspectionAssessment)
+                {
+                    inspectionAssessment.Compilation = compilation;
+                }
+                else if (assessment is AssessmentByRunningBase runningAssessment)
                 {
                     runningAssessment.CodeRunner = runner;
                     try

@@ -49,7 +49,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
         {
             try
             {
-                (byte[] bin, byte[] pdb) = await Compiler.EmitAsync(compilation.Compilation);
+                (byte[] bin, byte[] pdb) = await Compiler.EmitAsync(compilation.CompilationObject);
                 return new CompiledCode(compilation.Code, bin, pdb);
             }
             catch (Exception e) when (!(e is CompilationErrorException))

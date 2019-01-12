@@ -154,7 +154,7 @@
     <Compile Include="BlockingMemoryStream.cs" />
     <Compile Include="CompilationWithSource.cs" />
     <Compile Include="CompiledCode.cs" />
-    <Compile Include="Compiler.cs" />
+    <Compile Include="CodeRunner.Compiler.cs" />
     <Compile Include="CodeRunner.cs" />
     <Compile Include="CodeRunner.SandboxManager.cs" />
     <Compile Include="ConsoleWriteEventArgs.cs" />

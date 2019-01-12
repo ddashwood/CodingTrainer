@@ -11,11 +11,11 @@ namespace CodingTrainer.CSharpRunner.CodeHost
     {
         internal CompilationWithSource(Compilation compilation, string code)
         {
-            Compilation = compilation;
+            CompilationObject = compilation;
             Code = code;
         }
 
-        public Compilation Compilation { get; }
+        public Compilation CompilationObject { get; }
         public string Code { get; }
     }
 }
