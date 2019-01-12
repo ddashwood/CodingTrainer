@@ -115,6 +115,14 @@
 56</ConsoleInText>
             <ExpectedResult xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">output.EndsWith("99")</ExpectedResult>
           </AssessmentBase>
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:ContainsIntDotParseAssessment">
+            <AbortOnFail>true</AbortOnFail>
+            <ChapterNo>2</ChapterNo>
+            <ExerciseNo>2</ExerciseNo>
+            <Sequence>3</Sequence>
+            <Title>int.Parse</Title>
+            <InspectionInstructions xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">...</InspectionInstructions>
+          </AssessmentBase>
         </Assessments>
         <ChapterNo>2</ChapterNo>
         <ExerciseName>Add two numbers</ExerciseName>

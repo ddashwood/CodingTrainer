@@ -1,10 +1,12 @@
 ﻿using CodingTrainer.CodingTrainerModels;
 using CodingTrainer.CSharpRunner.CodeHost;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,27 @@ namespace CodingTrainer.CSharpRunner.Assessment
 {
     public abstract class AssessmentMethodBase:AssessmentBase
     {
+        static AssessmentMethodBase()
+        {
+            // Add types to Dynamic Linq which might be used by assessment queries.
+            // This has to happen once, before assessments run - doing it in the
+            // static constructor should do the trick
+
+            // Private type, hence we can't simply use typeof
+            Type type = typeof(System.Linq.Dynamic.DynamicQueryable).Assembly.GetType("System.Linq.Dynamic.ExpressionParser");
+            FieldInfo field = type.GetField("predefinedTypes", BindingFlags.Static | BindingFlags.NonPublic);
+
+            Type[] predefinedTypes = (Type[])field.GetValue(null);
+
+            Array.Resize(ref predefinedTypes, predefinedTypes.Length + 1);
+            predefinedTypes[predefinedTypes.Length - 1] = typeof(SyntaxToken);
+
+            field.SetValue(null, predefinedTypes);
+
+            field = type.GetField("keywords", BindingFlags.Static | BindingFlags.NonPublic);
+            field.SetValue(null, null);
+        }
+
         // Events
         public event ConsoleWriteEventHandler ConsoleWrite;
 
