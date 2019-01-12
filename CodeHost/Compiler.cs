@@ -8,49 +8,52 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.CodeHost
 {
-    internal static class Compiler
+    public partial class CodeRunner
     {
-        public static async Task<Compilation> GetCompilationAsync(string code)
+        internal static class Compiler
         {
-            Compilation compilation = null;
-            await Task.Run(() =>
+            public static async Task<Compilation> GetCompilationAsync(string code)
             {
-                var script = CSharpScript.Create<object>(code);
-                var options = new CSharpCompilationOptions(OutputKind.ConsoleApplication, scriptClassName: "CodingTrainerExercise");
-                compilation = script.GetCompilation().WithOptions(options);
-
-                compilation = compilation.AddReferences(References.ReferencedAssembliesData);
-            });
-
-            return compilation;
-        }
-
-        public static async Task<(byte[] result, byte[] pdb)> EmitAsync(Compilation compilation)
-        {
-            byte[] compiledCode = null;
-            byte[] pdb = null;
-
-            await Task.Run(() =>
-            {
-                using (var memoryStream = new MemoryStream())
-                using (var pdbStream = new MemoryStream())
+                Compilation compilation = null;
+                await Task.Run(() =>
                 {
-                    var emitResult = compilation.Emit(memoryStream, pdbStream);
+                    var script = CSharpScript.Create<object>(code);
+                    var options = new CSharpCompilationOptions(OutputKind.ConsoleApplication, scriptClassName: "CodingTrainerExercise");
+                    compilation = script.GetCompilation().WithOptions(options);
 
-                    if (!emitResult.Success)
-                    {
-                        throw new CompilationErrorException("Error during compilation", emitResult.Diagnostics);
-                    }
+                    compilation = compilation.AddReferences(References.ReferencedAssembliesData);
+                });
 
-                    compiledCode = memoryStream.ToArray();
-                    if (compiledCode.Length > 102400)
+                return compilation;
+            }
+
+            public static async Task<(byte[] result, byte[] pdb)> EmitAsync(Compilation compilation)
+            {
+                byte[] compiledCode = null;
+                byte[] pdb = null;
+
+                await Task.Run(() =>
+                {
+                    using (var memoryStream = new MemoryStream())
+                    using (var pdbStream = new MemoryStream())
                     {
-                        throw new PolicyException("The compiled code is too large");
+                        var emitResult = compilation.Emit(memoryStream, pdbStream);
+
+                        if (!emitResult.Success)
+                        {
+                            throw new CompilationErrorException("Error during compilation", emitResult.Diagnostics);
+                        }
+
+                        compiledCode = memoryStream.ToArray();
+                        if (compiledCode.Length > 102400)
+                        {
+                            throw new PolicyException("The compiled code is too large");
+                        }
+                        pdb = pdbStream.ToArray();
                     }
-                    pdb = pdbStream.ToArray();
-                }
-            });
-            return (compiledCode, pdb);
+                });
+                return (compiledCode, pdb);
+            }
         }
     }
 }

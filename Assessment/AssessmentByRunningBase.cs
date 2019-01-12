@@ -31,6 +31,23 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
         }
 
+        private bool compiledCodeSet = false;
+        private CompiledCode compiledCode;
+        [NotMapped]
+        [IgnoreDataMember]
+        internal CompiledCode CompiledCode
+        {
+            get
+            {
+                return compiledCode;
+            }
+            set
+            {
+                compiledCode = value;
+                compiledCodeSet = true;
+            }
+        }
+
         // Entity Framework properties
         [Required]
         public string ConsoleInText { get; set; }
@@ -42,6 +59,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
         protected sealed override async Task<bool> DoAssessmentAsync()
         {
             if (!codeRunnerSet) throw new InvalidOperationException("Attempt to run assessment without a code runner");
+            if (!compiledCodeSet) throw new InvalidOperationException("Attempt to run assessment without any compiled code");
 
             StringBuilder console = new StringBuilder();
             void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)

@@ -17,11 +17,16 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 {
     public class IdeServices : IIdeServices
     {
+        ICodeRunner runner;
+        public IdeServices(ICodeRunner runner)
+        {
+            this.runner = runner;
+        }
         public async Task<IEnumerable<Diagnostic>> GetDiagnosticsAsyc(string code, CancellationToken token)
         {
-            var compilation = await Compiler.GetCompilationAsync(code);
+            var compilation = await runner.GetCompilationAsync(code);
             token.ThrowIfCancellationRequested();
-            var diagnostics = await GetDiagnostics(compilation, token);
+            var diagnostics = await GetDiagnostics(compilation.Compilation, token);
             token.ThrowIfCancellationRequested();
 
             return diagnostics;
@@ -50,10 +55,10 @@ namespace CodingTrainer.CSharpRunner.CodeHost
         {
             Workspace workspace = new AdhocWorkspace();
 
-            var compilation = await Compiler.GetCompilationAsync(code);
-            var tree = compilation.SyntaxTrees.Single();
+            var compilation = await runner.GetCompilationAsync(code);
+            var tree = compilation.Compilation.SyntaxTrees.Single();
 
-            SemanticModel sm = compilation.GetSemanticModel(tree);
+            SemanticModel sm = compilation.Compilation.GetSemanticModel(tree);
             var symbols = await Recommender.GetRecommendedSymbolsAtPositionAsync(sm, position, workspace, cancellationToken: token);
 
             return symbols.OrderBy(s => s.Name).Select(s => s.Name).Distinct();
@@ -61,10 +66,10 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 
         public async Task<IEnumerable<ISymbol>> GetOverloadsAndParametersAsync(string code, int position, CancellationToken token = default(CancellationToken))
         {
-            var compilation = await Compiler.GetCompilationAsync(code);
-            var tree = compilation.SyntaxTrees.Single();
+            var compilation = await runner.GetCompilationAsync(code);
+            var tree = compilation.Compilation.SyntaxTrees.Single();
 
-            var semanticModel = compilation.GetSemanticModel(tree);
+            var semanticModel = compilation.Compilation.GetSemanticModel(tree);
             token.ThrowIfCancellationRequested();
 
             var theToken = (await tree.GetRootAsync(token)).FindToken(position);

@@ -1,8 +1,10 @@
 ﻿using CodingTrainer.CSharpRunner.Assessment.Methods;
 using CodingTrainer.CSharpRunner.CodeHost;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,12 +24,19 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         public async Task<bool> RunAssessmentsAsync(string code, IEnumerable<AssessmentMethodBase> assessments)
         {
-            // Compile the code first
+            // Prepare to compile the code
 
-            CompiledCode compiledCode;
+            LazyAsync<CompiledCode> compiledCode;
             try
             {
-                compiledCode = await runner.CompileAsync(code);
+                var compilation = await runner.GetCompilationAsync(code);
+                var tree = compilation.Compilation.SyntaxTrees.Single();
+                var diags = compilation.Compilation.GetSemanticModel(tree).GetDiagnostics();
+                var errors = diags.Any(d => d.Severity == DiagnosticSeverity.Error);
+                if (errors) throw new CompilationErrorException("Error compiling your code", diags.ToImmutableArray());
+
+                compiledCode = new LazyAsync<CompiledCode>
+                        (() => runner.EmitFromCompilationAsync(compilation));
             }
             catch (Exception e) when (!(e is CompilationErrorException))
             {
@@ -44,11 +53,21 @@ namespace CodingTrainer.CSharpRunner.Assessment
             var failCount = 0;
             foreach (var assessment in assessments)
             {
-                assessment.CompiledCode = compiledCode;
                 assessment.ConsoleWrite += OnConsoleWrite;
                 if (assessment is AssessmentByRunningBase runningAssessment)
                 {
                     runningAssessment.CodeRunner = runner;
+                    try
+                    {
+                        runningAssessment.CompiledCode = await compiledCode.Value;
+                    }
+                    catch (Exception e) when (!(e is CompilationErrorException))
+                    {
+                        WriteToConsole("Something went wrong with the compilation\r\n");
+                        WriteToConsole("The error message is:\r\n");
+                        WriteToConsole("  " + e.Message);
+                        return false;
+                    }
                 }
                 try
                 {
@@ -95,6 +114,13 @@ namespace CodingTrainer.CSharpRunner.Assessment
         private void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
         {
             ConsoleWrite?.Invoke(this, e);
+        }
+
+        private class LazyAsync<T> : Lazy<Task<T>>
+        {
+            public LazyAsync(Func<Task<T>> taskFunc)
+                : base(() => Task.Factory.StartNew(taskFunc).Unwrap())
+            { }
         }
     }
 }

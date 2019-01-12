@@ -36,17 +36,27 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 
         public async Task<CompiledCode> CompileAsync(string code)
         {
+            return await EmitFromCompilationAsync(await GetCompilationAsync(code));
+        }
+
+        public async Task<CompilationWithSource> GetCompilationAsync(string code)
+        {
+            var compilation = await Compiler.GetCompilationAsync(code);
+            return new CompilationWithSource(compilation, code);
+        }
+
+        public async Task<CompiledCode> EmitFromCompilationAsync(CompilationWithSource compilation)
+        {
             try
             {
-                var compilation = await Compiler.GetCompilationAsync(code);
-                (byte[] bin, byte[] pdb) = await Compiler.EmitAsync(compilation);
-                return new CompiledCode(code, bin, pdb);
+                (byte[] bin, byte[] pdb) = await Compiler.EmitAsync(compilation.Compilation);
+                return new CompiledCode(compilation.Code, bin, pdb);
             }
             catch (Exception e) when (!(e is CompilationErrorException))
             {
                 if (exceptionLogger != null)
                 {
-                    await exceptionLogger.LogException(e, code);
+                    await exceptionLogger.LogException(e, compilation.Code);
                 }
                 throw;
             }

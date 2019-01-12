@@ -14,6 +14,9 @@ namespace CodingTrainer.CSharpRunner.CodeHost
 
         Task CompileAndRunAsync(string code);
         Task<CompiledCode> CompileAsync(string code);
+        Task<CompilationWithSource> GetCompilationAsync(string code);
+        Task<CompiledCode> EmitFromCompilationAsync(CompilationWithSource compilation);
+
         Task RunAsync(CompiledCode compiledCode);
         Task RunAsync(CompiledCode compiledCode, TextReader consoleInTextReader);
 

@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockingMemoryStream.cs" />
+    <Compile Include="CompilationWithSource.cs" />
     <Compile Include="CompiledCode.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="CodeRunner.cs" />

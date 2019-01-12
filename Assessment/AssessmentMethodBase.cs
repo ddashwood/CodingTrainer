@@ -16,29 +16,8 @@ namespace CodingTrainer.CSharpRunner.Assessment
         // Events
         public event ConsoleWriteEventHandler ConsoleWrite;
 
-        // Not mapped onto Entity Framework
-        private bool compiledCodeSet = false;
-        private CompiledCode compiledCode;
-        [NotMapped]
-        [IgnoreDataMember]
-        internal CompiledCode CompiledCode
-        {
-            get
-            {
-                return compiledCode;
-            }
-            set
-            {
-                compiledCode = value;
-                compiledCodeSet = true;
-            }
-        }
-
-
         public override async Task<bool> AssessAsync()
         {
-            if (!compiledCodeSet) throw new InvalidOperationException("Attempt to run assessment without any compiled code");
-
             DisplayStartMessage();
             bool result = true;
             try
