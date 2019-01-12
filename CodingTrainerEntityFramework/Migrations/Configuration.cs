@@ -37,15 +37,17 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Migrations
             var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
 
             // Read data
-            Type[] referencedTypes =
+
+            List<Type> referencedTypes = new List<Type> { typeof(Exercise) };
+
+            var baseType = typeof(AssessmentMethodBase);
+            foreach (var type in baseType.Assembly.ExportedTypes)
             {
-                typeof(Exercise),
-                typeof(AlwaysPassAssessment),
-                typeof(CheckAllOutputAssessment),
-                typeof(CheckLastLineOfOutputAssessment),
-                typeof(VariableTypeAssessment),
-                typeof(LastLineLinqAssessment)
-            };
+                if (baseType.IsAssignableFrom(type))
+                {
+                    referencedTypes.Add(type);
+                }
+            }
 
             DataContractSerializer ser = new DataContractSerializer(typeof(List<Chapter>), referencedTypes);
 
