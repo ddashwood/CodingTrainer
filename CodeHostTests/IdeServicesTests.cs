@@ -12,7 +12,7 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
 {
     class IdeServicesTests:CodeHostTestBase
     {
-        private IIdeServices ideServices = new IdeServices();
+        private IIdeServices ideServices = new IdeServices(new CodeRunner());
 
         #region ParameterTests
 

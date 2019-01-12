@@ -28,7 +28,7 @@ namespace CodingTrainer.CodingTrainerWebTests
             var context = new HubCallerContext(null, "RequestParametersTestConnection");
 
             // Arrange - Hub
-            var hub = new IdeHub(new IdeServices())
+            var hub = new IdeHub(new IdeServices(new CodeRunner()))
             {
                 Clients = mockClients.Object,
                 Context = context
@@ -75,7 +75,7 @@ namespace CodingTrainer.CodingTrainerWebTests
             var context = new HubCallerContext(null, "BuiltInReturnTypeTestConnection");
 
             // Arrange - Hub
-            var hub = new IdeHub(new IdeServices())
+            var hub = new IdeHub(new IdeServices(new CodeRunner()))
             {
                 Clients = mockClients.Object,
                 Context = context
@@ -109,7 +109,7 @@ namespace CodingTrainer.CodingTrainerWebTests
             var context = new HubCallerContext(null, "BeforeParamsTestConnection");
 
             // Arrange - Hub
-            var hub = new IdeHub(new IdeServices())
+            var hub = new IdeHub(new IdeServices(new CodeRunner()))
             {
                 Clients = mockClients.Object,
                 Context = context
@@ -135,7 +135,7 @@ namespace CodingTrainer.CodingTrainerWebTests
             var context = new HubCallerContext(null, "AfterParamsTestConnection");
 
             // Arrange - Hub
-            var hub = new IdeHub(new IdeServices())
+            var hub = new IdeHub(new IdeServices(new CodeRunner()))
             {
                 Clients = mockClients.Object,
                 Context = context

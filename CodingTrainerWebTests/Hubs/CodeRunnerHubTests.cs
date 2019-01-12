@@ -90,6 +90,16 @@ namespace CodingTrainer.CodingTrainerWebTests
             {
                 throw new NotImplementedException();
             }
+
+            public Task<CompilationWithSource> GetCompilationAsync(string code)
+            {
+                throw new NotImplementedException();
+            }
+
+            public Task<CompiledCode> EmitFromCompilationAsync(CompilationWithSource compilation)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         [Test]
