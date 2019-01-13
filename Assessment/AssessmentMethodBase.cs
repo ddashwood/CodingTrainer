@@ -1,6 +1,7 @@
 ﻿using CodingTrainer.CodingTrainerModels;
 using CodingTrainer.CSharpRunner.CodeHost;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,11 +16,34 @@ namespace CodingTrainer.CSharpRunner.Assessment
 {
     public abstract class AssessmentMethodBase:AssessmentBase
     {
+        // Dynamic Linq can't use enum names, so this enables Dynamic Linq queries
+        // to call the Value() method and pass the name as a parameter
+        protected class EnumHelper<TEnum, TUnderlying> where TEnum:Enum
+        {
+            public EnumHelper()
+            {
+                if (!typeof(TUnderlying).IsAssignableFrom(Enum.GetUnderlyingType(typeof(TEnum))))
+                    throw new InvalidOperationException("Enum type and underlying type do not match");
+            }
+            public TUnderlying Value(string name)
+            {
+                TEnum t = (TEnum)Enum.Parse(typeof(TEnum), name);
+                return (TUnderlying)(object)t;
+            }
+        }
+
         static AssessmentMethodBase()
         {
             // Add types to Dynamic Linq which might be used by assessment queries.
             // This has to happen once, before assessments run - doing it in the
             // static constructor should do the trick
+
+            Type[] newTypes =
+            {
+                typeof(EnumHelper<SyntaxKind, ushort>),
+                typeof(SyntaxToken),
+                typeof(SyntaxNode)
+            };
 
             // Private type, hence we can't simply use typeof
             Type type = typeof(System.Linq.Dynamic.DynamicQueryable).Assembly.GetType("System.Linq.Dynamic.ExpressionParser");
@@ -27,8 +51,10 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
             Type[] predefinedTypes = (Type[])field.GetValue(null);
 
-            Array.Resize(ref predefinedTypes, predefinedTypes.Length + 1);
+            int originalLength = predefinedTypes.Length;
+            Array.Resize(ref predefinedTypes, predefinedTypes.Length + newTypes.Length);
             predefinedTypes[predefinedTypes.Length - 1] = typeof(SyntaxToken);
+            Array.Copy(newTypes, 0, predefinedTypes, originalLength, newTypes.Length);
 
             field.SetValue(null, predefinedTypes);
 
