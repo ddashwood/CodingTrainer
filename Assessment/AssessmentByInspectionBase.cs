@@ -14,25 +14,8 @@ namespace CodingTrainer.CSharpRunner.Assessment
     public abstract class AssessmentByInspectionBase : AssessmentMethodBase
     {
         // Not mapped onto Entity Framework
-        private bool compilationsSet = false;
-        private CompilationWithSource compilation;
         [NotMapped]
         [IgnoreDataMember]
-        public CompilationWithSource Compilation
-        {
-            get
-            {
-                return compilation;
-            }
-            set
-            {
-                compilationsSet = true;
-                compilation = value;
-            }
-        }
-
-        // Entity Framework properties
-        [Required]
-        public string InspectionInstructions { get; set; }
+        public CompilationWithSource Compilation { get; set; }
     }
 }

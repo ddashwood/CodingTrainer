@@ -51,8 +51,6 @@ namespace CodingTrainer.CSharpRunner.Assessment
         // Entity Framework properties
         [Required]
         public string ConsoleInText { get; set; }
-        [Required]
-        public string ExpectedResult { get; set; }
 
         protected abstract bool CheckResult(string consoleOut);
 

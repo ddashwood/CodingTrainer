@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -161,10 +162,12 @@
     <Compile Include="AssessmentMethodBase.cs" />
     <Compile Include="AssessmentRunner.cs" />
     <Compile Include="Methods\AlwaysPassAssessment.cs" />
+    <Compile Include="Methods\AncestorNodeForEachTokenLinqMethod.cs" />
     <Compile Include="Methods\CheckAllOutputAssessment.cs" />
     <Compile Include="Methods\CheckLastLineOfOutputAssessment.cs" />
-    <Compile Include="Methods\ContainsIntDotParseAssessment.cs" />
     <Compile Include="Methods\LastLineLinqAssessment.cs" />
+    <Compile Include="Methods\ParentNodeForEachTokenLinqMethod.cs" />
+    <Compile Include="Methods\SyntaxTokensLinqMethod.cs" />
     <Compile Include="Methods\VariableTypeAssessment.cs" />
     <Compile Include="PreProgrammedTextReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

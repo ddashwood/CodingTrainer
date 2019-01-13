@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,40 @@ namespace CodingTrainer.CSharpRunner.Assessment
     {
         public event ConsoleWriteEventHandler ConsoleWrite;
         private ICodeRunner runner;
+
+        static AssessmentRunner()
+        {
+            // Add types to Dynamic Linq which might be used by assessment queries.
+            // This has to happen once, before assessments run - doing it in the
+            // static constructor should do the trick
+
+            // EnumHelper is protected within AssessmentMethodBase
+            Type assessmentMethodBase = typeof(AssessmentMethodBase);
+            Type enumHelper = assessmentMethodBase.GetNestedType("EnumHelper`2", BindingFlags.NonPublic);
+
+            Type[] newTypes =
+            {
+                enumHelper.MakeGenericType(typeof(Microsoft.CodeAnalysis.CSharp.SyntaxKind), typeof(ushort)),
+                typeof(SyntaxToken),
+                typeof(SyntaxNode)
+            };
+
+            // Private type, hence we can't simply use typeof
+            Type type = typeof(System.Linq.Dynamic.DynamicQueryable).Assembly.GetType("System.Linq.Dynamic.ExpressionParser");
+            FieldInfo field = type.GetField("predefinedTypes", BindingFlags.Static | BindingFlags.NonPublic);
+
+            Type[] predefinedTypes = (Type[])field.GetValue(null);
+
+            int originalLength = predefinedTypes.Length;
+            Array.Resize(ref predefinedTypes, predefinedTypes.Length + newTypes.Length);
+            predefinedTypes[predefinedTypes.Length - 1] = typeof(SyntaxToken);
+            Array.Copy(newTypes, 0, predefinedTypes, originalLength, newTypes.Length);
+
+            field.SetValue(null, predefinedTypes);
+
+            field = type.GetField("keywords", BindingFlags.Static | BindingFlags.NonPublic);
+            field.SetValue(null, null);
+        }
 
         public AssessmentRunner(ICodeRunner runner)
         {

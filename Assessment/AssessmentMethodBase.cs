@@ -32,36 +32,6 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
         }
 
-        static AssessmentMethodBase()
-        {
-            // Add types to Dynamic Linq which might be used by assessment queries.
-            // This has to happen once, before assessments run - doing it in the
-            // static constructor should do the trick
-
-            Type[] newTypes =
-            {
-                typeof(EnumHelper<SyntaxKind, ushort>),
-                typeof(SyntaxToken),
-                typeof(SyntaxNode)
-            };
-
-            // Private type, hence we can't simply use typeof
-            Type type = typeof(System.Linq.Dynamic.DynamicQueryable).Assembly.GetType("System.Linq.Dynamic.ExpressionParser");
-            FieldInfo field = type.GetField("predefinedTypes", BindingFlags.Static | BindingFlags.NonPublic);
-
-            Type[] predefinedTypes = (Type[])field.GetValue(null);
-
-            int originalLength = predefinedTypes.Length;
-            Array.Resize(ref predefinedTypes, predefinedTypes.Length + newTypes.Length);
-            predefinedTypes[predefinedTypes.Length - 1] = typeof(SyntaxToken);
-            Array.Copy(newTypes, 0, predefinedTypes, originalLength, newTypes.Length);
-
-            field.SetValue(null, predefinedTypes);
-
-            field = type.GetField("keywords", BindingFlags.Static | BindingFlags.NonPublic);
-            field.SetValue(null, null);
-        }
-
         // Events
         public event ConsoleWriteEventHandler ConsoleWrite;
 
