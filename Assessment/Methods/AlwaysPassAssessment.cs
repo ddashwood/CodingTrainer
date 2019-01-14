@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods
 {
     public class AlwaysPassAssessment : AssessmentByInspectionBase
     {
-        protected override Task<bool> DoAssessmentAsync()
+        protected override Task<bool> AssessCompilationAsync(Compilation compilation)
         {
             return Task.FromResult(true);
         }

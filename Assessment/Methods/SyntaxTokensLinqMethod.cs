@@ -14,9 +14,9 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods
     {
         public string Condition { get; set; }
 
-        protected override Task<bool> DoAssessmentAsync()
+        protected override Task<bool> AssessCompilationAsync(Compilation compilation)
         {
-            var tree = Compilation.CompilationObject.SyntaxTrees.Single();
+            var tree = compilation.SyntaxTrees.Single();
             var tokens = tree.GetRoot().DescendantTokens(c => true);
 
             bool result;

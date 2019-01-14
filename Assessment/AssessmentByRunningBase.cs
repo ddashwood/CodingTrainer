@@ -14,39 +14,12 @@ namespace CodingTrainer.CSharpRunner.Assessment
     public abstract class AssessmentByRunningBase : AssessmentMethodBase
     {
         // Not mapped onto Entity Framework
-        private bool codeRunnerSet = false;
-        private ICodeRunner codeRunner;
         [NotMapped]
         [IgnoreDataMember]
-        public ICodeRunner CodeRunner
-        {
-            get
-            {
-                return codeRunner;
-            }
-            set
-            {
-                codeRunnerSet = true;
-                codeRunner = value;
-            }
-        }
-
-        private bool compiledCodeSet = false;
-        private CompiledCode compiledCode;
+        public ICodeRunner CodeRunner { get; set; }
         [NotMapped]
         [IgnoreDataMember]
-        internal CompiledCode CompiledCode
-        {
-            get
-            {
-                return compiledCode;
-            }
-            set
-            {
-                compiledCode = value;
-                compiledCodeSet = true;
-            }
-        }
+        internal CompiledCode? CompiledCode { get; set; }
 
         // Entity Framework properties
         [Required]
@@ -56,8 +29,8 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         protected sealed override async Task<bool> DoAssessmentAsync()
         {
-            if (!codeRunnerSet) throw new InvalidOperationException("Attempt to run assessment without a code runner");
-            if (!compiledCodeSet) throw new InvalidOperationException("Attempt to run assessment without any compiled code");
+            if (CodeRunner == null) throw new InvalidOperationException("Attempt to run assessment without a code runner");
+            if (CompiledCode == null || CompiledCode.HasValue == false) throw new InvalidOperationException("Attempt to run assessment without any compiled code");
 
             StringBuilder console = new StringBuilder();
             void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
@@ -69,7 +42,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
             CodeRunner.ConsoleWrite += OnConsoleWrite;
             try
             {
-                await CodeRunner.RunAsync(CompiledCode, new PreProgrammedTextReader(ConsoleInText));
+                await CodeRunner.RunAsync(CompiledCode.Value, new PreProgrammedTextReader(ConsoleInText));
             }
             finally
             {
