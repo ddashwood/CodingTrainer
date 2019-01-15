@@ -17,7 +17,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
         // Not mapped onto Entity Framework
         [NotMapped]
         [IgnoreDataMember]
-        public CompilationWithSource? Compilation { get; set; }
+        public CompilationWithSource? Compilation { private get; set; }
 
         protected abstract Task<bool> AssessCompilationAsync(Compilation compilation);
 

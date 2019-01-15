@@ -16,10 +16,10 @@ namespace CodingTrainer.CSharpRunner.Assessment
         // Not mapped onto Entity Framework
         [NotMapped]
         [IgnoreDataMember]
-        public ICodeRunner CodeRunner { get; set; }
+        public ICodeRunner CodeRunner { private get; set; }
         [NotMapped]
         [IgnoreDataMember]
-        internal CompiledCode? CompiledCode { get; set; }
+        internal CompiledCode? CompiledCode { private get; set; }
 
         // Entity Framework properties
         [Required]
