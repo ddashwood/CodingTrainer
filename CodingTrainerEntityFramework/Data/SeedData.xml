@@ -118,6 +118,13 @@
             <d6p1:ParentCondition>parentNode.RawKind == syntaxKind.Value("SimpleAssignmentExpression")</d6p1:ParentCondition>
             <d6p1:TokenSelector>tokens.Where(Text == "Parse" &amp;&amp; GetNextToken(false, false, false, false).Text == "(")</d6p1:TokenSelector>
           </AssessmentBase>
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:SyntaxTreeScriptAssessment">
+            <AbortOnFail>false</AbortOnFail>
+            <ChapterNo>2</ChapterNo>
+            <ExerciseNo>2</ExerciseNo>
+            <Sequence>6</Sequence>
+            <Title>Script Test</Title>
+          </AssessmentBase>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckLastLineOfOutputAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>2</ChapterNo>

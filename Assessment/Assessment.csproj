@@ -168,6 +168,7 @@
     <Compile Include="Methods\LastLineLinqAssessment.cs" />
     <Compile Include="Methods\ParentNodeForEachTokenLinqMethod.cs" />
     <Compile Include="Methods\SyntaxTokensLinqMethod.cs" />
+    <Compile Include="Methods\SyntaxTreeScriptAssessment.cs" />
     <Compile Include="Methods\VariableTypeAssessment.cs" />
     <Compile Include="PreProgrammedTextReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
