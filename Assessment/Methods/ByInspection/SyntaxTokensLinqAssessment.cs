@@ -8,9 +8,10 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using DynamicExpression = System.Linq.Dynamic.DynamicExpression;
 
-namespace CodingTrainer.CSharpRunner.Assessment.Methods
+namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
 {
-    public class SyntaxTokensLinqMethod : AssessmentByInspectionBase
+    [Obsolete("Use SyntaxTreeScriptAssessment instead", true)]
+    public class SyntaxTokensLinqAssessment : AssessmentByInspectionBase
     {
         public string Condition { get; set; }
 

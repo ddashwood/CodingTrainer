@@ -32,6 +32,11 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
         }
 
+        // Not mapped onto Entity Framework
+        [NotMapped]
+        [IgnoreDataMember]
+        public dynamic AssessmentBag { get; set; }
+
         // Events
         public event ConsoleWriteEventHandler ConsoleWrite;
 

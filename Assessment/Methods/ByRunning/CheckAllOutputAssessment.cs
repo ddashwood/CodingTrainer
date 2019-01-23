@@ -1,14 +1,14 @@
-﻿using System;
+﻿using CodingTrainer.CSharpRunner.CodeHost;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CodingTrainer.CSharpRunner.CodeHost;
 
-namespace CodingTrainer.CSharpRunner.Assessment.Methods
+namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning
 {
-    public class CheckLastLineOfOutputAssessment : AssessmentByRunningBase
+    public class CheckAllOutputAssessment:AssessmentByRunningBase
     {
         [Required]
         public string ExpectedResult { get; set; }

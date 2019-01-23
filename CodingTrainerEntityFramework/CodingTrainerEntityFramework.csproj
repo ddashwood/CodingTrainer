@@ -96,6 +96,10 @@
     <Compile Include="Migrations\201901131704501_RefactorAssessments.Designer.cs">
       <DependentUpon>201901131704501_RefactorAssessments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901161301168_AddScriptAssessment.cs" />
+    <Compile Include="Migrations\201901161301168_AddScriptAssessment.Designer.cs">
+      <DependentUpon>201901161301168_AddScriptAssessment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -132,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901131704501_RefactorAssessments.resx">
       <DependentUpon>201901131704501_RefactorAssessments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901161301168_AddScriptAssessment.resx">
+      <DependentUpon>201901161301168_AddScriptAssessment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

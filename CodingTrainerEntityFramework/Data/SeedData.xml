@@ -20,21 +20,7 @@
     <Exercises>
       <Exercise>
         <Assessments>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:AlwaysPassAssessment">
-            <AbortOnFail>false</AbortOnFail>
-            <ChapterNo>1</ChapterNo>
-            <ExerciseNo>1</ExerciseNo>
-            <Sequence>3</Sequence>
-            <Title>Always pass</Title>
-          </AssessmentBase>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:VariableTypeAssessment">
-            <AbortOnFail>false</AbortOnFail>
-            <ChapterNo>1</ChapterNo>
-            <ExerciseNo>1</ExerciseNo>
-            <Sequence>4</Sequence>
-            <Title>Variable</Title>
-          </AssessmentBase>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckAllOutputAssessment">
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d6p1:CheckAllOutputAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>1</ExerciseNo>
@@ -43,7 +29,7 @@
             <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
             <d6p1:ExpectedResult>You entered: blah</d6p1:ExpectedResult>
           </AssessmentBase>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckLastLineOfOutputAssessment">
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d6p1:CheckLastLineOfOutputAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>1</ExerciseNo>
@@ -58,15 +44,7 @@
         <ExerciseNo>1</ExerciseNo>
       </Exercise>
       <Exercise>
-        <Assessments>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:AlwaysPassAssessment">
-            <AbortOnFail>false</AbortOnFail>
-            <ChapterNo>1</ChapterNo>
-            <ExerciseNo>2</ExerciseNo>
-            <Sequence>1</Sequence>
-            <Title>Exercise 2 assessment</Title>
-          </AssessmentBase>
-        </Assessments>
+        <Assessments />
         <ChapterNo>1</ChapterNo>
         <ExerciseName>Divide By Zero</ExerciseName>
         <ExerciseNo>2</ExerciseNo>
@@ -92,7 +70,7 @@
       </Exercise>
       <Exercise>
         <Assessments>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:SyntaxTokensLinqMethod">
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d6p1:SyntaxTokensLinqAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>2</ChapterNo>
             <ExerciseNo>2</ExerciseNo>
@@ -100,32 +78,32 @@
             <Title>Has 2 Parse( methods</Title>
             <d6p1:Condition>(tokens.Where(Text == "Parse" &amp;&amp; GetNextToken(false, false, false, false).Text == "(").Count()) == 2</d6p1:Condition>
           </AssessmentBase>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:ParentNodeForEveryTokenLinqMethod">
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d6p1:AncestorNodeForEveryTokenLinqAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>2</ChapterNo>
             <ExerciseNo>2</ExerciseNo>
             <Sequence>4</Sequence>
-            <Title>Parent is Identifier</Title>
-            <d6p1:ParentCondition>parentNode.RawKind == syntaxKind.Value("IdentifierName")</d6p1:ParentCondition>
-            <d6p1:TokenSelector>tokens.Where(Text == "Parse" &amp;&amp; GetNextToken(false, false, false, false).Text == "(")</d6p1:TokenSelector>
-          </AssessmentBase>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:AncestorNodeForEveryTokenLinqMethod">
-            <AbortOnFail>false</AbortOnFail>
-            <ChapterNo>2</ChapterNo>
-            <ExerciseNo>2</ExerciseNo>
-            <Sequence>5</Sequence>
             <Title>Is part of assignment</Title>
             <d6p1:ParentCondition>parentNode.RawKind == syntaxKind.Value("SimpleAssignmentExpression")</d6p1:ParentCondition>
             <d6p1:TokenSelector>tokens.Where(Text == "Parse" &amp;&amp; GetNextToken(false, false, false, false).Text == "(")</d6p1:TokenSelector>
           </AssessmentBase>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:SyntaxTreeScriptAssessment">
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d6p1:SyntaxTreeScriptAssessment">
+            <AbortOnFail>false</AbortOnFail>
+            <ChapterNo>2</ChapterNo>
+            <ExerciseNo>2</ExerciseNo>
+            <Sequence>5</Sequence>
+            <Title>Script Test</Title>
+            <d6p1:Script>WriteToConsole("Hello 1\n"); string fromPrevious="Hello from previous\n"; return Tree.GetRoot().DescendantTokens(n =&gt; true).Count(t =&gt; t.Text == "Parse") == 2;</d6p1:Script>
+          </AssessmentBase>
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d6p1:SyntaxTreeScriptAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>2</ChapterNo>
             <ExerciseNo>2</ExerciseNo>
             <Sequence>6</Sequence>
-            <Title>Script Test</Title>
+            <Title>Second script test</Title>
+            <d6p1:Script>WriteToConsole(fromPrevious); return true;</d6p1:Script>
           </AssessmentBase>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:CheckLastLineOfOutputAssessment">
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d6p1:CheckLastLineOfOutputAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>2</ChapterNo>
             <ExerciseNo>2</ExerciseNo>
@@ -135,7 +113,7 @@
 3</ConsoleInText>
             <d6p1:ExpectedResult>The answer is 8</d6p1:ExpectedResult>
           </AssessmentBase>
-          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods" i:type="d6p1:LastLineLinqAssessment">
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d6p1:LastLineLinqAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>2</ChapterNo>
             <ExerciseNo>2</ExerciseNo>

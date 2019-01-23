@@ -8,9 +8,9 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using DynamicExpression = System.Linq.Dynamic.DynamicExpression;
 
-namespace CodingTrainer.CSharpRunner.Assessment.Methods
+namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
 {
-    public class AncestorNodeForEveryTokenLinqMethod : AssessmentByInspectionBase
+    public class AncestorNodeForEveryTokenLinqAssessment : AssessmentByInspectionBase
     {
         public string TokenSelector { get; set; }
         public string ParentCondition { get; set; }

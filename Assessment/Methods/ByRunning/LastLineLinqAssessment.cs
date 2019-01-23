@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using DynamicExpression = System.Linq.Dynamic.DynamicExpression;
 
-namespace CodingTrainer.CSharpRunner.Assessment.Methods
+namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning
 {
     public class LastLineLinqAssessment : AssessmentByRunningBase
     {

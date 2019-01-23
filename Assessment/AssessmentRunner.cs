@@ -87,8 +87,10 @@ namespace CodingTrainer.CSharpRunner.Assessment
             var result = true;
             var aborted = false;
             var failCount = 0;
+            dynamic assessmentBag = new System.Dynamic.ExpandoObject();
             foreach (var assessment in assessments)
             {
+                assessment.AssessmentBag = assessmentBag;
                 assessment.ConsoleWrite += OnConsoleWrite;
                 if (assessment is AssessmentByInspectionBase inspectionAssessment)
                 {

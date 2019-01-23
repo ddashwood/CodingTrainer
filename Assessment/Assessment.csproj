@@ -161,15 +161,12 @@
     <Compile Include="AssessmentManager.cs" />
     <Compile Include="AssessmentMethodBase.cs" />
     <Compile Include="AssessmentRunner.cs" />
-    <Compile Include="Methods\AlwaysPassAssessment.cs" />
-    <Compile Include="Methods\AncestorNodeForEachTokenLinqMethod.cs" />
-    <Compile Include="Methods\CheckAllOutputAssessment.cs" />
-    <Compile Include="Methods\CheckLastLineOfOutputAssessment.cs" />
-    <Compile Include="Methods\LastLineLinqAssessment.cs" />
-    <Compile Include="Methods\ParentNodeForEachTokenLinqMethod.cs" />
-    <Compile Include="Methods\SyntaxTokensLinqMethod.cs" />
-    <Compile Include="Methods\SyntaxTreeScriptAssessment.cs" />
-    <Compile Include="Methods\VariableTypeAssessment.cs" />
+    <Compile Include="Methods\ByInspection\AncestorNodeForEveryTokenLinqAssessment.cs" />
+    <Compile Include="Methods\ByRunning\CheckAllOutputAssessment.cs" />
+    <Compile Include="Methods\ByRunning\CheckLastLineOfOutputAssessment.cs" />
+    <Compile Include="Methods\ByRunning\LastLineLinqAssessment.cs" />
+    <Compile Include="Methods\ByInspection\SyntaxTokensLinqAssessment.cs" />
+    <Compile Include="Methods\ByInspection\SyntaxTreeScriptAssessment.cs" />
     <Compile Include="PreProgrammedTextReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
