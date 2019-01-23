@@ -16,6 +16,12 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
         {
             public SyntaxTree Tree { get; set; }
             public Action<string> WriteToConsole { get; set; }
+
+            public Globals(SyntaxTree tree, SyntaxTreeScriptAssessment owner)
+            {
+                Tree = tree;
+                WriteToConsole = owner.WriteToConsole;
+            }
         }
 
         public string Script { get; set; }
@@ -44,7 +50,7 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
                 // This is the first script
 
                 var tree = compilation.SyntaxTrees.Single();
-                var globals = new Globals { Tree = tree, WriteToConsole = WriteToConsole };
+                var globals = new Globals(tree, this);
                 state = await CSharpScript.RunAsync<bool>(Script, options, globals);
             }
 
