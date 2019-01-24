@@ -22,6 +22,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(Contexts.ApplicationDbContext context)

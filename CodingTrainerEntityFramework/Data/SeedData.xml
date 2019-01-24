@@ -92,16 +92,24 @@
             <ChapterNo>2</ChapterNo>
             <ExerciseNo>2</ExerciseNo>
             <Sequence>5</Sequence>
-            <Title>Script Test</Title>
-            <d6p1:Script>WriteToConsole("Hello 1\n"); string fromPrevious="Hello from previous\n"; return Tree.GetRoot().DescendantTokens(n =&gt; true).Count(t =&gt; t.Text == "Parse") == 2;</d6p1:Script>
+            <Title>NEW has 2x Parse</Title>
+            <d6p1:Script>var nodes = Nodes.Where(n =&gt; n.GetText().ToString().Trim() == "Parse"); return nodes.Count() == 2;</d6p1:Script>
           </AssessmentBase>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d6p1:SyntaxTreeScriptAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>2</ChapterNo>
             <ExerciseNo>2</ExerciseNo>
             <Sequence>6</Sequence>
-            <Title>Second script test</Title>
-            <d6p1:Script>WriteToConsole(fromPrevious); return true;</d6p1:Script>
+            <Title>NEW Parse has ()</Title>
+            <d6p1:Script>return nodes.All(n =&gt; n.ChildTokens().First().GetNextToken().Text == "(");</d6p1:Script>
+          </AssessmentBase>
+          <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d6p1:SyntaxTreeScriptAssessment">
+            <AbortOnFail>false</AbortOnFail>
+            <ChapterNo>2</ChapterNo>
+            <ExerciseNo>2</ExerciseNo>
+            <Sequence>7</Sequence>
+            <Title>NEW is part of =</Title>
+            <d6p1:Script>return TreeHelper.NodesOnRightOfEquals(nodes);</d6p1:Script>
           </AssessmentBase>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d6p1:CheckLastLineOfOutputAssessment">
             <AbortOnFail>false</AbortOnFail>

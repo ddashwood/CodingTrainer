@@ -10,17 +10,21 @@ using Microsoft.CodeAnalysis.Scripting;
 
 namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
 {
-    public class SyntaxTreeScriptAssessment : AssessmentByInspectionBase
+    public partial class SyntaxTreeScriptAssessment : AssessmentByInspectionBase
     {
         public class Globals
         {
-            public SyntaxTree Tree { get; set; }
-            public Action<string> WriteToConsole { get; set; }
+            public SyntaxTree Tree { get; }
+            public IEnumerable<SyntaxNode> Nodes { get; }
+            public Action<string> WriteToConsole { get; }
+            public TreeHelper TreeHelper { get; }
 
             public Globals(SyntaxTree tree, SyntaxTreeScriptAssessment owner)
             {
                 Tree = tree;
+                Nodes = tree.GetRoot().DescendantNodes(n => true);
                 WriteToConsole = owner.WriteToConsole;
+                TreeHelper = new TreeHelper(Tree);
             }
         }
 
@@ -32,9 +36,11 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
             ScriptOptions options = ScriptOptions.Default
                 .AddReferences(
                     Assembly.GetAssembly(typeof(SyntaxTree)),
+                    Assembly.GetAssembly(typeof(CSharpExtensions)),
                     Assembly.Load("System.Runtime, Version=4.0.20.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),
-                    Assembly.Load("System.Threading.Tasks, Version = 4.0.10.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a")
-                ).AddImports("Microsoft.CodeAnalysis", "System.Linq");
+                    Assembly.Load("System.Threading.Tasks, Version = 4.0.10.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a"),
+                    Assembly.Load("System.Text.Encoding, Version = 4.0.10.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a")
+                ).AddImports("Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "System.Linq");
 
 
             ScriptState<bool> state;

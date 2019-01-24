@@ -10,6 +10,7 @@ using DynamicExpression = System.Linq.Dynamic.DynamicExpression;
 
 namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
 {
+    [Obsolete("Use SyntaxTreeScriptAssessment instead", true)]
     public class AncestorNodeForEveryTokenLinqAssessment : AssessmentByInspectionBase
     {
         public string TokenSelector { get; set; }
