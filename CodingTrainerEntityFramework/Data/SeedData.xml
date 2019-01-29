@@ -25,18 +25,22 @@
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>1</ExerciseNo>
             <Sequence>2</Sequence>
-            <Title>Last line</Title>
+            <Title>All</Title>
             <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
-            <d6p1:ExpectedResult>You entered: blah</d6p1:ExpectedResult>
+            <d6p1:ExpectedResult>Enter some text
+blah
+You entered: blah</d6p1:ExpectedResult>
+            <d6p1:RequiredAccuracy>0.9</d6p1:RequiredAccuracy>
           </AssessmentBase>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d6p1:CheckLastLineOfOutputAssessment">
             <AbortOnFail>false</AbortOnFail>
             <ChapterNo>1</ChapterNo>
             <ExerciseNo>1</ExerciseNo>
             <Sequence>1</Sequence>
-            <Title>All</Title>
+            <Title>Last Line</Title>
             <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
-            <d6p1:ExpectedResult>blah</d6p1:ExpectedResult>
+            <d6p1:ExpectedResult>You entered: blah</d6p1:ExpectedResult>
+            <d6p1:RequiredAccuracy>0.9</d6p1:RequiredAccuracy>
           </AssessmentBase>
         </Assessments>
         <ChapterNo>1</ChapterNo>
@@ -120,6 +124,7 @@
             <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">5
 3</ConsoleInText>
             <d6p1:ExpectedResult>The answer is 8</d6p1:ExpectedResult>
+            <d6p1:RequiredAccuracy>1</d6p1:RequiredAccuracy>
           </AssessmentBase>
           <AssessmentBase xmlns:d6p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d6p1:LastLineLinqAssessment">
             <AbortOnFail>false</AbortOnFail>
