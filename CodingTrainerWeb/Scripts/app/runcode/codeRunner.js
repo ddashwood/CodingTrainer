@@ -18,10 +18,14 @@
 
 CodeRunner.prototype.run = function (code, forAssessment) {
     try {
-        var serverFunc = forAssessment ?
-            code => this.runnerHub.server.assess (code, this.chapter, this.exercise) :
-            this.runnerHub.server.run;
-        serverFunc(code).fail(function (e) {
+        var hubProcess;
+        if (forAssessment) {
+            hubProcess = this.runnerHub.server.assess(code, this.chapter, this.exercise);
+        }
+        else {
+            hubProcess = this.runnerHub.server.run(code);
+        }
+        hubProcess.fail(function (e) {
             if (e.data) {
                 e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
             }

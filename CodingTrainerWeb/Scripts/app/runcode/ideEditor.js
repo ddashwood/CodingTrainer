@@ -14,13 +14,13 @@
             {
                 class: "cm-btn-submit cm-btn-disable-on-run",
                 label: "Submit",
-                callback: () => run(true)
+                callback: function () { run(true); }
             },
             {
                 hotkey: "F5",
                 class: "cm-btn-run cm-btn-disable-on-run",
                 label: "Connecting",
-                callback: () => run(false)
+                callback: function () { run(false); }
             },
             {
                 hotkey: "Ctrl-Z",

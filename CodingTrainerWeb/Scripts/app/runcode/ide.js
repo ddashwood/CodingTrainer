@@ -1,6 +1,7 @@
-﻿function Ide(serviceFactory, isSubmittable) {
+﻿function Ide(serviceFactory, isSubmittable, fixedSize) {
     var self = this;
     this.isSubmittable = isSubmittable;
+    this.fixedSize = fixedSize;
 
     // Make the service objects
     var codeRunner = serviceFactory.getCodeRunner(this);
@@ -35,6 +36,25 @@
     // Make the CodeMirror editors
     this.editor = this.getEditor(run, requestCompletions);
     this.codeConsole = this.getConsole(consoleIn);
+
+    // Reside the editors based on the screen size
+    if (this.fixedSize) {
+        var resizeIde = function () {
+            var screenHeight = $(window).height();
+            var editorTop = $('.CodeMirror').first().offset().top;
+            var buttonsHeight = $('.CodeMirror-buttonsPanel').first().height();
+            var ideHeight = screenHeight - editorTop - buttonsHeight - 50;
+            self.editor.setSize(null, (ideHeight * 0.6 + buttonsHeight) + "px");
+            self.codeConsole.setSize(null, (ideHeight * 0.4) + "px");
+        };
+        var resizeIdeDebounceTimer = null;
+        var resizeIdeDebounce = function () {
+            clearTimeout(resizeIdeDebounceTimer);
+            resizeIdeDebounceTimer = setTimeout(resizeIde, 100);
+        };
+        $(window).on('resize', resizeIdeDebounce);
+        resizeIde();
+    }
 
     // Connect to the server
     // When done, enable the Run button, etc

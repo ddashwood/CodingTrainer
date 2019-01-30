@@ -16,7 +16,7 @@
     display:none;
 }
 .cm-btn-submit.cm-btn-submit-enabled {
-    display:initial;
+    display:inline;
 }
 
 

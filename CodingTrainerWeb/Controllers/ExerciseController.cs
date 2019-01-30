@@ -67,12 +67,12 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
 
         [Authorize]
         [ChildActionOnly]
-        public ActionResult RunCode(Exercise exercise)
+        public ActionResult RunCode(Exercise exercise, bool fullScreen = false)
         {
             async Task<ActionResult> RunCodeAsync(Exercise _exercise)
             {
                 string activeTheme = await userServices.GetCodeMirrorThemeAsync();
-                return RunCode(_exercise, activeTheme);
+                return RunCode(_exercise, activeTheme, fullScreen);
             }
 
             return RunWithoutSyncContext(() => RunCodeAsync(exercise));
@@ -80,7 +80,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
 
         [Authorize]
         [ChildActionOnly]
-        public ActionResult RunCodeById(int chapter, int exercise)
+        public ActionResult RunCodeById(int chapter, int exercise, bool fullScreen = false)
         {
             async Task<ActionResult> RunCodeAsync(int _chapter, int _exercise)
             {
@@ -92,14 +92,15 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                 string activeTheme = themeTask.Result;
                 Exercise model = exerciseTask.Result;
 
-                return RunCode(model, activeTheme);
+                return RunCode(model, activeTheme, fullScreen);
             }
 
             return RunWithoutSyncContext(() => RunCodeAsync(chapter, exercise));
         }
 
-        private ActionResult RunCode(Exercise model, string activeTheme)
+        private ActionResult RunCode(Exercise model, string activeTheme, bool fullScreen = false)
         {
+            ViewBag.FullScreenIde = fullScreen;
             ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
                 { Text = char.ToUpper(t[0]) + t.Substring(1), Value = t, Selected = t == activeTheme });
 
