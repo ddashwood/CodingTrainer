@@ -1,7 +1,7 @@
 ﻿$(function () {
     var popoutUnloadHandled = false;
     var w = null;
-    if (window.opener !== null) {
+    if (window.opener) {
         // We are a popout window - when we close, tell the main window
         window.onbeforeunload = window.onunload = function () {
             if (popoutUnloadHandled) return;
