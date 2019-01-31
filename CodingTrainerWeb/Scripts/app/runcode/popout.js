@@ -1,14 +1,26 @@
 ﻿$(function () {
+    var popoutUnloadHandled = false;
+    var w = null;
     if (window.opener !== null) {
-        var popoutUnloadHandled = false;
+        // We are a popout window - when we close, tell the main window
         window.onbeforeunload = window.onunload = function () {
             if (popoutUnloadHandled) return;
             popoutUnloadHandled = true;
 
             try {
+                w = null;
                 opener.ideGlobals.popoutClosing(ideGlobals.ide.getValue());
             }
             catch (e) { console.log(e); }
+        };
+    }
+    else {
+        // We are the main window - when we close, close the popout window too
+        window.onbeforeunload = window.onunload = function () {
+            if (w !== null) {
+                w.close();
+                w = null;
+            }
         };
     }
 
@@ -24,7 +36,7 @@
             $('#exerciseInput').val(ideGlobals.model.ExerciseNo);
             $('#codeInput').val(ideGlobals.ide.getValue());
 
-            window.open("about:blank", "formresult", "left=0,top=0,width=800,height=640,menubar=no,toolbar=no,location=no,personalbar=no,status=no,scrollbars=yes,resizable=yes");
+            w = window.open("about:blank", "formresult", "left=0,top=0,width=800,height=640,menubar=no,toolbar=no,location=no,personalbar=no,status=no,scrollbars=yes,resizable=yes");
             
             $('form#newWindow').submit();
             $('#ide').hide();
