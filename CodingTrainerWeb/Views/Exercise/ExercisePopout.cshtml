@@ -1,0 +1,10 @@
+﻿@model CodingTrainer.CodingTrainerModels.Exercise
+
+@{
+    ViewBag.Title = "Exercise - " + Model.ExerciseName;
+    Layout = "~/Views/Shared/_FullScreenLayout.cshtml";
+}
+
+<h2>Exercise - @Model.ExerciseName</h2>
+
+@Html.Action("RunCode", new { Exercise = Model, FullScreen = true })

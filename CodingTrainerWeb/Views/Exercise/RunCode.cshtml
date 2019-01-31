@@ -8,11 +8,12 @@
     @Scripts.Render("~/bundles/runcode")
     <script>
         // Get everything started
+        var ideGlobals = {};
         (function () {
             var signalRFactory = new SignalRFactory();
-            var model = @Html.Raw(Json.Encode(new { Model.ChapterNo, Model.ExerciseNo, Model.DefaultCode, Model.HiddenCodeHeader }));
-            var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, model.HiddenCodeHeader, @Model.ChapterNo, @Model.ExerciseNo);
-            new Ide(serviceFactory, @((Model.ChapterNo > 0 && Model.ExerciseNo > 0).ToString().ToLower()), @ViewBag.FullScreenIde.ToString().ToLower());
+            ideGlobals.model = @Html.Raw(Json.Encode(new { Model.ChapterNo, Model.ExerciseNo, Model.DefaultCode, Model.HiddenCodeHeader }));
+            var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, ideGlobals.model.HiddenCodeHeader, @Model.ChapterNo, @Model.ExerciseNo);
+            ideGlobals.ide = new Ide(serviceFactory, @((Model.ChapterNo > 0 && Model.ExerciseNo > 0).ToString().ToLower()), @ViewBag.FullScreenIde.ToString().ToLower());
         })();
     </script>
 }
@@ -22,11 +23,25 @@
     <link href="~/Content/RunCode.css" rel="stylesheet" type="text/css" />
 }
 
-<div>
+<div id="ide">
     @*Theme div is not displayed - can be enabled in browser developer tools if required*@
     <div id="theme-div" class="row bottom-buffer" style="display:none">
         Select theme: @Html.DropDownList("Theme")
     </div>
+
+    @*Popout form is only displayed if we've not been asked to fill the whole screen*@
+    @if (!ViewBag.FullScreenIde)
+    {
+        <form action="@Url.Action("ExercisePopout", "Exercise")" method="post" target="formresult" id="newWindow">
+            <input type="hidden" name="chapter" id="chapterInput" value="" />
+            <input type="hidden" name="exercise" id="exerciseInput" value="" />
+            <input type="hidden" name="code" id="codeInput" value="" />
+
+            <p><a href="@Url.Action("ExercisePopout", "Exercise")" id="popoutLink">Open editor in new window</a>
+        </form>
+    }
+
+    @*Now the text areas which will form the basis of the IDE*@
     <div class="row">
         @Html.TextArea("code", Model.DefaultCode, new { style = "display:none" })
     </div>

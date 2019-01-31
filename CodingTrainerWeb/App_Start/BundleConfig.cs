@@ -65,7 +65,8 @@ namespace CodingTrainer.CodingTrainerWeb
                         // The editor
                         "~/Scripts/app/runcode/ide.js",
                         "~/Scripts/app/runcode/ideEditor.js",
-                        "~/Scripts/app/runcode/ideConsole.js"));
+                        "~/Scripts/app/runcode/ideConsole.js",
+                        "~/Scripts/app/runcode/popout.js"));
 
             var codeMirrorStyles = new List<string> {
                         "~/Scripts/codemirror/lib/codemirror.css",

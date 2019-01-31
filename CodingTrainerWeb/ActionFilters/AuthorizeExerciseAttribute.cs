@@ -35,8 +35,13 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
                 return false;
             }
 
+            // Retrieve GET parameters
             object oChapter = httpContext.Request.RequestContext.RouteData.Values["chapter"];
             object oExercise = httpContext.Request.RequestContext.RouteData.Values["exercise"];
+
+            // Retrieve POST parameters
+            oChapter = oChapter ?? httpContext.Request.Params["chapter"];
+            oExercise = oExercise ?? httpContext.Request.Params["exercise"];
 
             if (oChapter == null || oExercise == null)
             {

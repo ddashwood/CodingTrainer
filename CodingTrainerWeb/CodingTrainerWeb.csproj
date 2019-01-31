@@ -407,6 +407,7 @@
     <Content Include="Scripts\app\runcode\ideEditor.js" />
     <Content Include="Scripts\app\runcode\ideServices.js" />
     <Content Include="Scripts\app\runcode\ideServicesWithCorrections.js" />
+    <Content Include="Scripts\app\runcode\popout.js" />
     <Content Include="Scripts\app\runcode\serviceFactory.js" />
     <Content Include="Scripts\app\runcode\serviceFactoryForHiddenCode.js" />
     <Content Include="Scripts\app\runcode\signalRFactory.js" />
@@ -822,6 +823,8 @@
     <Content Include="Views\Manage\Details.cshtml" />
     <Content Include="Views\Manage\Edit.cshtml" />
     <Content Include="Views\Manage\Settings.cshtml" />
+    <Content Include="Views\Shared\_FullScreenLayout.cshtml" />
+    <Content Include="Views\Exercise\ExercisePopout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

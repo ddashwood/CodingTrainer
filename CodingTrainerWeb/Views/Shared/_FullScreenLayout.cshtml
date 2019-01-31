@@ -1,0 +1,67 @@
+﻿@using CodingTrainer.CodingTrainerWeb.ViewExtensions
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Code Runner</title>
+
+    <link href="@Url.Content($"~/Content/Themes/{User.GetBootstrapTheme()}/bootstrap{Url.IncludeMin()}.css")" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    <link href="@Url.Content($"~/Content/Themes/{User.GetBootstrapTheme()}/site.css")" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+    @Html.RenderSection("styles")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @* Cookie consent from https://cookieconsent.insites.com/download/ *@
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+    <script>
+        window.addEventListener("load", function () {
+            window.cookieconsent.initialise({
+                "palette": {
+                    "popup": {
+                        "background": "#eeeeee",
+                        "text": "#666666"
+                    },
+                    "button": {
+                        "background": "#2a9fd6"
+                    }
+                },
+                "theme": "classic",
+                "content": {
+                    "href": "@Url.Action("PrivacyPolicy", "Home")"
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+    <div id="main-navbar" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <span class="navbar-brand">Coding Trainer</span>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="row">
+            <div class="container-fluid">
+                <div class="row row-offcanvas row-offcanvas-left">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; 2017-@DateTime.Now.Year - Dean Dashwood</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @Html.RenderSection("scripts")
+</body>
+</html>

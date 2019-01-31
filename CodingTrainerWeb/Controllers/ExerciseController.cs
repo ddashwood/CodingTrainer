@@ -44,6 +44,19 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return View(exerciseDetails);
         }
 
+        [HttpPost]
+        [AuthorizeExercise]
+        public async Task<ActionResult> ExercisePopout(int chapter, int exercise, string code)
+        {
+            var exerciseDetails = await rep.GetExerciseAsync(chapter, exercise);
+            if (exerciseDetails == null) throw new HttpException(404, "Not found");
+            if (code != null)
+            {
+                exerciseDetails.DefaultCode = code;
+            }
+            return View(exerciseDetails);
+        }
+
         [Authorize]
         public async Task<ActionResult> CurrentExercise()
         {

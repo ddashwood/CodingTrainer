@@ -37,7 +37,7 @@
     this.editor = this.getEditor(run, requestCompletions);
     this.codeConsole = this.getConsole(consoleIn);
 
-    // Reside the editors based on the screen size
+    // Resise the editors based on the screen size
     if (this.fixedSize) {
         var resizeIde = function () {
             var screenHeight = $(window).height();
@@ -85,6 +85,19 @@
     this.editor.on('change', function () {
         changed();
     });
+}
+
+Ide.prototype.getValue = function (separator) {
+    return this.editor.getValue(separator);
+};
+
+Ide.prototype.setValue = function (content) {
+    this.editor.setValue(content);
+};
+
+Ide.prototype.refresh = function () {
+    this.editor.refresh();
+    this.codeConsole.refresh();
 }
 
 Ide.prototype.consoleOut = function (message) {
