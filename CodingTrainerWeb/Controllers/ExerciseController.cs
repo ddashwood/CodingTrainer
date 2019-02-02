@@ -121,10 +121,10 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             var viewModel = new RunCodeViewModel
             {
                 Exercise = model,
-                SavedCode = savedCode
+                SavedCode = savedCode,
+                FullScreenIde = fullScreen
             };
 
-            ViewBag.FullScreenIde = fullScreen;
             ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
             {
                 Text = char.ToUpper(t[0]) + t.Substring(1),

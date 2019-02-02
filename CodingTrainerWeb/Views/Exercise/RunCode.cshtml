@@ -13,7 +13,7 @@
             var signalRFactory = new SignalRFactory();
             ideGlobals.model = @Html.Raw(Json.Encode(new { Model.Exercise.ChapterNo, Model.Exercise.ExerciseNo, Model.Exercise.DefaultCode, Model.Exercise.HiddenCodeHeader }));
             var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, ideGlobals.model.HiddenCodeHeader, @Model.Exercise.ChapterNo, @Model.Exercise.ExerciseNo);
-            ideGlobals.ide = new Ide(serviceFactory, @((Model.Exercise.ChapterNo > 0 && Model.Exercise.ExerciseNo > 0).ToString().ToLower()), @ViewBag.FullScreenIde.ToString().ToLower(), ideGlobals.model);
+            ideGlobals.ide = new Ide(serviceFactory, @((Model.Exercise.ChapterNo > 0 && Model.Exercise.ExerciseNo > 0).ToString().ToLower()), @Model.FullScreenIde.ToString().ToLower(), ideGlobals.model);
         })();
     </script>
 }
@@ -30,7 +30,7 @@
     </div>
 
     @*Popout form is only displayed if we've not been asked to fill the whole screen*@
-    @if (!ViewBag.FullScreenIde)
+    @if (!Model.FullScreenIde)
     {
         <form action="@Url.Action("ExercisePopout", "Exercise")" method="post" target="formresult" id="newWindow">
             <input type="hidden" name="chapter" id="chapterInput" value="" />
