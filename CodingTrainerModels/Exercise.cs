@@ -34,6 +34,7 @@ namespace CodingTrainer.CodingTrainerModels
         public virtual Chapter Chapter { get; set; }
 
         public virtual ICollection<AssessmentBase> Assessments { get; set; }
+        public virtual ICollection<SavedWork> SavedWork { get; set; }
 
         // To sort exercises, e.g. in the exercise list, sort them by exercise number
         public int CompareTo(Exercise other)

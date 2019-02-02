@@ -71,10 +71,11 @@ namespace CodingTrainer.CodingTrainerWeb
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor(new Type[] { typeof(IUserServices) }));
 
-            // Action Filters aren't created using Unity's resolver, so we need to inject dependencies into them
+            // Action Filters, etc aren't created using Unity's resolver, so we need to inject dependencies into them
             AuthorizeExerciseAttribute.UserServices = container.Resolve<IUserServices>();
             AuthorizeExerciseAttribute.DbRepository = container.Resolve<ICodingTrainerRepository>();
             LogAndHandleErrorAttribute.Repository = container.Resolve<ICodingTrainerRepository>();
+            LogAndHandleWebApiError.Repository = container.Resolve<ICodingTrainerRepository>();
         }
     }
 }

@@ -41,6 +41,7 @@ namespace CodingTrainer.CodingTrainerModels.Security
 
         public virtual ICollection<Submission> Submissions { get; set; }
         public virtual ICollection<ExceptionLog> ExceptionLogs { get; set; }
+        public virtual ICollection<SavedWork> SaveWork { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

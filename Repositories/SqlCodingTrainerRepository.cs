@@ -69,6 +69,33 @@ namespace CodingTrainer.Repositories
             context.UnhandledControllerExceptions.Add(exception);
             context.SaveChanges();
         }
+
+        // Saved work
+
+        public async Task SaveWorkAsync(SavedWork savedWork)
+        {
+            var existingData = context.SavedWork.Where(s => s.UserId == savedWork.UserId 
+                                                         && s.ChapterNo == savedWork.ChapterNo
+                                                         && s.ExerciseNo == savedWork.ExerciseNo);
+            if (await existingData.AnyAsync())
+            {
+                savedWork.SavedWorkId = existingData.Single().SavedWorkId;
+                context.Entry(existingData.Single()).CurrentValues.SetValues(savedWork);
+                await context.SaveChangesAsync();
+            }
+            else
+            {
+                context.SavedWork.Add(savedWork);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<SavedWork> GetSavedWorkAsync(int chapter, int exercise, string userId)
+        {
+            return await context.SavedWork.SingleOrDefaultAsync(s => s.ChapterNo == chapter
+                                                                  && s.ExerciseNo == exercise
+                                                                  && s.UserId == userId);
+        }
     }
 
 }

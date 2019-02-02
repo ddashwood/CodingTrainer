@@ -1,4 +1,4 @@
-﻿Ide.prototype.getEditor = function (run, requestCompletions) {
+﻿Ide.prototype.getEditor = function (run, requestCompletions, model) {
     var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
         lineNumbers: true,
         matchBrackets: true,
@@ -12,9 +12,18 @@
         gutters: ["CodeMirror-lint-markers"],
         buttons: [
             {
-                class: "cm-btn-submit cm-btn-disable-on-run",
+                class: "cm-btn-submit cm-btn-right cm-btn-disable-on-run",
                 label: "Submit",
                 callback: function () { run(true); }
+            },
+            {
+                class: "cm-btn-revert cm-btn-right",
+                label: "&#x238C;",
+                callback: function (cm) {
+                    if (confirm("Revert to starter?\n\nWARNING: You will lose any work you've done on this exercise!")) {
+                        cm.setValue(model.DefaultCode);
+                    }
+                }
             },
             {
                 hotkey: "F5",
@@ -87,7 +96,7 @@
         $('.cm-btn-redo').attr('data-toggle', 'tooltip').attr('title', 'Redo (Ctrl-Y)').tooltip();
         $('.cm-btn-comment').attr('data-toggle', 'tooltip').attr('title', 'Toggle comment (Ctrl-/)').tooltip();
         $('.cm-btn-indent').attr('data-toggle', 'tooltip').attr('title', 'Auto-indent (Ctrl-K Ctrl-D)').tooltip();
-
+        $('.cm-btn-revert').attr('data-toggle', 'tooltip').attr('title', 'Revert to starter code').tooltip();
 
         $('[data-toggle="tooltip"]').tooltip({ trigger: 'hover' }).on('click', function () {
             $(this).tooltip('hide');

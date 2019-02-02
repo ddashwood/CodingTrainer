@@ -1,0 +1,44 @@
+﻿$(function () {
+    function saveIfVisible(code) {
+        if ($('#ide').is(':visible')) {
+            try {
+                var url = "/api/SavedWork/" + ideGlobals.model.ChapterNo + "/" + ideGlobals.model.ExerciseNo;
+                $.ajax({
+                    type: "PUT",
+                    url: url,
+                    dataType: "application/json",
+                    data: "=" + encodeURIComponent(code)
+                }).fail(function () {
+                    $('#ide-save-error').show();
+                });
+            }
+            catch (e) {
+                $('#ide-save-error').show();
+            }
+        }
+    }
+
+    // Save on exit
+    // N.b. Mobile iOS does not support beforeunload
+    //   Recommended alternatives are unload, or pagehide
+    //   but testing shows that neither of these work properly
+    //   either. No known resolution at present.
+    $(window).on('beforeunload', function () {
+        saveIfVisible(ideGlobals.ide.getValue());
+    });
+
+
+
+    // Autosave
+    var lastSavedCode = ideGlobals.ide.getValue();
+
+    function autoSave() {
+        var currentCode = ideGlobals.ide.getValue();
+        if (lastSavedCode !== currentCode) {
+            lastSavedCode = currentCode;
+            saveIfVisible(currentCode);
+        }
+        setTimeout(autoSave, 3000);
+    }
+    autoSave();
+});

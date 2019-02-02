@@ -1,7 +1,8 @@
-﻿function Ide(serviceFactory, isSubmittable, fixedSize) {
+﻿function Ide(serviceFactory, isSubmittable, fixedSize, model) {
     var self = this;
     this.isSubmittable = isSubmittable;
     this.fixedSize = fixedSize;
+    this.model = model;
 
     // Make the service objects
     var codeRunner = serviceFactory.getCodeRunner(this);
@@ -34,7 +35,7 @@
 
 
     // Make the CodeMirror editors
-    this.editor = this.getEditor(run, requestCompletions);
+    this.editor = this.getEditor(run, requestCompletions, model);
     this.codeConsole = this.getConsole(consoleIn);
 
     // Resise the editors based on the screen size

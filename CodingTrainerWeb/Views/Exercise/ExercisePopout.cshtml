@@ -1,10 +1,10 @@
-﻿@model CodingTrainer.CodingTrainerModels.Exercise
+﻿@model CodingTrainer.CodingTrainerWeb.Models.RunCodeViewModel
 
 @{
-    ViewBag.Title = "Exercise - " + Model.ExerciseName;
+    ViewBag.Title = "Exercise - " + Model.Exercise.ExerciseName;
     Layout = "~/Views/Shared/_FullScreenLayout.cshtml";
 }
 
-<h2>Exercise - @Model.ExerciseName</h2>
+<h2>Exercise - @Model.Exercise.ExerciseName</h2>
 
-@Html.Action("RunCode", new { Exercise = Model, FullScreen = true })
+@Html.Action("RunCode", new { Exercise = Model.Exercise, FullScreen = true, overrideSavedCode = Model.SavedCode })

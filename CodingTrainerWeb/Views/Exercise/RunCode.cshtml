@@ -1,4 +1,4 @@
-﻿@model CodingTrainer.CodingTrainerModels.Exercise
+﻿@model CodingTrainer.CodingTrainerWeb.Models.RunCodeViewModel
 
 @using (Html.BeginSection("scripts"))
 {
@@ -11,9 +11,9 @@
         var ideGlobals = {};
         (function () {
             var signalRFactory = new SignalRFactory();
-            ideGlobals.model = @Html.Raw(Json.Encode(new { Model.ChapterNo, Model.ExerciseNo, Model.DefaultCode, Model.HiddenCodeHeader }));
-            var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, ideGlobals.model.HiddenCodeHeader, @Model.ChapterNo, @Model.ExerciseNo);
-            ideGlobals.ide = new Ide(serviceFactory, @((Model.ChapterNo > 0 && Model.ExerciseNo > 0).ToString().ToLower()), @ViewBag.FullScreenIde.ToString().ToLower());
+            ideGlobals.model = @Html.Raw(Json.Encode(new { Model.Exercise.ChapterNo, Model.Exercise.ExerciseNo, Model.Exercise.DefaultCode, Model.Exercise.HiddenCodeHeader }));
+            var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, ideGlobals.model.HiddenCodeHeader, @Model.Exercise.ChapterNo, @Model.Exercise.ExerciseNo);
+            ideGlobals.ide = new Ide(serviceFactory, @((Model.Exercise.ChapterNo > 0 && Model.Exercise.ExerciseNo > 0).ToString().ToLower()), @ViewBag.FullScreenIde.ToString().ToLower(), ideGlobals.model);
         })();
     </script>
 }
@@ -42,8 +42,17 @@
     }
 
     @*Now the text areas which will form the basis of the IDE*@
+
+    <div id="ide-save-error" class="row" style="display:none">
+        <p>
+            <strong><span class="text-danger">An error occurred while saving your work.</span>
+            The details of the error have been logged. Please contact Coding Trainer for
+            more details.</strong>
+        </p>
+</div>
+
     <div class="row">
-        @Html.TextArea("code", Model.DefaultCode, new { style = "display:none" })
+        @Html.TextArea("code", Model.SavedCode ?? Model.Exercise.DefaultCode, new { style = "display:none" })
     </div>
     <div class="row">
         @Html.TextArea("console", new { style = "display:none" })

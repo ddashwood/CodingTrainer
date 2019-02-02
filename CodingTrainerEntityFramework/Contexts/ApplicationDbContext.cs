@@ -26,6 +26,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Contexts
         public DbSet<ExceptionLog> ExceptionLogs { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<AssessmentMethodBase> Assessments { get; set; }
+        public DbSet<SavedWork> SavedWork { get; set; }
 
         public DbSet<UnhandledControllerException> UnhandledControllerExceptions { get; set; }
 

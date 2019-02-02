@@ -50,11 +50,11 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         {
             var exerciseDetails = await rep.GetExerciseAsync(chapter, exercise);
             if (exerciseDetails == null) throw new HttpException(404, "Not found");
-            if (code != null)
-            {
-                exerciseDetails.DefaultCode = code;
-            }
-            return View(exerciseDetails);
+            
+            return View(new RunCodeViewModel {
+                Exercise = exerciseDetails,
+                SavedCode = code
+            });
         }
 
         [Authorize]
@@ -80,44 +80,59 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
 
         [Authorize]
         [ChildActionOnly]
-        public ActionResult RunCode(Exercise exercise, bool fullScreen = false)
+        public ActionResult RunCode(Exercise exercise, bool fullScreen = false, string overrideSavedCode = null)
         {
-            async Task<ActionResult> RunCodeAsync(Exercise _exercise)
+            async Task<ActionResult> RunCodeAsync()
             {
                 string activeTheme = await userServices.GetCodeMirrorThemeAsync();
-                return RunCode(_exercise, activeTheme, fullScreen);
+                return await RunCodeInternal(exercise, activeTheme, fullScreen, overrideSavedCode);
             }
 
-            return RunWithoutSyncContext(() => RunCodeAsync(exercise));
+            return RunWithoutSyncContext(() => RunCodeAsync());
         }
 
         [Authorize]
         [ChildActionOnly]
-        public ActionResult RunCodeById(int chapter, int exercise, bool fullScreen = false)
+        public ActionResult RunCodeById(int chapter, int exercise, bool fullScreen = false, string overrideSavedCode = null)
         {
-            async Task<ActionResult> RunCodeAsync(int _chapter, int _exercise)
+            async Task<ActionResult> RunCodeAsync()
             {
                 Task<string> themeTask = userServices.GetCodeMirrorThemeAsync();
-                Task<Exercise> exerciseTask = rep.GetExerciseAsync(_chapter, _exercise);
+                Task<Exercise> exerciseTask = rep.GetExerciseAsync(chapter, exercise);
 
                 await Task.WhenAll(themeTask, exerciseTask);
 
                 string activeTheme = themeTask.Result;
                 Exercise model = exerciseTask.Result;
 
-                return RunCode(model, activeTheme, fullScreen);
+                return await RunCodeInternal(model, activeTheme, fullScreen, overrideSavedCode);
             }
 
-            return RunWithoutSyncContext(() => RunCodeAsync(chapter, exercise));
+            return RunWithoutSyncContext(() => RunCodeAsync());
         }
 
-        private ActionResult RunCode(Exercise model, string activeTheme, bool fullScreen = false)
+        private async Task<ActionResult> RunCodeInternal(Exercise model, string activeTheme, bool fullScreen, string overrideSavedCode)
         {
+            // The overrideSavedCode parameter is used when the caller knows that there may be
+            // a more up to date version of the code than that which is saved in the database.
+            // For example, when the editor is popped out, the current text may be the most up to date
+            var savedCode = overrideSavedCode ?? (await rep.GetSavedWorkAsync(model.ChapterNo, model.ExerciseNo, userServices.GetCurrentUserId()))?.SavedCode;
+
+            var viewModel = new RunCodeViewModel
+            {
+                Exercise = model,
+                SavedCode = savedCode
+            };
+
             ViewBag.FullScreenIde = fullScreen;
             ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()
-                { Text = char.ToUpper(t[0]) + t.Substring(1), Value = t, Selected = t == activeTheme });
+            {
+                Text = char.ToUpper(t[0]) + t.Substring(1),
+                Value = t,
+                Selected = t == activeTheme
+            });
 
-            return PartialView("RunCode", model);
+            return PartialView("RunCode", viewModel);
         }
 
         [Authorize]
