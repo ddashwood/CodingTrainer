@@ -27,31 +27,30 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
                 throw new InvalidOperationException("The Database Repository has not been set");
         }
 
-        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            if (!base.AuthorizeCore(httpContext))
+            base.OnAuthorization(filterContext);
+            if (filterContext.Result != null)
             {
-                // Not logged on
-                return false;
+                // Not logged in
+                return;
             }
 
-            // Retrieve GET parameters
-            object oChapter = httpContext.Request.RequestContext.RouteData.Values["chapter"];
-            object oExercise = httpContext.Request.RequestContext.RouteData.Values["exercise"];
-
-            // Retrieve POST parameters
-            oChapter = oChapter ?? httpContext.Request.Params["chapter"];
-            oExercise = oExercise ?? httpContext.Request.Params["exercise"];
+            ValueProviderResult oChapter = filterContext.Controller.ValueProvider.GetValue("chapter");
+            ValueProviderResult oExercise = filterContext.Controller.ValueProvider.GetValue("exercise");
 
             if (oChapter == null || oExercise == null)
             {
                 throw new InvalidOperationException("No Exercise details found in route parameters");
             }
-            chapter = Convert.ToInt32(oChapter);
-            exercise = Convert.ToInt32(oExercise);
+            chapter = Convert.ToInt32(oChapter.AttemptedValue);
+            exercise = Convert.ToInt32(oExercise.AttemptedValue);
 
             ApplicationUser user = UserServices.GetCurrentUser();
-            return user.ExercisePermitted(chapter, exercise);
+            if (!user.ExercisePermitted(chapter, exercise))
+            {
+                HandleUnauthorizedRequest(filterContext);
+            }
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

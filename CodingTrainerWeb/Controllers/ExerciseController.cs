@@ -46,14 +46,14 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
 
         [HttpPost]
         [AuthorizeExercise]
-        public async Task<ActionResult> ExercisePopout(int chapter, int exercise, string code)
+        public async Task<ActionResult> ExercisePopout(PopoutViewModel viewModel)
         {
-            var exerciseDetails = await rep.GetExerciseAsync(chapter, exercise);
+            var exerciseDetails = await rep.GetExerciseAsync(viewModel.Chapter, viewModel.Exercise);
             if (exerciseDetails == null) throw new HttpException(404, "Not found");
             
             return View(new RunCodeViewModel {
                 Exercise = exerciseDetails,
-                SavedCode = code
+                SavedCode = viewModel.Code
             });
         }
 

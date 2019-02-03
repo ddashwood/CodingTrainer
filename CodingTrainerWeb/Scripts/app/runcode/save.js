@@ -2,6 +2,8 @@
     function saveIfVisible(code) {
         if ($('#ide').is(':visible')) {
             try {
+                $('#ide-save').css('visibility', 'visible');
+
                 var url = "/api/SavedWork/" + ideGlobals.model.ChapterNo + "/" + ideGlobals.model.ExerciseNo;
                 $.ajax({
                     type: "PUT",
@@ -14,6 +16,12 @@
             }
             catch (e) {
                 $('#ide-save-error').show();
+            }
+            finally {
+                // Slight delay so user has time to see it
+                setTimeout(function () {
+                    $('#ide-save').css('visibility', 'hidden');
+                }, 500);
             }
         }
     }

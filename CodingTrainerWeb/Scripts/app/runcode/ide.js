@@ -35,6 +35,7 @@
 
 
     // Make the CodeMirror editors
+    $('#ide').show();
     this.editor = this.getEditor(run, requestCompletions, model);
     this.codeConsole = this.getConsole(consoleIn);
 

@@ -23,7 +23,7 @@
     <link href="~/Content/RunCode.css" rel="stylesheet" type="text/css" />
 }
 
-<div id="ide">
+<div id="ide" style="display:none">
     @*Theme div is not displayed - can be enabled in browser developer tools if required*@
     <div id="theme-div" class="row bottom-buffer" style="display:none">
         Select theme: @Html.DropDownList("Theme")
@@ -49,7 +49,10 @@
             The details of the error have been logged. Please contact Coding Trainer for
             more details.</strong>
         </p>
-</div>
+    </div>
+    <div id="ide-save" class="row" style="visibility:hidden">
+        Saving...
+    </div>
 
     <div class="row">
         @Html.TextArea("code", Model.SavedCode ?? Model.Exercise.DefaultCode, new { style = "display:none" })
