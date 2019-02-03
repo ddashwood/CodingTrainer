@@ -13,13 +13,27 @@ namespace CodingTrainer.CodingTrainerModels
     {
         [Required, Key]
         public int SubmissionId { get; set; }
-        [Required]
-        public string SubmittedCode { get; set; }
-        [Required]
+
+        [Column(Order = 0), ForeignKey("Exercise"), Required]
+        public int ChapterNo { get; set; }
+        [Column(Order = 1), ForeignKey("Exercise"), Required]
+        public int ExerciseNo { get; set; }
         public virtual Exercise Exercise { get; set; }
 
         [ForeignKey("User")]
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
+
+        [Required]
+        public DateTime SubmissionDateTime { get; set; }
+
+        [Required]
+        public string SubmittedCode { get; set; }
+
+        [Required]
+        public string Output { get; set; }
+
+        [Required]
+        public bool Success { get; set; }
     }
 }

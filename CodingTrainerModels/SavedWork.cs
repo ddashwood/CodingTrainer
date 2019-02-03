@@ -18,7 +18,6 @@ namespace CodingTrainer.CodingTrainerModels
         [Column(Order = 0), ForeignKey("Exercise"), Required]
         [Index("IX_SavedWorkUserExercise", IsUnique = true, Order = 2)]
         public int ChapterNo { get; set; }
-
         [Column(Order = 1), ForeignKey("Exercise"), Required]
         [Index("IX_SavedWorkUserExercise", IsUnique = true, Order = 3)]
         public int ExerciseNo { get; set; }

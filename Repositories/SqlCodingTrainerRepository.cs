@@ -62,6 +62,12 @@ namespace CodingTrainer.Repositories
             await context.SaveChangesAsync();
         }
 
+        public async Task InsertSubmissionAsync(Submission submission)
+        {
+            context.Submissions.Add(submission);
+            await context.SaveChangesAsync();
+        }
+
         // Unhandled exceptions
 
         public void InsertUnhandledControllerException(UnhandledControllerException exception)

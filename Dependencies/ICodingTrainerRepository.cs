@@ -22,6 +22,7 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
 
         // Assessments
         Task<IEnumerable<AssessmentBase>> GetAssessmentsMethodsForExerciseAsync(int chapterNo, int exerciseNo);
+        Task InsertSubmissionAsync(Submission submission);
 
         // Exception logs
         Task InsertExceptionLogAsync(ExceptionLog log);

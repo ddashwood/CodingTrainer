@@ -1,9 +1,11 @@
-﻿using CodingTrainer.CodingTrainerModels.Security;
+﻿using CodingTrainer.CodingTrainerModels;
+using CodingTrainer.CodingTrainerModels.Security;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using CodingTrainer.CSharpRunner.CodeHost;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -13,8 +15,8 @@ namespace CodingTrainer.CSharpRunner.Assessment
     {
         public event ConsoleWriteEventHandler ConsoleWrite;
 
-        private ICodeRunner codeRunner;
-        private ICodingTrainerRepository rep;
+        private readonly ICodeRunner codeRunner;
+        private readonly ICodingTrainerRepository rep;
 
         public AssessmentManager(ICodeRunner runner, ICodingTrainerRepository repository)
         {
@@ -24,6 +26,8 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         public async Task RunAssessmentsForExercise(ApplicationUser user, string code, int chapter, int exercise)
         {
+            var output = new StringBuilder();
+
             if (!user.ExercisePermitted(chapter, exercise))
             {
                 WriteToConsole("You do not have permission to do this exercise\r\n");
@@ -35,23 +39,34 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 return;
             }
 
-
-
             var assessments = await rep.GetAssessmentsMethodsForExerciseAsync(chapter, exercise);
             var assessmentRunner = new AssessmentRunner(codeRunner);
             assessmentRunner.ConsoleWrite += OnConsoleWrite;
-            await assessmentRunner.RunAssessmentsAsync(code, assessments.Select(a => (AssessmentMethodBase)a));
+            var result = await assessmentRunner.RunAssessmentsAsync(code, assessments.Select(a => (AssessmentMethodBase)a));
             assessmentRunner.ConsoleWrite -= OnConsoleWrite;
-        }
 
-        private void WriteToConsole(string message)
-        {
-            ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs(message));
-        }
+            var savedAssessment = new Submission
+            {
+                UserId = user.Id,
+                ChapterNo = chapter,
+                ExerciseNo = exercise,
+                SubmittedCode = code,
+                Output = output.ToString(),
+                Success = result,
+                SubmissionDateTime = DateTime.Now
+            };
+            await rep.InsertSubmissionAsync(savedAssessment);
 
-        private void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
-        {
-            ConsoleWrite?.Invoke(sender, e);
+            void WriteToConsole(string message)
+            {
+                OnConsoleWrite(this, new ConsoleWriteEventArgs(message));
+            }
+
+            void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
+            {
+                output.Append(e.Message);
+                ConsoleWrite?.Invoke(sender, e);
+            }
         }
     }
 }
