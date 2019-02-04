@@ -35,7 +35,7 @@
 
 
     // Make the CodeMirror editors
-    $('#ide').show();
+    $('#ide').show();  // Keep this hidden until now so user can't click on link before the JavaScript is ready
     this.editor = this.getEditor(run, requestCompletions, model);
     this.codeConsole = this.getConsole(consoleIn);
 
