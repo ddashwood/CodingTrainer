@@ -29,7 +29,7 @@ namespace CodingTrainer.CodingTrainerWeb.ApiControllers
                 UserId = userService.GetCurrentUserId(),
                 ChapterNo = chapter,
                 ExerciseNo = exercise,
-                SavedCode = savedWork
+                SavedCode = savedWork ?? ""
             };
 
             await repository.SaveWorkAsync(dataToSave);

@@ -54,17 +54,25 @@ namespace CodingTrainer.Repositories
                 .OrderBy(a => a.Sequence).ToListAsync();
         }
 
+        public async Task InsertSubmissionAsync(Submission submission)
+        {
+            context.Submissions.Add(submission);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Submission>> GetSubmissionsAsync(int chapterNo, int exerciseNo, string userId)
+        {
+            return await context.Submissions.Where(
+                c => c.ChapterNo == chapterNo
+                  && c.ExerciseNo == exerciseNo
+                  && c.UserId == userId).OrderByDescending(c => c.SubmissionDateTime).ToListAsync();
+        }
+
         // Exception logs
 
         public async Task InsertExceptionLogAsync(ExceptionLog log)
         {
             context.ExceptionLogs.Add(log);
-            await context.SaveChangesAsync();
-        }
-
-        public async Task InsertSubmissionAsync(Submission submission)
-        {
-            context.Submissions.Add(submission);
             await context.SaveChangesAsync();
         }
 

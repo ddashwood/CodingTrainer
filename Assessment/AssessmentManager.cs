@@ -27,35 +27,49 @@ namespace CodingTrainer.CSharpRunner.Assessment
         public async Task RunAssessmentsForExercise(ApplicationUser user, string code, int chapter, int exercise)
         {
             var output = new StringBuilder();
+            Exercise exerciseDetails;
+            string userCode;
+            var result = false;
 
             if (!user.ExercisePermitted(chapter, exercise))
             {
                 WriteToConsole("You do not have permission to do this exercise\r\n");
                 return;
             }
-            if (await rep.GetExerciseAsync(chapter, exercise) == null)
+            if ((exerciseDetails = await rep.GetExerciseAsync(chapter, exercise)) == null)
             {
                 WriteToConsole("Invalid exercise details\r\n");
                 return;
             }
-
-            var assessments = await rep.GetAssessmentsMethodsForExerciseAsync(chapter, exercise);
-            var assessmentRunner = new AssessmentRunner(codeRunner);
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-            var result = await assessmentRunner.RunAssessmentsAsync(code, assessments.Select(a => (AssessmentMethodBase)a));
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
-
-            var savedAssessment = new Submission
+            if (!code.StartsWith(exerciseDetails.HiddenCodeHeader))
             {
-                UserId = user.Id,
-                ChapterNo = chapter,
-                ExerciseNo = exercise,
-                SubmittedCode = code,
-                Output = output.ToString(),
-                Success = result,
-                SubmissionDateTime = DateTime.Now
-            };
-            await rep.InsertSubmissionAsync(savedAssessment);
+                WriteToConsole("Something went wrong with the pre-prepared code header");
+                throw new InvalidOperationException("Start of user's code does not match the hidden code header");
+            }
+            userCode = code.Substring(exerciseDetails.HiddenCodeHeader.Length + 1);
+
+            try
+            {
+                var assessments = await rep.GetAssessmentsMethodsForExerciseAsync(chapter, exercise);
+                var assessmentRunner = new AssessmentRunner(codeRunner);
+                assessmentRunner.ConsoleWrite += OnConsoleWrite;
+                result = await assessmentRunner.RunAssessmentsAsync(code, assessments.Select(a => (AssessmentMethodBase)a));
+                assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            }
+            finally
+            {
+                var savedAssessment = new Submission
+                {
+                    UserId = user.Id,
+                    ChapterNo = chapter,
+                    ExerciseNo = exercise,
+                    SubmittedCode = userCode,
+                    Output = output.ToString(),
+                    Success = result,
+                    SubmissionDateTime = DateTime.Now
+                };
+                await rep.InsertSubmissionAsync(savedAssessment);
+            }
 
             void WriteToConsole(string message)
             {

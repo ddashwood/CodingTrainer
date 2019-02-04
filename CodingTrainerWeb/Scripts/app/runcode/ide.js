@@ -38,6 +38,7 @@
     $('#ide').show();  // Keep this hidden until now so user can't click on link before the JavaScript is ready
     this.editor = this.getEditor(run, requestCompletions, model);
     this.codeConsole = this.getConsole(consoleIn);
+    $('#ide-loading').hide();
 
     // Resise the editors based on the screen size
     if (this.fixedSize) {

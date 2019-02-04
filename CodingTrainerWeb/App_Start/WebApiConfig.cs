@@ -18,9 +18,8 @@ namespace CodingTrainer.CodingTrainerWeb
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "SaveWork",
-                routeTemplate: "api/SavedWork/{chapter}/{exercise}",
-                defaults: new { controller = "SavedWork" }
+                name: "ExerciseApi",
+                routeTemplate: "api/{controller}/{chapter}/{exercise}"
             );
 
             config.Routes.MapHttpRoute(

@@ -335,6 +335,7 @@
     <Compile Include="ActionFilters\LogAndHandleWebApiError.cs" />
     <Compile Include="ApiControllers\ChapterController.cs" />
     <Compile Include="ApiControllers\SavedWorkController.cs" />
+    <Compile Include="ApiControllers\SubmissionsController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -755,6 +756,7 @@
     <Content Include="Scripts\codemirror\theme\Archive\xq-light.css" />
     <Content Include="Scripts\codemirror\theme\Archive\yeti.css" />
     <Content Include="Scripts\codemirror\theme\Archive\zenburn.css" />
+    <Content Include="Scripts\app\exercise.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />

@@ -10,6 +10,8 @@
                     url: url,
                     dataType: "application/json",
                     data: "=" + encodeURIComponent(code)
+                }).done(function () {
+                    $('#ide-save-error').hide();
                 }).fail(function () {
                     $('#ide-save-error').show();
                 });
@@ -21,7 +23,7 @@
                 // Slight delay so user has time to see it
                 setTimeout(function () {
                     $('#ide-save').css('visibility', 'hidden');
-                }, 500);
+                }, 300);
             }
         }
     }

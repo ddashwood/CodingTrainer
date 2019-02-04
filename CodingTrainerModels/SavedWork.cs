@@ -28,7 +28,7 @@ namespace CodingTrainer.CodingTrainerModels
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = true)]
         public string SavedCode { get; set; }
     }
 }
