@@ -333,7 +333,6 @@
     <Compile Include="ActionFilters\AuthorizeExerciseAttribute.cs" />
     <Compile Include="ActionFilters\LogAndHandleErrorAttribute.cs" />
     <Compile Include="ActionFilters\LogAndHandleWebApiError.cs" />
-    <Compile Include="ApiControllers\ChapterController.cs" />
     <Compile Include="ApiControllers\SavedWorkController.cs" />
     <Compile Include="ApiControllers\SubmissionsController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -352,7 +351,6 @@
     <Compile Include="Models\RunCodeViewModel.cs" />
     <Compile Include="Users\UserServices.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ChapterController.cs" />
     <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -400,7 +398,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\app\ChapterList.js" />
     <Content Include="Scripts\app\codemirror-addon\console.js" />
     <Content Include="Scripts\app\codemirror-addon\hint-loader.js" />
     <Content Include="Scripts\app\codemirror-addon\performed-lint.js" />
@@ -813,7 +810,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Chapter\List.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Exercise\Playground.cshtml" />

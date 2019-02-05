@@ -1,6 +1,11 @@
 ﻿// Submission tab
 
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    if (typeof(CodeMirror) === 'undefined') {
+        $('#submissions-content').text('Page is still initialising, please return to this screen in a moment');
+        return;
+    }
+
     var target = $(e.target).attr("href");
     if (target === '#submissions') {
         $('#submissions-content').text('Loading your previous submissions...');
