@@ -5,11 +5,16 @@
 }
 
 @section scripts {
+    <script>
+        var exerciseGlobals = {};
+        exerciseGlobals.model = @Html.Raw(Json.Encode(new { Model.ChapterNo, Model.ExerciseNo }));
+        exerciseGlobals.theme = '@ViewBag.ActiveTheme';
+    </script>
     <script src="~/Scripts/app/sidebar.js"></script>
     <script src="~/Scripts/app/exercise.js"></script>
 }
 
-@Html.Action("ExerciseSidebar", new { currentExercise = Model })
+                @Html.Action("ExerciseSidebar", new { currentExercise = Model })
 
 @*Seperation from "Show/Hide Sidebar" button - only required on small screens when button is displayed*@
 <div class="visible-sm visible-xs top-buffer"></div>
@@ -38,7 +43,7 @@
 
     <div id="submissions" class="tab-pane fade">
         <h3>Submissions</h3>
-        <p>Submissions are not yet supported</p>
+        <div id="submissions-content"></div>
     </div>
 
     <div id="answer" class="tab-pane fade">
