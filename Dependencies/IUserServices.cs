@@ -19,6 +19,6 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
         Task<string> GetCodeMirrorThemeAsync();
 
         Task UpdateNameAsync(string firstName, string lastName);
-        Task UpdateSettings(bool dark);
+        Task UpdateSettings(bool dark, string timeZoneId);
     }
 }

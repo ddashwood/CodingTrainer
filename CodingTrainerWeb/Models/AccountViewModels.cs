@@ -97,10 +97,10 @@ namespace CodingTrainer.CodingTrainerWeb.Models
                 UserName = Email,
                 FirstName = FirstName,
                 LastName = LastName,
-//                SelectedTheme = "elegant",
                 CurrentChapterNo = 1,
                 CurrentExerciseNo = 1,
-                Dark = false
+                Dark = false,
+                TimeZoneId = "GMT Standard Time"
             };
         }
     }

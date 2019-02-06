@@ -112,6 +112,10 @@
     <Compile Include="Migrations\201902030938470_AddSubmissionDetails.Designer.cs">
       <DependentUpon>201902030938470_AddSubmissionDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902061427546_AddUserTimeZone.cs" />
+    <Compile Include="Migrations\201902061427546_AddUserTimeZone.Designer.cs">
+      <DependentUpon>201902061427546_AddUserTimeZone.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -160,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902030938470_AddSubmissionDetails.resx">
       <DependentUpon>201902030938470_AddSubmissionDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061427546_AddUserTimeZone.resx">
+      <DependentUpon>201902061427546_AddUserTimeZone.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
