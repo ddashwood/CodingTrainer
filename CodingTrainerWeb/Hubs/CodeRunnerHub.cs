@@ -93,10 +93,10 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
 
         private async Task LogErrorAsync(Exception e, string code)
         {
-            ExceptionLog log = new ExceptionLog
+            ExceptionRunningUsersCode log = new ExceptionRunningUsersCode
             {
                 ExceptionText = e.ToString(),
-                ExceptionDateTime = DateTimeOffset.Now,
+                ExceptionDateTime = DateTimeOffset.UtcNow,
                 UserCode = $"<Not from user code>{Environment.NewLine}{code}"
             };
 

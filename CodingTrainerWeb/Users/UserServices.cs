@@ -85,11 +85,10 @@ namespace CodingTrainer.CodingTrainerWeb.Users
             await userStore.Context.SaveChangesAsync();
         }
 
-        public async Task UpdateSettings(bool dark, string timeZoneId)
+        public async Task UpdateSettings(bool dark)
         {
             var user = await GetCurrentUserAsync();
             user.Dark = dark;
-            user.TimeZoneId = timeZoneId;
             await userManager.UpdateAsync(user);
             await userStore.Context.SaveChangesAsync();
         }

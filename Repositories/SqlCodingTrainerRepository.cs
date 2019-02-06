@@ -70,7 +70,7 @@ namespace CodingTrainer.Repositories
 
         // Exception logs
 
-        public async Task InsertExceptionLogAsync(ExceptionLog log)
+        public async Task InsertExceptionLogAsync(ExceptionRunningUsersCode log)
         {
             context.ExceptionLogs.Add(log);
             await context.SaveChangesAsync();

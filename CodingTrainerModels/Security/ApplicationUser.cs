@@ -37,14 +37,10 @@ namespace CodingTrainer.CodingTrainerModels.Security
         [DisplayName("Dark Theme")]
         public bool Dark { get; set; }
 
-        [Required]
-        [DisplayName("Time Zone")]
-        public string TimeZoneId { get; set; }
-
         public virtual Exercise CurrentExercise { get; set; }
 
         public virtual ICollection<Submission> Submissions { get; set; }
-        public virtual ICollection<ExceptionLog> ExceptionLogs { get; set; }
+        public virtual ICollection<ExceptionRunningUsersCode> ExceptionLogs { get; set; }
         public virtual ICollection<SavedWork> SaveWork { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

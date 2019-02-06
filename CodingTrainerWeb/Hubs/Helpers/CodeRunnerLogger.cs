@@ -25,10 +25,10 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
 
         public async Task LogException(Exception e, string code)
         {
-            ExceptionLog log = new ExceptionLog
+            ExceptionRunningUsersCode log = new ExceptionRunningUsersCode
             {
                 ExceptionText = e.ToString(),
-                ExceptionDateTime = DateTimeOffset.Now,
+                ExceptionDateTime = DateTimeOffset.UtcNow,
                 UserCode = code,
                 UserId = userId
             };

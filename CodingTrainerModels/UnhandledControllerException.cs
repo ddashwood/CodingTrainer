@@ -19,6 +19,6 @@ namespace CodingTrainer.CodingTrainerModels
         public string Body { get; set; }
         public string UserId { get; set; }
 
-        public DateTime DateTime { get; set; }
+        public DateTimeOffset DateTime { get; set; }
     }
 }

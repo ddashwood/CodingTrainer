@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chapter.cs" />
-    <Compile Include="ExceptionLog.cs" />
+    <Compile Include="ExceptionRunningUsersCode.cs" />
     <Compile Include="AssessmentBase.cs" />
     <Compile Include="SavedWork.cs" />
     <Compile Include="Security\ApplicationUser.cs" />

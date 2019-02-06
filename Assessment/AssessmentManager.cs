@@ -66,7 +66,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
                     SubmittedCode = userCode,
                     Output = output.ToString(),
                     Success = result,
-                    SubmissionDateTime = DateTime.Now
+                    SubmissionDateTime = DateTimeOffset.UtcNow
                 };
                 await rep.InsertSubmissionAsync(savedAssessment);
             }

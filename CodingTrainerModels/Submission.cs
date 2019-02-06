@@ -29,7 +29,7 @@ namespace CodingTrainer.CodingTrainerModels
         public virtual ApplicationUser User { get; set; }
 
         [Required]
-        public DateTime SubmissionDateTime { get; set; }
+        public DateTimeOffset SubmissionDateTime { get; set; }
 
         [Required(AllowEmptyStrings = true)]
         public string SubmittedCode { get; set; }

@@ -23,7 +23,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Contexts
 
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Submission> Submissions { get; set; }
-        public DbSet<ExceptionLog> ExceptionLogs { get; set; }
+        public DbSet<ExceptionRunningUsersCode> ExceptionLogs { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<AssessmentMethodBase> Assessments { get; set; }
         public DbSet<SavedWork> SavedWork { get; set; }
@@ -37,7 +37,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Contexts
                 .WithMany(u => u.Submissions)
                 .WillCascadeOnDelete();
 
-            modelBuilder.Entity<ExceptionLog>()
+            modelBuilder.Entity<ExceptionRunningUsersCode>()
                 .HasOptional(e => e.User)
                 .WithMany(u => u.ExceptionLogs)
                 .WillCascadeOnDelete();

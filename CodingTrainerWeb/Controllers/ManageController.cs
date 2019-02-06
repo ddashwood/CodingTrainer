@@ -112,16 +112,13 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
 
         public async Task<ActionResult> Settings()
         {
-            ViewBag.TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(t => new SelectListItem { Text = t.DisplayName, Value = t.Id });
             return View(await userServices.GetCurrentUserAsync());
         }
 
         [HttpPost]
-        public async Task<ActionResult> Settings([Bind (Include = nameof(ApplicationUser.Dark) + "," +
-                                                                  nameof(ApplicationUser.TimeZoneId))] ApplicationUser editedUser)
+        public async Task<ActionResult> Settings([Bind (Include = nameof(ApplicationUser.Dark))] ApplicationUser editedUser)
         {
-            await userServices.UpdateSettings(editedUser.Dark, editedUser.TimeZoneId);
-            ViewBag.TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(t => new SelectListItem { Text = t.DisplayName, Value = t.Id });
+            await userServices.UpdateSettings(editedUser.Dark);
             return View();
         }
 

@@ -26,7 +26,7 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
         Task<IEnumerable<Submission>> GetSubmissionsAsync(int chapterNo, int exerciseNo, string userId);
 
         // Exception logs
-        Task InsertExceptionLogAsync(ExceptionLog log);
+        Task InsertExceptionLogAsync(ExceptionRunningUsersCode log);
 
         // Unhandled exceptions
         void InsertUnhandledControllerException(UnhandledControllerException exception);

@@ -55,7 +55,7 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
                     Url = filterContext.HttpContext.Request.Url.ToString(),
                     Body = body,
                     UserId = filterContext.HttpContext.User.Identity.GetUserId(),
-                    DateTime = DateTime.Now
+                    DateTime = DateTimeOffset.UtcNow
                 };
 
                 Repository.InsertUnhandledControllerException(exception);

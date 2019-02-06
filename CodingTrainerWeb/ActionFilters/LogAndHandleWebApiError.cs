@@ -52,7 +52,7 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
                 Url = context.Request.RequestUri.ToString(),
                 Body = body,
                 UserId = context.RequestContext.Principal.Identity.GetUserId(),
-                DateTime = DateTime.Now
+                DateTime = DateTimeOffset.UtcNow
             };
 
             Repository.InsertUnhandledControllerException(exception);

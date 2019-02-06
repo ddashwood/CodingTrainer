@@ -99,8 +99,7 @@ namespace CodingTrainer.CodingTrainerWeb.Models
                 LastName = LastName,
                 CurrentChapterNo = 1,
                 CurrentExerciseNo = 1,
-                Dark = false,
-                TimeZoneId = "GMT Standard Time"
+                Dark = false
             };
         }
     }

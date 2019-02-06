@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CodingTrainerModels
 {
-    public class ExceptionLog
+    [Table ("ExceptionsRunningUsersCode")]
+    public class ExceptionRunningUsersCode
     {
         [Required, Key]
         public int Id { get; set; }
