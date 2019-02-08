@@ -1,4 +1,5 @@
-﻿using CodingTrainer.CodingTrainerWeb.ActionFilters;
+﻿using CodingTrainer.CodingTrainerModels;
+using CodingTrainer.CodingTrainerWeb.ActionFilters;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Web.Mvc;
 
 namespace CodingTrainer.CodingTrainerWeb.Controllers
 {
-    public class SubmissionController : Controller
+    public class SubmissionController : Controller, ISubmissionController
     {
         ICodingTrainerRepository rep;
         IUserServices userServices;
@@ -20,17 +21,25 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             this.userServices = userServices;
         }
 
+        // For injection by custom filters
+        public Submission Submission { private get; set; }
+
         // GET: Submission/Show
         [AuthorizeSubmission]
         public async Task<ActionResult> Show(int id)
         {
-            var submission = await rep.GetSubmissionAsync(id);
-            if (submission == null)
+            if (Submission == null)
+            {
+                // Should never happen - should be set by the AuthorizeSubmission filter
+                Submission = await rep.GetSubmissionAsync(id);
+            }
+
+            if (Submission == null)
             {
                 return HttpNotFound();
             }
             ViewBag.ActiveTheme = await userServices.GetCodeMirrorThemeAsync();
-            return View(submission);
+            return View(Submission);
         }
     }
 }

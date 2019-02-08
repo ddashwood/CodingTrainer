@@ -48,6 +48,13 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
             {
                 HandleUnauthorizedRequest(filterContext);
             }
+            else
+            {
+                if (filterContext.Controller is ISubmissionController controller)
+                {
+                    controller.Submission = submission;
+                }
+            }
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

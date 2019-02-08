@@ -332,6 +332,7 @@
   <ItemGroup>
     <Compile Include="ActionFilters\AuthorizeSubmissionAttribute.cs" />
     <Compile Include="ActionFilters\AuthorizeExerciseAttribute.cs" />
+    <Compile Include="ActionFilters\ISubmissionController.cs" />
     <Compile Include="ActionFilters\LogAndHandleErrorAttribute.cs" />
     <Compile Include="ActionFilters\LogAndHandleWebApiError.cs" />
     <Compile Include="ApiControllers\SavedWorkController.cs" />
