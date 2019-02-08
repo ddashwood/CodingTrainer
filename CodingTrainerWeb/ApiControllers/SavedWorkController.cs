@@ -22,6 +22,7 @@ namespace CodingTrainer.CodingTrainerWeb.ApiControllers
         }
 
         // PUT api/SavedWork/chapter/exercise
+        [Authorize]
         public async Task Put(int chapter, int exercise, [FromBody]string savedWork)
         {
             var dataToSave = new SavedWork

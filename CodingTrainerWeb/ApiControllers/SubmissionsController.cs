@@ -21,6 +21,7 @@ namespace CodingTrainer.CodingTrainerWeb.ApiControllers
         }
 
         // GET /api/submissions/1/2
+        [Authorize]
         public async Task<IEnumerable<Submission>> Get(int chapter, int exercise)
         {
             return await rep.GetSubmissionsAsync(chapter, exercise, userServices.GetCurrentUserId());
