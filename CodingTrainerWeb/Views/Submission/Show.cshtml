@@ -1,0 +1,48 @@
+﻿@model CodingTrainer.CodingTrainerModels.Submission
+
+@{
+    ViewBag.Title = "Your Submission";
+    Layout = "~/Views/Shared/_FullScreenLayout.cshtml";
+}
+
+@section scripts {
+    <script>
+    var submissionsGlobals = {
+        theme:'@ViewBag.ActiveTheme'
+        };
+    </script>
+    @Scripts.Render("~/bundles/codemirror")
+    <script src="~/Scripts/app/showsubmission.js"></script>
+}
+@section styles {
+    @Styles.Render("~/Content/codemirror")
+    <link href="~/Content/RunCode.css" rel="stylesheet" />
+}
+
+<h2>Your Submission</h2>
+
+
+@if (Model.Success)
+{
+    <p>You completed the exercise with this submission - well done!</p>
+}
+else
+{
+    <p>This submission did not complete the exercise - please review the output and feedback below</p>
+}
+
+
+<h4>
+    Your code
+</h4>
+<div class="row">
+    @Html.TextArea("code", Model.SubmittedCode, new { style = "display:none" })
+</div>
+<br>
+
+<h4>
+    Output and Feedback
+</h4>
+<div class="row">
+    @Html.TextArea("feedback", Model.Output, new { style = "display:none" })
+</div>

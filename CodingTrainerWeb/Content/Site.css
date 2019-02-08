@@ -39,9 +39,9 @@ button {
     white-space: normal;
 }
 
-/* Ensure checkboxes show on mobile */
+/* Ensure checkboxes show properly on mobile, and don't disappear off the left edge */
 
-@media (max-width:788px) { /* Checkboxes start disappearing at just bigger than extra-small */
+@media (max-width:991px) {
     div.form-group input[type='checkbox'] {
         margin-left: 0px;
     }
@@ -60,6 +60,15 @@ button {
 
 .sidebar-offcanvas ul.nav a.disabled:hover {
     background-color: transparent;
+}
+
+/* Exercise submissions styling */
+
+.submission-heading div.list-group {
+    padding-top:7px;
+}
+.submission-heading div.list-group a.list-group-item {
+    border:none;
 }
 
 /* Off Canvas Sidebar */

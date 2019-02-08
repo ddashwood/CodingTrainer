@@ -37,14 +37,15 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                     var row = $('<div>').addClass('row');
                     $('#submissions-content').append(row);
 
-                    $('<div>')
-                        .addClass('col-sm-3')
-                        .append(document.createTextNode(submissionDate.toLocaleDateString(undefined,
-                            { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })))
-                        .append('<br>')
-                        .append(document.createTextNode(submissionDate.toLocaleTimeString(undefined, { hour24: 'true' })))
-                        .append('<br>')
-                        .append('Completed ' + (submission.Success ? '&#x2714;' : '&#x2716;'))
+                    $('<div>').addClass('col-sm-3 submission-heading')
+                        .append($('<div>').addClass('list-group')
+                            .append($("<a>").attr('href', 'javascript:openWindow(' + submission.SubmissionId + ')').addClass('list-group-item')
+                                .append(document.createTextNode(submissionDate.toLocaleDateString(undefined,
+                                    { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })))
+                                .append('<br>')
+                                .append(document.createTextNode(submissionDate.toLocaleTimeString(undefined, { hour24: 'true' })))
+                                .append('<br>')
+                                .append('Completed ' + (submission.Success ? '&#x2714;' : '&#x2716;'))))
                         .appendTo(row);
                     var cmDiv = $('<div>').addClass('col-sm-9').appendTo(row);
                     $('<div>').addClass('visible-xs top-buffer').appendTo(row); // Space between items if single column
@@ -62,4 +63,24 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             $('#submissions-content').text('Sorry, something went wrong when loading your submissions');
         });
     }
+});
+
+exerciseGlobals.openSubmissions = [];
+
+function openWindow(id) {
+    var url = "/Submission/Show/" + id;
+    w = window.open(url, "_blank");
+    exerciseGlobals.openSubmissions.push(w);
+}
+
+$(function () {
+    var unload = function () {
+        for (var i = 0; i < exerciseGlobals.openSubmissions.length; i++) {
+            if (!exerciseGlobals.openSubmissions[i].closed) {
+                exerciseGlobals.openSubmissions[i].close();
+            }
+        }
+    };
+    window.addEventListener('beforeunload', unload);
+    window.addEventListener('unload', unload);
 });

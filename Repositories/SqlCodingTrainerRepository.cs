@@ -68,6 +68,16 @@ namespace CodingTrainer.Repositories
                   && c.UserId == userId).OrderByDescending(c => c.SubmissionDateTime).ToListAsync();
         }
 
+        public async Task<Submission> GetSubmissionAsync(int submissionId)
+        {
+            return await context.Submissions.SingleOrDefaultAsync(s => s.SubmissionId == submissionId);
+        }
+
+        public Submission GetSubmission(int submissionId)
+        {
+            return context.Submissions.SingleOrDefault(s => s.SubmissionId == submissionId);
+        }
+
         // Exception logs
 
         public async Task InsertExceptionLogAsync(ExceptionRunningUsersCode log)

@@ -74,6 +74,8 @@ namespace CodingTrainer.CodingTrainerWeb
             // Action Filters, etc aren't created using Unity's resolver, so we need to inject dependencies into them
             AuthorizeExerciseAttribute.UserServices = container.Resolve<IUserServices>();
             AuthorizeExerciseAttribute.DbRepository = container.Resolve<ICodingTrainerRepository>();
+            AuthorizeSubmissionAttribute.UserServices = container.Resolve<IUserServices>();
+            AuthorizeSubmissionAttribute.DbRepository = container.Resolve<ICodingTrainerRepository>();
             LogAndHandleErrorAttribute.Repository = container.Resolve<ICodingTrainerRepository>();
             LogAndHandleWebApiError.Repository = container.Resolve<ICodingTrainerRepository>();
         }

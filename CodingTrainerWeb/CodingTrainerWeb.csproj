@@ -330,6 +330,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\AuthorizeSubmissionAttribute.cs" />
     <Compile Include="ActionFilters\AuthorizeExerciseAttribute.cs" />
     <Compile Include="ActionFilters\LogAndHandleErrorAttribute.cs" />
     <Compile Include="ActionFilters\LogAndHandleWebApiError.cs" />
@@ -344,6 +345,7 @@
     <Compile Include="App_Start\UnityActivator.cs" />
     <Compile Include="App_Start\UnityHubActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\SubmissionController.cs" />
     <Compile Include="Hubs\CodeRunnerHub.Connection.cs" />
     <Compile Include="Hubs\CodeRunnerHub.Tasks.cs" />
     <Compile Include="Models\ExerciseContentViewModel.cs" />
@@ -414,6 +416,7 @@
     <Content Include="Scripts\app\runcode\serviceFactory.js" />
     <Content Include="Scripts\app\runcode\serviceFactoryForHiddenCode.js" />
     <Content Include="Scripts\app\runcode\signalRFactory.js" />
+    <Content Include="Scripts\app\showsubmission.js" />
     <Content Include="Scripts\app\sidebar.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -828,6 +831,8 @@
     <Content Include="Views\Manage\Settings.cshtml" />
     <Content Include="Views\Shared\_FullScreenLayout.cshtml" />
     <Content Include="Views\Exercise\ExercisePopout.cshtml" />
+    <Content Include="Views\Submission\Show.cshtml" />
+    <Content Include="Views\Submission\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

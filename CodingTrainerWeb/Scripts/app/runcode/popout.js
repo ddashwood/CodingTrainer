@@ -3,7 +3,7 @@
     var w = null;
     if (window.opener) {
         // We are a popout window - when we close, tell the main window
-        window.onbeforeunload = window.onunload = function () {
+        var unload = function () {
             if (popoutUnloadHandled) return;
             popoutUnloadHandled = true;
 
@@ -13,11 +13,13 @@
             }
             catch (e) { console.log(e); }
         };
+        window.addEventListener('beforeunload', unload);
+        window.addEventListener('unload', unload);
     }
     else {
         // We are the main window - when we close, close the popout window too
         window.onbeforeunload = window.onunload = function () {
-            if (w !== null) {
+            if (w !== null && !w.closed) {
                 w.close();
                 w = null;
             }
