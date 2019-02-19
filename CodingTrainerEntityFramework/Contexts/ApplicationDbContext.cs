@@ -25,6 +25,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Contexts
         public DbSet<Submission> Submissions { get; set; }
         public DbSet<ExceptionRunningUsersCode> ExceptionLogs { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
+        public DbSet<AssessmentGroup> AssessmentGroups { get; set; }
         public DbSet<AssessmentMethodBase> Assessments { get; set; }
         public DbSet<SavedWork> SavedWork { get; set; }
 

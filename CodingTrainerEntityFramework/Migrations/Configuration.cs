@@ -83,9 +83,20 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Migrations
                         // Save the assessments
                         foreach (Exercise e in c.Exercises)
                         {
-                            if (e.Assessments != null)
+                            if (e.AssessmentGroups != null)
                             {
-                                context.Assessments.AddOrUpdate<AssessmentMethodBase>(a => new { a.ChapterNo, a.ExerciseNo, a.Sequence }, e.Assessments.Select(a => (AssessmentMethodBase)a).ToArray());
+                                context.AssessmentGroups.AddOrUpdate(g => new { g.ChapterNo, g.ExerciseNo, g.Sequence }, e.AssessmentGroups.ToArray());
+                                foreach (AssessmentGroup g in e.AssessmentGroups)
+                                {
+                                    if (g.Assessments != null)
+                                    {
+                                        foreach(AssessmentBase a in g.Assessments)
+                                        {
+                                            a.AssessmentGroupId = g.AssessmentGroupId;
+                                        }
+                                        context.Assessments.AddOrUpdate(a => new { a.AssessmentGroupId, a.Sequence }, g.Assessments.Select(a => (AssessmentMethodBase)a).ToArray());
+                                    }
+                                }
                             }
                         }
                     }

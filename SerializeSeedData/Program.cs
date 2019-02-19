@@ -36,7 +36,8 @@ namespace CodingTrainer.SerializeSeedData
             ent.Configuration.ProxyCreationEnabled = false;
             var chapters = ent.Chapters
                 .Include(c => c.Exercises)
-                .Include(c => c.Exercises.Select(e => e.Assessments))
+                .Include(c => c.Exercises.Select(e => e.AssessmentGroups))
+                .Include(c => c.Exercises.Select(e => e.AssessmentGroups.Select(g => g.Assessments)))
                 .ToList();
             Console.WriteLine("done");
 

@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssessmentGroup.cs" />
     <Compile Include="Chapter.cs" />
     <Compile Include="ExceptionRunningUsersCode.cs" />
     <Compile Include="AssessmentBase.cs" />
