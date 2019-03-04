@@ -112,14 +112,14 @@ namespace CodingTrainer.CSharpRunner.Assessment
                     if (thisResult)
                     {
                         if (assessment.ShowAutoMessageOnPass)
-                            Console.WriteLine(assessment.Title + " passed\r\n");
+                            WriteToConsole(assessment.Title + " passed\r\n");
                     }
                     else // Assessment failed
                     {
                         groupResult = false;
 
                         if (assessment.ShowAutoMessageOnFail)
-                            Console.WriteLine(assessment.Title + " failed\r\n");
+                            WriteToConsole(assessment.Title + " failed\r\n");
 
                         if (assessment.EndAssessmentGroupOnFail) break;
                     }
@@ -128,14 +128,14 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 if (groupResult)
                 {
                     if (assessmentGroup.ShowAutoMessageOnPass)
-                        Console.WriteLine(assessmentGroup.Title + " passed\r\n");
+                        WriteToConsole(assessmentGroup.Title + " passed\r\n");
                 }
                 else // Assessment group failed
                 {
                     result = false;
 
                     if (assessmentGroup.ShowAutoMessageOnFail)
-                        Console.WriteLine(assessmentGroup.Title + " failed\r\n");
+                        WriteToConsole(assessmentGroup.Title + " failed\r\n");
 
                     if (assessmentGroup.EndAssessmentsOnFail) break;
                 }
