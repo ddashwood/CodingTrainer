@@ -21,7 +21,7 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
         Task<SavedWork> GetSavedWorkAsync(int chapter, int exercise, string userId);
 
         // Assessments
-        Task<IEnumerable<AssessmentBase>> GetAssessmentsMethodsForExerciseAsync(int chapterNo, int exerciseNo);
+        Task<IEnumerable<AssessmentGroup>> GetAssessmentGroupsForExerciseAsync(int chapterNo, int exerciseNo);
         Task InsertSubmissionAsync(Submission submission);
         Task<IEnumerable<Submission>> GetSubmissionsAsync(int chapterNo, int exerciseNo, string userId);
         Task<Submission> GetSubmissionAsync(int submissionId);

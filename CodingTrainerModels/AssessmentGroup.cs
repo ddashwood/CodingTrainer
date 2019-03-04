@@ -26,10 +26,33 @@ namespace CodingTrainer.CodingTrainerModels
         [Required]
         public int Sequence { get; set; }
 
+        public string Title { get; set; }
+
+        [Required]
+        public bool ShowAutoMessageOnStart { get; set; }
+
+        [Required]
+        public bool ShowAutoMessageOnPass { get; set; }
+
+        [Required]
+        public bool ShowAutoMessageOnFail { get; set; }
+
+        [Required]
+        public bool EndAssessmentsOnFail { get; set; }
 
         [System.Runtime.Serialization.IgnoreDataMember]
         public Exercise Exercise { get; set; }
 
         public virtual ICollection<AssessmentBase> Assessments { get; set; }
+
+        [NotMapped]
+        [System.Runtime.Serialization.IgnoreDataMember]
+        public IEnumerable<AssessmentBase> OrderedAssessments
+        {
+            get
+            {
+                return Assessments.OrderBy(a => a.Sequence);
+            }
+        }
     }
 }

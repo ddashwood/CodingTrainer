@@ -25,6 +25,9 @@ namespace CodingTrainer.CSharpRunner.Assessment
         [Required]
         public string ConsoleInText { get; set; }
 
+        [Required]
+        public bool ShowScriptRunning { get; set; }
+
         protected abstract bool CheckResult(string consoleOut);
 
         protected sealed override async Task<bool> DoAssessmentAsync()
@@ -35,7 +38,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
             StringBuilder console = new StringBuilder();
             void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
             {
-                WriteToConsole(e.Message);
+                if (ShowScriptRunning) WriteToConsole(e.Message);
                 console.Append(e.Message);
             }
 

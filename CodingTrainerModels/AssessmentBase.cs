@@ -22,7 +22,16 @@ namespace CodingTrainer.CodingTrainerModels
         public string Title { get; set; }
 
         [Required]
-        public bool AbortOnFail { get; set; }
+        public bool ShowAutoMessageOnStart { get; set; }
+
+        [Required]
+        public bool ShowAutoMessageOnPass { get; set; }
+
+        [Required]
+        public bool ShowAutoMessageOnFail { get; set; }
+
+        [Required]
+        public bool EndAssessmentGroupOnFail { get; set; }
 
         [Index("IX_Assessment_Sequence", IsUnique = true, Order = 2)]
         [Required]

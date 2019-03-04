@@ -42,12 +42,10 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         public override async Task<bool> AssessAsync()
         {
-            DisplayStartMessage();
             bool result = true;
             try
             {
                 result = await DoAssessmentAsync();
-                DisplayEndMessage(result);
             }
             catch (Exception e)
             {
@@ -70,17 +68,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
             throw e;
         }
 
-        protected virtual void DisplayStartMessage()
-        {
-            WriteToConsole($"Starting test: {Title}...\r\n");
-        }
-
         protected abstract Task<bool> DoAssessmentAsync();
-
-        protected virtual void DisplayEndMessage(bool success)
-        {
-            WriteToConsole(success ? "Test passed!\r\n\r\n" : "Test failed!\r\n\r\n");
-        }
 
         protected void WriteToConsole(string s)
         {

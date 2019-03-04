@@ -47,6 +47,8 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             public void PostToQueue((QueueItemType type, string message) data)
             {
                 connectionQueue.Post(data);
+                if (data.type == QueueItemType.Complete)
+                    connectionQueue.Complete();
             }
 
             public async Task ProcessQueueAsync()
@@ -54,32 +56,25 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 // Run in a different thread from the thread pool
 
                 // The ProcessQueueAsync method should be started before
-                // the task is run. It will return immediately due to
-                // being run on a differen thread. Then the task can be 
-                // started, and any items posted to the queue will be
+                // the task is run. It will return immediately. Then the task
+                // can be started, and any items posted to the queue will be
                 // handled by the following code:
 
-                await Task.Run(async () =>
+                while (await connectionQueue.OutputAvailableAsync())
                 {
-                    bool complete = false;
+                    var (type, message) = connectionQueue.Receive();
 
-                    while (!complete)
+                    switch (type)
                     {
-                        var (type, message) = await connectionQueue.ReceiveAsync();
-
-                        switch (type)
-                        {
-                            case QueueItemType.Complete:
-                                caller.Complete();
-                                connections.TryRemove(connectionId, out var ignore);
-                                complete = true;
-                                break;
-                            case QueueItemType.ConsoleOut:
-                                caller.ConsoleOut(message);
-                                break;
-                        }
+                        case QueueItemType.Complete:
+                            caller.Complete();
+                            connections.TryRemove(connectionId, out var ignore);
+                            break;
+                        case QueueItemType.ConsoleOut:
+                            caller.ConsoleOut(message);
+                            break;
                     }
-                });
+                }
             }
         }
 

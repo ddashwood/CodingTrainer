@@ -24,11 +24,15 @@
           <AssessmentGroup>
             <Assessments>
               <AssessmentBase xmlns:d8p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d8p1:CheckAllOutputAssessment">
-                <AbortOnFail>false</AbortOnFail>
                 <AssessmentGroupId>3</AssessmentGroupId>
+                <EndAssessmentGroupOnFail>false</EndAssessmentGroupOnFail>
                 <Sequence>2</Sequence>
+                <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+                <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+                <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
                 <Title>All - 0.9 accuracy</Title>
                 <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
+                <ShowScriptRunning xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">true</ShowScriptRunning>
                 <d8p1:ExpectedResult>
 Enter some text
 blah
@@ -37,18 +41,26 @@ You entered: blah
                 <d8p1:RequiredAccuracy>0.9</d8p1:RequiredAccuracy>
               </AssessmentBase>
               <AssessmentBase xmlns:d8p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d8p1:CheckLastLineOfOutputAssessment">
-                <AbortOnFail>false</AbortOnFail>
                 <AssessmentGroupId>3</AssessmentGroupId>
+                <EndAssessmentGroupOnFail>false</EndAssessmentGroupOnFail>
                 <Sequence>1</Sequence>
+                <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+                <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+                <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
                 <Title>Last Line</Title>
                 <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">blah</ConsoleInText>
+                <ShowScriptRunning xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">true</ShowScriptRunning>
                 <d8p1:ExpectedResult>You entered: blah</d8p1:ExpectedResult>
                 <d8p1:RequiredAccuracy>0.9</d8p1:RequiredAccuracy>
               </AssessmentBase>
             </Assessments>
             <ChapterNo>1</ChapterNo>
+            <EndAssessmentsOnFail>false</EndAssessmentsOnFail>
             <ExerciseNo>1</ExerciseNo>
             <Sequence>1</Sequence>
+            <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+            <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+            <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
           </AssessmentGroup>
         </AssessmentGroups>
         <ChapterNo>1</ChapterNo>
@@ -89,66 +101,93 @@ You entered: blah
           <AssessmentGroup>
             <Assessments>
               <AssessmentBase xmlns:d8p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d8p1:SyntaxTokensLinqAssessment">
-                <AbortOnFail>false</AbortOnFail>
                 <AssessmentGroupId>4</AssessmentGroupId>
+                <EndAssessmentGroupOnFail>false</EndAssessmentGroupOnFail>
                 <Sequence>3</Sequence>
+                <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+                <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+                <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
                 <Title>Has 2 Parse( methods</Title>
                 <d8p1:Condition>(tokens.Where(Text == "Parse" &amp;&amp; GetNextToken(false, false, false, false).Text == "(").Count()) == 2</d8p1:Condition>
               </AssessmentBase>
               <AssessmentBase xmlns:d8p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d8p1:AncestorNodeForEveryTokenLinqAssessment">
-                <AbortOnFail>false</AbortOnFail>
                 <AssessmentGroupId>4</AssessmentGroupId>
+                <EndAssessmentGroupOnFail>false</EndAssessmentGroupOnFail>
                 <Sequence>4</Sequence>
+                <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+                <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+                <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
                 <Title>Is part of assignment</Title>
                 <d8p1:ParentCondition>parentNode.RawKind == syntaxKind.Value("SimpleAssignmentExpression")</d8p1:ParentCondition>
                 <d8p1:TokenSelector>tokens.Where(Text == "Parse" &amp;&amp; GetNextToken(false, false, false, false).Text == "(")</d8p1:TokenSelector>
               </AssessmentBase>
               <AssessmentBase xmlns:d8p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d8p1:SyntaxTreeScriptAssessment">
-                <AbortOnFail>false</AbortOnFail>
                 <AssessmentGroupId>4</AssessmentGroupId>
+                <EndAssessmentGroupOnFail>false</EndAssessmentGroupOnFail>
                 <Sequence>5</Sequence>
+                <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+                <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+                <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
                 <Title>NEW has 2x Parse</Title>
                 <d8p1:Script>var nodes = Nodes.Where(n =&gt; n.GetText().ToString().Trim() == "Parse"); return nodes.Count() == 2;</d8p1:Script>
               </AssessmentBase>
               <AssessmentBase xmlns:d8p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d8p1:SyntaxTreeScriptAssessment">
-                <AbortOnFail>false</AbortOnFail>
                 <AssessmentGroupId>4</AssessmentGroupId>
+                <EndAssessmentGroupOnFail>false</EndAssessmentGroupOnFail>
                 <Sequence>6</Sequence>
+                <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+                <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+                <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
                 <Title>NEW Parse has ()</Title>
                 <d8p1:Script>return nodes.All(n =&gt; n.ChildTokens().First().GetNextToken().Text == "(");</d8p1:Script>
               </AssessmentBase>
               <AssessmentBase xmlns:d8p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection" i:type="d8p1:SyntaxTreeScriptAssessment">
-                <AbortOnFail>false</AbortOnFail>
                 <AssessmentGroupId>4</AssessmentGroupId>
+                <EndAssessmentGroupOnFail>false</EndAssessmentGroupOnFail>
                 <Sequence>7</Sequence>
+                <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+                <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+                <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
                 <Title>NEW is part of =</Title>
                 <d8p1:Script>return TreeHelper.NodesOnRightOfEquals(nodes);</d8p1:Script>
               </AssessmentBase>
               <AssessmentBase xmlns:d8p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d8p1:CheckLastLineOfOutputAssessment">
-                <AbortOnFail>false</AbortOnFail>
                 <AssessmentGroupId>4</AssessmentGroupId>
+                <EndAssessmentGroupOnFail>false</EndAssessmentGroupOnFail>
                 <Sequence>1</Sequence>
+                <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+                <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+                <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
                 <Title>Last line is correct</Title>
                 <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">5
 3
                 </ConsoleInText>
+                <ShowScriptRunning xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">true</ShowScriptRunning>
                 <d8p1:ExpectedResult>The answer is 8</d8p1:ExpectedResult>
                 <d8p1:RequiredAccuracy>1</d8p1:RequiredAccuracy>
               </AssessmentBase>
               <AssessmentBase xmlns:d8p1="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning" i:type="d8p1:LastLineLinqAssessment">
-                <AbortOnFail>false</AbortOnFail>
                 <AssessmentGroupId>4</AssessmentGroupId>
+                <EndAssessmentGroupOnFail>false</EndAssessmentGroupOnFail>
                 <Sequence>2</Sequence>
+                <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+                <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+                <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
                 <Title>Linq test</Title>
                 <ConsoleInText xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">43
 56
                 </ConsoleInText>
+                <ShowScriptRunning xmlns="http://schemas.datacontract.org/2004/07/CodingTrainer.CSharpRunner.Assessment">true</ShowScriptRunning>
                 <d8p1:Condition>output.EndsWith("99")</d8p1:Condition>
               </AssessmentBase>
             </Assessments>
             <ChapterNo>2</ChapterNo>
+            <EndAssessmentsOnFail>false</EndAssessmentsOnFail>
             <ExerciseNo>2</ExerciseNo>
             <Sequence>1</Sequence>
+            <ShowAutoMessageOnFail>true</ShowAutoMessageOnFail>
+            <ShowAutoMessageOnPass>true</ShowAutoMessageOnPass>
+            <ShowAutoMessageOnStart>true</ShowAutoMessageOnStart>
           </AssessmentGroup>
         </AssessmentGroups>
         <ChapterNo>2</ChapterNo>

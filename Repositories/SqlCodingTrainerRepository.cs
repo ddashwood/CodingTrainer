@@ -48,18 +48,12 @@ namespace CodingTrainer.Repositories
 
         // Assessments
 
-        public async Task<IEnumerable<AssessmentBase>> GetAssessmentsMethodsForExerciseAsync(int chapterNo, int exerciseNo)
+        public async Task<IEnumerable<AssessmentGroup>> GetAssessmentGroupsForExerciseAsync(int chapterNo, int exerciseNo)
         {
-            var assessments = from g in context.AssessmentGroups
-                              join a in context.Assessments on g.AssessmentGroupId equals a.AssessmentGroupId
-                              where g.ChapterNo == chapterNo && g.ExerciseNo == exerciseNo
-                              orderby g.Sequence, a.Sequence
-                              select a;
-
-            return await assessments.ToListAsync();
-
-            //return await context.Assessments.Where(a => a.ChapterNo == chapterNo && a.ExerciseNo == exerciseNo)
-            //    .OrderBy(a => a.Sequence).ToListAsync();
+            return await context.AssessmentGroups.Where(g => g.ChapterNo == chapterNo && g.ExerciseNo == exerciseNo)
+                .OrderBy(g => g.Sequence)
+                .Include(g => g.Assessments)
+                .ToListAsync();
         }
 
         public async Task InsertSubmissionAsync(Submission submission)

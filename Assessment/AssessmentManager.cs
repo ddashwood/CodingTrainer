@@ -50,10 +50,10 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
             try
             {
-                var assessments = await rep.GetAssessmentsMethodsForExerciseAsync(chapter, exercise);
-                var assessmentRunner = new AssessmentRunner(codeRunner);
+                var assessmentGroups = await rep.GetAssessmentGroupsForExerciseAsync(chapter, exercise);
+                var assessmentRunner = new AssessmentRunner(codeRunner, code);
                 assessmentRunner.ConsoleWrite += OnConsoleWrite;
-                result = await assessmentRunner.RunAssessmentsAsync(code, assessments.Select(a => (AssessmentMethodBase)a));
+                result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
                 assessmentRunner.ConsoleWrite -= OnConsoleWrite;
             }
             finally

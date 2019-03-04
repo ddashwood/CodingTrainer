@@ -132,6 +132,14 @@
     <Compile Include="Migrations\201902191014198_AddAssessmentGroup.Designer.cs">
       <DependentUpon>201902191014198_AddAssessmentGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902191416404_AddAssessmentOptions.cs" />
+    <Compile Include="Migrations\201902191416404_AddAssessmentOptions.Designer.cs">
+      <DependentUpon>201902191416404_AddAssessmentOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903041516466_AddAssessmentGroupTitle.cs" />
+    <Compile Include="Migrations\201903041516466_AddAssessmentGroupTitle.Designer.cs">
+      <DependentUpon>201903041516466_AddAssessmentGroupTitle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -195,6 +203,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902191014198_AddAssessmentGroup.resx">
       <DependentUpon>201902191014198_AddAssessmentGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902191416404_AddAssessmentOptions.resx">
+      <DependentUpon>201902191416404_AddAssessmentOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903041516466_AddAssessmentGroupTitle.resx">
+      <DependentUpon>201903041516466_AddAssessmentGroupTitle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

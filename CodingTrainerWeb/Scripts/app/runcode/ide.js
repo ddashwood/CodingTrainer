@@ -21,7 +21,9 @@
         codeRunner.consoleIn(message);
     };
 
+    this.running = false;
     var run = function (forAssessment) {
+        this.running = true;
         self.codeConsole.clearAll();
         self.codeConsole.focus();
         // Prevent user from running again
@@ -86,7 +88,8 @@
     };
 
     this.editor.on('change', function () {
-        changed();
+        if (!this.running)
+            changed();
     });
 }
 
@@ -109,6 +112,7 @@ Ide.prototype.consoleOut = function (message) {
 
 Ide.prototype.enableRun = function () {
     $('.cm-btn-disable-on-run').prop('disabled', false).css('color', 'black');
+    this.running = false;
 };
 
 Ide.prototype.runComplete = function () {
