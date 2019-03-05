@@ -39,19 +39,24 @@ namespace CodingTrainer.CSharpRunner.TestingCommon
         protected StringBuilder console;
 
         [OneTimeSetUp]
-        public void OneTimeSetup()
+        public virtual void OneTimeSetup()
+        {
+            OneTimeSetup(true);
+        }
+        protected virtual void OneTimeSetup(bool registerConsoleWrite)
         {
             runner = new CodeRunner();
-            runner.ConsoleWrite += OnConsoleWrite;
+            if (registerConsoleWrite)
+                runner.ConsoleWrite += OnConsoleWrite;
         }
 
         [SetUp]
-        public void Setup()
+        public virtual void Setup()
         {
             console = new StringBuilder();
         }
 
-        private void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
+        protected void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
         {
             console.Append(e.Message);
         }

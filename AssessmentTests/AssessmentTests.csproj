@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssessmentRunnerTests.cs" />
     <Compile Include="PreProgrammedTextReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,6 +69,10 @@
     <ProjectReference Include="..\CodeHost\CodeHost.csproj">
       <Project>{0b5480bd-8879-4158-8c35-73fd207742a3}</Project>
       <Name>CodeHost</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodingTrainerModels\CodingTrainerModels.csproj">
+      <Project>{dfa7a141-5d03-48dc-b604-c3a9659d2948}</Project>
+      <Name>CodingTrainerModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestingCommon\TestingCommon.csproj">
       <Project>{6e5229ea-8183-4b7a-acb6-2c98ec112326}</Project>
