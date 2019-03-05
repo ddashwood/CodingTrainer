@@ -1,0 +1,1 @@
+﻿var nodes = Nodes.Where(n => n.GetText().ToString().Trim() == "Parse"); return nodes.Count() == 2;

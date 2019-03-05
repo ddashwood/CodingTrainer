@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CodingTrainer.CSharpRunner.Assessment
 {
@@ -15,10 +16,10 @@ namespace CodingTrainer.CSharpRunner.Assessment
     {
         // Not mapped onto Entity Framework
         [NotMapped]
-        [IgnoreDataMember]
+        [XmlIgnore]
         public ICodeRunner CodeRunner { private get; set; }
         [NotMapped]
-        [IgnoreDataMember]
+        [XmlIgnore]
         internal CompiledCode? CompiledCode { private get; set; }
 
         // Entity Framework properties

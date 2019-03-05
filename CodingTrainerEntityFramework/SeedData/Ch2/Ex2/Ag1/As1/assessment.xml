@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CheckLastLineOfOutputAssessment>
+  <FullClassName>CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning.CheckLastLineOfOutputAssessment</FullClassName>
+  <Title>Last line is correct</Title>
+  <ShowAutoMessageOnStart>1</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>1</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>1</ShowAutoMessageOnFail>
+  <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
+  <RequiredAccuracy>1</RequiredAccuracy>
+  <ShowScriptRunning>1</ShowScriptRunning>
+</CheckLastLineOfOutputAssessment>

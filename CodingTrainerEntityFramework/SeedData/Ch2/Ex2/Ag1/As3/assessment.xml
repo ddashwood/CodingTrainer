@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SyntaxTokensLinqAssessment>
+  <FullClassName>CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection.SyntaxTokensLinqAssessment</FullClassName>
+  <Title>Has 2 Parse( methods</Title>
+  <ShowAutoMessageOnStart>1</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>1</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>1</ShowAutoMessageOnFail>
+  <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
+</SyntaxTokensLinqAssessment>

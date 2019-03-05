@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AncestorNodeForEveryTokenLinqAssessment>
+  <FullClassName>CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection.AncestorNodeForEveryTokenLinqAssessment</FullClassName>
+  <Title>Is part of assignment statement</Title>
+  <ShowAutoMessageOnStart>1</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>1</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>1</ShowAutoMessageOnFail>
+  <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
+</AncestorNodeForEveryTokenLinqAssessment>

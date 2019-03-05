@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssessmentGroup>
+  <Title>Demo group</Title>
+  <ShowAutoMessageOnStart>1</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>1</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>1</ShowAutoMessageOnFail>
+  <EndAssessmentsOnFail>1</EndAssessmentsOnFail>
+</AssessmentGroup>

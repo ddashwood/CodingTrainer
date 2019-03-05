@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CodingTrainer.CodingTrainerModels
 {
@@ -37,7 +38,7 @@ namespace CodingTrainer.CodingTrainerModels
         [Required]
         public int Sequence { get; set; }
 
-        [System.Runtime.Serialization.IgnoreDataMember]
+        [XmlIgnore]
         public AssessmentGroup AssessmentGroup { get; set; }
 
 

@@ -1,5 +1,5 @@
 ﻿$(function () {
-    function saveIfVisible(code) {
+    function saveIfVisible(code, unloading) {
         if ($('#ide').is(':visible')) {
             try {
                 $('#ide-save').css('visibility', 'visible');
@@ -13,11 +13,13 @@
                 }).done(function () {
                     $('#ide-save-error').hide();
                 }).fail(function () {
-                    $('#ide-save-error').show();
+                    if (!unloading)
+                        $('#ide-save-error').show();
                 });
             }
             catch (e) {
-                $('#ide-save-error').show();
+                if (!unloading)
+                    $('#ide-save-error').show();
             }
             finally {
                 // Slight delay so user has time to see it
@@ -34,7 +36,7 @@
     //   but testing shows that neither of these work properly
     //   either. No known resolution at present.
     $(window).on('beforeunload', function () {
-        saveIfVisible(ideGlobals.ide.getValue());
+        saveIfVisible(ideGlobals.ide.getValue(), true);
     });
 
 
@@ -46,7 +48,7 @@
         var currentCode = ideGlobals.ide.getValue();
         if (lastSavedCode !== currentCode) {
             lastSavedCode = currentCode;
-            saveIfVisible(currentCode);
+            saveIfVisible(currentCode, false);
         }
         setTimeout(autoSave, 3000);
     }

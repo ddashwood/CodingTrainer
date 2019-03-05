@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LastLineLinqAssessment>
+  <FullClassName>CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning.LastLineLinqAssessment</FullClassName>
+  <Title>Linq test</Title>
+  <ShowAutoMessageOnStart>1</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>1</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>1</ShowAutoMessageOnFail>
+  <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
+  <ShowScriptRunning>1</ShowScriptRunning>
+</LastLineLinqAssessment>

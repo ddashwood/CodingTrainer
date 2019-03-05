@@ -1,0 +1,1 @@
+﻿(tokens.Where(Text == "Parse" && GetNextToken(false, false, false, false).Text == "(").Count()) == 2

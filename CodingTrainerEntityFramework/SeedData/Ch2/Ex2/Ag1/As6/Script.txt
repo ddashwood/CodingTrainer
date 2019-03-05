@@ -1,0 +1,1 @@
+﻿return nodes.All(n => n.ChildTokens().First().GetNextToken().Text == "(");

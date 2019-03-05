@@ -23,7 +23,7 @@
 
     this.running = false;
     var run = function (forAssessment) {
-        this.running = true;
+        self.running = true;
         self.codeConsole.clearAll();
         self.codeConsole.focus();
         // Prevent user from running again
@@ -88,7 +88,7 @@
     };
 
     this.editor.on('change', function () {
-        if (!this.running)
+        if (!self.running)
             changed();
     });
 }

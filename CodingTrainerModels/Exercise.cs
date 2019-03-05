@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml.Serialization;
 
 namespace CodingTrainer.CodingTrainerModels
 {
@@ -19,21 +20,19 @@ namespace CodingTrainer.CodingTrainerModels
         public string ExerciseName { get; set; }
 
         [Required]
-        [System.Runtime.Serialization.IgnoreDataMember]
         public string DefaultCode { get; set; }
 
-        [System.Runtime.Serialization.IgnoreDataMember]
         public string HiddenCodeHeader { get; set; }
 
         [Required]
-        [System.Runtime.Serialization.IgnoreDataMember]
         public string Content { get; set; }
 
-        [JsonIgnore]
-        [System.Runtime.Serialization.IgnoreDataMember]
+        [XmlIgnore]
         public virtual Chapter Chapter { get; set; }
 
+        [XmlIgnore]
         public virtual ICollection<AssessmentGroup> AssessmentGroups { get; set; }
+        [XmlIgnore]
         public virtual ICollection<SavedWork> SavedWork { get; set; }
 
         // To sort exercises, e.g. in the exercise list, sort them by exercise number

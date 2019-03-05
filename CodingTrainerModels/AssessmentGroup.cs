@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CodingTrainer.CodingTrainerModels
 {
@@ -40,13 +41,14 @@ namespace CodingTrainer.CodingTrainerModels
         [Required]
         public bool EndAssessmentsOnFail { get; set; }
 
-        [System.Runtime.Serialization.IgnoreDataMember]
+        [XmlIgnore]
         public Exercise Exercise { get; set; }
 
+        [XmlIgnore]
         public virtual ICollection<AssessmentBase> Assessments { get; set; }
 
         [NotMapped]
-        [System.Runtime.Serialization.IgnoreDataMember]
+        [XmlIgnore]
         public IEnumerable<AssessmentBase> OrderedAssessments
         {
             get

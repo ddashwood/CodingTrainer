@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CodingTrainer.CodingTrainerModels
 {
@@ -18,6 +19,7 @@ namespace CodingTrainer.CodingTrainerModels
 
         public string Description { get; set; }
 
+        [XmlIgnore]
         public virtual List<Exercise> Exercises { get; set; }
     }
 }
