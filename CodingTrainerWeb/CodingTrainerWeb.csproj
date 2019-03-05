@@ -382,6 +382,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Themes\Cyborg\bootstrap.css" />
     <Content Include="Content\Themes\Cyborg\bootstrap.min.css" />
     <Content Include="Content\Themes\Cyborg\Site.css" />
@@ -419,22 +423,26 @@
     <Content Include="Scripts\app\runcode\signalRFactory.js" />
     <Content Include="Scripts\app\showsubmission.js" />
     <Content Include="Scripts\app\sidebar.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Themes\SpaceLab\bootstrap.min.css.map" />
     <Content Include="Content\Themes\SpaceLab\bootstrap.css.map" />
     <Content Include="Content\Themes\SpaceLab\bootstrap.min.css" />
     <Content Include="Content\Themes\Cyborg\bootstrap.css.map" />
     <Content Include="Content\Themes\Cyborg\bootstrap.min.css.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\CodingTrainer - Web Deploy.pubxml" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\codemirror-buttons\buttons.css" />
     <Content Include="Scripts\codemirror-buttons\buttons.js" />
     <Content Include="Scripts\codemirror\AUTHORS" />
