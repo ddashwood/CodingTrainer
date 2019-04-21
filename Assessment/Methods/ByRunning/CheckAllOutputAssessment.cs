@@ -22,7 +22,8 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning
             var fixedConsoleOut = consoleOut.Replace("\r\n", "\n").Trim();
             var fixedExpectedResult = ExpectedResult.Replace("\r\n", "\n").Trim();
 
-            if (RequiredAccuracy == 1)
+            const int magicNUmber = 1;
+            if (RequiredAccuracy == magicNUmber)
             {
                 // No differences allowed
                 return fixedConsoleOut == fixedExpectedResult;

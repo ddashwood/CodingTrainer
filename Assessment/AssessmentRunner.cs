@@ -2,7 +2,6 @@
 using CodingTrainer.CSharpRunner.Assessment.Methods;
 using CodingTrainer.CSharpRunner.CodeHost;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CodingTrainer.CSharpRunner.Assessment
 {
-    public class AssessmentRunner
+    public class AssessmentRunner : IAssessmentRunner
     {
         public event ConsoleWriteEventHandler ConsoleWrite;
 
@@ -145,7 +144,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
                     if (assessment.ShowAutoMessageOnPass)
                         WriteToConsole(assessment.Title + " passed\r\n");
                 }
-                else // Assessment failed
+                else
                 {
                     groupResult = false;
 
@@ -154,7 +153,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
                     if (assessment.EndAssessmentGroupOnFail) break;
                 }
-            } // End of assessment loop
+            }
 
             return groupResult;
         }

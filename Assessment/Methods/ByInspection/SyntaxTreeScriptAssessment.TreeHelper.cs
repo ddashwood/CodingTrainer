@@ -29,70 +29,72 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
                 {
                     var resultForThisToken = false;
                     var currentNode = node;
-                    while (currentNode != null)
-                    {
-                        // Handle the case where variable already declared, now being assigned to:
-                        //   int a;
-                        //   a = <this node>;
-                        if (currentNode.Kind() == SyntaxKind.SimpleAssignmentExpression)
-                        {
-                            var parentAssignment = (AssignmentExpressionSyntax)currentNode;
-                            if (parentAssignment.Right.Contains(node))
-                            {
-                                resultForThisToken = true;
-                                break;
-                            }
-                        }
-                        // Handle the case where variable is declared and initialised:
-                        //    int a = <this node>;
-                        else if (currentNode.Kind() == SyntaxKind.EqualsValueClause)
-                        {
-                            resultForThisToken = true;
-                            break;
-                        }
-
-                        currentNode = currentNode.Parent;
-                    }
-                    if (resultForThisToken == false)
-                    {
-                        result = false;
-                        break;
-                    }
+                    if (ProcessParentNodes(currentNode, node, resultForThisToken, ref result)) break;
                 }
 
 
                 return result;
             }
 
-            public bool TokensHaveSpecifiedAncestorNode(Func<SyntaxToken, bool> tokenSelector, Func<SyntaxNode, bool> parentCondition)
+            private static bool ProcessParentNodes(SyntaxNode currentNode, SyntaxNode node, bool resultForThisToken,
+                ref bool result)
             {
-                bool result = true;
-                var tokens = Tree.GetRoot().DescendantTokens(c => true).Where(tokenSelector);
-
-                foreach (var token in tokens)
+                while (currentNode != null)
                 {
-                    var resultForThisToken = false;
-                    var parent = token.Parent;
-                    while (parent != null)
+                    var isVariableDeclaredButAssignedSeparatly = currentNode.Kind() == SyntaxKind.SimpleAssignmentExpression;
+                    var isVariableDeclaredAndAssigned = currentNode.Kind() == SyntaxKind.EqualsValueClause;
+                    if (isVariableDeclaredButAssignedSeparatly)
                     {
-                        var thisResult = parentCondition(parent);
-                        if (thisResult) // Found it!
+                        var parentAssignment = (AssignmentExpressionSyntax) currentNode;
+                        if (parentAssignment.Right.Contains(node))
                         {
                             resultForThisToken = true;
                             break;
                         }
-
-                        parent = parent.Parent;
                     }
-                    if (resultForThisToken == false)
+                    else if (isVariableDeclaredAndAssigned)
                     {
-                        result = false;
+                        resultForThisToken = true;
                         break;
                     }
+
+                    currentNode = currentNode.Parent;
+                }
+
+                if (resultForThisToken == false)
+                {
+                    result = false;
+                    return true;
+                }
+
+                return false;
+            }
+
+            public bool TokensHaveSpecifiedAncestorNode(Func<SyntaxToken, bool> tokenSelector, Func<SyntaxNode, bool> parentCondition)
+            {
+                var tokens = Tree.GetRoot().DescendantTokens(c => true).Where(tokenSelector);
+
+                foreach (var token in tokens)
+                {
+                    var isParentFound = IsParentFound(parentCondition, token);
+                    if (isParentFound == false) return false;
                 }
 
 
-                return result;
+                return true;
+            }
+
+            private static bool IsParentFound(Func<SyntaxNode, bool> parentCondition, object token)
+            {
+                var parent = token.Parent;
+                while (parent != null)
+                {
+                    var isParentFound = parentCondition(parent);
+                    if (isParentFound) return true;
+                    parent = parent.Parent;
+                }
+
+                return false;
             }
         }
     }
