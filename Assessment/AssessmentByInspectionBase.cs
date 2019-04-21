@@ -24,7 +24,8 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         protected async sealed override Task<bool> DoAssessmentAsync()
         {
-            if (Compilation == null || Compilation.HasValue == false) throw new InvalidOperationException("Attempt to run assessment without a compilation");
+            if (Compilation == null || Compilation.HasValue == false)
+                throw new InvalidOperationException("Attempt to run assessment without a compilation");
 
             return await AssessCompilationAsync(Compilation.Value.CompilationObject);
         }

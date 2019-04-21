@@ -70,113 +70,75 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
         #endregion
 
         [Test, Category("Assessment")]
-        public async Task AssessmentGroupStartMessageFalseTest()
+        public async Task AssessmentGroup_StartMessage_False_Ok()
         {
-            // Arrange
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
-
-            // Assert
             StringAssert.DoesNotContain("TestGroup", console.ToString());
             Assert.IsTrue(result);
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentGroupStartMessageTrueTest()
+        public async Task AssessmentGroup_StartMessage_True_Ok()
         {
-            // Arrange
             assessmentGroups.First().ShowAutoMessageOnStart = true;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
-
-            // Assert
             StringAssert.Contains("TestGroup", console.ToString());
             Assert.IsTrue(result);
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentGroupPassMessageFalseTest()
+        public async Task AssessmentGroup_Without_PassMessage_Ok()
         {
-            // Arrange
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
-            // Assert
             StringAssert.DoesNotContain("TestGroup passed", console.ToString());
             Assert.IsTrue(result);
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentGroupPassMessageTrueTest()
+        public async Task AssessmentGroup_With_PassMessage_Ok()
         {
-            // Arrange
             assessmentGroups.First().ShowAutoMessageOnPass = true;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
-
-            // Assert
             StringAssert.Contains("TestGroup passed", console.ToString());
             Assert.IsTrue(result);
         }
 
+        //+
         [Test, Category("Assessment")]
-        public async Task AssessmentGroupFailMessageFalseTest()
+        public async Task AssessmentGroup_FailMessage_False_Ok()
         {
-            // Arrange
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Wrong Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
+            const string testOuput = "Wrong Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
-            // Assert
             StringAssert.DoesNotContain("TestGroup failed", console.ToString());
             Assert.IsFalse(result);
         }
-
+        //+
         [Test, Category("Assessment")]
-        public async Task AssessmentGroupFailMessageTrueTest()
+        public async Task AssessmentGroup_FailMessage_True_Ok()
         {
-            // Arrange
             assessmentGroups.First().ShowAutoMessageOnFail = true;
+            const string testOuput = "Wrong Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Wrong Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.Contains("TestGroup failed", console.ToString());
@@ -184,39 +146,28 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentGroupNoFailMessageOnPassTest()
+        public async Task AssessmentGroup_No_FailMessage_OnPass_Ok()
         {
-            // Arrange
             assessmentGroups.First().ShowAutoMessageOnFail = true;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.DoesNotContain("TestGroup failed", console.ToString());
             Assert.IsTrue(result);
         }
 
+        //+
         [Test, Category("Assessment")]
-        public async Task AssessmentGroupNoPassMessageOnFailTest()
+        public async Task AssessmentGroup_No_PassMessage_OnFail_Ok()
         {
-            // Arrange
             assessmentGroups.First().ShowAutoMessageOnPass = true;
+            const string testOuput = "Wrong Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Wrong Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.DoesNotContain("TestGroup passed", console.ToString());
@@ -224,17 +175,12 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentStartMessageFalseTest()
+        public async Task Assessment_StartMessage_False_Ok()
         {
-            // Arrange
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.DoesNotContain("TestAssessment1", console.ToString());
@@ -242,19 +188,13 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentStartMessageTrueTest()
+        public async Task Assessment_StartMessage_True_Ok()
         {
-            // Arrange
             assessmentGroups.First().Assessments.First().ShowAutoMessageOnStart = true;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.Contains("TestAssessment1", console.ToString());
@@ -262,17 +202,12 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentPassMessageFalseTest()
+        public async Task Assessment_PassMessage_False_Ok()
         {
-            // Arrange
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.DoesNotContain("TestAssessment1 passed", console.ToString());
@@ -280,57 +215,43 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentPassMessageTrueTest()
+        public async Task Assessment_PassMessage_True_Ok()
         {
-            // Arrange
             assessmentGroups.First().Assessments.First().ShowAutoMessageOnPass = true;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.Contains("TestAssessment1 passed", console.ToString());
             Assert.IsTrue(result);
         }
 
-        [Test, Category("Assessment")]
-        public async Task AssessmentFailMessageFalseTest()
-        {
-            // Arrange
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Wrong Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
 
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+        //+
+        [Test, Category("Assessment")]
+        public async Task Assessment_FailMessage_False_Ok()
+        {
+            const string testOuput = "Wrong Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
+
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.DoesNotContain("TestAssessment1 failed", console.ToString());
             Assert.IsFalse(result);
         }
 
+        //+
         [Test, Category("Assessment")]
-        public async Task AssessmentFailMessageTrueTest()
+        public async Task Assessment_FailMessage_True_Ok()
         {
-            // Arrange
             assessmentGroups.First().Assessments.First().ShowAutoMessageOnFail = true;
+            const string testOuput = "Wrong Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Wrong Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.Contains("TestAssessment1 failed", console.ToString());
@@ -338,125 +259,95 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentNoFailMessageOnPassTest()
+        public async Task Assessment_No_FailMessage_OnPass_Ok()
         {
-            // Arrange
             assessmentGroups.First().Assessments.First().ShowAutoMessageOnFail = true;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.DoesNotContain("TestAssessment1 failed", console.ToString());
             Assert.IsTrue(result);
         }
 
+        //+
         [Test, Category("Assessment")]
-        public async Task AssessmentNoPassMessageOnFailTest()
+        public async Task Assessment_No_PassMessage_OnFail_Ok()
         {
-            // Arrange
             assessmentGroups.First().Assessments.First().ShowAutoMessageOnPass = true;
+            const string testOuput = "Wrong Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Wrong Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.DoesNotContain("TestAssessment1 passed", console.ToString());
             Assert.IsFalse(result);
         }
 
+        //+
         [Test, Category("Assessment")]
-        public async Task AssessmentGroupAbortTest()
+        public async Task Assessment_Group_Abort_Ok()
         {
-            // Arrange
             assessmentGroups.First().Assessments.First().EndAssessmentGroupOnFail = true;
             assessmentGroups.First().Assessments.ElementAt(1).ShowAutoMessageOnStart = true;
+            const string testOuput = "Wrong Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Wrong Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.DoesNotContain("TestAssessment2", console.ToString());
             Assert.IsFalse(result);
         }
 
+        //+
         [Test, Category("Assessment")]
-        public async Task AssessmentNoGroupAbortTest()
+        public async Task Assessment_NoGroup_Abort_Ok()
         {
             // Arrange
             assessmentGroups.First().Assessments.First().EndAssessmentGroupOnFail = false;
             assessmentGroups.First().Assessments.ElementAt(1).ShowAutoMessageOnStart = true;
+            const string testOuput = "Wrong Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Wrong Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.Contains("TestAssessment2", console.ToString());
             Assert.IsFalse(result);
         }
 
+        //+
         [Test, Category("Assessment")]
-        public async Task AssessmentsAbortTest()
+        public async Task Assessments_Abort_Ok()
         {
             // Arrange
 
             assessmentGroups.First().EndAssessmentsOnFail = true;
             assessmentGroups.ElementAt(1).ShowAutoMessageOnStart = true;
+            const string testOuput = "Wrong Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Wrong Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.DoesNotContain("TestSecondGroup", console.ToString());
             Assert.IsFalse(result);
         }
-
+        
+        //+
         [Test, Category("Assessment")]
-        public async Task AssessmentsNoAbortTest()
+        public async Task Assessments_No_Abort_Ok()
         {
-            // Arrange
-
             assessmentGroups.First().EndAssessmentsOnFail = false;
             assessmentGroups.ElementAt(1).ShowAutoMessageOnStart = true;
+            const string testOuput = "Wrong Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Wrong Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.Contains("TestSecondGroup", console.ToString());
@@ -464,20 +355,13 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentIncludeOutputTest()
+        public async Task Assessment_Include_Output_Ok()
         {
-            // Arrange
-
             ((AssessmentByRunningBase)assessmentGroups.First().Assessments.First()).ShowScriptRunning = true;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.Contains("Test Output", console.ToString());
@@ -485,24 +369,33 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
         }
 
         [Test, Category("Assessment")]
-        public async Task AssessmentDoesNotIncludeOutputTest()
+        public async Task Assessment_NotIncluded_Output_Ok()
         {
-            // Arrange
-
             ((AssessmentByRunningBase)assessmentGroups.First().Assessments.First()).ShowScriptRunning = false;
+            const string testOuput = "Test Output";
+            var assessmentRunner = ArrangeAssesmentGroup(testOuput);
 
-            var code = GetUsings(new string[] { "System" })
-                .Append(WrapInMain("Console.WriteLine(\"Test Output\");"));
-            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
-            assessmentRunner.ConsoleWrite += OnConsoleWrite;
-
-            // Act
-            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
-            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            var result = await RunAssessmentAndDeattachConsoleWriter(assessmentRunner);
 
             // Assert
             StringAssert.DoesNotContain("Test Output", console.ToString());
             Assert.IsTrue(result);
+        }
+
+        private AssessmentRunner ArrangeAssesmentGroup(string testOutput)
+        {
+            var code = GetUsings(new string[] { "System" })
+                .Append(WrapInMain($"Console.WriteLine(\"{testOutput}\");"));
+            var assessmentRunner = new AssessmentRunner(runner, code.ToString());
+            assessmentRunner.ConsoleWrite += OnConsoleWrite;
+            return assessmentRunner;
+        }
+
+        private async Task<bool> RunAssessmentAndDeattachConsoleWriter(AssessmentRunner assessmentRunner)
+        {
+            bool result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
+            assessmentRunner.ConsoleWrite -= OnConsoleWrite;
+            return result;
         }
     }
 }

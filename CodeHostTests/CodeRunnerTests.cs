@@ -20,7 +20,7 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         #region CompilerTests
         [Test]
         [Category("Compiler")]
-        public void CompilerErrorTest()
+        public void Compiler_Fail()
         {
             Exception e = Assert.ThrowsAsync(typeof(CompilationErrorException), () =>
                 runner.CompileAndRunAsync(GetUsings(new string[] { "System" })
@@ -30,12 +30,14 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
 
         [Test]
         [Category("Compiler")]
-        public void CompilationTooBigTest()
+        public void Compilation_TooBig_Fail()
         {
             StringBuilder code = new StringBuilder("int i = 0;");
-            for (int i = 0; i < 10000; i++)
+            const int notSupportedLineNumber = 10000;
+            for (int i = 0; i < notSupportedLineNumber; i++)
             {
-                code.Append(" i = 5 * i++ - 4 * 3;");
+                const string codeInput = " i = 5 * i++ - 4 * 3;";
+                code.Append(codeInput);
             }
 
             Assert.ThrowsAsync(typeof(PolicyException), () =>
@@ -48,12 +50,12 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         [Explicit ("Doesn't work reliably yet")]
         [Test]
         [Category("Monitoring")]
-        public void OutOfMemoryTest()
+        public void OutOfMemory_Fail()
         {
             // The GC.Collect() and Sleep() make this test quite artificial - memory allocation checking
             // only works properly after garbage collection. Without this, it's down to chance
             // when the memory allocation will get updated
-            string code = @"
+            const string code = @"
 class C { double[] a = new double[100000]; }
 C[] ca = new C[500];
 for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.Thread.Sleep(0); }

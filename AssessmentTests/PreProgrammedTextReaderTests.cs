@@ -14,7 +14,7 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
     {
         [Test]
         [Category("Assessment")]
-        public async Task ConsoleInTest()
+        public async Task Console_In_Ok()
         {
             var compiled = await runner.CompileAsync(GetUsings(new string[] { "System" }).
                 Append(WrapInMain("Console.WriteLine(\"You entered \" + Console.ReadLine()); " +
@@ -27,7 +27,7 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
 
         [Test]
         [Category("Assessment")]
-        public async Task ReadTooMuchTest()
+        public async Task Read_TooMuch_Fail()
         {
             var compiled = await runner.CompileAsync(GetUsings(new string[] { "System" }).
                 Append(WrapInMain("Console.ReadLine(); Console.ReadLine();")).ToString());

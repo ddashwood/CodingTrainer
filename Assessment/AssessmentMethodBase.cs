@@ -16,8 +16,10 @@ namespace CodingTrainer.CSharpRunner.Assessment
 {
     public abstract class AssessmentMethodBase:AssessmentBase
     {
-        // Dynamic Linq can't use enum names, so this enables Dynamic Linq queries
-        // to call the Value() method and pass the name as a parameter
+        /// <summary>
+        /// Dynamic Linq can't use enum names, so this enables Dynamic Linq queries
+        ///  to call the Value() method and pass the name as a parameter
+        /// </summary>
         protected class EnumHelper<TEnum, TUnderlying> where TEnum:Enum
         {
             public EnumHelper()
@@ -32,13 +34,11 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
         }
 
-        // Not mapped onto Entity Framework
+        public event ConsoleWriteEventHandler ConsoleWrite;
+
         [NotMapped]
         [IgnoreDataMember]
         public dynamic AssessmentBag { get; set; }
-
-        // Events
-        public event ConsoleWriteEventHandler ConsoleWrite;
 
         public override async Task<bool> AssessAsync()
         {

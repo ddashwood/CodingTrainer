@@ -17,80 +17,88 @@ namespace CodingTrainer.CSharpRunner.Assessment
     public class AssessmentRunner
     {
         public event ConsoleWriteEventHandler ConsoleWrite;
-        private ICodeRunner runner;
-        private readonly string code;
-        private LazyAsync<CompiledCode> compiledCode;
-        private CompilationWithSource compilation;
-        private IEnumerable<Diagnostic> diags;
+
+        private ICodeRunner _runner;
+        private readonly string _code;
+        private LazyAsync<CompiledCode> _compiledCode;
+        private CompilationWithSource _compilation;
+        private IEnumerable<Diagnostic> _diags;
 
         static AssessmentRunner()
         {
             try
             {
-                // Add types to Dynamic Linq which might be used by assessment queries.
-                // This has to happen once, before assessments run - doing it in the
-                // static constructor should do the trick
+                var type = GetExpressionRunnerPredefinedTypes(out var predefinedTypesField, out var predefinedTypes);
+                var newTypes = ExtractEnumTypes();
+                predefinedTypes = MergeTypes(predefinedTypes, newTypes);
+                SetPredefinedTypesFieldValue(predefinedTypesField, predefinedTypes, type);
+            }
+            catch { } // Exceptions must not prevent the _code from continuing - they will show later as exceptions when trying to use Dynamic Linq
+        }
 
-                // EnumHelper is protected within AssessmentMethodBase
-                Type assessmentMethodBase = typeof(AssessmentMethodBase);
-                Type enumHelper = assessmentMethodBase.GetNestedType("EnumHelper`2", BindingFlags.NonPublic);
+        private static Type[] ExtractEnumTypes()
+        {
+            // Add types to Dynamic Linq which might be used by assessment queries.
+            // This has to happen once, before assessments run - doing it in the
+            // static constructor should do the trick
 
-                Type[] newTypes =
-                {
+            // EnumHelper is protected within AssessmentMethodBase
+            Type assessmentMethodBase = typeof(AssessmentMethodBase);
+            Type enumHelper = assessmentMethodBase.GetNestedType("EnumHelper`2", BindingFlags.NonPublic);
+
+            Type[] newTypes =
+            {
                 enumHelper.MakeGenericType(typeof(Microsoft.CodeAnalysis.CSharp.SyntaxKind), typeof(ushort)),
                 typeof(SyntaxToken),
                 typeof(SyntaxNode)
             };
-
-                // Private type, hence we can't simply use typeof
-                Type type = typeof(System.Linq.Dynamic.DynamicQueryable).Assembly.GetType("System.Linq.Dynamic.ExpressionParser");
-                FieldInfo field = type.GetField("predefinedTypes", BindingFlags.Static | BindingFlags.NonPublic);
-
-                Type[] predefinedTypes = (Type[])field.GetValue(null);
-
-                int originalLength = predefinedTypes.Length;
-                Array.Resize(ref predefinedTypes, predefinedTypes.Length + newTypes.Length);
-                predefinedTypes[predefinedTypes.Length - 1] = typeof(SyntaxToken);
-                Array.Copy(newTypes, 0, predefinedTypes, originalLength, newTypes.Length);
-
-                field.SetValue(null, predefinedTypes);
-
-                field = type.GetField("keywords", BindingFlags.Static | BindingFlags.NonPublic);
-                field.SetValue(null, null);
-            }
-            catch { } // Exceptions must not prevent the code from continuing - they will show later as exceptions when trying to use Dynamic Linq
+            return newTypes;
         }
-
 
         public AssessmentRunner(ICodeRunner runner, string code)
         {
-            this.runner = runner;
-            this.code = code;
+            _runner = runner;
+            _code = code;
         }
 
         public async Task<bool> RunAssessmentsAsync(IEnumerable<AssessmentGroup> assessmentGroups)
         {
-            // Prepare to compile the code
+            if (!await PrepareForCompiling()) return false;
 
+            var result = await RunTests(assessmentGroups);
+            if (result)
+            {
+                WriteToConsole("Congratulations!");
+            }
+
+            return result;
+        }
+
+
+        private async Task<bool> PrepareForCompiling()
+        {
             try
             {
-                compilation = await runner.GetCompilationAsync(code);
-                var tree = compilation.CompilationObject.SyntaxTrees.Single();
-                diags = compilation.CompilationObject.GetSemanticModel(tree).GetDiagnostics();
+                _compilation = await _runner.GetCompilationAsync(_code);
+                var tree = _compilation.CompilationObject.SyntaxTrees.Single();
+                _diags = _compilation.CompilationObject.GetSemanticModel(tree).GetDiagnostics();
 
-                compiledCode = new LazyAsync<CompiledCode>
-                        (() => runner.EmitFromCompilationAsync(compilation));
+                _compiledCode = new LazyAsync<CompiledCode>
+                    (() => _runner.EmitFromCompilationAsync(_compilation));
             }
             catch (Exception e) when (!(e is CompilationErrorException))
             {
-                WriteToConsole("Something went wrong with the compilation\r\n");
+                WriteToConsole("Something went wrong with the _compilation\r\n");
                 WriteToConsole("The error message is:\r\n");
                 WriteToConsole("  " + e.Message);
                 return false;
             }
 
-            // Now run each of the tests
+            return true;
+        }
 
+        private async Task<bool> RunTests(IEnumerable<AssessmentGroup> assessmentGroups)
+        {
             var result = true;
             dynamic assessmentBag = new System.Dynamic.ExpandoObject();
 
@@ -99,38 +107,14 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 if (assessmentGroup.ShowAutoMessageOnStart)
                     WriteToConsole($"Checking {assessmentGroup.Title}\r\n");
 
-                var groupResult = true;
-                foreach (var assessmentBase in assessmentGroup.OrderedAssessments)
-                {
-                    var assessment = (AssessmentMethodBase)assessmentBase;
+                bool isGroupPassed = await RunAssessments(assessmentGroup, assessmentBag);
 
-                    if (assessment.ShowAutoMessageOnStart)
-                        WriteToConsole($"Checking {assessment.Title}\r\n");
-
-                    var thisResult = await RunAssessmentAsync(assessment, assessmentBag);
-
-                    if (thisResult)
-                    {
-                        if (assessment.ShowAutoMessageOnPass)
-                            WriteToConsole(assessment.Title + " passed\r\n");
-                    }
-                    else // Assessment failed
-                    {
-                        groupResult = false;
-
-                        if (assessment.ShowAutoMessageOnFail)
-                            WriteToConsole(assessment.Title + " failed\r\n");
-
-                        if (assessment.EndAssessmentGroupOnFail) break;
-                    }
-                } // End of assessment loop
-
-                if (groupResult)
+                if (isGroupPassed)
                 {
                     if (assessmentGroup.ShowAutoMessageOnPass)
                         WriteToConsole(assessmentGroup.Title + " passed\r\n");
                 }
-                else // Assessment group failed
+                else
                 {
                     result = false;
 
@@ -141,12 +125,64 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 }
             } // End of assessment group loop
 
-            if (result)
-            {
-                WriteToConsole("Congratulations!");
-            }
-
             return result;
+        }
+
+        private async Task<bool> RunAssessments(AssessmentGroup assessmentGroup, dynamic assessmentBag)
+        {
+            var groupResult = true;
+            foreach (var assessmentBase in assessmentGroup.OrderedAssessments)
+            {
+                var assessment = (AssessmentMethodBase) assessmentBase;
+
+                if (assessment.ShowAutoMessageOnStart)
+                    WriteToConsole($"Checking {assessment.Title}\r\n");
+
+                var thisResult = await RunAssessmentAsync(assessment, assessmentBag);
+
+                if (thisResult)
+                {
+                    if (assessment.ShowAutoMessageOnPass)
+                        WriteToConsole(assessment.Title + " passed\r\n");
+                }
+                else // Assessment failed
+                {
+                    groupResult = false;
+
+                    if (assessment.ShowAutoMessageOnFail)
+                        WriteToConsole(assessment.Title + " failed\r\n");
+
+                    if (assessment.EndAssessmentGroupOnFail) break;
+                }
+            } // End of assessment loop
+
+            return groupResult;
+        }
+
+        private static Type GetExpressionRunnerPredefinedTypes(out FieldInfo predefinedTypesField, out Type[] predefinedTypes)
+        {
+            // Private type, hence we can't simply use typeof
+            Type type = typeof(System.Linq.Dynamic.DynamicQueryable).Assembly.GetType("System.Linq.Dynamic.ExpressionParser");
+            predefinedTypesField = type.GetField("predefinedTypes", BindingFlags.Static | BindingFlags.NonPublic);
+
+            predefinedTypes = (Type[])predefinedTypesField.GetValue(null);
+            return type;
+        }
+
+        private static Type[] MergeTypes(Type[] predefinedTypes, Type[] newTypes)
+        {
+            int originalLength = predefinedTypes.Length;
+            Array.Resize(ref predefinedTypes, predefinedTypes.Length + newTypes.Length);
+            predefinedTypes[predefinedTypes.Length - 1] = typeof(SyntaxToken);
+            Array.Copy(newTypes, 0, predefinedTypes, originalLength, newTypes.Length);
+            return predefinedTypes;
+        }
+
+        private static void SetPredefinedTypesFieldValue(FieldInfo predefinedTypesField, Type[] predefinedTypes, Type type)
+        {
+            predefinedTypesField.SetValue(null, predefinedTypes);
+            predefinedTypesField = type.GetField("keywords", BindingFlags.Static | BindingFlags.NonPublic);
+            predefinedTypesField.SetValue(null, null);
         }
 
         private async Task<bool> RunAssessmentAsync(AssessmentMethodBase assessment, dynamic assessmentBag)
@@ -155,24 +191,24 @@ namespace CodingTrainer.CSharpRunner.Assessment
             assessment.ConsoleWrite += OnConsoleWrite;
             if (assessment is AssessmentByInspectionBase inspectionAssessment)
             {
-                inspectionAssessment.Compilation = compilation;
+                inspectionAssessment.Compilation = _compilation;
             }
             else if (assessment is AssessmentByRunningBase runningAssessment)
             {
-                if (diags.Any(d => d.Severity == DiagnosticSeverity.Error))
+                if (_diags.Any(d => d.Severity == DiagnosticSeverity.Error))
                 {
-                    WriteToConsole("Unable to run your code because it has compiler errors\r\n");
+                    WriteToConsole("Unable to run your _code because it has compiler errors\r\n");
                     return false;
                 }
 
-                runningAssessment.CodeRunner = runner;
+                runningAssessment.CodeRunner = _runner;
                 try
                 {
-                    runningAssessment.CompiledCode = await compiledCode.Value;
+                    runningAssessment.CompiledCode = await _compiledCode.Value;
                 }
                 catch (Exception e) when (!(e is CompilationErrorException))
                 {
-                    WriteToConsole("Something went wrong with the compilation\r\n");
+                    WriteToConsole("Something went wrong with the _compilation\r\n");
                     WriteToConsole("The error message is:\r\n");
                     WriteToConsole("  " + e.Message);
                     return false;
