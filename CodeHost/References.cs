@@ -12,7 +12,8 @@ namespace CodingTrainer.CSharpRunner.CodeHost
     {
         public static ImmutableList<MetadataReference> ReferencedAssembliesData { get; } = new List<MetadataReference>()
             {
-                FromType(typeof(Console))       // mscorlib
+                FromType(typeof(Console)),      // mscorlib
+                FromType(typeof(System.Linq.Enumerable))
             }.ToImmutableList();
 
         public static MetadataReference FromType(Type type)
