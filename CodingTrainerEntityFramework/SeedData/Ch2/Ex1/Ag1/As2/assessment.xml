@@ -10,4 +10,5 @@
   <ForInfoOnly>1</ForInfoOnly>
   <PassMessage>Total basket amount of £1.10 appears to have been calculated correctly, but is not formatted correctly</PassMessage>
   <FailMessage>Total basket amount of £1.10 does not appear to have been calculated correctly</FailMessage>
+  <UseResultFromPreviousAssessment>1</UseResultFromPreviousAssessment>
 </LinqAssessment>

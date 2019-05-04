@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CSharpRunner.CodeHost;
+using Microsoft.CSharp.RuntimeBinder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,34 +24,55 @@ namespace CodingTrainer.CSharpRunner.Assessment
         internal CompiledCode? CompiledCode { private get; set; }
 
         // Entity Framework properties
-        [Required]
+        // [Required] - Not required if UseResultFromPreviousAssessment = true
         public string ConsoleInText { get; set; }
 
         [Required]
         public bool ShowScriptRunning { get; set; }
 
+        [Required]
+        public bool UseResultFromPreviousAssessment { get; set; }
+
         protected abstract bool CheckResult(string consoleOut);
 
         protected sealed override async Task<bool> DoAssessmentAsync()
         {
-            if (CodeRunner == null) throw new InvalidOperationException("Attempt to run assessment without a code runner");
-            if (CompiledCode == null || CompiledCode.HasValue == false) throw new InvalidOperationException("Attempt to run assessment without any compiled code");
+            StringBuilder console;
 
-            StringBuilder console = new StringBuilder();
-            void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
+            if (UseResultFromPreviousAssessment)
             {
-                if (ShowScriptRunning) WriteToConsole(e.Message);
-                console.Append(e.Message);
+                try
+                {
+                    console = AssessmentBag.Console;
+                }
+                catch (RuntimeBinderException)
+                {
+                    throw new InvalidOperationException("Attempt to use result from previous assessment on the first assessment-by-running");
+                }
             }
+            else
+            {
+                if (CodeRunner == null) throw new InvalidOperationException("Attempt to run assessment without a code runner");
+                if (CompiledCode == null || CompiledCode.HasValue == false) throw new InvalidOperationException("Attempt to run assessment without any compiled code");
 
-            CodeRunner.ConsoleWrite += OnConsoleWrite;
-            try
-            {
-                await CodeRunner.RunAsync(CompiledCode.Value, new PreProgrammedTextReader(ConsoleInText));
-            }
-            finally
-            {
-                CodeRunner.ConsoleWrite -= OnConsoleWrite;
+                console = new StringBuilder();
+                void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
+                {
+                    if (ShowScriptRunning) WriteToConsole(e.Message);
+                    console.Append(e.Message);
+                }
+
+                CodeRunner.ConsoleWrite += OnConsoleWrite;
+                try
+                {
+                    await CodeRunner.RunAsync(CompiledCode.Value, new PreProgrammedTextReader(ConsoleInText));
+                }
+                finally
+                {
+                    CodeRunner.ConsoleWrite -= OnConsoleWrite;
+                }
+
+                AssessmentBag.Console = console;
             }
 
             return CheckResult(console.ToString());
