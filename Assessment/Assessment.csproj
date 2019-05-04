@@ -171,6 +171,7 @@
     <Compile Include="Methods\ByInspection\SyntaxTreeScriptAssessment.TreeHelper.cs" />
     <Compile Include="Methods\ByRunning\CheckAllOutputAssessment.cs" />
     <Compile Include="Methods\ByRunning\CheckLastLineOfOutputAssessment.cs" />
+    <Compile Include="Methods\ByRunning\LinqAssessment.cs" />
     <Compile Include="Methods\ByRunning\LastLineLinqAssessment.cs" />
     <Compile Include="Methods\ByInspection\SyntaxTokensLinqAssessment.cs" />
     <Compile Include="Methods\ByInspection\SyntaxTreeScriptAssessment.cs" />

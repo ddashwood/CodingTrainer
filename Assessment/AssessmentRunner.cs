@@ -97,49 +97,25 @@ namespace CodingTrainer.CSharpRunner.Assessment
             foreach (var assessmentGroup in assessmentGroups)
             {
                 if (assessmentGroup.ShowAutoMessageOnStart)
-                    WriteToConsole($"Checking {assessmentGroup.Title}\r\n");
+                    WriteToConsole($"Checking {assessmentGroup.Title}\r\n\r\n");
 
-                var groupResult = true;
-                foreach (var assessmentBase in assessmentGroup.OrderedAssessments)
-                {
-                    var assessment = (AssessmentMethodBase)assessmentBase;
-
-                    if (assessment.ShowAutoMessageOnStart)
-                        WriteToConsole($"Checking {assessment.Title}\r\n");
-
-                    var thisResult = await RunAssessmentAsync(assessment, assessmentBag);
-
-                    if (thisResult)
-                    {
-                        if (assessment.ShowAutoMessageOnPass)
-                            WriteToConsole(assessment.Title + " passed\r\n");
-                    }
-                    else // Assessment failed
-                    {
-                        groupResult = false;
-
-                        if (assessment.ShowAutoMessageOnFail)
-                            WriteToConsole(assessment.Title + " failed\r\n");
-
-                        if (assessment.EndAssessmentGroupOnFail) break;
-                    }
-                } // End of assessment loop
+                bool groupResult = await RunAssessmentGroupAsync(assessmentBag, assessmentGroup);
 
                 if (groupResult)
                 {
                     if (assessmentGroup.ShowAutoMessageOnPass)
-                        WriteToConsole(assessmentGroup.Title + " passed\r\n");
+                        WriteToConsole("\r\n" + assessmentGroup.Title + " passed\r\n");
                 }
-                else // Assessment group failed
+                else
                 {
                     result = false;
 
                     if (assessmentGroup.ShowAutoMessageOnFail)
-                        WriteToConsole(assessmentGroup.Title + " failed\r\n");
+                        WriteToConsole("\r\n" + assessmentGroup.Title + " failed\r\n");
 
                     if (assessmentGroup.EndAssessmentsOnFail) break;
                 }
-            } // End of assessment group loop
+            }
 
             if (result)
             {
@@ -147,6 +123,39 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
 
             return result;
+        }
+
+        private async Task<bool> RunAssessmentGroupAsync(dynamic assessmentBag, AssessmentGroup assessmentGroup)
+        {
+            var groupResult = true;
+            foreach (var assessmentBase in assessmentGroup.OrderedAssessments)
+            {
+                var assessment = (AssessmentMethodBase)assessmentBase;
+
+                if (assessment.ShowAutoMessageOnStart)
+                    WriteToConsole((assessment.StartMessage ?? $"Checking {assessment.Title}") + "\r\n\r\n");
+
+                var thisResult = await RunAssessmentAsync(assessment, assessmentBag);
+
+                if (thisResult)
+                {
+                    if (assessment.ShowAutoMessageOnPass)
+                        WriteToConsole("\r\n" + (assessment.PassMessage ?? assessment.Title + " passed") + "\r\n");
+
+                    if (assessment.EndAssessmentGroupOnPass) break;
+                }
+                else
+                {
+                    groupResult = false;
+
+                    if (assessment.ShowAutoMessageOnFail)
+                        WriteToConsole("\r\n" + (assessment.FailMessage ?? assessment.Title + " failed") + "\r\n");
+
+                    if (assessment.EndAssessmentGroupOnFail) break;
+                }
+            }
+
+            return groupResult;
         }
 
         private async Task<bool> RunAssessmentAsync(AssessmentMethodBase assessment, dynamic assessmentBag)

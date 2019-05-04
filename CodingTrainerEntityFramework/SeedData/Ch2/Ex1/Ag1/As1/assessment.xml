@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LinqAssessment>
+  <FullClassName>CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning.LinqAssessment</FullClassName>
+  <Title>Contains Total Price</Title>
+  <ShowAutoMessageOnStart>0</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>1</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>0</ShowAutoMessageOnFail>
+  <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
+  <EndAssessmentGroupOnPass>1</EndAssessmentGroupOnPass>
+  <ShowScriptRunning>1</ShowScriptRunning>
+  <PassMessage>Total basket amount of £1.10 has been shown correctly</PassMessage>
+</LinqAssessment>

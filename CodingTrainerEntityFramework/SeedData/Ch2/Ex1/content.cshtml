@@ -1,0 +1,21 @@
+﻿<p>
+    Shopping Basket instructions will go here
+</p>
+
+<div class="row">
+    <div class="sizer pull-left" style="width:70%">
+        <div class="embed-responsive embed-responsive-16by9">
+            <video controls>
+                <source src="@Url.Content("~/Content/Course/1/1.mp4")" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <br>
+    <p>
+    </p>
+</div>
+<br>
+
+@Html.Action("RunCode", new { Exercise = Model.Exercise }).Raw()

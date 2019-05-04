@@ -50,7 +50,7 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         {
             await ideServices.GetCompletionStringsAsync("using Sys", 9);
             IEnumerable<string> actual = await ideServices.GetCompletionStringsAsync("using System.", 13);
-            string[] expected = { "Collections", "Configuration", "Deployment", "Diagnostics", "Globalization", "IO", "Reflection", "Resources", "Runtime", "Security", "Text", "Threading" };
+            string[] expected = { "Collections", "Configuration", "Deployment", "Diagnostics", "Dynamic", "Globalization", "IO", "Linq", "Management", "Reflection", "Resources", "Runtime", "Security", "Text", "Threading" };
             CollectionAssert.AreEquivalent(expected, actual);
         }
 
@@ -60,7 +60,7 @@ namespace CodingTrainer.CSharpRunner.CodeHostTests
         {
             Task t = ideServices.GetCompletionStringsAsync("using Sys", 9); // To test concurrency, don't await this task!
             IEnumerable<string> actual = await ideServices.GetCompletionStringsAsync("using System.", 13);
-            string[] expected = { "Collections", "Configuration", "Deployment", "Diagnostics", "Globalization", "IO", "Reflection", "Resources", "Runtime", "Security", "Text", "Threading" };
+            string[] expected = { "Collections", "Configuration", "Deployment", "Diagnostics", "Dynamic", "Globalization", "IO", "Linq", "Management", "Reflection", "Resources", "Runtime", "Security", "Text", "Threading" };
             CollectionAssert.AreEquivalent(expected, actual);
         }
 

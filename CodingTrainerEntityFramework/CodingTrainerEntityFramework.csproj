@@ -140,6 +140,10 @@
     <Compile Include="Migrations\201903041516466_AddAssessmentGroupTitle.Designer.cs">
       <DependentUpon>201903041516466_AddAssessmentGroupTitle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905031454545_AddAssessmentMessagesEtc.cs" />
+    <Compile Include="Migrations\201905031454545_AddAssessmentMessagesEtc.Designer.cs">
+      <DependentUpon>201905031454545_AddAssessmentMessagesEtc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seed\Seeder.cs" />
@@ -208,6 +212,9 @@
     <EmbeddedResource Include="Migrations\201903041516466_AddAssessmentGroupTitle.resx">
       <DependentUpon>201903041516466_AddAssessmentGroupTitle.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905031454545_AddAssessmentMessagesEtc.resx">
+      <DependentUpon>201905031454545_AddAssessmentMessagesEtc.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Assessment\Assessment.csproj">
@@ -230,13 +237,22 @@
     <None Include="SeedData\Ch-1\Ex-1\header.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\content.cshtml">
+    <None Include="SeedData\Ch3\Ex2\content.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\default.csx">
+    <None Include="SeedData\Ch3\Ex2\default.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\header.csx">
+    <None Include="SeedData\Ch3\Ex2\header.csx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SeedData\Ch2\Ex1\content.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SeedData\Ch2\Ex1\default.csx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SeedData\Ch2\Ex1\header.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SeedData\TemplateChapter\Ex1\content.cshtml">
@@ -268,55 +284,55 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As7\Script.txt">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As7\Script.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As7\assessment.xml">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As7\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As6\Script.txt">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As6\Script.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As6\assessment.xml">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As6\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As5\Script.txt">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As5\Script.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As5\assessment.xml">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As5\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As4\TokenSelector.txt">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As4\TokenSelector.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As4\ParentCondition.txt">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As4\ParentCondition.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As4\assessment.xml">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As4\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As3\Condition.txt">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As3\Condition.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As3\assessment.xml">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As3\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As2\Condition.txt">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As2\Condition.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As2\ConsoleInText.txt">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As2\ConsoleInText.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As2\assessment.xml">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As2\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As1\ExpectedResult.txt">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As1\ExpectedResult.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As1\ConsoleInText.txt">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As1\ConsoleInText.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\As1\assessment.xml">
+    <None Include="SeedData\Ch3\Ex2\Ag1\As1\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SeedData\Ch1\Ex1\Ag1\As1\assessment.xml">
@@ -340,7 +356,7 @@
     <None Include="SeedData\TemplateChapter\Ex1\Ag1\As1\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex2\Ag1\asmt-group.xml">
+    <None Include="SeedData\Ch3\Ex2\Ag1\asmt-group.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SeedData\Ch1\Ex1\Ag1\asmt-group.xml">
@@ -349,22 +365,22 @@
     <None Include="SeedData\TemplateChapter\Ex1\Ag1\asmt-group.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SeedData\Ch4\Ex1\exercise.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SeedData\Ch4\chapter.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SeedData\Ch3\Ex3\exercise.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SeedData\Ch3\Ex2\exercise.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SeedData\Ch3\Ex1\exercise.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SeedData\Ch3\chapter.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SeedData\Ch2\Ex3\exercise.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SeedData\Ch2\Ex2\exercise.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SeedData\Ch2\Ex1\exercise.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SeedData\Ch2\chapter.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SeedData\Ch1\Ex3\exercise.xml">
@@ -392,6 +408,51 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="SeedData\Ch2\chapter.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SeedData\Ch2\Ex1\Ag1\asmt-group.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SeedData\Ch2\Ex1\exercise.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SeedData\Ch2\Ex1\Ag1\As2\assessment.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SeedData\Ch2\Ex1\Ag1\As2\Condition.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SeedData\Ch2\Ex1\Ag1\As2\ConsoleInText.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SeedData\Ch2\Ex1\Ag1\As1\assessment.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SeedData\Ch2\Ex1\Ag1\As1\Condition.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SeedData\Ch2\Ex1\Ag1\As1\ConsoleInText.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

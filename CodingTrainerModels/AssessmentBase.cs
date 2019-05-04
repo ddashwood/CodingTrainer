@@ -34,6 +34,15 @@ namespace CodingTrainer.CodingTrainerModels
         [Required]
         public bool EndAssessmentGroupOnFail { get; set; }
 
+        [Required]
+        public bool EndAssessmentGroupOnPass { get; set; }
+
+        public string StartMessage { get; set; }
+
+        public string PassMessage { get; set; }
+
+        public string FailMessage { get; set; }
+
         [Index("IX_Assessment_Sequence", IsUnique = true, Order = 2)]
         [Required]
         public int Sequence { get; set; }
