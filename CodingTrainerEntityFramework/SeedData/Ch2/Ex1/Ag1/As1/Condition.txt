@@ -1,1 +1,1 @@
-﻿output.Contains("£1.10")
+﻿output.Contains("£0.60")

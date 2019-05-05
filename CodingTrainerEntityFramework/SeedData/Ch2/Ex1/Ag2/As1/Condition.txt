@@ -1,0 +1,1 @@
+﻿output.Contains("£1.10")

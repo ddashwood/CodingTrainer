@@ -97,21 +97,21 @@ namespace CodingTrainer.CSharpRunner.Assessment
             foreach (var assessmentGroup in assessmentGroups)
             {
                 if (assessmentGroup.ShowAutoMessageOnStart)
-                    WriteToConsole($"Checking {assessmentGroup.Title}\r\n\r\n");
+                    WriteToConsole($"Checking {assessmentGroup.Title}\r\n");
 
                 bool groupResult = await RunAssessmentGroupAsync(assessmentBag, assessmentGroup);
 
                 if (groupResult)
                 {
                     if (assessmentGroup.ShowAutoMessageOnPass)
-                        WriteToConsole("\r\n" + assessmentGroup.Title + " passed\r\n");
+                        WriteToConsole(assessmentGroup.Title + " passed\r\n");
                 }
                 else
                 {
                     result = false;
 
                     if (assessmentGroup.ShowAutoMessageOnFail)
-                        WriteToConsole("\r\n" + assessmentGroup.Title + " failed\r\n");
+                        WriteToConsole(assessmentGroup.Title + " failed\r\n");
 
                     if (assessmentGroup.EndAssessmentsOnFail) break;
                 }
@@ -133,14 +133,14 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 var assessment = (AssessmentMethodBase)assessmentBase;
 
                 if (assessment.ShowAutoMessageOnStart)
-                    WriteToConsole((assessment.StartMessage ?? $"Checking {assessment.Title}") + "\r\n\r\n");
+                    WriteToConsole((assessment.StartMessage ?? $"Checking {assessment.Title}") + "\r\n");
 
                 var thisResult = await RunAssessmentAsync(assessment, assessmentBag);
 
                 if (thisResult)
                 {
                     if (assessment.ShowAutoMessageOnPass)
-                        WriteToConsole("\r\n" + (assessment.PassMessage ?? assessment.Title + " passed") + "\r\n");
+                        WriteToConsole((assessment.PassMessage ?? assessment.Title + " passed") + "\r\n");
 
                     if (assessment.EndAssessmentGroupOnPass) break;
                 }
@@ -149,7 +149,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
                     groupResult = false;
 
                     if (assessment.ShowAutoMessageOnFail)
-                        WriteToConsole("\r\n" + (assessment.FailMessage ?? assessment.Title + " failed") + "\r\n");
+                        WriteToConsole((assessment.FailMessage ?? assessment.Title + " failed") + "\r\n");
 
                     if (assessment.EndAssessmentGroupOnFail) break;
                 }

@@ -1,1 +1,1 @@
-﻿output.Contains("1.1")
+﻿output.Contains("0.6")

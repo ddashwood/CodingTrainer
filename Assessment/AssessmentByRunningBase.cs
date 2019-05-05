@@ -65,7 +65,9 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 CodeRunner.ConsoleWrite += OnConsoleWrite;
                 try
                 {
+                    OnConsoleWrite(this, new ConsoleWriteEventArgs("\r\n")); // Separate from start/end messages
                     await CodeRunner.RunAsync(CompiledCode.Value, new PreProgrammedTextReader(ConsoleInText));
+                    OnConsoleWrite(this, new ConsoleWriteEventArgs("\r\n"));
                 }
                 finally
                 {
