@@ -65,6 +65,9 @@
     // When done, enable the Run button, etc
     serviceFactory.connect(function () {
         $('.cm-btn-run').html('&#x25B6;&nbsp;Run');
+        if (self.isSubmittable) {
+            $('.cm-btn-submit').addClass('cm-btn-submit-enabled');
+        }
         self.enableRun();
 
         // Apply linting to the default code
@@ -117,10 +120,6 @@ Ide.prototype.enableRun = function () {
 
 Ide.prototype.runComplete = function () {
     this.enableRun();
-    // After user has tested their code, allow them to submit it
-    if (this.isSubmittable) {
-        $('.cm-btn-submit').addClass('cm-btn-submit-enabled');
-    }
 };
 
 // This method may be used when errors occur during real-time linting,
