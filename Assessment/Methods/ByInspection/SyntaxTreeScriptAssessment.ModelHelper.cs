@@ -1,6 +1,9 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,14 +25,36 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
 
             public ISymbol GetSymbolInClass(string className, string memberName)
             {
-                var classSyntax = Nodes.OfType<Microsoft.CodeAnalysis.CSharp.Syntax.TypeDeclarationSyntax>().SingleOrDefault(t => t.Identifier.Text == className);
+                var classSyntax = Nodes.OfType<TypeDeclarationSyntax>().SingleOrDefault(t => t.Identifier.Text == className);
                 if (classSyntax == null) return null;
 
                 var classModel = SemanticModel.GetDeclaredSymbol(classSyntax) as INamedTypeSymbol;
                 if (classModel == null) return null;
 
                 var member = classModel.GetMembers().SingleOrDefault(m => m.Name == memberName);
+
                 return member;
+
+            }
+
+
+            public ImmutableArray<IMethodSymbol> GetClassConstructors(string className)
+            {
+                var classSyntax = Nodes.OfType<TypeDeclarationSyntax>().SingleOrDefault(t => t.Identifier.Text == className);
+                if (classSyntax == null) return new ImmutableArray<IMethodSymbol>();
+
+                var classModel = SemanticModel.GetDeclaredSymbol(classSyntax) as INamedTypeSymbol;
+                if (classModel == null) return new ImmutableArray<IMethodSymbol>();
+                
+                return classModel.Constructors;
+            }
+
+            public bool MethodAssignsVariable(IMethodSymbol method, string variableName)
+            {
+                var syntax = method.DeclaringSyntaxReferences[0].GetSyntax();
+                var assignments = syntax.DescendantNodes().Where(n => n.IsKind(SyntaxKind.SimpleAssignmentExpression));
+
+                return assignments.Any(a => ((IdentifierNameSyntax)((AssignmentExpressionSyntax)a).Left).Identifier.Text == variableName);
             }
         }
     }

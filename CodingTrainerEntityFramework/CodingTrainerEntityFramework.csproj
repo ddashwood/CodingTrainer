@@ -251,6 +251,9 @@
     <None Include="SeedData\Ch-1\Ex-1\header.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag50-ItemsProperty\As2-ItemsIsInitialised\Script.csx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SeedData\Ch3\Ex2\content.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -491,6 +494,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag50-ItemsProperty\As2-ItemsIsInitialised\assessment.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag50-ItemsProperty\As1\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
