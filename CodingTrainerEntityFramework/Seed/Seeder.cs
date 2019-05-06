@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -25,7 +26,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Seed
             var di = new DirectoryInfo(rootFolder);
             foreach(var dir in di.GetDirectories("Ch*"))
             {
-                int chapterNo = int.Parse(dir.Name.Substring(2));
+                int chapterNo = int.Parse(new Regex(@"^Ch(?<num>-?\d+)(\-.*)?$").Match(dir.Name).Groups["num"].Value);
                 SeedChapter(context, chapterNo, dir.FullName);
             }
         }
@@ -44,7 +45,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Seed
             var di = new DirectoryInfo(path);
             foreach (var dir in di.GetDirectories("Ex*"))
             {
-                int exerciseNo = int.Parse(dir.Name.Substring(2));
+                int exerciseNo = int.Parse(new Regex(@"^Ex(?<num>-?\d+)(\-.*)?$").Match(dir.Name).Groups["num"].Value);
                 SeedExercise(context, chapterNo, exerciseNo, dir.FullName);
             }
         }
@@ -68,7 +69,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Seed
             var di = new DirectoryInfo(path);
             foreach (var dir in di.GetDirectories("Ag*"))
             {
-                int sequence = int.Parse(dir.Name.Substring(2));
+                int sequence = int.Parse(new Regex(@"^Ag(?<num>-?\d+)(\-.*)?$").Match(dir.Name).Groups["num"].Value);
                 SeedAssessmentGroup(context, chapterNo, exerciseNo, sequence, dir.FullName);
             }
         }
@@ -91,7 +92,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Seed
             var di = new DirectoryInfo(path);
             foreach(var dir in di.GetDirectories("As*"))
             {
-                int assessmentSequence = int.Parse(dir.Name.Substring(2));
+                int assessmentSequence = int.Parse(new Regex(@"^As(?<num>-?\d+)(\-.*)?$").Match(dir.Name).Groups["num"].Value);
                 SeedAssessment(context, assessmentGroup.AssessmentGroupId, assessmentSequence, dir.FullName);
             }
         }

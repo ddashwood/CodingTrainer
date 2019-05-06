@@ -260,13 +260,13 @@
     <None Include="SeedData\Ch3\Ex2\header.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex1\content.cshtml">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\content.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex1\default.csx">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\default.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SeedData\Ch2\Ex1\header.csx">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\header.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SeedData\TemplateChapter\Ex1\content.cshtml">
@@ -423,72 +423,83 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\chapter.xml">
+    <None Include="SeedData\Ch2-ShoppingBasket\chapter.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag1\asmt-group.xml">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag101-ApplesPrice\asmt-group.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\exercise.xml">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\exercise.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag1\As2\assessment.xml">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag101-ApplesPrice\As2-IncorrectFormatting\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag1\As2\Condition.txt">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag101-ApplesPrice\As2-IncorrectFormatting\Condition.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag1\As1\assessment.xml">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag101-ApplesPrice\As1-CorrectFormatting\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag1\As1\Condition.txt">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag101-ApplesPrice\As1-CorrectFormatting\Condition.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag1\As1\ConsoleInText.txt">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag101-ApplesPrice\As1-CorrectFormatting\ConsoleInText.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag2\As1\assessment.xml">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag102-TotalPrice\As1-CorrectFormatting\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag2\As1\Condition.txt">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag102-TotalPrice\As1-CorrectFormatting\Condition.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag2\As2\assessment.xml">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag102-TotalPrice\As2-IncorrectFormatting\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag2\As2\Condition.txt">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag102-TotalPrice\As2-IncorrectFormatting\Condition.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SeedData\Ch2\Ex1\Ag2\asmt-group.xml">
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag102-TotalPrice\asmt-group.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag50-ItemsProperty\As1\assessment.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag50-ItemsProperty\As1\Script.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag50-ItemsProperty\asmt-group.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

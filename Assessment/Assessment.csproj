@@ -168,6 +168,7 @@
     <Compile Include="AssessmentMethodBase.cs" />
     <Compile Include="AssessmentRunner.cs" />
     <Compile Include="Methods\ByInspection\AncestorNodeForEveryTokenLinqAssessment.cs" />
+    <Compile Include="Methods\ByInspection\SyntaxTreeScriptAssessment.ModelHelper.cs" />
     <Compile Include="Methods\ByInspection\SyntaxTreeScriptAssessment.TreeHelper.cs" />
     <Compile Include="Methods\ByRunning\CheckAllOutputAssessment.cs" />
     <Compile Include="Methods\ByRunning\CheckLastLineOfOutputAssessment.cs" />

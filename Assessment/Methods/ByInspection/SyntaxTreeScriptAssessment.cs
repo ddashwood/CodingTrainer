@@ -14,17 +14,23 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
     {
         public class Globals
         {
+            public Compilation Compilation { get; }
             public SyntaxTree Tree { get; }
+            public SemanticModel SemanticModel { get; }
             public IEnumerable<SyntaxNode> Nodes { get; }
             public Action<string> WriteToConsole { get; }
             public TreeHelper TreeHelper { get; }
+            public ModelHelper ModelHelper { get; }
 
-            public Globals(SyntaxTree tree, SyntaxTreeScriptAssessment owner)
+            public Globals(Compilation compilation, SyntaxTreeScriptAssessment owner)
             {
-                Tree = tree;
-                Nodes = tree.GetRoot().DescendantNodes(n => true);
+                Compilation = compilation;
+                Tree = compilation.SyntaxTrees.Single();
+                SemanticModel = compilation.GetSemanticModel(Tree);
+                Nodes = Tree.GetRoot().DescendantNodes(n => true);
                 WriteToConsole = owner.WriteToConsole;
                 TreeHelper = new TreeHelper(Tree);
+                ModelHelper = new ModelHelper(SemanticModel, Nodes);
             }
         }
 
@@ -39,7 +45,8 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
                     Assembly.GetAssembly(typeof(CSharpExtensions)),
                     Assembly.Load("System.Runtime, Version=4.0.20.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),
                     Assembly.Load("System.Threading.Tasks, Version = 4.0.10.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a"),
-                    Assembly.Load("System.Text.Encoding, Version = 4.0.10.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a")
+                    Assembly.Load("System.Text.Encoding, Version = 4.0.10.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a"),
+                    Assembly.Load("System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")
                 ).AddImports("Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "System.Linq");
 
 
@@ -55,8 +62,7 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
             {
                 // This is the first script
 
-                var tree = compilation.SyntaxTrees.Single();
-                var globals = new Globals(tree, this);
+                var globals = new Globals(compilation, this);
                 state = await CSharpScript.RunAsync<bool>(Script, options, globals);
             }
 

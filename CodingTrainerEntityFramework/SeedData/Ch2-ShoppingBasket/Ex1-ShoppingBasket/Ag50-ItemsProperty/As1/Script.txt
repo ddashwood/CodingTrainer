@@ -1,0 +1,12 @@
+﻿//var basketSyntax = Nodes.OfType<Microsoft.CodeAnalysis.CSharp.Syntax.TypeDeclarationSyntax>().SingleOrDefault(t => t.Identifier.Text == "Basket");
+//var basketModel = SemanticModel.GetDeclaredSymbol(basketSyntax) as INamedTypeSymbol;
+//var itemsSymbol = basketModel.GetMembers().SingleOrDefault(m => m.Name == "Items");
+
+var itemsSymbol = ModelHelper.GetSymbolInClass("Basket", "Items");
+if (itemsSymbol == null)
+{
+	WriteToConsole("There is no member called Items\r\n");
+	return false;
+}
+
+return itemsSymbol.Kind == SymbolKind.Property;
