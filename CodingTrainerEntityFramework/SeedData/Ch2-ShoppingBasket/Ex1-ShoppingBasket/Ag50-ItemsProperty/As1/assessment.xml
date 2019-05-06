@@ -2,8 +2,8 @@
 <SyntaxTreeScriptAssessment>
   <FullClassName>CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection.SyntaxTreeScriptAssessment</FullClassName>
   <Title>Basket has Items property</Title>
-  <ShowAutoMessageOnStart>1</ShowAutoMessageOnStart>
-  <ShowAutoMessageOnPass>1</ShowAutoMessageOnPass>
-  <ShowAutoMessageOnFail>1</ShowAutoMessageOnFail>
+  <ShowAutoMessageOnStart>0</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>0</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>0</ShowAutoMessageOnFail>
   <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
 </SyntaxTreeScriptAssessment>
