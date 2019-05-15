@@ -1,8 +1,4 @@
-﻿var a = SyntaxKind.SimpleAssignmentExpression;
-IdentifierNameSyntax b;
-
-
-// We've got the itemsSymbol from the semantic model
+﻿// We've got the itemsSymbol from the semantic model
 // Now we need to find the item in the syntax tree which declares the symbol
 var itemsPropSyntax = ((PropertyDeclarationSyntax)itemsSymbol.DeclaringSyntaxReferences[0].GetSyntax());
 var useField = false;
