@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SyntaxTreeScriptAssessment>
+  <FullClassName>CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection.SyntaxTreeScriptAssessment</FullClassName>
+  <Title>Basket TotalPrice property</Title>
+  <ShowAutoMessageOnStart>0</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>0</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>0</ShowAutoMessageOnFail>
+  <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
+</SyntaxTreeScriptAssessment>

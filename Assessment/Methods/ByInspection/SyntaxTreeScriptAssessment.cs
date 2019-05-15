@@ -47,7 +47,7 @@ namespace CodingTrainer.CSharpRunner.Assessment.Methods.ByInspection
                     Assembly.Load("System.Threading.Tasks, Version = 4.0.10.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a"),
                     Assembly.Load("System.Text.Encoding, Version = 4.0.10.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a"),
                     Assembly.Load("System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")
-                ).AddImports("Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Microsoft.CodeAnalysis.CSharp.Syntax", "System.Linq");
+                ).AddImports("Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Microsoft.CodeAnalysis.CSharp.Syntax", "System.Collections.Generic", "System.Linq");
 
 
             ScriptState<bool> state;

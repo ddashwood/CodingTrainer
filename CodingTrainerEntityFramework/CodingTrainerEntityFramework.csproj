@@ -251,6 +251,12 @@
     <None Include="SeedData\Ch-1\Ex-1\header.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag60-AddItemContainsIf\As1\Script.csx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag51-TotalPriceProperty\As1\Script.csx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag50-ItemsProperty\As2-ItemsIsInitialised\Script.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -494,6 +500,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag60-AddItemContainsIf\As1\assessment.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag60-AddItemContainsIf\asmt-group.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag51-TotalPriceProperty\As1\assessment.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag51-TotalPriceProperty\asmt-group.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag50-ItemsProperty\As2-ItemsIsInitialised\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
