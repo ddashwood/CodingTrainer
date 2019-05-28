@@ -7,7 +7,7 @@ if (addItemSymbol == null)
 
 if (addItemSymbol.Kind != SymbolKind.Method)
 {
-    WriteToConsole("The AddItem element in your Basket class is not a method.");
+    WriteToConsole("The AddItem element in your Basket class is not a method.\r\n");
     return false;
 }
 
@@ -15,18 +15,18 @@ MethodDeclarationSyntax addItemSyntax = ((MethodDeclarationSyntax)addItemSymbol.
 IEnumerable<SyntaxNode> addItemsIfNodes = addItemSyntax.DescendantNodes().Where(n => n.IsKind(SyntaxKind.IfStatement));
 if (!addItemsIfNodes.Any())
 {
-    WriteToConsole("You will need to use an \"if\" statement in the AddItem() method, to handle two different scenarios.\r\nIn one scenario, this item ID does not exist in the basket yet.\r\nIn the other scenario, it does exist and needs to have its quantity increased.");
+    WriteToConsole("You will need to use an \"if\" statement in the AddItem() method, to handle two different scenarios.\r\nIn one scenario, this item ID does not exist in the basket yet.\r\nIn the other scenario, it does exist and needs to have its quantity increased.\r\n");
     return false;
 }
 IEnumerable<SyntaxNode> addItemsSingleOrDefaultNodes = addItemSyntax.DescendantNodes().Where(n => n.GetText().ToString() == "SingleOrDefault");
 if (!addItemsSingleOrDefaultNodes.Any())
 {
-    WriteToConsole("You will need to call Items.SingleOrDefault() before the \"if\" statement to attempt\r\nto retrieve the item with the correct ID from the basket");
+    WriteToConsole("You will need to call Items.SingleOrDefault() before the \"if\" statement to attempt\r\nto retrieve the item with the correct ID from the basket\r\n");
     return false;
 }
 if (addItemsSingleOrDefaultNodes.First().FullSpan.Start > addItemsIfNodes.First().FullSpan.Start) // SingleOrDefault comes after If
 {
-    WriteToConsole("You will need to call Items.SingleOrDefault() before (not after!) the \"if\" statement to attempt\r\nto retrieve the item with the correct ID from the basket");
+    WriteToConsole("You will need to call Items.SingleOrDefault() before (not after!) the \"if\" statement to attempt\r\nto retrieve the item with the correct ID from the basket\r\n");
     return false;
 }
 

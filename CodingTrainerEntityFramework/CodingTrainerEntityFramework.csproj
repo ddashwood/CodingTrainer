@@ -251,6 +251,9 @@
     <None Include="SeedData\Ch-1\Ex-1\header.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag70-ToStringContainsLoop\As1\Script.csx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag60-AddItemContainsIf\As1\Script.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -500,6 +503,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag70-ToStringContainsLoop\As1\assessment.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag70-ToStringContainsLoop\asmt-group.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag60-AddItemContainsIf\As1\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
