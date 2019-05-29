@@ -71,6 +71,11 @@ namespace CodingTrainer.CodingTrainerModels.Security
 
         public void AdvanceToExercise(Exercise newExercise)
         {
+            if (newExercise == null)
+            {
+                return;
+            }
+
             if (CurrentChapterNo > newExercise.ChapterNo)
             {
                 return;
