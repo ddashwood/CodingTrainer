@@ -170,8 +170,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
             {
                 if (diags.Any(d => d.Severity == DiagnosticSeverity.Error))
                 {
-                    WriteToConsole("Unable to run your code because it has compiler errors\r\n");
-                    return false;
+                    throw new CompilationErrorInUserCodeException("Unable to run your code because it has compiler errors\r\n");
                 }
 
                 runningAssessment.CodeRunner = runner;
@@ -181,15 +180,11 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 }
                 catch (Exception e) when (!(e is CompilationErrorException))
                 {
-                    WriteToConsole("Something went wrong with the compilation\r\n");
-                    WriteToConsole("The error message is:\r\n");
-                    WriteToConsole("  " + e.Message);
-                    return false;
+                    throw new CompilationErrorInUserCodeException("Something went wrong with the compilation\r\nThe error message is:\r\n" + e.Message);
                 }
             }
 
             return await assessment.AssessAsync();
-
         }
 
         private void WriteToConsole(string message)
