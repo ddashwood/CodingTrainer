@@ -13,8 +13,9 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
         Task<IEnumerable<Chapter>> GetAllChaptersAsync();
 
         // Exercises
-        Task<Exercise> GetExerciseAsync(int chapterNo, int exercisesNo);
-        Exercise GetExercise(int chapterNo, int exercisesNo);
+        Task<Exercise> GetExerciseAsync(int chapterNo, int exerciseNo);
+        Exercise GetExercise(int chapterNo, int exerciseNo);
+        Task<Exercise> GetNextExerciseAsync(int chapterNo, int exerciseNo);
 
         // Saved work
         Task SaveWorkAsync(SavedWork savedWork);

@@ -1,4 +1,4 @@
-﻿function CodeRunner(signalRFactory, consoleOut, complete, errors, chapter, exercise) {
+﻿function CodeRunner(signalRFactory, consoleOut, complete, errors, assessmentComplete, chapter, exercise) {
     this.complete = complete;
     this.runnerHub = signalRFactory.createHub('codeRunnerHub');
     this.chapter = chapter;
@@ -14,6 +14,9 @@
 
     // Called when there is an error compiling the script
     this.runnerHub.client.compilerError = errors;
+
+    // Called to indicate the success or otherwise of a submitted assessment
+    this.runnerHub.client.assessmentComplete = assessmentComplete;
 }
 
 CodeRunner.prototype.run = function (code, forAssessment) {

@@ -68,5 +68,21 @@ namespace CodingTrainer.CodingTrainerModels.Security
         {
             return ExercisePermitted(exercise.ChapterNo, exercise.ExerciseNo);
         }
+
+        public void AdvanceToExercise(Exercise newExercise)
+        {
+            if (CurrentChapterNo > newExercise.ChapterNo)
+            {
+                return;
+            }
+
+            if (CurrentChapterNo == newExercise.ChapterNo && CurrentExerciseNo > newExercise.ExerciseNo)
+            {
+                return;
+            }
+
+            CurrentChapterNo = newExercise.ChapterNo;
+            CurrentExerciseNo = newExercise.ExerciseNo;
+        }
     }
 }

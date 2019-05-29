@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using CodingTrainer.CodingTrainerEntityFramework.Contexts;
+using CodingTrainer.CodingTrainerModels;
 using CodingTrainer.CodingTrainerModels.Security;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using Microsoft.AspNet.Identity;
@@ -89,6 +90,14 @@ namespace CodingTrainer.CodingTrainerWeb.Users
         {
             var user = await GetCurrentUserAsync();
             user.Dark = dark;
+            await userManager.UpdateAsync(user);
+            await userStore.Context.SaveChangesAsync();
+        }
+
+        public async Task AdvanceToExercise(Exercise newExercise)
+        {
+            var user = await GetCurrentUserAsync();
+            user.AdvanceToExercise(newExercise);
             await userManager.UpdateAsync(user);
             await userStore.Context.SaveChangesAsync();
         }

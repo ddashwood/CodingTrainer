@@ -13,7 +13,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
     {
         private interface IConnectionTask
         {
-            Task RunAsync(ConnectionConsoleOut consoleOut, string message);
+            Task RunAsync(ConnectionOutput output, string message);
         }
         private interface IConnectionTaskWithInput : IConnectionTask
         {
@@ -28,11 +28,11 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 this.runner = runner;
             }
 
-            public async Task RunAsync(ConnectionConsoleOut consoleOut, string message)
+            public async Task RunAsync(ConnectionOutput output, string message)
             {
-                runner.ConsoleWrite += consoleOut.OnConsoleWrite;
+                runner.ConsoleWrite += output.OnConsoleWrite;
                 await runner.CompileAndRunAsync(message);
-                runner.ConsoleWrite -= consoleOut.OnConsoleWrite;
+                runner.ConsoleWrite -= output.OnConsoleWrite;
             }
             public void Input(string message)
             {
@@ -56,13 +56,22 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 this.chapter = chapter;
                 this.exercise = exercise;
             }
-            public async Task RunAsync(ConnectionConsoleOut consoleOut, string message)
+            public async Task RunAsync(ConnectionOutput output, string message)
             {
-                var assessmentManager = new AssessmentManager(runner, rep);
-                assessmentManager.ConsoleWrite += consoleOut.OnConsoleWrite;
-                await assessmentManager.RunAssessmentsForExercise(userServices.GetCurrentUser(), message, chapter, exercise);
-                assessmentManager.ConsoleWrite -= consoleOut.OnConsoleWrite;
+                try
+                {
+                    var assessmentManager = new AssessmentManager(runner, rep, userServices);
+                    assessmentManager.ConsoleWrite += output.OnConsoleWrite;
+                    var result = await assessmentManager.RunAssessmentsForExercise(userServices.GetCurrentUser(), message, chapter, exercise);
+                    assessmentManager.ConsoleWrite -= output.OnConsoleWrite;
 
+                    output.AssessmentComplete(result);
+                }
+                catch
+                {
+                    output.AssessmentComplete(false);
+                    throw;
+                }
             }
         }
 

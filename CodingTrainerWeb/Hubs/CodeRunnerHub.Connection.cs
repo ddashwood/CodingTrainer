@@ -18,7 +18,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             private readonly ICodeRunnerHubClient caller;
 
             private readonly BufferBlock<(QueueItemType type, string message)> connectionQueue;
-            private readonly ConnectionConsoleOut consoleOut;
+            private readonly ConnectionOutput output;
 
             public Connection(string connectionId, IConnectionTask connectionTask, ICodeRunnerHubClient caller, string userId)
             {
@@ -28,12 +28,12 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 this.userId = userId;
 
                 connectionQueue = new BufferBlock<(QueueItemType type, string message)>();
-                consoleOut = new ConnectionConsoleOut(this);
+                output = new ConnectionOutput(this);
             }
 
             public async Task RunAsync(string message)
             {
-                await connectionTask.RunAsync(consoleOut, message);
+                await connectionTask.RunAsync(output, message);
             }
 
             public void ConsoleIn(string message)
@@ -73,16 +73,19 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                         case QueueItemType.ConsoleOut:
                             caller.ConsoleOut(message);
                             break;
+                        case QueueItemType.AssessmentComplete:
+                            caller.AssessmentComplete(message == null ? false : true);
+                            break;
                     }
                 }
             }
         }
 
-        private class ConnectionConsoleOut
+        private class ConnectionOutput
         {
             Connection connection;
 
-            public ConnectionConsoleOut(Connection connection)
+            public ConnectionOutput(Connection connection)
             {
                 this.connection = connection;
             }
@@ -93,6 +96,11 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                 {
                     connection.PostToQueue((QueueItemType.ConsoleOut, e.Message));
                 }
+            }
+
+            public void AssessmentComplete(bool success)
+            {
+                connection.PostToQueue((QueueItemType.AssessmentComplete, success ? "Success" : null));
             }
         }
 

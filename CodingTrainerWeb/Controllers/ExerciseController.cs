@@ -73,10 +73,16 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                 ViewBag.CurrentExercise = currentExercise;
 
                 ViewBag.User = await userServices.GetCurrentUserAsync();
-                return PartialView(await rep.GetAllChaptersAsync());
+                return PartialView("ExerciseSidebar", await rep.GetAllChaptersAsync());
             }
 
             return RunWithoutSyncContext(() => ExerciseSidebarAsync());
+        }
+
+        public async Task<ActionResult> ExerciseSidebarRefresh(int chapter, int exercise)
+        {
+            var ex = await rep.GetExerciseAsync(chapter, exercise);
+            return ExerciseSidebar(ex);
         }
 
         [Authorize]
@@ -169,12 +175,12 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
 
         // Helpers
 
-        private ActionResult RunWithoutSyncContext(Func<Task<ActionResult>> task)
+        private T RunWithoutSyncContext<T>(Func<Task<T>> task)
         {
             var syncContext = SynchronizationContext.Current;
             SynchronizationContext.SetSynchronizationContext(null); // Can't run async from partial views without this
 
-            var result = task().Result;
+            T result = task().Result;
 
             SynchronizationContext.SetSynchronizationContext(syncContext);
             return result;

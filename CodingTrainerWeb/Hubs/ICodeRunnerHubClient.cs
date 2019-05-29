@@ -12,5 +12,6 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         void ConsoleOut(string message);
         void Complete();
         void CompilerError(CompilerError[] details);
+        void AssessmentComplete(bool success);
     }
 }

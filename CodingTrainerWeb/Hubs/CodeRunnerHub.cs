@@ -36,7 +36,8 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         public enum QueueItemType
         {
             ConsoleOut,
-            Complete
+            Complete,
+            AssessmentComplete
         }
 
         // Methods

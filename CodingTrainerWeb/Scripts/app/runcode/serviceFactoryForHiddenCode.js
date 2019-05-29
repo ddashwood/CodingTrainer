@@ -34,6 +34,7 @@ ServiceFactoryForHiddenCode.prototype.getCodeRunner = function (callbacks) {
         callbacks.consoleOut.bind(callbacks),
         callbacks.runComplete.bind(callbacks),
         callbacks.showErrors.bind(callbacks),
+        callbacks.assessmentComplete.bind(callbacks),
         this.corrections, this.chapter, this.exercise
     );
 };

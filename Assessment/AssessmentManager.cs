@@ -17,14 +17,16 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         private readonly ICodeRunner codeRunner;
         private readonly ICodingTrainerRepository rep;
+        private readonly IUserServices userServices;
 
-        public AssessmentManager(ICodeRunner runner, ICodingTrainerRepository repository)
+        public AssessmentManager(ICodeRunner runner, ICodingTrainerRepository repository, IUserServices userServices)
         {
             codeRunner = runner;
             rep = repository;
+            this.userServices = userServices;
         }
 
-        public async Task RunAssessmentsForExercise(ApplicationUser user, string code, int chapter, int exercise)
+        public async Task<bool> RunAssessmentsForExercise(ApplicationUser user, string code, int chapter, int exercise)
         {
             var output = new StringBuilder();
             Exercise exerciseDetails;
@@ -34,12 +36,12 @@ namespace CodingTrainer.CSharpRunner.Assessment
             if (!user.ExercisePermitted(chapter, exercise))
             {
                 WriteToConsole("You do not have permission to do this exercise\r\n");
-                return;
+                return false;
             }
             if ((exerciseDetails = await rep.GetExerciseAsync(chapter, exercise)) == null)
             {
                 WriteToConsole("Invalid exercise details\r\n");
-                return;
+                return false;
             }
             if (!code.StartsWith(exerciseDetails.HiddenCodeHeader))
             {
@@ -81,6 +83,13 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 output.Append(e.Message);
                 ConsoleWrite?.Invoke(sender, e);
             }
+
+            if (result)
+            {
+                await userServices.AdvanceToExercise(await rep.GetNextExerciseAsync(chapter, exercise));
+            }
+
+            return result;
         }
     }
 }

@@ -31,19 +31,41 @@ namespace CodingTrainer.Repositories
 
         // Exercises
 
-        public async Task<Exercise> GetExerciseAsync(int chapterNo, int exercisesNo)
+        public async Task<Exercise> GetExerciseAsync(int chapterNo, int exerciseNo)
         {
             var exercise = from e in context.Exercises
-                           where e.ChapterNo == chapterNo && e.ExerciseNo == exercisesNo
+                           where e.ChapterNo == chapterNo && e.ExerciseNo == exerciseNo
                            select e;
             return await exercise.SingleOrDefaultAsync();
         }
-        public Exercise GetExercise(int chapterNo, int exercisesNo)
+        public Exercise GetExercise(int chapterNo, int exerciseNo)
         {
             var exercise = from e in context.Exercises
-                           where e.ChapterNo == chapterNo && e.ExerciseNo == exercisesNo
+                           where e.ChapterNo == chapterNo && e.ExerciseNo == exerciseNo
                            select e;
             return exercise.SingleOrDefault();
+        }
+        public async Task<Exercise> GetNextExerciseAsync(int chapterNo, int exerciseNo)
+        {
+            var inThisChapter = from e in context.Exercises
+                                where e.ChapterNo == chapterNo && e.ExerciseNo > exerciseNo
+                                orderby e.ExerciseNo
+                                select e;
+
+            var result = await inThisChapter.FirstOrDefaultAsync();
+
+            if (result == null) // There are no more exercises in this chapter
+            {
+                var nextChapter = await context.Chapters.Where(c => c.ChapterNo > chapterNo).OrderBy(c => c.ChapterNo).FirstOrDefaultAsync();
+
+                if (nextChapter != null)
+                {
+                    // result = await nextChapter.Exercises.AsQueryable().OrderBy(e => e.ExerciseNo).FirstOrDefaultAsync(); - this retrieves all exercises for the chapter
+                    result = await context.Entry(nextChapter).Collection(c => c.Exercises).Query().OrderBy(e => e.ExerciseNo).FirstOrDefaultAsync();
+                }
+            }
+
+            return result;
         }
 
         // Assessments

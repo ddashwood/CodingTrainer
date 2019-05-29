@@ -1,4 +1,5 @@
-﻿using CodingTrainer.CodingTrainerModels.Security;
+﻿using CodingTrainer.CodingTrainerModels;
+using CodingTrainer.CodingTrainerModels.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,6 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
 
         Task UpdateNameAsync(string firstName, string lastName);
         Task UpdateSettings(bool dark);
+        Task AdvanceToExercise(Exercise newExercise);
     }
 }

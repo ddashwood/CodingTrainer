@@ -94,6 +94,19 @@
         if (!self.running)
             changed();
     });
+
+    // These functions respond to the user's next action when they pass an assessment
+    $('#successModal').on('hidden.bs.modal', function () {
+        $('#exercise-sidebar').load("/Exercise/ExerciseSidebarRefresh?" + $.param({
+            chapter: model.ChapterNo,
+            exercise: model.ExerciseNo
+        }));
+    });
+    $('.next-page').click(function () {
+        $('#successModal').off('hidden.bs.modal');
+        window.location.href = "/Exercise/CurrentExercise";
+    });
+
 }
 
 Ide.prototype.getValue = function (separator) {
@@ -120,6 +133,14 @@ Ide.prototype.enableRun = function () {
 
 Ide.prototype.runComplete = function () {
     this.enableRun();
+};
+
+Ide.prototype.assessmentComplete = function (success) {
+    if (success) {
+        $("#successModal").modal();
+    } else {
+        $("#failModal").modal();
+    }
 };
 
 // This method may be used when errors occur during real-time linting,

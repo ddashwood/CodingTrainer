@@ -1,4 +1,4 @@
-﻿function CodeRunnerWithCorrections(signalRFactory, consoleOut, complete, errors, corrections, chapter, exercise) {
+﻿function CodeRunnerWithCorrections(signalRFactory, consoleOut, complete, errors, assessmentComplete, corrections, chapter, exercise) {
     var self = this;
     this.corrections = corrections;
 
@@ -13,7 +13,7 @@
         errors(errorList);
     };
 
-    CodeRunner.call(this, signalRFactory, consoleOut, complete, correctedErrors, chapter, exercise);
+    CodeRunner.call(this, signalRFactory, consoleOut, complete, correctedErrors, assessmentComplete, chapter, exercise);
 }
 
 CodeRunnerWithCorrections.prototype = Object.create(CodeRunner.prototype);
