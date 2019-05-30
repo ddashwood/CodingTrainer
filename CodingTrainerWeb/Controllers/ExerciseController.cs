@@ -53,7 +53,7 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         }
 
         [Authorize]
-        public async Task<ActionResult> Next()
+        public async Task<ActionResult> Next(bool advance = true)
         {
             var fromUri = Request.UrlReferrer;
             int chapter;
@@ -67,14 +67,17 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                 int.TryParse(RemoveTrailingSlash(fromUri.Segments[3]), out exercise))
             {
                 var thisExercise = await rep.GetExerciseAsync(chapter, exercise);
-                if (thisExercise.IsAssessed)
-                {
-                    // Can't just decide to move on from an assessed exercise
-                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Can't call the Next action from an assessed exercise");
-                }
-
                 var nextExercise = await rep.GetNextExerciseAsync(chapter, exercise);
-                await userServices.AdvanceToExercise(nextExercise);
+
+                if (advance)
+                {
+                    if (thisExercise.IsAssessed)
+                    {
+                        // Can't just decide to move on from an assessed exercise
+                        return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Can't call the Next action from an assessed exercise");
+                    }
+                    await userServices.AdvanceToExercise(nextExercise);
+                }
                 return RedirectToAction("Exercise", new { chapter = nextExercise.ChapterNo, exercise = nextExercise.ExerciseNo });
             }
             else

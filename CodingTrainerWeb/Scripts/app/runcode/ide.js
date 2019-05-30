@@ -109,7 +109,7 @@
         $('#successModal').off('hidden.bs.modal');
         var w = window.opener;
         if (w === null) w = window;
-        w.location.href = "/Exercise/CurrentExercise";
+        w.location.href = "/Exercise/Next?advance=false";
     });
 }
 
