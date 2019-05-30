@@ -20,13 +20,19 @@
     });
 });
 
-CodeMirror.defineExtension("consoleAppend", function (text, preventScroll) {
+CodeMirror.defineExtension("consoleAppend", function (text, preventScroll, colour) {
+    var start = this.posFromIndex(Infinity);
+
     this.replaceRange(text, { line: Infinity });
     if (preventScroll !== true) {
         this.focus();
         this.setCursor({ line: Infinity, ch: 0 });
     }
     this.markText(this.posFromIndex(0), this.posFromIndex(Infinity), { atomic: true, inclusiveLeft: true });
+
+    if (colour) {
+        this.markText(start, this.posFromIndex(Infinity), { css: "color:" + colour });
+    }
 });
 
 CodeMirror.defineExtension("consoleAppendWithLineLink", function (text, line, action) {

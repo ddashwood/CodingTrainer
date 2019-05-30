@@ -73,6 +73,9 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
                         case QueueItemType.ConsoleOut:
                             caller.ConsoleOut(message);
                             break;
+                        case QueueItemType.ConsoleOutHighlight:
+                            caller.ConsoleOutHighlight(message);
+                            break;
                         case QueueItemType.AssessmentComplete:
                             caller.AssessmentComplete(message == null ? false : true);
                             break;
@@ -94,7 +97,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             {
                 if (!string.IsNullOrEmpty(e.Message))
                 {
-                    connection.PostToQueue((QueueItemType.ConsoleOut, e.Message));
+                    connection.PostToQueue((e.Highlight ? QueueItemType.ConsoleOutHighlight : QueueItemType.ConsoleOut, e.Message));
                 }
             }
 

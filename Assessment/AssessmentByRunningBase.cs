@@ -58,7 +58,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 console = new StringBuilder();
                 void OnConsoleWrite(object sender, ConsoleWriteEventArgs e)
                 {
-                    if (ShowScriptRunning) WriteToConsole(e.Message);
+                    if (ShowScriptRunning) WriteToConsoleHighlight(e.Message);
                     console.Append(e.Message);
                 }
 

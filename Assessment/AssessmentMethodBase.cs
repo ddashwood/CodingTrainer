@@ -74,5 +74,9 @@ namespace CodingTrainer.CSharpRunner.Assessment
         {
             ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs(s));
         }
+        protected void WriteToConsoleHighlight(string s)
+        {
+            ConsoleWrite?.Invoke(this, new ConsoleWriteEventArgs(s, true));
+        }
     }
 }

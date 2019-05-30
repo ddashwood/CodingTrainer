@@ -8,6 +8,7 @@
 
     // Called when the script wants to display something on the console
     this.runnerHub.client.consoleOut = consoleOut;
+    this.runnerHub.client.consoleOutHighlight = function (m) { consoleOut(m, "#00f"); };
 
     // Called when the script has finished running
     this.runnerHub.client.complete = complete;

@@ -36,6 +36,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
         public enum QueueItemType
         {
             ConsoleOut,
+            ConsoleOutHighlight,
             Complete,
             AssessmentComplete
         }

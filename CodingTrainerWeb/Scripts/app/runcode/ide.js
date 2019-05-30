@@ -126,8 +126,8 @@ Ide.prototype.refresh = function () {
     this.codeConsole.refresh();
 }
 
-Ide.prototype.consoleOut = function (message) {
-    this.codeConsole.consoleAppend(message);
+Ide.prototype.consoleOut = function (message, colour) {
+    this.codeConsole.consoleAppend(message, undefined, colour);
 };
 
 Ide.prototype.enableRun = function () {

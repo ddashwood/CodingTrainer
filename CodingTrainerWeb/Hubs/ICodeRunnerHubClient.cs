@@ -10,6 +10,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
     public interface ICodeRunnerHubClient
     {
         void ConsoleOut(string message);
+        void ConsoleOutHighlight(string message);
         void Complete();
         void CompilerError(CompilerError[] details);
         void AssessmentComplete(bool success);
