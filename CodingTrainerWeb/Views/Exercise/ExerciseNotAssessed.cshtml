@@ -27,4 +27,12 @@
         contentVm.Html = Html;
     }
     @Html.Action("Content", contentVm)
+
+    @if (!Model.IsFinalExercise)
+    {
+        <br />
+        <div class="text-right">
+            @Html.ActionLink("Next Page", "Next", null, new { @class = "btn btn-primary", role = "button" })
+        </div>
+    }
 </div>

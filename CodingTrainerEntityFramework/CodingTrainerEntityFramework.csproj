@@ -534,6 +534,9 @@
     <Content Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag50-ItemsProperty\As1\assessment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="SeedData\Ch4\Ex2\exercise.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SeedData\Ch2-ShoppingBasket\Ex1-ShoppingBasket\Ag50-ItemsProperty\As1\Script.csx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

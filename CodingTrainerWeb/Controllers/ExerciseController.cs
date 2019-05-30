@@ -52,6 +52,43 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             }
         }
 
+        [Authorize]
+        public async Task<ActionResult> Next()
+        {
+            var fromUri = Request.UrlReferrer;
+            int chapter;
+            int exercise;
+            
+            if (fromUri != null &&
+                fromUri.Segments.Length == 4 && 
+                RemoveTrailingSlash(fromUri.Segments[0]) == "" &&
+                RemoveTrailingSlash(fromUri.Segments[1]) == "Exercise" &&
+                int.TryParse(RemoveTrailingSlash(fromUri.Segments[2]), out chapter) &&
+                int.TryParse(RemoveTrailingSlash(fromUri.Segments[3]), out exercise))
+            {
+                var thisExercise = await rep.GetExerciseAsync(chapter, exercise);
+                if (thisExercise.IsAssessed)
+                {
+                    // Can't just decide to move on from an assessed exercise
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Can't call the Next action from an assessed exercise");
+                }
+
+                var nextExercise = await rep.GetNextExerciseAsync(chapter, exercise);
+                await userServices.AdvanceToExercise(nextExercise);
+                return RedirectToAction("Exercise", new { chapter = nextExercise.ChapterNo, exercise = nextExercise.ExerciseNo });
+            }
+            else
+            {
+                // We haven't come from an exercise
+                return RedirectToAction("CurrentExercise");
+            }
+        }
+
+        private string RemoveTrailingSlash(string s)
+        {
+            return s.EndsWith("/") ? s.Substring(0, s.Length - 1) : s;
+        }
+
         [HttpPost]
         [AuthorizeExercise]
         public async Task<ActionResult> ExercisePopout(PopoutViewModel viewModel)
