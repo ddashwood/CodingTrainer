@@ -170,7 +170,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
             {
                 if (diags.Any(d => d.Severity == DiagnosticSeverity.Error))
                 {
-                    throw new CompilationErrorInUserCodeException("Unable to run your code because it has compiler errors\r\n");
+                    throw new CompilationErrorInUserCodeException("Unable to run your code because it has compiler errors.\r\nClick the Run button to see the error messages.");
                 }
 
                 runningAssessment.CodeRunner = runner;

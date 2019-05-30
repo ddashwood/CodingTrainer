@@ -5,5 +5,5 @@
   <ShowAutoMessageOnStart>0</ShowAutoMessageOnStart>
   <ShowAutoMessageOnPass>0</ShowAutoMessageOnPass>
   <ShowAutoMessageOnFail>0</ShowAutoMessageOnFail>
-  <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
+  <EndAssessmentGroupOnFail>1</EndAssessmentGroupOnFail>
 </SyntaxTreeScriptAssessment>

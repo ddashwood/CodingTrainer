@@ -192,7 +192,7 @@ Ide.prototype.showErrors = function (errors) {
 };
 
 Ide.prototype.showErrorsForGeneration = function (errors, generation) {
-    if (this.editor.isClean(generation)) {
+    if (this.editor.isClean(generation) && !this.running) {
         this.showErrors(errors);
     }
 };
