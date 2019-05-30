@@ -842,6 +842,7 @@
     <Content Include="Views\Exercise\ExercisePopout.cshtml" />
     <Content Include="Views\Submission\Show.cshtml" />
     <Content Include="Views\Submission\AccessDenied.cshtml" />
+    <Content Include="Views\Exercise\ExerciseNotAssessed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

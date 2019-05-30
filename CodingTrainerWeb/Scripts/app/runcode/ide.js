@@ -97,16 +97,20 @@
 
     // These functions respond to the user's next action when they pass an assessment
     $('#successModal').on('hidden.bs.modal', function () {
-        $('#exercise-sidebar').load("/Exercise/ExerciseSidebarRefresh?" + $.param({
+        var w = window.opener;
+        if (w === null) w = window;
+
+        w.jQuery('#exercise-sidebar').load("/Exercise/ExerciseSidebarRefresh?" + $.param({
             chapter: model.ChapterNo,
             exercise: model.ExerciseNo
         }));
     });
     $('.next-page').click(function () {
         $('#successModal').off('hidden.bs.modal');
-        window.location.href = "/Exercise/CurrentExercise";
+        var w = window.opener;
+        if (w === null) w = window;
+        w.location.href = "/Exercise/CurrentExercise";
     });
-
 }
 
 Ide.prototype.getValue = function (separator) {

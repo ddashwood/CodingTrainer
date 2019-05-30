@@ -13,7 +13,7 @@
             var signalRFactory = new SignalRFactory();
             ideGlobals.model = @Html.Raw(Json.Encode(new { Model.Exercise.ChapterNo, Model.Exercise.ExerciseNo, Model.Exercise.DefaultCode, Model.Exercise.HiddenCodeHeader }));
             var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, ideGlobals.model.HiddenCodeHeader, @Model.Exercise.ChapterNo, @Model.Exercise.ExerciseNo);
-            ideGlobals.ide = new Ide(serviceFactory, @((Model.Exercise.ChapterNo > 0 && Model.Exercise.ExerciseNo > 0).ToString().ToLower()), @Model.FullScreenIde.ToString().ToLower(), ideGlobals.model);
+            ideGlobals.ide = new Ide(serviceFactory, @(Model.Exercise.IsAssessed.ToString().ToLower()), @Model.FullScreenIde.ToString().ToLower(), ideGlobals.model);
         })();
     </script>
 }

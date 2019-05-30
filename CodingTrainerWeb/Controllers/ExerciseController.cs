@@ -42,7 +42,14 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             var exerciseDetails = await rep.GetExerciseAsync(chapter, exercise);
             if (exerciseDetails == null) throw new HttpException(404, "Not found");
             ViewBag.ActiveTheme = await userServices.GetCodeMirrorThemeAsync();
-            return View(exerciseDetails);
+            if (exerciseDetails.IsAssessed)
+            {
+                return View(exerciseDetails);
+            }
+            else
+            {
+                return View("ExerciseNotAssessed", exerciseDetails);
+            }
         }
 
         [HttpPost]

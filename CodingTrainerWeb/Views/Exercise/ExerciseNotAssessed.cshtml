@@ -1,0 +1,30 @@
+﻿@model CodingTrainer.CodingTrainerModels.Exercise
+
+@{
+    ViewBag.Title = "Exercise - " + Model.ExerciseName;
+}
+
+@section scripts {
+    <script src="~/Scripts/app/sidebar.js"></script>
+}
+
+<div id="exercise-sidebar">
+    @Html.Action("ExerciseSidebar", new { currentExercise = Model })
+</div>
+
+@*Seperation from "Show/Hide Sidebar" button - only required on small screens when button is displayed*@
+<div class="visible-sm visible-xs top-buffer"></div>
+
+<h2>Exercise - @Model.ExerciseName</h2>
+
+<div class="col-md-9 col-sm-12">
+    <h2>@Model.Chapter.ChapterName</h2>
+    <h4>@Model.ExerciseName</h4>
+    @{
+        var contentVm = new CodingTrainer.CodingTrainerWeb.Models.ExerciseContentViewModel();
+        contentVm.Exercise = Model;
+        contentVm.Url = Url;
+        contentVm.Html = Html;
+    }
+    @Html.Action("Content", contentVm)
+</div>

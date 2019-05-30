@@ -27,6 +27,14 @@ namespace CodingTrainer.CodingTrainerModels
         [Required]
         public string Content { get; set; }
 
+        public string ModelAnswer { get; set; }
+
+        [Required]
+        public bool IsAssessed { get; set; }
+
+        [Required]
+        public bool IsFinalExercise { get; set; }
+
         [XmlIgnore]
         public virtual Chapter Chapter { get; set; }
 

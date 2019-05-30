@@ -29,6 +29,12 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Seed
                 int chapterNo = int.Parse(new Regex(@"^Ch(?<num>-?\d+)(\-.*)?$").Match(dir.Name).Groups["num"].Value);
                 SeedChapter(context, chapterNo, dir.FullName);
             }
+
+            // Easiest way to get the final exercise is to only look for it after all exercises have been added
+            var lastChapter = context.Chapters.OrderByDescending(c => c.ChapterNo).FirstOrDefault();
+            var lastExercise = lastChapter?.Exercises?.OrderByDescending(e => e.ExerciseNo)?.FirstOrDefault();
+            if (lastExercise != null) lastExercise.IsFinalExercise = true;
+            context.SaveChanges();
         }
 
         private static void SeedChapter(ApplicationDbContext context, int chapterNo, string path)
@@ -53,6 +59,8 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Seed
         private static void SeedExercise(ApplicationDbContext context, int chapterNo, int exerciseNo, string path)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Exercise));
+            var assessmentDirectories = new DirectoryInfo(path).GetDirectories("Ag*");
+
             using (var stream = new StreamReader(Path.Combine(path, "exercise.xml")))
             {
                 Exercise exercise = (Exercise)serializer.Deserialize(stream);
@@ -62,12 +70,14 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Seed
                 exercise.HiddenCodeHeader = ReadFile(path, "header.csx");
                 exercise.Content = ReadFile(path, "content.cshtml", "<p>No course material is available for this exercise</p>");
 
+                exercise.IsAssessed = assessmentDirectories.Any();
+                exercise.IsFinalExercise = false;
+
                 context.Exercises.AddOrUpdate(exercise);
                 context.SaveChanges();
             }
 
-            var di = new DirectoryInfo(path);
-            foreach (var dir in di.GetDirectories("Ag*"))
+            foreach (var dir in assessmentDirectories)
             {
                 int sequence = int.Parse(new Regex(@"^Ag(?<num>-?\d+)(\-.*)?$").Match(dir.Name).Groups["num"].Value);
                 SeedAssessmentGroup(context, chapterNo, exerciseNo, sequence, dir.FullName);

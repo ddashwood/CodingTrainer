@@ -152,6 +152,10 @@
     <Compile Include="Migrations\201905041612379_ConsoleInTextNotRequired.Designer.cs">
       <DependentUpon>201905041612379_ConsoleInTextNotRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905300705543_AddExerciseFields.cs" />
+    <Compile Include="Migrations\201905300705543_AddExerciseFields.Designer.cs">
+      <DependentUpon>201905300705543_AddExerciseFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seed\Seeder.cs" />
@@ -228,6 +232,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905041612379_ConsoleInTextNotRequired.resx">
       <DependentUpon>201905041612379_ConsoleInTextNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905300705543_AddExerciseFields.resx">
+      <DependentUpon>201905300705543_AddExerciseFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
