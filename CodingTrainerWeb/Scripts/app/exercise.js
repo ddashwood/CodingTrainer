@@ -84,3 +84,29 @@ $(function () {
     window.addEventListener('beforeunload', unload);
     window.addEventListener('unload', unload);
 });
+
+// Model Answer tab
+
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    if (typeof (CodeMirror) === 'undefined') {
+        $('#submissions-content').text('Page is still initialising, please return to this screen in a moment');
+        return;
+    }
+
+    var target = $(e.target).attr("href");
+    if (target === '#answer') {
+        var codeSegments = document.getElementsByClassName('model-answer-code');
+        var i;
+        for (i = 0; i < codeSegments.length; i++) {
+            var cm = CodeMirror.fromTextArea(codeSegments[i], {
+                lineNumbers: true,
+                mode: "text/x-csharp",
+                theme: exerciseGlobals.theme,
+                readOnly: true
+            });
+            var size = codeSegments[i].getAttribute('data-height');
+            if (size === null) size = '30ex';
+            cm.setSize(null, size);
+        }
+    }
+});

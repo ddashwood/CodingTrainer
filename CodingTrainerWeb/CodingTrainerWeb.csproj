@@ -843,6 +843,8 @@
     <Content Include="Views\Submission\Show.cshtml" />
     <Content Include="Views\Submission\AccessDenied.cshtml" />
     <Content Include="Views\Exercise\ExerciseNotAssessed.cshtml" />
+    <Content Include="Views\Exercise\ModelAnswer.cshtml" />
+    <Content Include="Views\Exercise\ModelAnswerNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

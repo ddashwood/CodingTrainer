@@ -49,7 +49,6 @@
     </div>
 
     <div id="answer" class="tab-pane fade">
-        <h3>Model Answer</h3>
-        <p>The model answer will be shown here once you have completed some or all of the exercise</p>
+        @Html.Action("ModelAnswer", new { chapter = Model.ChapterNo, exercise = Model.ExerciseNo })
     </div>
 </div>

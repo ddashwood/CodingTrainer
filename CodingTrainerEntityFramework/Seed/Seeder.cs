@@ -33,7 +33,11 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Seed
             // Easiest way to get the final exercise is to only look for it after all exercises have been added
             var lastChapter = context.Chapters.OrderByDescending(c => c.ChapterNo).FirstOrDefault();
             var lastExercise = lastChapter?.Exercises?.OrderByDescending(e => e.ExerciseNo)?.FirstOrDefault();
-            if (lastExercise != null) lastExercise.IsFinalExercise = true;
+            if (lastExercise != null)
+            {
+                if (lastExercise.IsAssessed) throw new InvalidOperationException("The final exercise must not be assessed - add an unassessed information exercise to the end of the course");
+                lastExercise.IsFinalExercise = true;
+            }
             context.SaveChanges();
         }
 
@@ -68,6 +72,7 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Seed
                 exercise.ExerciseNo = exerciseNo;
                 exercise.DefaultCode = ReadFile(path, "default.csx", "// Enter your code here:" + Environment.NewLine + Environment.NewLine);
                 exercise.HiddenCodeHeader = ReadFile(path, "header.csx");
+                exercise.ModelAnswer = ReadFile(path, "modelanswer.html");
                 exercise.Content = ReadFile(path, "content.cshtml", "<p>No course material is available for this exercise</p>");
 
                 exercise.IsAssessed = assessmentDirectories.Any();

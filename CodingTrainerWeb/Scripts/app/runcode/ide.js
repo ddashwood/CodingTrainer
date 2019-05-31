@@ -104,6 +104,10 @@
             chapter: model.ChapterNo,
             exercise: model.ExerciseNo
         }));
+        w.jQuery('#answer').load("/Exercise/ModelAnswer?" + $.param({
+            chapter: model.ChapterNo,
+            exercise: model.ExerciseNo
+        }));
     });
     $('.next-page').click(function () {
         $('#successModal').off('hidden.bs.modal');

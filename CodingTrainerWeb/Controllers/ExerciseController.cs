@@ -220,6 +220,30 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             return Content(result);
         }
 
+        [Authorize]
+        public ActionResult ModelAnswer(int chapter, int exercise)
+        {
+            var exerciseDetails = rep.GetExercise(chapter, exercise);
+            if (exerciseDetails.ModelAnswer == null)
+            {
+                return PartialView("ModelAnswerNotFound");
+            }
+
+            // Has the user completed this exercise?
+            var user = userServices.GetCurrentUser();
+            if (user.CurrentChapterNo > chapter || (user.CurrentChapterNo == chapter && user.CurrentExerciseNo > exercise))
+            {
+                var result = new ContentResult();
+                result.Content = exerciseDetails.ModelAnswer;
+                result.ContentType = "text/html";
+                return result;
+            }
+            else
+            {
+                return PartialView(); // Model answer will be shown when the exercise is completed
+            }
+        }
+
         // Helpers
 
         private T RunWithoutSyncContext<T>(Func<Task<T>> task)
