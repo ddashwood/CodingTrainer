@@ -126,6 +126,11 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             {
                 Clients.Caller.CompilerError(CompilerError.ArrayFromException(ex));
             }
+            catch (ExceptionRunningUserCodeException e)
+            {
+                Clients.Caller.ConsoleOut("Error: " + e.Message + Environment.NewLine);
+                Clients.Caller.ConsoleOut(e.StackTrace);
+            }
             catch (Exception e)
             {
                 Clients.Caller.ConsoleOut("Error: " + e.Message + Environment.NewLine);

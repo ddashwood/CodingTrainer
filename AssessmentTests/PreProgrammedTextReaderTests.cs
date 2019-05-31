@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CSharpRunner.Assessment;
+using CodingTrainer.CSharpRunner.CodeHost;
 using CodingTrainer.CSharpRunner.TestingCommon;
 using NUnit.Framework;
 using System;
@@ -32,7 +33,7 @@ namespace CodingTrainer.CSharpRunner.AssessmentTests
             var compiled = await runner.CompileAsync(GetUsings(new string[] { "System" }).
                 Append(WrapInMain("Console.ReadLine(); Console.ReadLine();")).ToString());
 
-            var e = Assert.ThrowsAsync<AggregateException>(() => runner.RunAsync(compiled, new PreProgrammedTextReader("Test1\r\n")));
+            var e = Assert.ThrowsAsync<ExceptionRunningUserCodeException>(() => runner.RunAsync(compiled, new PreProgrammedTextReader("Test1\r\n")));
             Assert.That(e.InnerException, Is.TypeOf<EndOfStreamException>());
         }
     }

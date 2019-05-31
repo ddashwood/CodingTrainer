@@ -4,7 +4,7 @@
     this.corrections = {
         codeWithCorrections: function (code) {
             if (hiddenCodeHeader) {
-                code = hiddenCodeHeader + "\n" + code;
+                code = hiddenCodeHeader + " " + code;
             }
             return code;
         },

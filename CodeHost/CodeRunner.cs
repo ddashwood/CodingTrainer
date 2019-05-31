@@ -89,7 +89,7 @@ namespace CodingTrainer.CSharpRunner.CodeHost
                     sandboxMgr.RunInSandbox(compiledCode.bin, compiledCode.pdb, consoleInTextReader)
                 );
             }
-            catch (Exception e) when (!(e is AggregateException))
+            catch (Exception e) when (!(e is ExceptionRunningUserCodeException))
             {
                 if (exceptionLogger != null)
                 {

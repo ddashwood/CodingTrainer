@@ -131,11 +131,11 @@ namespace CodingTrainer.CSharpRunner.CodeHost
                                 {
                                     if (runner.IsCompleted && runner.Exception != null)
                                     {
-                                        // Unwrap the exception, then wrap it in our own AggregateException
+                                        // Unwrap the exception, then wrap it in our own exception
                                         Exception e = runner.Exception;
                                         while (e.InnerException != null) e = e.InnerException;
 
-                                        throw new AggregateException("An error occured while running the code", e);
+                                        throw new ExceptionRunningUserCodeException("An error occurred while running the code", e);
                                     }
                                     if (outOfMemory)
                                     {
@@ -169,6 +169,8 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             {
                 PermissionSet permSet = new PermissionSet(PermissionState.None);
                 permSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
+                string path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                permSet.AddPermission(new FileIOPermission(FileIOPermissionAccess.PathDiscovery, new string[] { path }));  // Needed so Exceptions can get line numbers for the stack trace
 
                 StrongName fullTrustAssembly = typeof(SandboxerWithConsoleRedirect).Assembly.Evidence.GetHostEvidence<StrongName>();
 

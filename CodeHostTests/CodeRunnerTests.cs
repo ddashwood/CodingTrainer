@@ -134,7 +134,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         [Category("Normal")]
         public void ExceptionTest()
         {
-            Exception e = Assert.ThrowsAsync(typeof(AggregateException), () =>
+            Exception e = Assert.ThrowsAsync(typeof(ExceptionRunningUserCodeException), () =>
                 runner.CompileAndRunAsync(GetUsings(new string[] { "System" })
                     .Append(WrapInMain(@"int i = 0; int j = 5 / i;")).ToString()));
             Assert.That(e.InnerException, Is.TypeOf<DivideByZeroException>());
@@ -144,7 +144,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         [Category("Normal")]
         public void ExceptionWithoutMainTest()
         {
-            Exception e = Assert.ThrowsAsync(typeof(AggregateException), () =>
+            Exception e = Assert.ThrowsAsync(typeof(ExceptionRunningUserCodeException), () =>
                 runner.CompileAndRunAsync(GetUsings(new string[] { "System" })
                             .Append(@"int i = 0; int j = 5 / i;").ToString()));
             Assert.That(e.InnerException, Is.TypeOf<DivideByZeroException>());
@@ -156,7 +156,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         [Category("Security")]
         public void IOForbiddenTest()
         {
-            Exception e = Assert.ThrowsAsync(typeof(AggregateException), () =>
+            Exception e = Assert.ThrowsAsync(typeof(ExceptionRunningUserCodeException), () =>
                 runner.CompileAndRunAsync(GetUsings(new string[] { "System", "System.IO" })
                     .Append(WrapInMain(@"using (var s = new StreamWriter(""test.txt"")) { s.WriteLine(""Testing""); }"))
                     .ToString()));
@@ -167,7 +167,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
         [Category("Security")]
         public void IOForbiddenWithoutMainTest()
         {
-            Exception e = Assert.ThrowsAsync(typeof(AggregateException), () =>
+            Exception e = Assert.ThrowsAsync(typeof(ExceptionRunningUserCodeException), () =>
             runner.CompileAndRunAsync(GetUsings(new string[] { "System", "System.IO" })
                             .Append(@"using (var s = new StreamWriter(""test.txt"")) { s.WriteLine(""Testing""); }").ToString()));
             Assert.That(e.InnerException, Is.TypeOf<SecurityException>());
@@ -187,7 +187,7 @@ for(int i=0; i<ca.Length; i++) { ca[i]=new C(); GC.Collect(); System.Threading.T
                     .Append(WrapInMain(@"int i = 0; int j = 5 / i;")).ToString();
 
             // Act
-            Exception e = Assert.ThrowsAsync(typeof(AggregateException), () =>
+            Exception e = Assert.ThrowsAsync(typeof(ExceptionRunningUserCodeException), () =>
                 runner.CompileAndRunAsync(code));
 
             // Assert

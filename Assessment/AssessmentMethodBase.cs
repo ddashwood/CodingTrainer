@@ -49,7 +49,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
             catch (Exception e)
             {
-                HandleExceptionInTest(e);
+                result = HandleExceptionInTest(e);
             }
             return result;
         }

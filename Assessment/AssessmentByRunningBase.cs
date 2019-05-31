@@ -82,7 +82,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         protected sealed override bool HandleExceptionInTest(Exception e)
         {
-            if (e is AggregateException userCodeException)
+            if (e is ExceptionRunningUserCodeException userCodeException)
             {
                 return HandleExceptionInUsersCode(userCodeException);
             }
@@ -92,13 +92,14 @@ namespace CodingTrainer.CSharpRunner.Assessment
             }
         }
 
-        protected virtual bool HandleExceptionInUsersCode(AggregateException e)
+        protected virtual bool HandleExceptionInUsersCode(ExceptionRunningUserCodeException e)
         {
             WriteToConsole("There was an exception when running your code\r\n");
-            WriteToConsole("The exception message is:\r\n");
-            WriteToConsole($"  {e.InnerException.Message}\r\n\r\n");
+            WriteToConsole("The exception message is:  ");
+            WriteToConsole($"  {e.InnerException.Message}\r\n");
+            WriteToConsole($"{e.StackTrace}\r\n\r\n");
 
-            throw e;
+            throw new ApplicationException("It is not possible to continue the assessment due to the compiler errors");
         }
     }
 }

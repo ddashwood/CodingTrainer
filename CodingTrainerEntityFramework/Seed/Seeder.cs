@@ -73,6 +73,14 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Seed
                 exercise.IsAssessed = assessmentDirectories.Any();
                 exercise.IsFinalExercise = false;
 
+                // Removing blank lines from the hidden code header ensures that line numbers in error messages are correct
+                if (exercise.HiddenCodeHeader != null)
+                {
+                    exercise.HiddenCodeHeader = exercise.HiddenCodeHeader.Replace("\r\n", "");
+                    exercise.HiddenCodeHeader = exercise.HiddenCodeHeader.Replace("\r", "");
+                    exercise.HiddenCodeHeader = exercise.HiddenCodeHeader.Replace("\n", "");
+                }
+
                 context.Exercises.AddOrUpdate(exercise);
                 context.SaveChanges();
             }
