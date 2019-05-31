@@ -3,15 +3,7 @@
     this.corrections = corrections;
 
     var correctedErrors = function (errorList, generation) {
-        if (errorList) {
-            for (var i = 0; i < errorList.length; i++) {
-                errorList[i].Location.SourceSpan.Start =
-                    self.corrections.positionCorrectionFromServer(errorList[i].Location.SourceSpan.Start);
-                errorList[i].Location.SourceSpan.End =
-                    self.corrections.positionCorrectionFromServer(errorList[i].Location.SourceSpan.End);
-            }
-        }
-        diagnostics(errorList, generation);
+        diagnostics(corrections.correctErrors(errorList), generation);
     };
 
     IdeServices.call(this, signalRFactory, correctedErrors, autoCompletions, parameters);

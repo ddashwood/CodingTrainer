@@ -27,6 +27,8 @@
             var startIdx = error.Location.SourceSpan.Start;
             var endIdx = error.Location.SourceSpan.End;
 
+            if (endIdx < 0) continue; // The error is in the hidden code, not the user's code
+
             var startPos = this.posFromIndex(startIdx);
             var endPos = this.posFromIndex(endIdx);
 

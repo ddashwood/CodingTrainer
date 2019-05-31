@@ -21,6 +21,7 @@
 }
 
 CodeRunner.prototype.run = function (code, forAssessment) {
+    var self = this;
     try {
         var hubProcess;
         if (forAssessment) {
@@ -34,7 +35,7 @@ CodeRunner.prototype.run = function (code, forAssessment) {
                 e.message += "\r\n\r\nThe error message is:\r\n    " + e.data.Message;
             }
             alert(e.message);
-            this.complete();
+            self.complete();
         });
     } catch (e) {
         alert(e.message);

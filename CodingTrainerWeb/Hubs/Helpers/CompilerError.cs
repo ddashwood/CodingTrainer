@@ -40,7 +40,10 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs.Helpers
             List<CompilerError> errors = new List<CompilerError>();
             foreach (var error in diagnostics.OrderBy(e => e.Location.SourceSpan.Start))
             {
-                errors.Add(new CompilerError(error));
+                if (error.Id != "CS7022") // CS7022 is a warning tht the entry point is global code - no need to show to the user
+                {
+                    errors.Add(new CompilerError(error));
+                }
             }
             return errors.ToArray();
         }

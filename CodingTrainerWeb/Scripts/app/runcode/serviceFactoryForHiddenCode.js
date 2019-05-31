@@ -21,6 +21,18 @@
                 pos -= adjustment;
             }
             return pos;
+        },
+        correctErrors: function (errorList) {
+            if (!errorList) return;
+
+            for (var i = 0; i < errorList.length; i++) {
+                errorList[i].Location.SourceSpan.Start =
+                    this.positionCorrectionFromServer(errorList[i].Location.SourceSpan.Start);
+                errorList[i].Location.SourceSpan.End =
+                    this.positionCorrectionFromServer(errorList[i].Location.SourceSpan.End);
+            }
+
+            return errorList;
         }
     };
 

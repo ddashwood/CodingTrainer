@@ -161,33 +161,37 @@ Ide.prototype.showErrors = function (errors) {
     this.codeConsole.consoleAppend('There were compiler errors...\n', true);
     this.codeConsole.consoleAppend('Click on an error to go to the affected line\n\n', true);
     var self = this;
-    for (var j = 0; j < errors.length; j++) {
-        this.codeConsole.consoleAppendWithLineLink('  ' + errors[j].Message + '\n    Line ' + (errors[i = j].line + 1) + '\n', errors[j].line, function (line) {
-            self.editor.focus();
-            self.editor.setCursor({ line: line, ch: 0 });
+    for (var i = 0; i < errors.length; i++) {
+        if (errors[i].Location.SourceSpan.End < 0) {
+            this.codeConsole.consoleAppend('  ' + errors[i].Message + '\n    In the test code\n', true);
+        } else {
+            this.codeConsole.consoleAppendWithLineLink('  ' + errors[i].Message + '\n    Line ' + (errors[i].line + 1) + '\n', errors[i].line, function (line) {
+                self.editor.focus();
+                self.editor.setCursor({ line: line, ch: 0 });
 
-            // Check that the top of the editor is not hidden behind the nav bar
-            try {
-                var cursor = $('.CodeMirror-cursor');
-                var cursorY;
-                if (cursor.length > 0) {
-                    cursorY = cursor.get(0).getBoundingClientRect().top;
-                } else {
-                    // CodeMirror-cursor class is not always present, especially on mobile
-                    // CodeMirrow-scroll is not as accurate, but still works
-                    cursorY = $('.CodeMirror-scroll').get(0).getBoundingClientRect().top;
+                // Check that the top of the editor is not hidden behind the nav bar
+                try {
+                    var cursor = $('.CodeMirror-cursor');
+                    var cursorY;
+                    if (cursor.length > 0) {
+                        cursorY = cursor.get(0).getBoundingClientRect().top;
+                    } else {
+                        // CodeMirror-cursor class is not always present, especially on mobile
+                        // CodeMirrow-scroll is not as accurate, but still works
+                        cursorY = $('.CodeMirror-scroll').get(0).getBoundingClientRect().top;
+                    }
+                    var navBarHeight = parseInt($('#main-navbar').css("height"));
+                    if (cursorY < navBarHeight) {
+                        var currentScroll = $(window).scrollTop();
+                        $(window).scrollTop(currentScroll - (navBarHeight - cursorY));
+                    }
                 }
-                var navBarHeight = parseInt($('#main-navbar').css("height"));
-                if (cursorY < navBarHeight) {
-                    var currentScroll = $(window).scrollTop();
-                    $(window).scrollTop(currentScroll - (navBarHeight - cursorY));
+                catch (e) {
+                    // Exceptions might occur if the classes we are looking for are not present.
+                    // In this case, ignore it
                 }
-            }
-            catch (e) {
-                // Exceptions might occur if the classes we are looking for are not present.
-                // In this case, ignore it
-            }
-        });
+            });
+        }
     }
 };
 
