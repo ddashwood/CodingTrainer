@@ -12,6 +12,16 @@ namespace CodingTrainer.CSharpRunner.CodeHost
             : base(message, innerException)
         { }
 
+        public override string Message
+        {
+            get
+            {
+                if (InnerException == null) return base.Message;
+
+                return $"{base.Message}\r\nThe error is: {InnerException.Message}";
+            }
+        }
+
         public override string StackTrace
         {
             get

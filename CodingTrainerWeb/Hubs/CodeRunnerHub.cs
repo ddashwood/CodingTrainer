@@ -128,7 +128,7 @@ namespace CodingTrainer.CodingTrainerWeb.Hubs
             }
             catch (ExceptionRunningUserCodeException e)
             {
-                Clients.Caller.ConsoleOut("Error: " + e.Message + Environment.NewLine);
+                Clients.Caller.ConsoleOut(Environment.NewLine + e.Message + Environment.NewLine);
                 Clients.Caller.ConsoleOut(e.StackTrace);
             }
             catch (Exception e)

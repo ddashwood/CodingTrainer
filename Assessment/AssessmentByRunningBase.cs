@@ -94,12 +94,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
         protected virtual bool HandleExceptionInUsersCode(ExceptionRunningUserCodeException e)
         {
-            WriteToConsole("There was an exception when running your code\r\n");
-            WriteToConsole("The exception message is:  ");
-            WriteToConsole($"  {e.InnerException.Message}\r\n");
-            WriteToConsole($"{e.StackTrace}\r\n\r\n");
-
-            throw new ApplicationException("It is not possible to continue the assessment due to the compiler errors");
+            throw e;
         }
     }
 }
