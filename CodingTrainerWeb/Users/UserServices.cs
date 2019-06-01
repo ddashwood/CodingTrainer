@@ -18,6 +18,8 @@ namespace CodingTrainer.CodingTrainerWeb.Users
         UserStore<ApplicationUser> userStore;
         ApplicationUserManager userManager;
 
+        string emulatingId = null;
+
         public UserServices()
         {
             var dbContext = new ApplicationDbContext();
@@ -30,24 +32,34 @@ namespace CodingTrainer.CodingTrainerWeb.Users
         public ApplicationUser GetCurrentUser()
         {
             var principal = Thread.CurrentPrincipal;
-            return userManager.FindById(principal.Identity.GetUserId());
+            return userManager.FindById(emulatingId ?? principal.Identity.GetUserId());
         }
 
         public async Task<ApplicationUser> GetCurrentUserAsync()
         {
             var principal = Thread.CurrentPrincipal;
-            return await userManager.FindByIdAsync(principal.Identity.GetUserId());
+            return await userManager.FindByIdAsync(emulatingId ?? principal.Identity.GetUserId());
         }
 
         public string GetCurrentUserId()
         {
-            return Thread.CurrentPrincipal.Identity.GetUserId();
+            return emulatingId ?? Thread.CurrentPrincipal.Identity.GetUserId();
         }
 
         public string GetName()
         {
             var appUser = GetCurrentUser();
-            return appUser == null ? "Unknown" : appUser.FirstName + " " + appUser.LastName;
+            var name = appUser == null ? "Unknown" : appUser.FirstName + " " + appUser.LastName;
+            if (emulatingId == null)
+            {
+                return name;
+            }
+            else
+            {
+                var principal = Thread.CurrentPrincipal;
+                var realUser = userManager.FindById(principal.Identity.GetUserId());
+                return $"{realUser.FirstName} {realUser.LastName} ({appUser.FirstName} {appUser.LastName})";
+            }
         }
 
         public string GetBootstrapTheme()
@@ -100,6 +112,11 @@ namespace CodingTrainer.CodingTrainerWeb.Users
             user.AdvanceToExercise(newExercise);
             await userManager.UpdateAsync(user);
             await userStore.Context.SaveChangesAsync();
+        }
+
+        public void Emulate(string userId)
+        {
+            emulatingId = userId;
         }
     }
 }

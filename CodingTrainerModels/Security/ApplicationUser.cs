@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace CodingTrainer.CodingTrainerModels.Security
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+
     public class ApplicationUser : IdentityUser
     {
         [Required]
@@ -27,15 +28,20 @@ namespace CodingTrainer.CodingTrainerModels.Security
 
         [Required]
         [ForeignKey("CurrentExercise"), Column(Order = 0)]
+        [DisplayName("Current Chapter")]
         public int CurrentChapterNo { get; set; }
 
         [Required]
         [ForeignKey("CurrentExercise"), Column(Order = 1)]
+        [DisplayName("Current Exercise")]
         public int CurrentExerciseNo { get; set; }
 
         [Required]
         [DisplayName("Dark Theme")]
         public bool Dark { get; set; }
+
+        [DisplayName("Email Confirmed")]
+        public override bool EmailConfirmed { get => base.EmailConfirmed; set => base.EmailConfirmed = value; }
 
         public virtual Exercise CurrentExercise { get; set; }
 

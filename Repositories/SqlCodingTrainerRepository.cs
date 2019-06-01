@@ -1,5 +1,6 @@
 ﻿using CodingTrainer.CodingTrainerEntityFramework.Contexts;
 using CodingTrainer.CodingTrainerModels;
+using CodingTrainer.CodingTrainerModels.Security;
 using CodingTrainer.CodingTrainerWeb.Dependencies;
 using CodingTrainer.CSharpRunner.Assessment;
 using System;
@@ -143,6 +144,11 @@ namespace CodingTrainer.Repositories
             return await context.SavedWork.SingleOrDefaultAsync(s => s.ChapterNo == chapter
                                                                   && s.ExerciseNo == exercise
                                                                   && s.UserId == userId);
+        }
+
+        public async Task<IEnumerable<ApplicationUser>> GetUsersAsync()
+        {
+            return await context.Users.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToListAsync();
         }
     }
 

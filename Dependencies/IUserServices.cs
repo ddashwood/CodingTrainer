@@ -22,5 +22,7 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
         Task UpdateNameAsync(string firstName, string lastName);
         Task UpdateSettings(bool dark);
         Task AdvanceToExercise(Exercise newExercise);
+
+        void Emulate(string userId);
     }
 }

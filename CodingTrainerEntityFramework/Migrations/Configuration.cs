@@ -17,6 +17,9 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Migrations
     using System.Data.Entity.Validation;
     using System.Text;
     using CodingTrainer.CodingTrainerEntityFramework.Seed;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity;
+    using CodingTrainer.CodingTrainerModels.Security;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Contexts.ApplicationDbContext>
     {
@@ -37,7 +40,30 @@ namespace CodingTrainer.CodingTrainerEntityFramework.Migrations
             //    System.Diagnostics.Debugger.Launch();
             //}
 
-            Seeder.Seed(context);
+            Seeder.Seed(context); // Seeds exercise data
+            Exercise lastExercise = context.Exercises.FirstOrDefault(e => e.IsFinalExercise);
+
+            // Now seed roles and users
+            if (!context.Roles.Any(r => r.Name == "Admin"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "Admin" };
+
+                manager.Create(role);
+            }
+
+            if (!context.Users.Any(u => u.UserName == "admin@codingtrainer.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser { UserName = "admin@codingtrainer.com", Email = "admin@codingtrainer.com", EmailConfirmed = true, FirstName = "Coding Trainer", LastName = "Admin" };
+                user.CurrentChapterNo = lastExercise?.ChapterNo ?? 1;
+                user.CurrentExerciseNo = lastExercise?.ExerciseNo ?? 1;
+
+                manager.Create(user, "ChangeMe!");
+                manager.AddToRole(user.Id, "Admin");
+            }
         }
     }
 }

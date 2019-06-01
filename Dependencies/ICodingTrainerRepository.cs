@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CodingTrainerModels;
+using CodingTrainer.CodingTrainerModels.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,5 +34,8 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
 
         // Unhandled exceptions
         void InsertUnhandledControllerException(UnhandledControllerException exception);
+
+        // Users
+        Task<IEnumerable<ApplicationUser>> GetUsersAsync();
     }
 }

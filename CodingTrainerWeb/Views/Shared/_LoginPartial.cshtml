@@ -14,6 +14,10 @@
                 <ul class="dropdown-menu">
                     <li>@Html.ActionLink("Account Details", "Details", "Manage")</li>
                     <li>@Html.ActionLink("Settings", "Settings", "Manage")</li>
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("User Admin", "UserList", "Admin")</li>
+                    }
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                 </ul>
         </ul>

@@ -16,7 +16,6 @@ namespace CodingTrainer.CSharpRunner.PartiallyTrusted
             var type = assembly.GetType("CodingTrainerExercise");
             var main = type?.GetMethod("Main");
 
-
             object ret = null;
             if (main != null)
             {
