@@ -49,6 +49,13 @@
     </div>
 
     <div id="answer" class="tab-pane fade">
-        @Html.Action("ModelAnswer", new { chapter = Model.ChapterNo, exercise = Model.ExerciseNo })
+        <div id="answer-not-ready">
+            <p>
+                Page is still initialising, please return to this screen in a moment.
+            </p>
+        </div>
+        <div id="answer-content" style="display:none">
+            @Html.Action("ModelAnswer", new { chapter = Model.ChapterNo, exercise = Model.ExerciseNo })
+        </div>
     </div>
 </div>

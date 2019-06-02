@@ -89,12 +89,14 @@ $(function () {
 
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     if (typeof (CodeMirror) === 'undefined') {
-        $('#submissions-content').text('Page is still initialising, please return to this screen in a moment');
         return;
     }
 
     var target = $(e.target).attr("href");
     if (target === '#answer') {
+        $('#answer-not-ready').css('display', 'none');
+        $('#answer-content').css('display', 'block');
+
         var codeSegments = document.getElementsByClassName('model-answer-code');
         var i;
         for (i = 0; i < codeSegments.length; i++) {
