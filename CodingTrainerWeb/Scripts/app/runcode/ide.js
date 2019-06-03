@@ -98,7 +98,7 @@
     // These functions respond to the user's next action when they pass an assessment
     $('#successModal').on('hidden.bs.modal', function () {
         var w = window.opener;
-        if (w === null) w = window;
+        if (!w) w = window;
 
         w.jQuery('#answer-not-ready').css('display', 'block');
         w.jQuery('#answer-content').css('display', 'none');
