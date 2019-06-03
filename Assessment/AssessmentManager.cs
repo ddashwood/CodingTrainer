@@ -58,6 +58,15 @@ namespace CodingTrainer.CSharpRunner.Assessment
                 result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
                 assessmentRunner.ConsoleWrite -= OnConsoleWrite;
             }
+            catch (Exception e)
+            {
+                OnConsoleWrite(this, new ConsoleWriteEventArgs("Error: " + e.Message + Environment.NewLine));
+
+                if (e.InnerException != null)
+                {
+                    OnConsoleWrite(this, new ConsoleWriteEventArgs(e.InnerException.Message));
+                }
+            }
             finally
             {
                 var savedAssessment = new Submission
