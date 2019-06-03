@@ -387,11 +387,15 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Course\1-1\Classroom.jpg" />
+    <Content Include="Content\Course\1-2\Code.jpg" />
+    <Content Include="Content\Course\2-1\Basket.jpg" />
+    <Content Include="Content\Course\2-2\Basket.png" />
+    <Content Include="Content\Course\3-1\Thanks.jpg" />
     <Content Include="Content\Themes\Cyborg\bootstrap.css" />
     <Content Include="Content\Themes\Cyborg\bootstrap.min.css" />
     <Content Include="Content\Themes\Cyborg\Site.css" />
     <Content Include="Content\Themes\SpaceLab\bootstrap.css" />
-    <Content Include="Content\Course\1\1.mp4" />
     <Content Include="Content\RunCode.css" />
     <Content Include="Content\Themes\SpaceLab\Site.css" />
     <Content Include="Content\TsAndCs.css" />

@@ -1,0 +1,120 @@
+﻿<h3>Shopping Basket Model Answer</h3>
+
+<p>
+    The instructions for the shopping basket don't give too much detail, so there is more than one
+    way of completing the exercise. The model answer shown here generally follows best practice. Note
+    that:
+</p>
+
+<ul>
+    <li>
+        The <code>Items</code> property returns a read-only version of the items collection, so that
+        it's not possible for other classes to add to the collection without using the appropriate
+        method in the <code>Basket</code> class.
+    </li>
+    <li>
+        The <code>TotalPrice</code> method in the <code>Basket</code> class uses the Linq <code>Sum</code>
+        method to add up the price of each item. This could be done manually using a loop if you prefer.
+    </li>
+    <li>
+        In the <code>AddItem()</code> method, exceptions are thrown if we find an item in the basket
+        with the same ID but a different description or price.
+    </li>
+    <li>
+        A <code>StringBuilder</code> has been used in the <code>Basket.ToString()</code> method - this
+        is best practice when building up strings bit by bit.
+    </li>
+</ul>
+
+<p>
+    Here is the code:
+</p>
+
+<div class="row">
+    <textarea class="model-answer-code" data-height="80ex" style="display:none">class Basket
+{
+    private List<BasketItem> items = new List<BasketItem>();
+
+    public IEnumerable<BasketItem> Items
+    {
+        get
+        {
+            return items.AsReadOnly();
+        }
+    }
+
+    public decimal TotalPrice
+    {
+        get
+        {
+            return Items.Sum(i => i.TotalPrice);
+        }
+    }
+
+    public void AddItem(int itemId, string description, decimal price)
+    {
+        var item = items.SingleOrDefault(i => i.ItemId == itemId);
+
+        if (item == null)
+        {
+            items.Add(new BasketItem(itemId, description, price));
+        }
+        else
+        {
+            if (item.Description != description)
+                throw new InvalidOperationException("Description does match the existing basket item with the same ID");
+            if (item.UnitPrice != price)
+                throw new InvalidOperationException("Price does match the existing basket item with the same ID");
+
+            item.IncrementQty();
+        }
+    }
+
+    public override string ToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (var item in Items)
+        {
+            sb.Append(item);
+        }
+        sb.Append($"Total value in basket: {TotalPrice:c2}");
+
+        return sb.ToString();
+    }
+}
+
+class BasketItem
+{
+    public int ItemId { get; }
+    public string Description { get; }
+    public decimal UnitPrice { get; }
+    public int Quantity { get; private set; }
+
+    public BasketItem(int itemId, string description, decimal price)
+    {
+        ItemId = itemId;
+        Description = description;
+        UnitPrice = price;
+        Quantity = 1;
+    }
+
+    public void IncrementQty()
+    {
+        Quantity++;
+    }
+
+    public decimal TotalPrice
+    {
+        get
+        {
+            return UnitPrice * Quantity;
+        }
+    }
+
+    public override string ToString()
+    {
+        return $"{Quantity} x {Description} @ {UnitPrice:c2} each = {TotalPrice:c2}{Environment.NewLine}";
+    }
+}
+</textarea>
+</div>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssessmentGroup>
+  <Title>Basket Totals</Title>
+  <ShowAutoMessageOnStart>1</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>0</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>0</ShowAutoMessageOnFail>
+  <EndAssessmentsOnFail>0</EndAssessmentsOnFail>
+</AssessmentGroup>

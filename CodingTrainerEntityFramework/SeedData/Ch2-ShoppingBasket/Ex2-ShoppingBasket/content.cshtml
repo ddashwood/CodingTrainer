@@ -1,0 +1,91 @@
+﻿<p>
+    At the bottom of this page, you will find a code editor where we've already begun the shopping
+    basket code. You might want to click the link above the editor to open it in a different window,
+    so that you can see the editor and these instructions at the same time.
+</p>
+
+<p>
+    Before we go any further, study the code, and make sure you understand what it does. You will
+    notice that there are several sections of the code which have not been written yet, or which
+    are incomplete or incorrect. Your task is to complete the shopping basket.
+</p>
+
+<p>
+    At any point, you can click the Run button to test your code. You will be prompted to add items
+    to the basket, and when you finish, the contents of the basket will be displayed (if your code
+    is complete). If you need help at any time, or if you think you are finished, press the Submit button.
+</p>
+
+<img src="@Url.Content("~/Content/Course/2-2/Basket.png")" style="max-width:50%" class="img-responsive" alt="Shopping Basket" />
+
+<h3>Instructions</h3>
+
+<p>
+    Please follow these instructions carefully to complete the exercise. Remeber that you can add whatever private
+    members you want to the classes to make them work:
+</p>
+
+<ol>
+    <li>
+        In the <code>BasketItem</code> constructor, there is a line which initialises the <code>Quantity</code>
+        property. That line is commented out. Un-comment it, and insert the correct initial value.
+    </li>
+    <li>
+        In the <code>BasketItem</code> class, the <code>TotalPrice</code> property does not have a calculation
+        to work out the total price. Add the correct calculation here.
+    </li>
+    <li>
+        In the <code>Basket</code> class, add an <code>Items</code> property. It should be a read-only property.
+        Initialise it to an empty <code>List&lt;BasketItem&gt;</code>.
+    </li>
+    <li>
+        In the <code>Basket</code> class, add a <code>TotalPrice</code> property of type <code>decimal</code>.
+        This will be a calculated property (similar to the <code>TotalPrice</code> property in the <code>BasketItem</code>
+        class) - it should add together the total price of each item in the <code>Items</code> property.
+    </li>
+    <li>
+        In the <code>Basket</code> class, there is already a method called <code>AddItem()</code>, but there is a
+        lot of work to do here. We have already used <code>SingleOrDefault()</code> (a Linq method) to attempt to find
+        the item that's being added. The code will now need to follow one of the following two paths:
+        <ul>
+            <li>
+                If the item does not exist in the basket yet, then create a new <code>BasketItem</code> object, and
+                add it to the <code>Items</code> collection. <em>
+                    Hint: <code>SingleOrDefault()</code> returns
+                    <code>null</code> if it can't find the item.
+                </em>
+            </li>
+            <li>
+                If the item already exists in the basket, there's no need to add anything to <code>Items</code>. Instead,
+                the quantity of the existing item will need to be increased by one.
+            </li>
+        </ul>
+    </li>
+    <li>
+        Finally, in the <code>Basket</code> class, override the <code>ToString()</code> method. <em>
+            Hint: you
+            won't be able to get a list of overrideable methods as you would in Visual Studio. But instead, you can
+            look at how the <code>ToString()</code> method has been override in the <code>BasketItem</code> class,
+            and use the same method signature
+        </em>
+        <ul>
+            <li>
+                Inside the method, you will need a <code>string</code> or a <code>StringBuilder</code>, to which
+                you can add each line of the results.
+            </li>
+            <li>
+                Loop through each member of the <code>Items</code> property, and append each item to the results string
+            </li>
+            <li>
+                At the end of the results string, add a line of text that shows the grand total. It might look like this:
+                <br />
+                <pre>Total value in basket: £3.50</pre>
+            </li>
+            <li>
+                Don't forget to return the results string!
+            </li>
+        </ul>
+    </li>
+</ol>
+
+@Html.Action("RunCode", new { Exercise = Model.Exercise }).Raw()

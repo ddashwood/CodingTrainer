@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LinqAssessment>
+  <FullClassName>CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning.LinqAssessment</FullClassName>
+  <Title>5 has been added</Title>
+  <ShowAutoMessageOnStart>0</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>1</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>1</ShowAutoMessageOnFail>
+  <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
+  <EndAssessmentGroupOnPass>1</EndAssessmentGroupOnPass>
+  <ShowScriptRunning>1</ShowScriptRunning>
+  <PassMessage>You have added 5 correctly!</PassMessage>
+  <FailMessage>It looks like you haven't added 5 to the final number</FailMessage>
+</LinqAssessment>

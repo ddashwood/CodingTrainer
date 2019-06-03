@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LinqAssessment>
+  <FullClassName>CodingTrainer.CSharpRunner.Assessment.Methods.ByRunning.LinqAssessment</FullClassName>
+  <Title>Contains Total Price with wrong format</Title>
+  <ShowAutoMessageOnStart>0</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>1</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>1</ShowAutoMessageOnFail>
+  <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
+  <ShowScriptRunning>0</ShowScriptRunning>
+  <ForInfoOnly>1</ForInfoOnly>
+  <PassMessage>Total basket amount of £1.10 appears to have been calculated correctly, but is not formatted correctly</PassMessage>
+  <FailMessage>Total basket amount of £1.10 does not appear to have been calculated correctly</FailMessage>
+  <UseResultFromPreviousAssessment>1</UseResultFromPreviousAssessment>
+</LinqAssessment>

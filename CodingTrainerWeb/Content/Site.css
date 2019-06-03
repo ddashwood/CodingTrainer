@@ -130,3 +130,31 @@ button {
         left: -240px;
     }
 }
+
+/* General styling */
+
+#exercise-content p {
+    margin-bottom: 3ex;
+}
+#exercise-content img {
+    margin: 10px;
+}
+#exercise-content li {
+    position:relative;
+    left: 1em;
+}
+#exercise-content ol li {
+    margin-bottom: 1.5ex;
+}
+#exercise-content code.code-indent {
+    position: relative;
+    left:4em;
+}
+#exercise-content code + p {
+    margin-top: 3ex;
+}
+
+code {
+    white-space: pre;
+    background-color: transparent;
+}

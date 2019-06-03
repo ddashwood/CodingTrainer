@@ -1,0 +1,162 @@
+﻿<p>
+    Consider the items in an online shopping basket. They may look like this:
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Price each</th>
+            <th>Quantity</th>
+            <th>Total price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Apple</td>
+            <td>£0.15</td>
+            <td>6</td>
+            <td>£0.90</td>
+        </tr>
+        <tr>
+            <td>Chicken</td>
+            <td>£4.00</td>
+            <td>2</td>
+            <td>£8.00</td>
+        </tr>
+        <tr>
+            <td>Bag of potatoes</td>
+            <td>£2.50</td>
+            <td>1</td>
+            <td>£2.50</td>
+        </tr>
+        <tr>
+            <td>Rice</td>
+            <td>£1.25</td>
+            <td>1</td>
+            <td>£1.25</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><strong>Grand total:</strong></td>
+            <td><strong>£12.65</strong></td>
+        </tr>
+    </tbody>
+</table>
+
+<img src="@Url.Content("~/Content/Course/2-1/Basket.jpg")" class="img-circle img-responsive" alt="Shopping Basket" />
+
+<p>
+    If we were thinking about how to represent this in a C# program, we might immediately notice
+    that we have many different items. Each has its own name, its own price, its own quanity and so on.
+</p>
+
+<p>
+    So we might think that a starting point for our code could be:
+</p>
+
+<code class="code-indent">class Basket
+{
+    List&lt;int&gt; itemIds;
+    List&lt;string&gt; descriptions;
+    List&lt;decimal&gt; unitPrices;
+    List&lt;int&gt; quantities;
+}</code>
+
+<p>
+    However, there is a flaw with this design. There is nothing to tie an item name together with its
+    price and its quantity!
+</p>
+
+<p>
+    Instead, a better design would understand that each item in the basket is itself an object. Therefore,
+    we should create a class which represents the basket, <em>
+        and a second class that represents an item
+        in the basket
+    </em>.
+</p>
+
+<p>
+    Additionally, we prefer properties to fields, especially if the stored data is going to be used from
+    outside the class.
+</p>
+
+<p>
+    Thus, our code might look more like this:
+</p>
+
+<code class="code-indent">class Basket
+{
+    List&lt;BasketItem&gt; items;
+}
+
+class BasketItem
+{
+    int ItemId {get; set;}
+    string Description {get; set;}
+    decimal UnitPrice {get; set;}
+    int Quantity {get; set;}
+}</code>
+
+<p>
+    (And even this will need some refinement. Do all these properties need getters and setters? Or could some
+    of them be fixed once they are set, in which case we can remove their setters?)
+</p>
+
+<h3>Specification for our Classes</h3>
+
+<h4>The Basket class</h4>
+
+<p>
+    The <code>Basket</code> class should have the following public members. (Private members can be added as required):
+</p>
+
+<ul>
+    <li>
+        <code>Items</code>: A  property of type <code>IEnumerable&lt;BasketItem&gt;</code>. This
+        will be a read-only property (i.e. it will have a getter, but no setter)
+    </li>
+    <li>
+        <code>TotalPrice</code>: A read-only property of type <code>decimal</code>
+    </li>
+    <li>
+        <code>AddItem()</code>: A method that adds a single item to the basket
+    </li>
+    <li>
+        <code>ToString()</code>: The <code>Basket</code> class will override this method so that it returns the
+        contents of the basket
+    </li>
+</ul>
+
+<h4>The BasketItem class</h4>
+
+<p>
+    The <code>BasketItem</code> class should have the following public members. (Private members can be added as required):
+</p>
+
+<ul>
+    <li>
+        Constructor: The public constructor will accept parameters containing the ID, description and price
+        of the item being added
+    </li>
+    <li>
+        <code>IncrementQty()</code>: A method that increases the quantity by one
+    </li>
+    <li>
+        <code>TotalPrice</code>: A read-only property of type <code>decimal</code>, calculated by multiplying
+        the quantity by the unit price
+    </li>
+    <li>
+        <code>ToString()</code>: The <code>BasketItem</code> class will override this method so that it returns a
+        textual description of the item in the basket
+    </li>
+</ul>
+
+<h3>Restrictions in our Design</h3>
+
+<p>
+    For simplicity, our design has been kept very straightforward - but that does mean it has certain restrictions.
+    There is no way to remove items from the basket. There is also no way to add more than one instance of an item
+    at once. For a basket in a real application, these issues would need to be addressed.
+</p>

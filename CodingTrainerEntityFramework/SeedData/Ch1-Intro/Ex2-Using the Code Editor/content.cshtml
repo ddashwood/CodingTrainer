@@ -1,0 +1,57 @@
+﻿<p>
+    You will need to use this website to enter your code. The website has been designed to simplify
+    the C# code that you write. So you will notice that:
+</p>
+
+<ul class="text-success">
+    <li>You don't need to worry about namespaces</li>
+    <li>You can write code without needing a class if you want</li>
+    <li>You don't need a Main() method - your program just starts running on the first line</li>
+    <li>You don't need to include some of the most common <code>using</code> statements</li>
+</ul>
+
+<img style="float:left" src="@Url.Content("~/Content/Course/1-2/Code.jpg")" class="img-rounded img-responsive" alt="Classroom" />
+
+<p>
+    For now, however, there are some aspects of Visual Studio that are not included on the website.
+    For example, there is some Intellisense, but it is not as complete as in Visual Studio. Some other
+    tools that you might be used to are also missing, such as refactorings and code snippets.
+</p>
+
+<p>
+    However, the biggest benefit of using this website is that it will automatically assess whether your
+    code is correct, and, in some cases, give you constructive feedback about what you need to do
+    to put your code right.
+</p>
+
+<p>
+    <strong>Let's try it out now! Below you will find a code window. Please try the following:</strong>
+</p>
+
+<ol>
+    <li>
+        Study the code, make sure you understand what it does. It is a very simple demo. It is not correct - that's
+        because you will need to correct it!
+    </li>
+    <li>Press the Run button. Notice how the code runs</li>
+    <li>Press the Submit button. Notice that the exercise does not pass, because you have not written any code yet</li>
+    <li>Fix the mistake in the code (the code comments give you some clues), then press Run again to test your code.</li>
+    <li>
+        Once you are happy that your code works, press Submit again. That will enable you to move on to the next
+        chapter. In the next chapter, you will find a simple exercise based on classes, which we would like you to
+        attempt on your own. If you struggle, don't worry - press Submit, read any feedback that's provided
+        <ul>
+            <li>
+                Please <em>do not ask your tutor or colleagues for help</em>. The aim of this task is to see whether
+                the help that is provided by the system is useful. If you are not able to complete the exercise,
+                it does not matter
+            </li>
+        </ul>
+    </li>
+</ol>
+
+<strong>Thank you!</strong>
+
+<hr />
+
+@Html.Action("RunCode", new { Exercise = Model.Exercise }).Raw()

@@ -94,21 +94,23 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
     var target = $(e.target).attr("href");
     if (target === '#answer') {
-        $('#answer-not-ready').css('display', 'none');
-        $('#answer-content').css('display', 'block');
+        if ($('#answer-content').css('display') !== "block") {
+            $('#answer-not-ready').css('display', 'none');
+            $('#answer-content').css('display', 'block');
 
-        var codeSegments = document.getElementsByClassName('model-answer-code');
-        var i;
-        for (i = 0; i < codeSegments.length; i++) {
-            var cm = CodeMirror.fromTextArea(codeSegments[i], {
-                lineNumbers: true,
-                mode: "text/x-csharp",
-                theme: exerciseGlobals.theme,
-                readOnly: true
-            });
-            var size = codeSegments[i].getAttribute('data-height');
-            if (size === null) size = '30ex';
-            cm.setSize(null, size);
+            var codeSegments = document.getElementsByClassName('model-answer-code');
+            var i;
+            for (i = 0; i < codeSegments.length; i++) {
+                var cm = CodeMirror.fromTextArea(codeSegments[i], {
+                    lineNumbers: true,
+                    mode: "text/x-csharp",
+                    theme: exerciseGlobals.theme,
+                    readOnly: true
+                });
+                var size = codeSegments[i].getAttribute('data-height');
+                if (size === null) size = '30ex';
+                cm.setSize(null, size);
+            }
         }
     }
 });

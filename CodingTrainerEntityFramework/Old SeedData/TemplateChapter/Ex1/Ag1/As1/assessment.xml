@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<InsertClassName>
+  <FullClassName>CodingTrainer.CSharpRunner.Assessment.Methods.InsertMethodGroup.InsertClassName</FullClassName>
+  <Title>Insert Title</Title>
+  <ShowAutoMessageOnStart>0</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>0</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>0</ShowAutoMessageOnFail>
+  <EndAssessmentGroupOnFail>0</EndAssessmentGroupOnFail>
+</InsertClassName>

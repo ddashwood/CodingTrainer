@@ -100,11 +100,14 @@
         var w = window.opener;
         if (w === null) w = window;
 
+        w.jQuery('#answer-not-ready').css('display', 'block');
+        w.jQuery('#answer-content').css('display', 'none');
+
         w.jQuery('#exercise-sidebar').load("/Exercise/ExerciseSidebarRefresh?" + $.param({
             chapter: model.ChapterNo,
             exercise: model.ExerciseNo
         }));
-        w.jQuery('#answer').load("/Exercise/ModelAnswer?" + $.param({
+        w.jQuery('#answer-content').load("/Exercise/ModelAnswer?" + $.param({
             chapter: model.ChapterNo,
             exercise: model.ExerciseNo
         }));

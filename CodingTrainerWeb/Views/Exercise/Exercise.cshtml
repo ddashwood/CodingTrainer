@@ -33,13 +33,15 @@
     <div id="exercise" class="tab-pane fade in active">
         <h2>@Model.Chapter.ChapterName</h2>
         <h4>@Model.ExerciseName</h4>
-        @{
-            var contentVm = new CodingTrainer.CodingTrainerWeb.Models.ExerciseContentViewModel();
-            contentVm.Exercise = Model;
-            contentVm.Url = Url;
-            contentVm.Html = Html;
-        }
-        @Html.Action("Content", contentVm)
+        <div id="exercise-content">
+            @{
+                var contentVm = new CodingTrainer.CodingTrainerWeb.Models.ExerciseContentViewModel();
+                contentVm.Exercise = Model;
+                contentVm.Url = Url;
+                contentVm.Html = Html;
+            }
+            @Html.Action("Content", contentVm)
+        </div>
     </div>
 
 

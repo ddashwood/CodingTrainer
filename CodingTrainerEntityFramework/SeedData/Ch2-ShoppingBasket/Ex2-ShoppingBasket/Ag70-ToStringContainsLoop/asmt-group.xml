@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssessmentGroup>
+  <Title>ToString Contains a Loop</Title>
+  <ShowAutoMessageOnStart>0</ShowAutoMessageOnStart>
+  <ShowAutoMessageOnPass>0</ShowAutoMessageOnPass>
+  <ShowAutoMessageOnFail>0</ShowAutoMessageOnFail>
+  <EndAssessmentsOnFail>1</EndAssessmentsOnFail>
+</AssessmentGroup>
