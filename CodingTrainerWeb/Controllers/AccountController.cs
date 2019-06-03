@@ -89,17 +89,17 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             }
 
             // Require the user to have a confirmed email before they can log on.
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user != null)
-            {
-                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-                {
-                    await SendEmailTokenAsync(user, UserManager.GenerateEmailConfirmationTokenAsync, "Verify", "Confirm your e-mail address before logging on", "ConfirmEmail");
+            //var user = await UserManager.FindByNameAsync(model.Email);
+            //if (user != null)
+            //{
+            //    if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+            //    {
+            //        await SendEmailTokenAsync(user, UserManager.GenerateEmailConfirmationTokenAsync, "Verify", "Confirm your e-mail address before logging on", "ConfirmEmail");
 
-                    ViewBag.errorMessage = "You must have a confirmed email to log on. The confirmation e-mail has been re-sent to your e-mail address.";
-                    return View("Error");
-                }
-            }
+            //        ViewBag.errorMessage = "You must have a confirmed email to log on. The confirmation e-mail has been re-sent to your e-mail address.";
+            //        return View("Error");
+            //    }
+            //}
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -183,17 +183,16 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //Removed because we don't want the user to be signed in until they confirm their e-mail address
-                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    await SendEmailTokenAsync(user, UserManager.GenerateEmailConfirmationTokenAsync, "Verify", "Confirm your e-mail address", "ConfirmEmail");
+                    // await SendEmailTokenAsync(user, UserManager.GenerateEmailConfirmationTokenAsync, "Verify", "Confirm your e-mail address", "ConfirmEmail");
 
-                    ViewBag.Message = "Please check your e-mails. You must confirm your e-mail before you can log on";
+                    //ViewBag.Message = "Please check your e-mails. You must confirm your e-mail before you can log on";
 
-                    return View("Info");
-                    //return RedirectToAction("Index", "Home");
+                    //return View("Info");
+                    return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }

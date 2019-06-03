@@ -19,6 +19,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
         public event ConsoleWriteEventHandler ConsoleWrite;
         private ICodeRunner runner;
         private readonly string code;
+        private bool byRunningOnly;
         private LazyAsync<CompiledCode> compiledCode;
         private CompilationWithSource compilation;
         private IEnumerable<Diagnostic> diags;
@@ -37,10 +38,10 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
                 Type[] newTypes =
                 {
-                enumHelper.MakeGenericType(typeof(Microsoft.CodeAnalysis.CSharp.SyntaxKind), typeof(ushort)),
-                typeof(SyntaxToken),
-                typeof(SyntaxNode)
-            };
+                    enumHelper.MakeGenericType(typeof(Microsoft.CodeAnalysis.CSharp.SyntaxKind), typeof(ushort)),
+                    typeof(SyntaxToken),
+                    typeof(SyntaxNode)
+                };
 
                 // Private type, hence we can't simply use typeof
                 Type type = typeof(System.Linq.Dynamic.DynamicQueryable).Assembly.GetType("System.Linq.Dynamic.ExpressionParser");
@@ -62,10 +63,11 @@ namespace CodingTrainer.CSharpRunner.Assessment
         }
 
 
-        public AssessmentRunner(ICodeRunner runner, string code)
+        public AssessmentRunner(ICodeRunner runner, string code, bool byRunningOnly)
         {
             this.runner = runner;
             this.code = code;
+            this.byRunningOnly = byRunningOnly;
         }
 
         public async Task<bool> RunAssessmentsAsync(IEnumerable<AssessmentGroup> assessmentGroups)
@@ -130,6 +132,9 @@ namespace CodingTrainer.CSharpRunner.Assessment
             var groupResult = true;
             foreach (var assessmentBase in assessmentGroup.OrderedAssessments)
             {
+                // For university study - some users will only see assessment of the running code, not static assessments
+                if (byRunningOnly && !(assessmentBase is AssessmentByRunningBase)) continue;
+
                 var assessment = (AssessmentMethodBase)assessmentBase;
 
                 if (assessment.ShowAutoMessageOnStart)

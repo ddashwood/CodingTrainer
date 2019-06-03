@@ -43,6 +43,10 @@ namespace CodingTrainer.CodingTrainerModels.Security
         [DisplayName("Email Confirmed")]
         public override bool EmailConfirmed { get => base.EmailConfirmed; set => base.EmailConfirmed = value; }
 
+        // For university study - some users will only see assessment of the running code, not static assessments
+        [DisplayName("Hide Detailed Assessment")]
+        public bool AssessByRunningOnly { get; set; }
+
         public virtual Exercise CurrentExercise { get; set; }
 
         public virtual ICollection<Submission> Submissions { get; set; }

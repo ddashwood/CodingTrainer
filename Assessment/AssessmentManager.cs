@@ -53,7 +53,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
             try
             {
                 var assessmentGroups = await rep.GetAssessmentGroupsForExerciseAsync(chapter, exercise);
-                var assessmentRunner = new AssessmentRunner(codeRunner, code);
+                var assessmentRunner = new AssessmentRunner(codeRunner, code, user.AssessByRunningOnly);
                 assessmentRunner.ConsoleWrite += OnConsoleWrite;
                 result = await assessmentRunner.RunAssessmentsAsync(assessmentGroups);
                 assessmentRunner.ConsoleWrite -= OnConsoleWrite;

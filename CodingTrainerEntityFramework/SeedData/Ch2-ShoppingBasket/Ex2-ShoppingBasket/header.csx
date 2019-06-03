@@ -20,6 +20,10 @@ static void Main()
         {
             string description;
             decimal price;
+            if (basket.Items == null)
+            {
+                throw new InvalidOperationException("Basket object's Items property is null");
+            }
             var item = basket.Items.SingleOrDefault(i => i.ItemId == id);
             if (item == null)
             {

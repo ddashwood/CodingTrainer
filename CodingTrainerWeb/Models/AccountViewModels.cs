@@ -1,4 +1,5 @@
 ﻿using CodingTrainer.CodingTrainerModels.Security;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -89,6 +90,8 @@ namespace CodingTrainer.CodingTrainerWeb.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        private static Random random = new Random();
+
         public ApplicationUser GetUser()
         {
             return new ApplicationUser()
@@ -99,7 +102,8 @@ namespace CodingTrainer.CodingTrainerWeb.Models
                 LastName = LastName,
                 CurrentChapterNo = 1,
                 CurrentExerciseNo = 1,
-                Dark = false
+                Dark = false,
+                AssessByRunningOnly = random.NextDouble() >= 0.5
             };
         }
     }

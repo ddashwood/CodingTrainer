@@ -392,6 +392,7 @@
     <Content Include="Content\Course\2-1\Basket.jpg" />
     <Content Include="Content\Course\2-2\Basket.png" />
     <Content Include="Content\Course\3-1\Thanks.jpg" />
+    <Content Include="Content\img\Classroom.jpg" />
     <Content Include="Content\Themes\Cyborg\bootstrap.css" />
     <Content Include="Content\Themes\Cyborg\bootstrap.min.css" />
     <Content Include="Content\Themes\Cyborg\Site.css" />
