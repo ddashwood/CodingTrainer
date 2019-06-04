@@ -41,6 +41,11 @@ namespace CodingTrainer.CodingTrainerWeb.Users
             return await userManager.FindByIdAsync(emulatingId ?? principal.Identity.GetUserId());
         }
 
+        public async Task<ApplicationUser> GetUserByIdAsync(string id)
+        {
+            return await userManager.FindByIdAsync(id);
+        }
+
         public string GetCurrentUserId()
         {
             return emulatingId ?? Thread.CurrentPrincipal.Identity.GetUserId();
@@ -117,6 +122,22 @@ namespace CodingTrainer.CodingTrainerWeb.Users
         public void Emulate(string userId)
         {
             emulatingId = userId;
+        }
+
+        public async Task UpdateUser(ApplicationUser user)
+        {
+            var theUser = await userManager.FindByIdAsync(user.Id);
+
+            theUser.FirstName = user.FirstName;
+            theUser.LastName = user.LastName;
+            theUser.CurrentChapterNo = user.CurrentChapterNo;
+            theUser.CurrentExerciseNo = user.CurrentExerciseNo;
+            theUser.Dark = user.Dark;
+            theUser.AssessByRunningOnly = user.AssessByRunningOnly;
+            theUser.Processed = user.Processed;
+
+            await userManager.UpdateAsync(theUser);
+            await userStore.Context.SaveChangesAsync();
         }
     }
 }

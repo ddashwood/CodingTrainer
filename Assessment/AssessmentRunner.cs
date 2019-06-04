@@ -63,7 +63,7 @@ namespace CodingTrainer.CSharpRunner.Assessment
         }
 
 
-        public AssessmentRunner(ICodeRunner runner, string code, bool byRunningOnly)
+        public AssessmentRunner(ICodeRunner runner, string code, bool byRunningOnly = false)
         {
             this.runner = runner;
             this.code = code;

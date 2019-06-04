@@ -47,6 +47,8 @@ namespace CodingTrainer.CodingTrainerModels.Security
         [DisplayName("Hide Detailed Assessment")]
         public bool AssessByRunningOnly { get; set; }
 
+        public bool Processed { get; set; }
+
         public virtual Exercise CurrentExercise { get; set; }
 
         public virtual ICollection<Submission> Submissions { get; set; }
