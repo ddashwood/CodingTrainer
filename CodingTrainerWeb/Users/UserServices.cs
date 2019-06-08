@@ -18,7 +18,7 @@ namespace CodingTrainer.CodingTrainerWeb.Users
         UserStore<ApplicationUser> userStore;
         ApplicationUserManager userManager;
 
-        string emulatingId = null;
+        const string Emulating = "Emulating";
 
         public UserServices()
         {
@@ -32,13 +32,13 @@ namespace CodingTrainer.CodingTrainerWeb.Users
         public ApplicationUser GetCurrentUser()
         {
             var principal = Thread.CurrentPrincipal;
-            return userManager.FindById(emulatingId ?? principal.Identity.GetUserId());
+            return userManager.FindById(EmulatingId ?? principal.Identity.GetUserId());
         }
 
         public async Task<ApplicationUser> GetCurrentUserAsync()
         {
             var principal = Thread.CurrentPrincipal;
-            return await userManager.FindByIdAsync(emulatingId ?? principal.Identity.GetUserId());
+            return await userManager.FindByIdAsync(EmulatingId ?? principal.Identity.GetUserId());
         }
 
         public async Task<ApplicationUser> GetUserByIdAsync(string id)
@@ -48,14 +48,14 @@ namespace CodingTrainer.CodingTrainerWeb.Users
 
         public string GetCurrentUserId()
         {
-            return emulatingId ?? Thread.CurrentPrincipal.Identity.GetUserId();
+            return EmulatingId ?? Thread.CurrentPrincipal.Identity.GetUserId();
         }
 
         public string GetName()
         {
             var appUser = GetCurrentUser();
             var name = appUser == null ? "Unknown" : appUser.FirstName + " " + appUser.LastName;
-            if (emulatingId == null)
+            if (EmulatingId == null)
             {
                 return name;
             }
@@ -121,7 +121,7 @@ namespace CodingTrainer.CodingTrainerWeb.Users
 
         public void Emulate(string userId)
         {
-            emulatingId = userId;
+            EmulatingId = userId;
         }
 
         public async Task UpdateUser(ApplicationUser user)
@@ -138,6 +138,21 @@ namespace CodingTrainer.CodingTrainerWeb.Users
 
             await userManager.UpdateAsync(theUser);
             await userStore.Context.SaveChangesAsync();
+        }
+
+        private string EmulatingId
+        {
+            get
+            {
+                if (HttpContext.Current == null) return null;
+                if (HttpContext.Current.Session == null) return null;
+                if (HttpContext.Current.Session[Emulating] == null) return null;
+                return HttpContext.Current.Session[Emulating] as string;
+            }
+            set
+            {
+                HttpContext.Current.Session[Emulating] = value;
+            }
         }
     }
 }
