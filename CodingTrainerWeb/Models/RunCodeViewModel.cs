@@ -12,5 +12,6 @@ namespace CodingTrainer.CodingTrainerWeb.Models
         public Exercise Exercise { get; set; }
         public string SavedCode { get; set; }
         public bool FullScreenIde { get; set; }
+        public bool Disabled { get; set; }
     }
 }

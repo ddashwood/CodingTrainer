@@ -176,7 +176,9 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
             {
                 Exercise = model,
                 SavedCode = savedCode,
-                FullScreenIde = fullScreen
+                FullScreenIde = fullScreen,
+                Disabled = userServices.IsEmulating(Session)
+                    // Because SignalR does not have access to Session state, and emulating relies on Session state, we can't allow users to run code while emulating
             };
 
             ViewBag.Theme = CodeMirrorThemes.Themes.ConvertAll(t => new SelectListItem()

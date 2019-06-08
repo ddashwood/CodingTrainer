@@ -124,6 +124,13 @@ namespace CodingTrainer.CodingTrainerWeb.Users
             EmulatingId = userId;
         }
 
+
+        public bool IsEmulating(HttpSessionStateBase session)
+        {
+            // HttpContext.Session appears to be null in some partial views, so insist on being given the session
+            return (session[Emulating] != null);
+        }
+
         public async Task UpdateUser(ApplicationUser user)
         {
             var theUser = await userManager.FindByIdAsync(user.Id);

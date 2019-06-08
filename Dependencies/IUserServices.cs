@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace CodingTrainer.CodingTrainerWeb.Dependencies
 {
@@ -26,5 +27,6 @@ namespace CodingTrainer.CodingTrainerWeb.Dependencies
         Task UpdateUser(ApplicationUser user);
 
         void Emulate(string userId);
+        bool IsEmulating(HttpSessionStateBase session);
     }
 }
