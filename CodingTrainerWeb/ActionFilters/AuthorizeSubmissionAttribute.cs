@@ -9,19 +9,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Unity;
 
 namespace CodingTrainer.CodingTrainerWeb.ActionFilters
 {
     public class AuthorizeSubmissionAttribute : AuthorizeAttribute
     {
-        public static IUserServices UserServices { get; set; }
         public static ICodingTrainerRepository DbRepository { get; set; }
         private Submission submission;
 
         public AuthorizeSubmissionAttribute()
         {
-            if (UserServices == null)
-                throw new InvalidOperationException("The User Services have not been set");
             if (DbRepository == null)
                 throw new InvalidOperationException("The Database Repository has not been set");
         }
@@ -35,6 +33,9 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
                 return;
             }
 
+            // Filters get reused, but if we reuse the same user service, old data will be cached
+            IUserServices userServices = UnityConfig.Container.Resolve<IUserServices>();
+
             ValueProviderResult oId = filterContext.Controller.ValueProvider.GetValue("id");
 
             if (oId == null)
@@ -44,7 +45,7 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
             var id = Convert.ToInt32(oId.AttemptedValue);
             submission = DbRepository.GetSubmission(id);
 
-            if (submission == null || submission.UserId != UserServices.GetCurrentUserId())
+            if (submission == null || submission.UserId != userServices.GetCurrentUserId())
             {
                 HandleUnauthorizedRequest(filterContext);
             }
