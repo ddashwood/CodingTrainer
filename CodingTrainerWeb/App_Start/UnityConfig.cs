@@ -64,7 +64,7 @@ namespace CodingTrainer.CodingTrainerWeb
             container.RegisterType<IIdeServices, IdeServices>();
             container.RegisterType<ICodeRunner, CodeRunner>();
             container.RegisterType<IExceptionLogger, CodeRunnerLogger>(new PerResolveLifetimeManager());
-            container.RegisterType<IUserServices, UserServices>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IUserServices, UserServices>();
 
             // Controllers with more than one constructor, where
             // we want the one with fewer parameters to be used
@@ -72,9 +72,7 @@ namespace CodingTrainer.CodingTrainerWeb
             container.RegisterType<ManageController>(new InjectionConstructor(new Type[] { typeof(IUserServices) }));
 
             // Action Filters, etc aren't created using Unity's resolver, so we need to inject dependencies into them
-            AuthorizeExerciseAttribute.UserServices = container.Resolve<IUserServices>();
             AuthorizeExerciseAttribute.DbRepository = container.Resolve<ICodingTrainerRepository>();
-            AuthorizeSubmissionAttribute.UserServices = container.Resolve<IUserServices>();
             AuthorizeSubmissionAttribute.DbRepository = container.Resolve<ICodingTrainerRepository>();
             LogAndHandleErrorAttribute.Repository = container.Resolve<ICodingTrainerRepository>();
             LogAndHandleWebApiError.Repository = container.Resolve<ICodingTrainerRepository>();

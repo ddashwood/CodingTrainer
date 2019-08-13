@@ -1,4 +1,5 @@
-﻿using CodingTrainer.CodingTrainerWeb.Dependencies;
+﻿using CodingTrainer.CodingTrainerModels.Security;
+using CodingTrainer.CodingTrainerWeb.Dependencies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,34 @@ namespace CodingTrainer.CodingTrainerWeb.Controllers
         {
             userServices.Emulate(id);
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<ActionResult> Edit(string id)
+        {
+            var user = await userServices.GetUserByIdAsync(id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(string id, ApplicationUser user)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await userServices.UpdateUser(user);
+                    return RedirectToAction("UserList");
+                }
+                catch (Exception e)
+                {
+                    ViewBag.Error = "Error: " + e.GetBaseException().Message;
+                    return View(user);
+                }
+            }
+            else
+            {
+                return View(user);
+            }
         }
     }
 }

@@ -40,6 +40,9 @@
     $('#ide').show();  // Keep this hidden until now so user can't click on link before the JavaScript is ready
     this.editor = this.getEditor(run, requestCompletions, model);
     this.codeConsole = this.getConsole(consoleIn);
+    if (ideGlobals.disabled) {
+        $('.cm-btn-disable-on-run').prop('disabled', true).css('color', 'lightgrey');
+    }
     $('#ide-loading').hide();
 
     // Resise the editors based on the screen size
@@ -98,7 +101,7 @@
     // These functions respond to the user's next action when they pass an assessment
     $('#successModal').on('hidden.bs.modal', function () {
         var w = window.opener;
-        if (w === null) w = window;
+        if (!w) w = window;
 
         w.jQuery('#answer-not-ready').css('display', 'block');
         w.jQuery('#answer-content').css('display', 'none');
@@ -138,6 +141,8 @@ Ide.prototype.consoleOut = function (message, colour) {
 };
 
 Ide.prototype.enableRun = function () {
+    if (ideGlobals.disabled) return;
+
     $('.cm-btn-disable-on-run').prop('disabled', false).css('color', 'black');
     this.running = false;
 };

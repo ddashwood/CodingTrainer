@@ -43,6 +43,8 @@ namespace CodingTrainer.CodingTrainerModels.Security
         [DisplayName("Email Confirmed")]
         public override bool EmailConfirmed { get => base.EmailConfirmed; set => base.EmailConfirmed = value; }
 
+        public bool Processed { get; set; }
+
         public virtual Exercise CurrentExercise { get; set; }
 
         public virtual ICollection<Submission> Submissions { get; set; }

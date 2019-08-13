@@ -12,6 +12,7 @@
         (function () {
             var signalRFactory = new SignalRFactory();
             ideGlobals.model = @Html.Raw(Json.Encode(new { Model.Exercise.ChapterNo, Model.Exercise.ExerciseNo, Model.Exercise.DefaultCode, Model.Exercise.HiddenCodeHeader }));
+            ideGlobals.disabled = @(Model.Disabled.ToString().ToLower());
             var serviceFactory = new ServiceFactoryForHiddenCode(signalRFactory, ideGlobals.model.HiddenCodeHeader, @Model.Exercise.ChapterNo, @Model.Exercise.ExerciseNo);
             ideGlobals.ide = new Ide(serviceFactory, @(Model.Exercise.IsAssessed.ToString().ToLower()), @Model.FullScreenIde.ToString().ToLower(), ideGlobals.model);
         })();

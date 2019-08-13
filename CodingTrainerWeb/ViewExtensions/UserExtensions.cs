@@ -19,20 +19,11 @@ namespace CodingTrainer.CodingTrainerWeb.ViewExtensions
     /// </summary>
     public static class UserExtensions
     {
-        private static IUserServices userServices;
-
-        /// <summary>
-        /// Allows injection of mock user repositories
-        /// </summary>
         public static IUserServices UserServices
         {
             get
             {
-                return userServices ?? (userServices = UnityConfig.Container.Resolve<IUserServices>());
-            }
-            set
-            {
-                userServices = value;
+                return UnityConfig.Container.Resolve<IUserServices>();
             }
         }
 

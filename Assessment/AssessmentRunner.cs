@@ -37,10 +37,10 @@ namespace CodingTrainer.CSharpRunner.Assessment
 
                 Type[] newTypes =
                 {
-                enumHelper.MakeGenericType(typeof(Microsoft.CodeAnalysis.CSharp.SyntaxKind), typeof(ushort)),
-                typeof(SyntaxToken),
-                typeof(SyntaxNode)
-            };
+                    enumHelper.MakeGenericType(typeof(Microsoft.CodeAnalysis.CSharp.SyntaxKind), typeof(ushort)),
+                    typeof(SyntaxToken),
+                    typeof(SyntaxNode)
+                };
 
                 // Private type, hence we can't simply use typeof
                 Type type = typeof(System.Linq.Dynamic.DynamicQueryable).Assembly.GetType("System.Linq.Dynamic.ExpressionParser");

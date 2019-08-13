@@ -392,6 +392,7 @@
     <Content Include="Content\Course\2-1\Basket.jpg" />
     <Content Include="Content\Course\2-2\Basket.png" />
     <Content Include="Content\Course\3-1\Thanks.jpg" />
+    <Content Include="Content\img\Classroom.jpg" />
     <Content Include="Content\Themes\Cyborg\bootstrap.css" />
     <Content Include="Content\Themes\Cyborg\bootstrap.min.css" />
     <Content Include="Content\Themes\Cyborg\Site.css" />
@@ -446,6 +447,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\CodingTrainer - Web Deploy.pubxml" />
+    <Content Include="Scripts\app\userlist.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\codemirror-buttons\buttons.css" />
@@ -851,6 +853,7 @@
     <Content Include="Views\Exercise\ModelAnswer.cshtml" />
     <Content Include="Views\Exercise\ModelAnswerNotFound.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

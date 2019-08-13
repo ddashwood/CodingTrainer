@@ -9,6 +9,9 @@ namespace CodingTrainer.CodingTrainerWeb
 {
     public static class WebApiConfig
     {
+        public static string UrlPrefix { get { return "api"; } }
+        public static string UrlPrefixRelative { get { return "~/api"; } }
+
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
@@ -19,12 +22,12 @@ namespace CodingTrainer.CodingTrainerWeb
 
             config.Routes.MapHttpRoute(
                 name: "ExerciseApi",
-                routeTemplate: "api/{controller}/{chapter}/{exercise}"
+                routeTemplate: UrlPrefix + "/{controller}/{chapter}/{exercise}"
             );
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: UrlPrefix + "/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }

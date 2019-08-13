@@ -9,22 +9,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Unity;
 
 namespace CodingTrainer.CodingTrainerWeb.ActionFilters
 {
     public class AuthorizeExerciseAttribute : AuthorizeAttribute
     {
-        public static IUserServices UserServices { get; set; }
         public static ICodingTrainerRepository DbRepository { get; set; }
         private int chapter;
         private int exercise;
 
         public AuthorizeExerciseAttribute()
         {
-            if (UserServices == null)
-                throw new InvalidOperationException("The User Services have not been set");
             if (DbRepository == null)
                 throw new InvalidOperationException("The Database Repository has not been set");
+
+            //userServices = new UserServices();
         }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
@@ -36,6 +36,9 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
                 return;
             }
 
+            // Filters get reused, but if we reuse the same user service, old data will be cached
+            IUserServices userServices = UnityConfig.Container.Resolve<IUserServices>();
+
             ValueProviderResult oChapter = filterContext.Controller.ValueProvider.GetValue("chapter");
             ValueProviderResult oExercise = filterContext.Controller.ValueProvider.GetValue("exercise");
 
@@ -46,7 +49,7 @@ namespace CodingTrainer.CodingTrainerWeb.ActionFilters
             chapter = Convert.ToInt32(oChapter.AttemptedValue);
             exercise = Convert.ToInt32(oExercise.AttemptedValue);
 
-            ApplicationUser user = UserServices.GetCurrentUser();
+            ApplicationUser user = userServices.GetCurrentUser();
             if (!user.ExercisePermitted(chapter, exercise))
             {
                 HandleUnauthorizedRequest(filterContext);
